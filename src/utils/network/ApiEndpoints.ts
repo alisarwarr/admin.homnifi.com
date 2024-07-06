@@ -1,11 +1,11 @@
 export const API_INSTANCE = import.meta.env.VITE_API_INSTANCE + '/admin';
 
 //Auth
-export const LOGIN = '/auth/signin';
+export const LOGIN = '/auth/login';
 export const GET_PROFILE = '/profile';
 
 // Token
-export const TOKEN = '/token';
+export const TOKEN = '/tokens';
 export const TOKEN_TRANSACTION_SETTING = '/token/settings';
 export const TOKEN_PAIRS = '/swap/pairs';
 export const TOKEN_PAIRS_SETTING = '/swap/pairs';

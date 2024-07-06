@@ -5,7 +5,6 @@ import SaveBar from '../../../components/SaveBar';
 import { photo } from '../../../images/other';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // REDUX
@@ -145,7 +144,6 @@ const AddProvider = () => {
 
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto">
-      <ToastContainer />
 
       <div className="mx-auto text-start">
         <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{`${id ? 'Update' : 'Add'} Provider`}</h2>

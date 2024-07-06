@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import SaveBar from '../../../components/SaveBar';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // REDUX
@@ -132,7 +131,6 @@ const TokenDetails = () => {
 
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto">
-      <ToastContainer />
 
       <form onSubmit={formik.handleSubmit} className="">
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 mt-12">

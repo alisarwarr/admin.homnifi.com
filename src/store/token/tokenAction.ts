@@ -29,7 +29,7 @@ export const useTokenActions = () => {
 
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${TOKEN}/`,
+      url: `${TOKEN}`,
     });
     const _tokensList = response?.data?.data;
     dispatch(setTokenList(_tokensList));

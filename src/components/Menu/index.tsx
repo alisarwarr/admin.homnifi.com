@@ -83,7 +83,7 @@ const Menu = ({ menu }: { menu: any }) => {
         sx={{
           color:
             activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))
-              ? '#26A5FF !important'
+              ? '#1B9FDA !important'
               : '#7D7D7D !important',
           fontWeight:
             activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))

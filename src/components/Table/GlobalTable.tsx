@@ -180,7 +180,7 @@ const GlobalTable = ({
   }, [outerFilters?.country, outerFilters?.accountType, outerFilters?.twoFA, outerFilters?.verified]);
 
   return (
-    <div className="bg-[#181717] backdrop-blur-md p-4">
+    <div className=" backdrop-blur-md p-4">
       <div className="h-full">
         {showInnerFilters && (
           <div className={`w-full flex justify-end mb-3 ${innerFiltersClassName}`}>

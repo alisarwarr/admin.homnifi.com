@@ -10,6 +10,7 @@ import TokensTable from '../../components/Token/TokenTable';
 const Tokens = () => {
   const { getTokensList } = useTokenActions();
   const { tokensList } = useSelector(selectToken);
+  console.log("🚀 ~ Tokens ~ tokensList:", tokensList)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
