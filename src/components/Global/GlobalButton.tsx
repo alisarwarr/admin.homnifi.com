@@ -8,10 +8,10 @@ type Props = {
   status: string;
   classNames?: string;
   onClick?: any;
+  loading:boolean
 };
 
-const GlobalButton = ({ text, type, setStatus, status, classNames , onClick}: Props) => {
-  const [loading, setLoading] = React.useState(false);
+const GlobalButton = ({ text, type, setStatus, status, classNames , onClick , loading}: Props) => {
 
   return (
     <button

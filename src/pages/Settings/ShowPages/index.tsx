@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // REDUX
@@ -88,7 +87,6 @@ const ShowPages = () => {
 
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto">
-      <ToastContainer />
       <h1 className="flex-1 font-bold text-2xl py-1">Show/Hide Pages</h1>
 
       <form onSubmit={formik.handleSubmit} className="">

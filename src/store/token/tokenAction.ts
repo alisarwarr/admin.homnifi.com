@@ -29,9 +29,11 @@ export const useTokenActions = () => {
 
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${TOKEN}/`,
+      url: `${TOKEN}/all`,
     });
-    const _tokensList = response?.data?.data;
+    console.log("🚀 ~ response ~ response:", response)
+
+    const _tokensList = response?.data.data;
     dispatch(setTokenList(_tokensList));
   };
 

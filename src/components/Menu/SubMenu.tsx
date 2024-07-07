@@ -61,9 +61,9 @@ const SubMenu = ({ subMenu, length, index }: { subMenu: any; length: number; ind
         }
       }}
     >
-      {user.adminPermissions?.length > 0 ? (
-        subMenu.permissions?.some((permission) => {
-          return user?.adminPermissions?.includes(permission);
+      {user.permission?.length > 0 ? (
+        subMenu.permissions?.some((per) => {
+          return user?.permission?.includes(per);
         }) ? (
           <MenuIcon menu={subMenu} type={'submenu'} length={length} index={index} />
         ) : (

@@ -2,7 +2,6 @@
 import Swal from 'sweetalert2';
 //REACT-TOASTIFY
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export const successAlert = (message: string) => {
   Swal.fire({
@@ -25,12 +24,14 @@ export const errorAlert = (message: string) => {
     title: 'Error',
     text: message,
     confirmButtonText: 'Okay',
-    confirmButtonColor: '#1D417C',
+    confirmButtonColor: '#1B9FDA',
     imageWidth: 600,
     imageHeight: 600,
   });
 };
 
 export const successNotify = (message: string) => toast.success(message);
-export const errorNotify = (message: string) => toast.error(message);
+export const errorNotify = (message: string) => toast.error(message ,{
+  toastId: 'error1',
+});
 export const infoNotify = (message: string) => toast.info(message);

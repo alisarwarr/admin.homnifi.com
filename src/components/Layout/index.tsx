@@ -27,7 +27,6 @@ import { logo } from '../../images/other';
 
 //UTILS
 import { DrawerOption, allDrawerOptions } from '../../utils/drawerOptions';
-import { ToastContainer } from 'react-toastify';
 import Menu from '../Menu';
 import { useNotificationsActions } from '../../store/notifications/notificationsAction';
 import { calculateSubmenuCount } from '../../utils/utils';
@@ -141,9 +140,9 @@ export default function Layout(): JSX.Element {
   const appBarMargin = drawerWidth + 10;
 
   const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
+    // palette: {
+    //   mode: 'dark',
+    // },
     typography: {
       fontFamily: 'Poppins, sans-serif !important',
       fontWeightBold: '400 !important',
@@ -153,7 +152,6 @@ export default function Layout(): JSX.Element {
   return (
     <ThemeProvider theme={darkTheme}>
       <div className="flex">
-        <ToastContainer />
         <Drawer
           disableScrollLock={true}
           anchor="left"
@@ -226,7 +224,7 @@ export default function Layout(): JSX.Element {
           </div>
           <div className="flex-grow py-4 px-2 h-screen">
             <Outlet />
-            
+
             hi
           </div>
         </div>

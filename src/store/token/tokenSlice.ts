@@ -37,6 +37,25 @@ export interface Token {
   onlyUsdtThreshold: boolean;
   swapFromEnabled: boolean;
   swapToEnabled: boolean;
+  settings: {
+    depositEnabled: boolean;
+    withdrawEnabled: boolean;
+    swapFromEnabled: boolean;
+    swapToEnabled: boolean;
+  };
+}
+
+export interface TokenDetails {
+  _id: string;
+  token: {
+    name: string;
+    symbol: string;
+    _id: string;
+  };
+  depositEnabled: boolean;
+  withdrawEnabled: boolean;
+  swapFromEnabled: boolean;
+  swapToEnabled: boolean;
 }
 
 export interface TokenTransactionSettingType {

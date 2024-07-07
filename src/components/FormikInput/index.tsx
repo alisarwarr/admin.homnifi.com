@@ -39,7 +39,7 @@ export default function FormikInput({
 }) {
   return (
     <div className="w-full">
-      <div className={`flex flex-col gap-1 relative ${className}`}>
+      <div className={`flex flex-col gap-1 relative  ${className}`}>
         <>
           <TextField
             multiline={multiline}
@@ -54,13 +54,30 @@ export default function FormikInput({
             placeholder={placeholder}
             value={value ? value : null}
             sx={{
-              '& .css-10m55e3-MuiFormLabel-root-MuiInputLabel-root': {
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: 'primary.main', // default outline color
+                },
+                '&:hover fieldset': {
+                  borderColor: 'primary.dark', // outline color on hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'primary.main', // outline color when focused
+                },
+              },
+              '& .MuiFormLabel-root': {
                 fontSize: '0.8rem',
               },
-              '& .css-p51h6s-MuiInputBase-input-MuiOutlinedInput-input': {
+              '& .MuiInputBase-input': {
                 fontSize: '0.8rem',
                 ...inputStyle,
               },
+              '&:hover fieldset': {
+                borderColor: '#115293', // primary.dark outline color on hover
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#1976d2', // primary.main outline color when focused
+              }
             }}
             inputRef={inputRef}
             InputLabelProps={{

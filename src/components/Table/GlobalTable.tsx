@@ -180,7 +180,7 @@ const GlobalTable = ({
   }, [outerFilters?.country, outerFilters?.accountType, outerFilters?.twoFA, outerFilters?.verified]);
 
   return (
-    <div className="bg-[#181717] backdrop-blur-md p-4">
+    <div className=" backdrop-blur-md p-4 bg-slate-600">
       <div className="h-full">
         {showInnerFilters && (
           <div className={`w-full flex justify-end mb-3 ${innerFiltersClassName}`}>
@@ -309,9 +309,9 @@ const GlobalTable = ({
         <div className="hidden lg:flex items-center gap-2 overflow-auto">
           <table className="w-full">
             <thead>
-              <tr className={`${rows.length > 0 ? 'text-white' : 'text-textSecondary'} w-full text-left`}>
+              <tr className={`${rows.length > 0 ? 'text-white' : 'text-textSecondary'} w-full text-left bg-red-500`}>
                 {/* Checkbox column */}
-                {checkBoxes && (
+                {/* {true && (
                   <th className={`py-4 hidden md:table-cell font-semibold sm:text-xs xl:text-sm`}>
                     <Checkbox
                       checked={selectedRows.length === rows.length && rows.length !== 0}
@@ -319,23 +319,20 @@ const GlobalTable = ({
                       inputProps={{ 'aria-label': 'controlled' }}
                     />
                   </th>
-                )}
+                )} */}
 
                 {headCells.map((cell, index) => {
                   return (
                     cell.id !== '_id' && (
                       <th
                         key={index}
-                        className={`py-4 px-2 hidden md:table-cell font-semibold sm:text-xs xl:text-sm ${cell.dataClass} ${cell.headCellClass}`}
+                        className={`py-4 px-2  hidden md:table-cell text-defaultBlack font-semibold sm:text-xs xl:text-sm ${cell.dataClass} ${cell.headCellClass}`}
                       >
                         <div className={`flex gap-2 items-center`}>
                           <span>{cell.label}</span>
                           {cell.id !== 'id' &&
                             cell.id !== 'actions' &&
-                            cell.id !== 'twoFA' &&
-                            cell.id !== 'verified' &&
-                            cell.id !== 'balance' &&
-                            cell.id !== 'refCode' &&
+
                             showSort && (
                               <img
                                 src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
@@ -372,6 +369,7 @@ const GlobalTable = ({
               <>
                 <tbody>
                   {rows.map((row, index) => {
+                    console.log("🚀 ~ {rows.map ~ row:", row)
                     return (
                       <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
                         {/* Checkbox column */}
@@ -386,13 +384,14 @@ const GlobalTable = ({
                         )}
 
                         {headCells.map((cell, index) => {
+                          console.log("🚀 ~ {he   :", row)
                           return (
                             cell.id !== '_id' && (
                               <td
                                 key={index}
                                 className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                               >
-                                {row[cell.id]}
+                                {row[cell.id] ? row?.[cell.id] : row.setting?.[cell.id]}
                               </td>
                             )
                           );
@@ -422,7 +421,7 @@ const GlobalTable = ({
                 {headCells.map((cell, index) => (
                   <div key={index} className="w-full flex items-center mt-3">
                     <div className="w-1/3">{cell.label}:</div>
-                    <div className="w-2/3">{row[cell.id]}</div>
+                    <div className="w-2/3">{row?.[cell.id]}</div>
                   </div>
                 ))}
                 <hr className="text-white my-3" />

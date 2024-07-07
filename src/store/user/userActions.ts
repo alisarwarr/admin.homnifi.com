@@ -12,33 +12,40 @@ export const useUserActions = () => {
   const userLogin = async ({ email, password }: { email: string; password: string }) => {
     dispatch(
       setLogin({
-        accessToken: "abcdefghijklmnopqrstuvwxyz",
-        user: { data: { email, password }, superAdmin: true }
+        loginLoading: true,
       })
     );
-    navigate("/");
-    // return await ApiRequest()
-    //   .request({
-    //     method: 'POST',
-    //     url: LOGIN,
-    //     data: {
-    //       email,
-    //       password,
-    //     },
-    //   })
-    //   .then((response: any) => {
-    //     const { data } = response;
-    //     dispatch(
-    //       setLogin({
-    //         accessToken: data.data.token,
-    //         user: data.data.user,
-    //       })
-    //     );
-    //     return response;
-    //   })
-    //   .catch((error: any) => {
-    //     return error;
-    //   });
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: LOGIN,
+        data: {
+          email,
+          password,
+        },
+      })
+      .then((response: any) => {
+        const { data } = response;
+        console.log('🚀 ~ .then ~ data:', data);
+        dispatch(
+          setLogin({
+            accessToken: data.user.token,
+            user: data.user,
+            loginLoading: false,
+          })
+        );
+        navigate('/');
+
+        return response;
+      })
+      .catch((error: any) => {
+        dispatch(
+          setLogin({
+            loginLoading: false,
+          })
+        );
+        return error;
+      });
   };
 
   const impersonateUser = async (id: string) => {

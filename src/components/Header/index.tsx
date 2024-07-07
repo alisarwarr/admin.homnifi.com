@@ -12,7 +12,7 @@ import { notification_badge } from '../../store/notifications/notificationsSlice
 import { bell, menu, user_default } from '../../images/other';
 import NotificationsDrawer from '../NotificationDrawer';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as UserIcon } from "../../SVGIcons/user.svg";
+import { ReactComponent as UserIcon } from '../../SVGIcons/user.svg';
 import GlobalInput from '../Global/GlobalInput';
 
 type HeaderProps = {
@@ -66,6 +66,7 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
   const userProfile = () => navigate('/profile');
 
   const user = useSelector(selectUser);
+  console.log("🚀 ~ Header ~ user:", user)
 
   return (
     <div className="flex items-center justify-between w-[96%] m-auto text-black">
@@ -78,13 +79,13 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
       )}
 
       <GlobalInput
-        name='email'
-        placeholder='Search'
-        type='email'
-      // value={formik.values.email}
-      // onChange={formik.handleChange}
-      // isError={formik.errors.email}
-      // error={formik.errors.email}
+        name="email"
+        placeholder="Search"
+        type="email"
+        // value={formik.values.email}
+        // onChange={formik.handleChange}
+        // isError={formik.errors.email}
+        // error={formik.errors.email}
       />
 
       <div className="flex items-center">
@@ -119,10 +120,10 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
               <UserIcon className="w-5 h-5 mr-0.5" />
             </div>
 
-            <span className="text-sm">
+            <span className="text-sm text-defaultBlack">
               {user && (
                 <>
-                  {user.accountType === 'INDIVIDUAL' ? (
+                  {user ? (
                     <>
                       {user.firstName ? (
                         <>{user.firstName.length <= 8 ? user.firstName + ' ' + user.lastName : user.firstName}</>
@@ -155,7 +156,8 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
             <div
               ref={profileDropdownRef}
               className="absolute top-[4rem] w-36 right-0
-                            bg-gradient-to-r from-[#303030] to-[#232323] backdrop-blur-[23.33px]
+                            z-[10000]
+                            bg-white
                             rounded-lg shadow-md"
             >
               <ul className="p-2 text-xs text-input">
