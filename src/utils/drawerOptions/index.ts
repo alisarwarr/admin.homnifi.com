@@ -71,7 +71,7 @@ export const allDrawerOptions: DrawerSection[] = [
         active: false,
         options: [
           {
-            name: 'Assets',
+            name: 'Tokens',
             icon_light: setting,
             icon_dark: setting,
             url: '/tokens',
@@ -81,7 +81,7 @@ export const allDrawerOptions: DrawerSection[] = [
             permissions: [`all`, `superadmin`, 'tokens_settings-assets'],
           },
           {
-            name: 'Deposit',
+            name: 'Transition Setting',
             icon_light: setting,
             icon_dark: setting,
             url: '/tokens/settings/deposit',
@@ -90,36 +90,7 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-deposit'],
           },
-          {
-            name: 'Withdraw',
-            icon_light: setting,
-            icon_dark: setting,
-            url: '/tokens/settings/withdraw',
-            key: 'tokens-withdraw-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
-          },
-          {
-            name: 'Migrate',
-            icon_light: setting,
-            icon_dark: setting,
-            url: '/tokens/settings/migrate',
-            key: 'token-migrate-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-migrate'],
-          },
-          {
-            name: 'Swap',
-            icon_light: setting,
-            icon_dark: setting,
-            url: '/tokens/settings/swap',
-            key: 'token-swap-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-swap'],
-          },
+         
 
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
@@ -193,7 +164,7 @@ export const allDrawerOptions: DrawerSection[] = [
     ],
   },
 
-                            
+
 
 
 

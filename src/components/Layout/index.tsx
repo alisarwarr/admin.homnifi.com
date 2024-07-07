@@ -140,9 +140,9 @@ export default function Layout(): JSX.Element {
   const appBarMargin = drawerWidth + 10;
 
   const darkTheme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
+    // palette: {
+    //   mode: 'dark',
+    // },
     typography: {
       fontFamily: 'Poppins, sans-serif !important',
       fontWeightBold: '400 !important',

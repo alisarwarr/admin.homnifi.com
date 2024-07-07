@@ -17,11 +17,11 @@ import { useTokenActions } from '../../../store/token/tokenAction';
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required.'),
   symbol: Yup.string().required('Symbol is required.'),
-  canWithdraw: Yup.boolean(),
-  canMigrate: Yup.boolean(),
-  canTopup: Yup.boolean(),
-  isSwapable: Yup.boolean(),
-  allowNegativeBalance: Yup.boolean(),
+  depositEnabled: Yup.boolean(),
+  withdrawEnabled: Yup.boolean(),
+  // canTopup: Yup.boolean(),
+  // isSwapable: Yup.boolean(),
+  // allowNegativeBalance: Yup.boolean(),
 });
 
 const formFields = [
@@ -30,12 +30,12 @@ const formFields = [
 ];
 
 const switches = [
-  { key: 'canWithdraw', label: 'Can Withdraw' },
-  { key: 'canMigrate', label: 'Can Migrate' },
-  { key: 'canTopup', label: 'Can Topup' },
+  { key: 'depositEnabled', label: 'Can Depost' },
+  { key: 'withdrawEnabled', label: 'Can Withdraw' },
+  // { key: 'canTopup', label: 'Can Topup' },
   { key: 'swapFromEnabled', label: 'Swapable From' },
   { key: 'swapToEnabled', label: 'Swapable To' },
-  { key: 'allowNegativeBalance', label: 'Allow Negative Balance' },
+  // { key: 'allowNegativeBalance', label: 'Allow Negative Balance' },
 ];
 
 const TokenDetails = () => {
@@ -51,22 +51,22 @@ const TokenDetails = () => {
   const initialValues: {
     name: string;
     symbol: string;
-    canWithdraw: boolean;
-    canMigrate: boolean;
-    canTopup: boolean;
+    depositEnabled: boolean;
+    withdrawEnabled: boolean;
+    // canTopup: boolean;
     swapFromEnabled: boolean;
     swapToEnabled: boolean;
-    allowNegativeBalance: boolean;
+    // allowNegativeBalance: boolean;
     [key: string]: any;
   } = {
     name: '',
     symbol: '',
-    canWithdraw: false,
-    canMigrate: false,
-    canTopup: false,
+    withdrawEnabled: false,
+    depositEnabled: false,
+    // canTopup: false,
     swapFromEnabled: false,
     swapToEnabled: false,
-    allowNegativeBalance: false,
+    // allowNegativeBalance: false,
   };
 
   const formik = useFormik({
@@ -74,6 +74,7 @@ const TokenDetails = () => {
     validationSchema: validationSchema,
 
     onSubmit: async (values) => {
+      console.log("🚀 ~ onSubmit: ~ values:", values)
       setSaveLoading(true);
 
       try {
@@ -102,27 +103,30 @@ const TokenDetails = () => {
     (async () => {
       if (id) {
         // GET PROVIDER
-        let token: Token | undefined = tokensList.find((token: Token) => {
+        let token = tokensList.find((token: Token) => {
           return token._id === id;
         });
 
         if (!token) {
           // FETCHG FROM API
-          const res = await getTokenById(id);
+          const res: Token = await getTokenById(id);
+          console.log('🚀 ~ res:', res);
           token = res;
         }
 
         // SET VALUES
         if (token) {
+          console.log('🚀 ~ token:', token);
+
           formik.setValues({
-            name: token.name,
+            name: token?.name,
             symbol: token.symbol,
-            canWithdraw: token.canWithdraw,
-            canMigrate: token.canMigrate,
-            canTopup: token.canTopup,
-            swapFromEnabled: token.swapFromEnabled,
-            swapToEnabled: token.swapToEnabled,
-            allowNegativeBalance: token.allowNegativeBalance,
+            withdrawEnabled: token.settings.withdrawEnabled,
+            depositEnabled: token.settings.depositEnabled,
+            // canTopup: token.canTopup,
+            // swapFromEnabled: token.swapFromEnabled,
+            // swapToEnabled: token.swapToEnabled,
+            // allowNegativeBalance: token.allowNegativeBalance,
           });
         }
       }
@@ -130,8 +134,7 @@ const TokenDetails = () => {
   }, [id]);
 
   return (
-    <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto">
-
+    <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto ">
       <form onSubmit={formik.handleSubmit} className="">
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 mt-12">
           {formFields.map((field) => (
@@ -139,6 +142,7 @@ const TokenDetails = () => {
               <FormikInput
                 label={field.label}
                 name={field.key}
+                disabled={true}
                 type={field.type}
                 placeholder={`Enter ${field.label}`}
                 error={formik.errors[field.key]}
@@ -158,6 +162,7 @@ const TokenDetails = () => {
                 <FormControlLabel
                   control={<Switch />}
                   label={item.label}
+                  className="text-primary"
                   checked={formik.values[item.key]}
                   onChange={(e: any) => {
                     formik.setFieldValue(item.key, e.target.checked);
