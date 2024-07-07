@@ -8,6 +8,7 @@ import { selectUser } from '../../store/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AdminTable from '../../components/Admin/AdminTable';
 import { selectAdmin } from '../../store/admin/adminSlice';
+import Loader from '../../components/Loader/Loader';
 
 export default function Admins(): JSX.Element {
   const { getAdminList } = useAdminActions();
@@ -19,15 +20,16 @@ export default function Admins(): JSX.Element {
   const [loading, setLoading] = useState(true);
 
   const fireApi = async () => {
-    setLoading(true);
     const response = await getAdminList();
     setLoading(false);
   };
 
   useEffect(() => {
-    // if (list?.length === 0) {
-    fireApi();
-    // }
+    if (list?.length === 0) {
+      fireApi();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   // useEffect(() => {
@@ -35,7 +37,9 @@ export default function Admins(): JSX.Element {
   //     navigate('/');
   //   }
   // }, []);
-
+  if (loading) {
+    return <Loader />;
+  }
   if (!user?.isSuperAdmin) return <></>;
   return (
     <div className="w-full px-2">

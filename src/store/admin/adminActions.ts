@@ -78,7 +78,7 @@ export const useAdminActions = () => {
         url: ADMIN_PERMISSIONS,
       })
       .then((response: any) => {
-        dispatch(setAdminPermissionsList(response?.data?.data));
+        dispatch(setAdminPermissionsList(response.data.permissions));
         return response?.data;
       })
       .catch((err: any) => err.data);

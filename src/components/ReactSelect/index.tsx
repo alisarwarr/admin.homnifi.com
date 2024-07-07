@@ -93,9 +93,9 @@ const ReactSelect = ({
                     ? 'none'
                     : formik?.errors[name] && formik?.touched[name]
                     ? '1px solid #f44336'
-                    : '1px solid #666666',
+                    : '1px solid #AEB6BF',
                   '&:hover': {
-                    border: !state.isFocused && '1px solid white',
+                    border: !state.isFocused && '1px solid gray',
                   },
                   boxShadow: '0px',
                   outline: state.isFocused && '2px #90CAF9 solid',
@@ -123,7 +123,7 @@ const ReactSelect = ({
               }),
               input: (baseStyles) => ({
                 ...baseStyles,
-                color: 'white',
+                color: 'gray',
               }),
               singleValue: (baseStyles) => ({
                 ...baseStyles,

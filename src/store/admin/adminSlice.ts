@@ -9,14 +9,14 @@ interface IAdminPermission {
 
 export interface AdminStateSlice {
   data: any;
-  list: any;
+  list: any[];
   activity: any;
   adminPermissionsList: IAdminPermission[];
 }
 
 const initialState: AdminStateSlice = {
   data: null,
-  list: null,
+  list: [],
   activity: null,
   adminPermissionsList: [],
 };
