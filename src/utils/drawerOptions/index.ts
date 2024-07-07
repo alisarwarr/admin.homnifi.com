@@ -60,6 +60,22 @@ export const allDrawerOptions: DrawerSection[] = [
       },
     ],
   },
+
+  {
+    options: [
+      {
+        name: 'Admins',
+        icon_light: Admin,
+        icon_dark: AdminDark,
+        url: '/admins',
+        key: 'admins',
+        active: false,
+        options: [],
+        permissions: [`all`, `superadmin`, 'admins'],
+      },
+    ],
+  },
+
   {
     options: [
       {
@@ -90,8 +106,6 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-deposit'],
           },
-         
-
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
       },
@@ -157,28 +171,8 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-swap'],
           },
-
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
-      },
-    ],
-  },
-
-
-
-
-
-  {
-    options: [
-      {
-        name: 'Admins',
-        icon_light: Admin,
-        icon_dark: AdminDark,
-        url: '/admins',
-        key: 'admins',
-        active: false,
-        options: [],
-        permissions: [`all`, `superadmin`, 'admins'],
       },
     ],
   },

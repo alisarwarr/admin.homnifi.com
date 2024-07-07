@@ -41,6 +41,8 @@ const adminSlice = createSlice({
 });
 
 export const { setAdminData, setAdminList, setAdminActivity, setAdminPermissionsList } = adminSlice.actions;
+
+export const selectAdmin = (state: { admin: AdminStateSlice }) => state.admin;
 export const selectAdminData = (state: { admin: AdminStateSlice }) => state.admin.data;
 export const selectAdminList = (state: { admin: AdminStateSlice }) => state.admin.list;
 export const selectAdminActivity = (state: { admin: AdminStateSlice }) => state.admin.activity;

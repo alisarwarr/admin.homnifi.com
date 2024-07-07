@@ -6,6 +6,7 @@ import {
   ADMIN_CHECK_USERNAME,
   ADMIN_CREATE,
   ADMIN_INFO,
+  ADMIN_LIST,
   ADMIN_PERMISSIONS,
   ADMIN_UPDATE,
 } from '../../utils/network/ApiEndpoints';
@@ -70,19 +71,6 @@ export const useAdminActions = () => {
       .catch((err: any) => err.data);
   };
 
-  const getAdminList = async () => {
-    return await ApiRequest()
-      .request({
-        method: 'GET',
-        url: '/',
-      })
-      .then((response: any) => {
-        setAdminList(response?.data?.data);
-        return response?.data?.data;
-      })
-      .catch((err: any) => err.data);
-  };
-
   const getAdminPermissionsList = async () => {
     return await ApiRequest()
       .request({
@@ -117,6 +105,19 @@ export const useAdminActions = () => {
       .then((response: any) => {
         dispatch(setAdminActivity(response.data.data));
         return response.data;
+      })
+      .catch((err: any) => err.data);
+  };
+
+  const getAdminList = async () => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: ADMIN_LIST,
+      })
+      .then((response: any) => {
+        dispatch(setAdminList(response?.data?.users));
+        return response;
       })
       .catch((err: any) => err.data);
   };

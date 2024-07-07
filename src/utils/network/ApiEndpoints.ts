@@ -129,3 +129,4 @@ export const ADMIN_ACCESS = '/user/access';
 export const DISTABLE_USER_2FA = '/user/2fa-disable';
 export const ADMIN_ACTIVITY = '/user/activity';
 export const ADMIN_PERMISSIONS = '/permissions';
+export const ADMIN_LIST = '';

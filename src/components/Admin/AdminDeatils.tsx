@@ -72,7 +72,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           lastName: state?.lastName ? state?.lastName : '',
           phoneNumber: state?.phoneNumber ? state?.phoneNumber : '',
           password: state?.password ? state?.password : '',
-          adminPermissions: state?.adminPermissions.map((permission) => {
+          adminPermissions: state?.adminPermissions?.map((permission) => {
             return {
               label: permission.name,
               value: permission._id,
@@ -91,7 +91,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     setIsSubmitting(true);
     const _values = {
       ...values,
-      adminPermissions: values.adminPermissions.map((permission) => permission.value),
+      adminPermissions: values.adminPermissions?.map((permission) => permission.value),
     };
     if (
       //CREATE ADMIN
@@ -359,7 +359,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                   formik={formikRef?.current}
                   name="adminPermissions"
                   label="Admin Permissions"
-                  options={adminPermissionsList.map((permission) => ({
+                  options={adminPermissionsList?.map((permission) => ({
                     label: permission.name,
                     value: permission._id,
                   }))}
