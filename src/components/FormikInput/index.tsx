@@ -59,7 +59,7 @@ export default function FormikInput({
                   borderColor: '#D7D7D7', // default outline color
                 },
                 '&:hover fieldset': {
-                  borderColor: 'primary.dark', // outline color on hover
+                  borderColor: 'primary.main', // outline color on hover
                 },
                 '&.Mui-focused fieldset': {
                   borderColor: 'primary.main', // outline color when focused

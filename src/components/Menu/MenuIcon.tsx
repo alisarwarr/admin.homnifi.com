@@ -12,7 +12,7 @@ const MenuIcon = ({ menu, type, length, index }: { menu: any; type: any; length:
   const menuClass = ' gap-3';
 
   return (
-    <div className={`flex-1 flex items-center ${type === 'menu' ? menuClass : subMenuClass}`}>
+    <div className={`flex-1 flex items-center  ${type === 'menu' ? menuClass : subMenuClass}`}>
       {type === 'menu' ? (
         menu?.icon
       ) : (

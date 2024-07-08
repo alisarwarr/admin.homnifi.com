@@ -79,7 +79,7 @@ export default function Profile(): JSX.Element {
 
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} innerRef={formikRef}>
         {({ errors, handleChange, values, touched }) => (
-          <Form className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto">
+          <Form className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto ">
             <div className="grid grid-cols-2 gap-3 w-full">
               <div className="flex flex-col gap-2 items-end">
                 <div className="w-full">
@@ -137,6 +137,7 @@ export default function Profile(): JSX.Element {
                   <TextInput
                     label="Last Name"
                     type="lastName"
+                    
                     name="lastName"
                     shrink={true}
                     isError={errors.lastName !== '' && touched.lastName ? true : false}

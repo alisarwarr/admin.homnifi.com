@@ -45,7 +45,7 @@ const SubMenu = ({ subMenu, length, index }: { subMenu: any; length: number; ind
       }`}
       disabled={subMenu.disable}
       sx={{
-        color: isMenuActive(subMenu) && drawer.openItemKey === subMenu.key ? '#26A5FF !important' : '#7D7D7D !important',
+        color: isMenuActive(subMenu) && drawer.openItemKey === subMenu.key ? '#1B9FDA !important' : '#7D7D7D !important',
       }}
       onClick={() => {
         if (subMenu.disable) {

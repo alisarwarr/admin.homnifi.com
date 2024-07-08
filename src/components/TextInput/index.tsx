@@ -56,6 +56,11 @@ const TextInput = ({
             fontSize: '0.8rem',
             ...inputStyle,
           },
+          '& .MuiOutlinedInput-root': {
+            '&:hover fieldset': {
+              borderColor: 'primary.main', // Change to the desired color
+            },
+          },
         }}
         inputRef={inputRef}
         InputLabelProps={{

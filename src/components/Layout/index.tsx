@@ -147,6 +147,14 @@ export default function Layout(): JSX.Element {
       fontFamily: 'Poppins, sans-serif !important',
       fontWeightBold: '400 !important',
     },
+    palette: {
+      primary: {
+        main: '#1B9FDA',
+      },
+      secondary: {
+        main: '#1B9FDA',
+      },
+    },
   });
 
   return (
