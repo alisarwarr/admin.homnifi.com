@@ -48,6 +48,7 @@ import FeaturePurchaseHistory from '../pages/TransactionHistory/FeaturePurchaseH
 import ProductPurchaseHistory from '../pages/TransactionHistory/ProductPurchaseHistory';
 import ShowPages from '../pages/Settings/ShowPages';
 import AdminDeatils from '../components/Admin/AdminDeatils';
+import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
 
 export const router = createBrowserRouter([
   {
@@ -89,11 +90,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/tokens/settings/deposit',
+        path: '/tokens/settings/transition',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <TokenDepositSetting />
+              <TokenTransactionSettings />
             </ProtectedRoute>
           </React.Suspense>
         ),
@@ -110,6 +111,16 @@ export const router = createBrowserRouter([
       },
       {
         path: '/tokens/settings/swap',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <TokenSwapSettings />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/tokens/settings/transfer',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>

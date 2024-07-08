@@ -18,7 +18,8 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required.'),
   symbol: Yup.string().required('Symbol is required.'),
   depositEnabled: Yup.boolean(),
-  withdrawEnabled: Yup.boolean(),
+  toSwapEnabled: Yup.boolean(),
+  fromSwapEnabled: Yup.boolean(),
   // canTopup: Yup.boolean(),
   // isSwapable: Yup.boolean(),
   // allowNegativeBalance: Yup.boolean(),
@@ -33,8 +34,8 @@ const switches = [
   { key: 'depositEnabled', label: 'Can Depost' },
   { key: 'withdrawEnabled', label: 'Can Withdraw' },
   // { key: 'canTopup', label: 'Can Topup' },
-  { key: 'swapFromEnabled', label: 'Swapable From' },
-  { key: 'swapToEnabled', label: 'Swapable To' },
+  { key: 'fromSwapEnabled', label: 'Swapable From' },
+  { key: 'toSwapEnabled', label: 'Swapable To' },
   // { key: 'allowNegativeBalance', label: 'Allow Negative Balance' },
 ];
 
@@ -54,8 +55,8 @@ const TokenDetails = () => {
     depositEnabled: boolean;
     withdrawEnabled: boolean;
     // canTopup: boolean;
-    swapFromEnabled: boolean;
-    swapToEnabled: boolean;
+    toSwapEnabled: boolean;
+    fromSwapEnabled: boolean;
     // allowNegativeBalance: boolean;
     [key: string]: any;
   } = {
@@ -64,8 +65,8 @@ const TokenDetails = () => {
     withdrawEnabled: false,
     depositEnabled: false,
     // canTopup: false,
-    swapFromEnabled: false,
-    swapToEnabled: false,
+    toSwapEnabled: false,
+    fromSwapEnabled: false,
     // allowNegativeBalance: false,
   };
 
@@ -74,11 +75,12 @@ const TokenDetails = () => {
     validationSchema: validationSchema,
 
     onSubmit: async (values) => {
-      console.log("🚀 ~ onSubmit: ~ values:", values)
+      console.log('🚀 ~ onSubmit: ~ values:', values);
       setSaveLoading(true);
 
       try {
-        const response = id && (await updateToken(id, values));
+        const response = id && (await updateToken(values.id, values));
+        console.log("🚀 ~ onSu   nse:", response)
         if (response.status) {
           if (!id) {
             successAlert(response?.message);
@@ -109,7 +111,7 @@ const TokenDetails = () => {
 
         if (!token) {
           // FETCHG FROM API
-          const res: Token = await getTokenById(id);
+          const res: any = await getTokenById(id);
           console.log('🚀 ~ res:', res);
           token = res;
         }
@@ -123,9 +125,11 @@ const TokenDetails = () => {
             symbol: token.symbol,
             withdrawEnabled: token.settings.withdrawEnabled,
             depositEnabled: token.settings.depositEnabled,
+            id:token._id,
             // canTopup: token.canTopup,
-            // swapFromEnabled: token.swapFromEnabled,
-            // swapToEnabled: token.swapToEnabled,
+
+            fromSwapEnabled: token.settings.fromSwapEnabled,
+            toSwapEnabled: token.settings.toSwapEnabled,
             // allowNegativeBalance: token.allowNegativeBalance,
           });
         }

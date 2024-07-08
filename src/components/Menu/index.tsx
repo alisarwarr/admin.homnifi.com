@@ -46,8 +46,8 @@ const Menu = ({ menu }: { menu: any }) => {
   let count = 0;
 
   useEffect(() => {
-    allDrawerOptions.forEach((drawerOption: any) => {
-      drawerOption.options.forEach((menu: any) => {
+    allDrawerOptions?.forEach((drawerOption: any) => {
+      drawerOption?.options?.forEach((menu: any) => {
         if (menu.url === location.pathname) {
           dispatch(
             setExpendMenu({
@@ -58,7 +58,7 @@ const Menu = ({ menu }: { menu: any }) => {
           return;
         }
 
-        menu.options.forEach((subMenu: any) => {
+        menu?.options?.forEach((subMenu: any) => {
           if (subMenu.url === location.pathname) {
             dispatch(
               setExpendMenu({
@@ -78,8 +78,9 @@ const Menu = ({ menu }: { menu: any }) => {
       <ListItem
         key={menu.key}
         disablePadding
-        className={`ml-2 my-2 !w-normal cursor-pointer rounded py-[0.7rem] pl-3 ${activeMenu === menu.url && `bg-selectedDrawerBg !w-full`
-          }`}
+        className={`ml-2 my-2 !w-normal cursor-pointer rounded py-[0.7rem] pl-3 ${
+          activeMenu === menu.url && `bg-selectedDrawerBg !w-full`
+        }`}
         sx={{
           color:
             activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))
@@ -87,8 +88,8 @@ const Menu = ({ menu }: { menu: any }) => {
               : '#7D7D7D !important',
           fontWeight:
             activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))
-              ? "bold !important"
-              : "normal !important"
+              ? 'bold !important'
+              : 'normal !important',
         }}
         disabled={menu.disable}
         onClick={(e) => {
@@ -132,8 +133,9 @@ const Menu = ({ menu }: { menu: any }) => {
           <img
             src={up_arrow}
             alt=""
-            className={`!text-base sm:!text-lg cursor-pointer ${drawer.expendKey === menu.key && drawer.expendMenu ? 'rotate-180' : 'rotate-90'
-              }`}
+            className={`!text-base sm:!text-lg cursor-pointer ${
+              drawer.expendKey === menu.key && drawer.expendMenu ? 'rotate-180' : 'rotate-90'
+            }`}
           />
         )}
       </ListItem>

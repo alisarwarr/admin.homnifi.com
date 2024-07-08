@@ -11,13 +11,18 @@ type Props = {
 };
 
 const headCells = [
-  { id: 'tokenName', label: 'Token Name', headCellClass: 'w-32 ' },
+  // { id: 'tokenName', label: 'Token Name', headCellClass: 'w-32 ' },
   { id: 'trxProcess', label: 'Trx. Process', headCellClass: '' },
+  { id: 'processType', label: 'Trx. Process Type', headCellClass: '' },
   { id: 'minimumTrxAmount', label: 'Min. Trx. Amount', headCellClass: '' },
-  { id: 'dailyTrxCountLimit', label: 'Daily Trx. Count Limit', headCellClass: '' },
-  { id: 'dailyAmountLimit', label: 'Daily Amount Limit', headCellClass: '' },
+  { id: 'maximumTrxAmount', label: 'Max. Trx. Amount', headCellClass: '' },
+
+  // { id: 'dailyTrxCountLimit', label: 'Daily Trx. Count Limit', headCellClass: '' },
+  // { id: 'dailyAmountLimit', label: 'Daily Amount Limit', headCellClass: '' },
   { id: 'fee', label: 'Fee', headCellClass: 'w-24 ' },
   { id: 'feeType', label: 'Fee Type', headCellClass: 'w-32' },
+  { id: 'charges', label: 'Charges', headCellClass: 'w-24 ' },
+  { id: 'chargesType', label: 'Charges Type', headCellClass: 'w-32' },
   { id: 'actions', label: 'Actions', headCellClass: 'text-center w-24 ' },
 ];
 
@@ -25,21 +30,35 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
   const navigate = useNavigate();
 
   const rows = data?.map((_data) => {
+    console.log('🚀 ~ rows ~ _data: _data_data_data_data', _data);
     return {
-      tokenName: <TokenNameWithLogo tokenName={_data.tokenName ?? ''} />,
-      trxProcess: _data.trxProcess,
-      minimumTrxAmount: _data.minimumTrxAmount ?? 'Unlimited',
-      dailyTrxCountLimit: _data.dailyTrxCountLimit ?? 'Unlimited',
-      dailyAmountLimit: _data.dailyAmountLimit ?? 'Unlimited',
-      fee: _data.fee,
+      tokenName: <TokenNameWithLogo tokenName={_data.name ?? ''} />,
+      trxProcess: _data?.trxSettings?.trxType,
+      processType:_data?.trxSettings?.processType,
+      minimumTrxAmount: _data?.trxSettings?.minAmount ?? 'Unlimited',
+      maximumTrxAmount: _data?.trxSettings?.maxAmount ?? 'Unlimited',
+
+      // dailyTrxCountLimit: _data.dailyTrxCountLimit ?? 'Unlimited',
+      // dailyAmountLimit: _data.dailyAmountLimit ?? 'Unlimited',
+      fee: _data.trxSettings?.fee,
       feeType: (
         <Chip
-          label={_data.feeType}
+          label={_data?.trxSettings?.feeType}
           size="small"
           sx={{ fontSize: '11px' }}
-          color={_data.feeType === 'AMOUNT' ? 'default' : 'primary'}
+          color={_data.feeType === 'fixed' ? 'default' : 'primary'}
         ></Chip>
       ),
+      charges: _data.trxSettings?.charges,
+      chargesType: (
+        <Chip
+          label={_data?.trxSettings?.chargesType}
+          size="small"
+          sx={{ fontSize: '11px' }}
+          color={_data.feeType === 'fixed' ? 'default' : 'primary'}
+        ></Chip>
+      ),
+
       actions: (
         <div className="flex justify-center">
           <Tooltip title="Edit">
@@ -49,7 +68,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
               height={24}
               alt="Edit Icon"
               onClick={() =>
-                navigate(`/tokens/settings/${_data?.transactionType?.toLowerCase()}/details/${_data._id}`, {
+                navigate(`/tokens/settings/${_data?.trxSettings?.trxType?.toLowerCase()}/details/${_data._id}`, {
                   state: _data,
                 })
               }

@@ -3,10 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface TokenSliceState {
   tokensList: Token[];
   tokenTransactionSettingList: {
-    MIGRATE: TokenTransactionSettingType[];
-    SWAP: TokenTransactionSettingType[];
-    WITHDRAW: TokenTransactionSettingType[];
-    DEPOSIT: TokenTransactionSettingType[];
+    'LYK-R': TokenTransactionSettingType[];
+    'LYK-W': TokenTransactionSettingType[];
+    'LYK-D': TokenTransactionSettingType[];
+    // DEPOSIT: TokenTransactionSettingType[];
     [key: string]: any;
   };
   tokenPairs: any[];
@@ -40,8 +40,8 @@ export interface Token {
   settings: {
     depositEnabled: boolean;
     withdrawEnabled: boolean;
-    swapFromEnabled: boolean;
-    swapToEnabled: boolean;
+    fromSwapEnabled: boolean;
+    toSwapEnabled: boolean;
   };
 }
 
@@ -58,30 +58,48 @@ export interface TokenDetails {
   swapToEnabled: boolean;
 }
 
+export interface TokenTransactionSettingTypeDetails {
+  charges: number;
+  chargesType: string;
+  createdAt: string;
+  fee: number;
+  feeType: string;
+  minAmount: number;
+  maxAmount:number
+  processType: string;
+  token: string;
+  trxType: string;
+  updatedAt: string;
+}
+
 export interface TokenTransactionSettingType {
   _id?: string;
+
+  name?: string;
+  symbol?: string;
   token?: string;
-  transactionType?: string;
-  feeType: string | any;
-  fee: number;
-  dailyAmountLimit: number | null;
-  dailyTrxCountLimit: number | null;
-  minimumTrxAmount: number;
-  trxProcess: string | any;
-  createdAt?: string;
-  updatedAt?: string;
-  tokenSymbol?: string;
-  tokenName?: string;
+  // transactionType?: string;
+  // feeType: string | any;
+  // fee: number;
+  // dailyAmountLimit: number | null;
+  // dailyTrxCountLimit: number | null;
+  // minimumTrxAmount: number;
+  // trxProcess: string | any;
+  // createdAt?: string;
+  // updatedAt?: string;
+  // tokenSymbol?: string;
+  // tokenName?: string;
+  trxSettings?: TokenTransactionSettingTypeDetails;
+
   [key: string]: any;
 }
 
 const initialState: TokenSliceState = {
   tokensList: [],
   tokenTransactionSettingList: {
-    MIGRATE: [],
-    SWAP: [],
-    WITHDRAW: [],
-    DEPOSIT: [],
+    'LYK-D': [],
+    'LYK-R': [],
+    'LYK-W': [],
   },
   tokenPairs: [],
 };

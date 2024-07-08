@@ -11,11 +11,21 @@ export const MIGRATION_ACTIONS = {
 export const WITHDRAW_FEE_TYPES = {
   AMOUNT: 'AMOUNT',
   PERCENTAGE: 'PERCENTAGE',
+  FIXED: 'FIXED',
 };
 
 export const TRANSACTION_TYPES = {
+  DEPOSIT: 'DEPOSIT',
+  WITHDRAW: 'WITHDRAW',
+  TRANSFER:'TRANSFER',
+  SWAP:'SWAP'
+};
+
+export const TRANSACTION_PROCESS = {
+  AUTO: 'AUTO',
   MANUAL: 'MANUAL',
-  AUTOMATIC: 'AUTOMATIC',
+  TRANSFER:'TRANSFER',
+  SWAP:'SWAP'
 };
 
 export const ProviderStatus = {

@@ -31,7 +31,7 @@ export const useTokenActions = () => {
       method: 'GET',
       url: `${TOKEN}/all`,
     });
-    console.log("🚀 ~ response ~ response:", response)
+    console.log('🚀 ~ response ~ response:', response);
 
     const _tokensList = response?.data.data;
     dispatch(setTokenList(_tokensList));
@@ -50,15 +50,15 @@ export const useTokenActions = () => {
     return await ApiRequest()
       .request({
         method: 'PUT',
-        url: `${TOKEN}/${id}`,
+        url: `${TOKEN}/${id}/settings`,
         data: data,
       })
       .then((response: any) => {
         getTokensList(true);
-        return response.data;
+        return { status: true, ...response.data };
       })
       .catch((err: any) => {
-        return err.data;
+        return { status: false, ...err.data };
       });
   };
 
@@ -74,16 +74,18 @@ export const useTokenActions = () => {
       url: `${TOKEN_TRANSACTION_SETTING}`,
     });
     const _tokenTransactionSettingList = response?.data?.data;
+    console.log('🚀 ~ getTokenTransactionSettingList ~ _tokenTransactionSettingList:', _tokenTransactionSettingList);
 
     const tokensByType: { [key: string]: TokenTransactionSettingType[] } = {};
 
     // Iterate over each transaction type
-    const transactionTypes = ['WITHDRAW', 'DEPOSIT', 'MIGRATE', 'SWAP'];
+    const transactionTypes = ['LYK-W', 'LYK-R', 'LYK-D'];
     transactionTypes.forEach((type) => {
       // Filter tokens array based on transactionType
       const tokensOfType = _tokenTransactionSettingList.filter(
-        (token: TokenTransactionSettingType) => token.transactionType === type
+        (token: TokenTransactionSettingType) => token.symbol === type
       );
+
       // Assign filtered tokens to the corresponding type key in tokensByType object
       tokensByType[type] = tokensOfType;
     });
@@ -104,14 +106,14 @@ export const useTokenActions = () => {
     return await ApiRequest()
       .request({
         method: 'PUT',
-        url: `${TOKEN_TRANSACTION_SETTING}/${id}`,
+        url: `${TOKEN}/${id}/trx-settings`,
         data: data,
       })
       .then((response: any) => {
-        return response.data;
+        return { status: true, ...response.data };
       })
       .catch((err: any) => {
-        return err.data;
+        return { status: true, ...err.data };
       });
   };
 

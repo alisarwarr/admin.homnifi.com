@@ -1,18 +1,23 @@
-import { ErrorMessage, Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
 import TextInput from '../TextInput';
 import Button from '../Button';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { useAdminActions } from '../../store/admin/adminActions';
 import { debounce } from '../../utils/debounce';
 import { check, close } from '../../images/other';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Dialog } from '@mui/material';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import ReactSelect from '../ReactSelect';
 import { useSelector } from 'react-redux';
 import { selectAdminPermissionsList } from '../../store/admin/adminSlice';
+import DialogButton from '../Dialog/DialogButton';
+import Loader from '../Loader/Loader';
+import { permission } from 'process';
+import GlobalDialog from '../Dialog';
+import FormikInput from '../FormikInput';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { updateCustomer } = useCustomerActions();
@@ -20,14 +25,19 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const navigate = useNavigate();
 
+  // console.log('adminPermissionsList ::', adminPermissionsList);
   const location: any = useLocation();
   const params: any = useParams();
 
   const [edit] = useState<boolean>(location?.state?.edit);
   const state = location?.state?._data;
+  console.log('state ::', location?.state);
+
   const formikRef = useRef<any>(null);
 
+  const [open, setOpen] = React.useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [isTypingEmail, setIsTypingEmail] = useState<boolean | null>(null);
   const [availablityEmail, setAvailablityEmail] = useState<boolean | null>(null);
   const [isTypingUsername, setIsTypingUsername] = useState<boolean>(false);
@@ -41,6 +51,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     phoneNumber: '',
     password: '',
     adminPermissions: [],
+    roles: [],
   };
 
   const validationSchema = Yup.object().shape({
@@ -49,6 +60,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
     phoneNumber: Yup.string().required('Phone number is required'),
+    roles: Yup.array().min(1, 'At least one permission is required').required('Role is required'),
     password: Yup.string()
       .min(6, 'Must be at least 6 characters')
       .matches(/[a-z]/, 'Must have at least 1 lowercase letter')
@@ -60,7 +72,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
 
   useEffect(() => {
     (async () => {
-      if (!adminPermissionsList.length) {
+      if (adminPermissionsList.length === 0) {
         await getAdminPermissionsList();
       }
 
@@ -72,10 +84,10 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           lastName: state?.lastName ? state?.lastName : '',
           phoneNumber: state?.phoneNumber ? state?.phoneNumber : '',
           password: state?.password ? state?.password : '',
-          adminPermissions: state?.adminPermissions.map((permission) => {
+          adminPermissions: state?.adminPermissions?.map((permission) => {
             return {
-              label: permission.name,
-              value: permission._id,
+              label: permission,
+              value: permission,
             };
           }),
         });
@@ -89,9 +101,10 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const handleSubmit = async (values) => {
     // enter the submitting
     setIsSubmitting(true);
+    setIsSubmit(true);
     const _values = {
       ...values,
-      adminPermissions: values.adminPermissions.map((permission) => permission.value),
+      adminPermissions: values.adminPermissions?.map((permission) => permission.value),
     };
     if (
       //CREATE ADMIN
@@ -148,6 +161,10 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     });
   };
 
+  const handleClose = () => {
+    setOpen(!open);
+  };
+
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto">
       <div className="mx-auto text-start flex gap-4 items-center">
@@ -163,6 +180,10 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
         innerRef={formikRef}
       >
         {({ errors, handleChange, values, touched, setFieldValue, setFieldTouched, setFieldError }) => {
+          console.log('values ::', values);
+          console.log('touched ::', touched);
+          console.log('errors ::', errors);
+
           return (
             <Form className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto">
               <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
@@ -350,31 +371,55 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                     <ErrorMessage name="password" component="div" className="text-red-500 text-xs" />
                   </div>
                 )}
+                <>{}</>
               </div>
 
-              {/* ADMIN PERMISSIONS */}
-              <div className="flex flex-col">
-                <span className={`text-sm mb-1 ${!edit && 'text-[#666666] font-medium'}`}>Admin Permissions</span>
-                <ReactSelect
-                  formik={formikRef?.current}
-                  name="adminPermissions"
-                  label="Admin Permissions"
-                  options={adminPermissionsList.map((permission) => ({
-                    label: permission.name,
-                    value: permission._id,
-                  }))}
-                  isMulti={true}
-                  placeholder="Select Admin Permissions..."
-                  disabled={!edit}
-                  isSearchable={true}
-                  onChange={(e) => {
-                    formikRef.current.setFieldValue('adminPermissions', e);
-                  }}
-                />
+              {/* start  */}
+              <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
+                <div className="flex flex-col gap-2 items-end justify-center ">
+                  <div className="w-full">
+                    <ReactSelect
+                      isError={errors?.roles ? true : false}
+                      formik={formikRef?.current}
+                      name="roles"
+                      label="Admin Role"
+                      options={adminPermissionsList?.map((dt) => ({
+                        label: dt,
+                        value: dt,
+                      }))}
+                      isMulti={true}
+                      placeholder="Select Admin Role..."
+                      isSearchable={true}
+                      onChange={(e) => {
+                        if (e) {
+                          setIsSubmit(false);
+                        }
+                        setFieldTouched('roles', true);
+                        formikRef.current.setFieldValue('roles', e);
+                      }}
+                    />
+                  </div>
+                  {/* <ErrorMessage name="roles" component="div" className="text-red-500 text-xs" /> */}
+                  {isSubmit && <span className="text-red-500 text-xs">{errors?.roles}</span>}
+                </div>
+
+                <div className="flex flex-col gap-2 items-end">
+                  <div className="w-full">
+                    <Button
+                      className="w-full bg-primary"
+                      loadingType="circular"
+                      buttonType="button"
+                      onClick={handleClose}
+                    >
+                      Create New Role
+                    </Button>
+                  </div>
+                </div>
               </div>
 
+              {/* end  */}
               {(edit || edit === undefined) && (
-                <Button className="w-full" loading={isSubmitting} loadingType="circular" buttonType="submit">
+                <Button className="w-full bg-primary" loading={isSubmitting} loadingType="circular" buttonType="submit">
                   Submit
                 </Button>
               )}
@@ -382,6 +427,91 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           );
         }}
       </Formik>
+      <CreateRole onClose={handleClose} open={open} permissions={adminPermissionsList} />
     </div>
   );
 }
+
+const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: boolean; onClose: () => void }) => {
+  const handleSubmit = (values: any) => {
+    console.log(values);
+  };
+
+  const initialValues = {
+    name: '',
+    permission: [],
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    permission: Yup.array().min(1, 'At least one permission is required').required('Permission is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log('Submitted values:', values);
+    },
+  });
+
+  return (
+    <Dialog open={open} fullWidth={true} maxWidth={'xs'} onClose={onClose}>
+      <div className="flex flex-col items-center w-full my-4">
+        <h2 className="text-md font-medium self-start mx-8">Create New Role</h2>
+        <div className=" text-gray-500 w-full my-4 flex items-center justify-center ">
+          <form onSubmit={formik.handleSubmit} className="h-full gap-10 space-y-9 w-full mx-12">
+            <div className="grid grid-cols-1  gap-y-6 mt-4">
+              <div className="flex flex-col items-end">
+                <div className="w-full relative">
+                  <TextInput
+                    type="string"
+                    label="Name"
+                    name="name"
+                    shrink={true}
+                    value={formik.values.name}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      formik.setFieldValue('name', e.target.value);
+                      formik.setFieldTouched('name', true);
+                    }}
+                    disabled={false}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <span className={`text-sm mb-1 ${false && 'text-[#666666] font-medium'}`}>Admin Permissions</span>
+              <ReactSelect
+                formik={formik}
+                name="permission"
+                label="Admin Permissions"
+                options={permissions?.map((dt: any) => ({
+                  label: dt,
+                  value: dt,
+                }))}
+                isMulti={true}
+                placeholder="Select Admin Permissions..."
+                disabled={false}
+                isSearchable={true}
+                onChange={(e) => {
+                  formik.setFieldValue('permission', e);
+                }}
+              />
+            </div>
+            <Button
+              className="w-full bg-primary"
+              loadingType="circular"
+              buttonType="submit"
+              onClick={(e) => {
+                formik.handleSubmit();
+                e.preventDefault();
+              }}
+            >
+              Submit
+            </Button>
+          </form>
+        </div>
+      </div>
+    </Dialog>
+  );
+};

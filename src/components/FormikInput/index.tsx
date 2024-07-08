@@ -56,7 +56,7 @@ export default function FormikInput({
             sx={{
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
-                  borderColor: 'primary.main', // default outline color
+                  borderColor: '#D7D7D7', // default outline color
                 },
                 '&:hover fieldset': {
                   borderColor: 'primary.dark', // outline color on hover

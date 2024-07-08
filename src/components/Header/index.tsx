@@ -66,7 +66,6 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
   const userProfile = () => navigate('/profile');
 
   const user = useSelector(selectUser);
-  console.log("🚀 ~ Header ~ user:", user)
 
   return (
     <div className="flex items-center justify-between w-[96%] m-auto text-black">

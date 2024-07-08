@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { components } from 'react-select';
 import { closeWhite } from '../../images/other';
+import { isError } from 'lodash';
 
 type Props = {
   formik: any;
@@ -22,6 +23,7 @@ type Props = {
   isClearable?: boolean;
   clearValueHandler?: () => void;
   isMulti?: boolean;
+  isError?: boolean;
 };
 const { ValueContainer, Placeholder, ClearIndicator } = components;
 
@@ -53,6 +55,7 @@ const ReactSelect = ({
   isClearable,
   clearValueHandler = () => {},
   isMulti = false,
+  isError = false,
 }: Props) => {
   const [focused, setFocused] = useState(false);
 
@@ -66,9 +69,15 @@ const ReactSelect = ({
     );
   };
 
+//   : formik?.errors[name] && formik?.touched[name]
+//   ? '1px solid #1B9FDA'
+//   : '1px solid #D7D7D7',
+// '&:hover': {
+//   border: !state.isFocused && '1px solid #1B9FDA',
+
   return (
     <>
-      <div className={`${selectContainerClassName} flex flex-col w-full z-0`}>
+      <div className={`${selectContainerClassName} flex flex-col w-full z-0  text-primary `}>
         <div className="flex items-center w-full">
           <Select
             className={`w-full ${className}`}
@@ -89,13 +98,16 @@ const ReactSelect = ({
                   ...baseStyles,
                   minHeight: height,
                   backgroundColor: 'transparent',
+                  color: 'green',
                   border: state.isFocused
                     ? 'none'
-                    : formik?.errors[name] && formik?.touched[name]
+
+                    : (formik?.errors[name] && formik?.touched[name]) || isError
                     ? '1px solid #f44336'
-                    : '1px solid #666666',
+                    : '1px solid #AEB6BF',
                   '&:hover': {
-                    border: !state.isFocused && '1px solid white',
+                    border: !state.isFocused && '1px solid gray',
+
                   },
                   boxShadow: '0px',
                   outline: state.isFocused && '2px #90CAF9 solid',
@@ -113,8 +125,8 @@ const ReactSelect = ({
               },
               option: (baseStyles, state) => ({
                 ...baseStyles,
-                backgroundColor: state.isSelected ? 'white' : 'transparent',
-                color: state.isSelected ? '#262626' : 'white',
+                backgroundColor: state.isSelected ? '#1B9FDA' : 'transparent',
+                color: state.isSelected ? 'white' : '#1B9FDA',
                 zIndex: 100,
                 '&:hover': {
                   color: '#262626',
@@ -123,23 +135,23 @@ const ReactSelect = ({
               }),
               input: (baseStyles) => ({
                 ...baseStyles,
-                color: 'white',
+                color: 'gray',
               }),
               singleValue: (baseStyles) => ({
                 ...baseStyles,
-                color: 'white',
+                color: '#666666',
               }),
               multiValue: (baseStyles) => ({
                 ...baseStyles,
-                backgroundColor: '#353535',
+                backgroundColor: 'red',
               }),
               multiValueLabel: (baseStyles) => ({
                 ...baseStyles,
-                color: 'white',
+                color: '#666666',
               }),
               placeholder: (provided, state) => ({
                 ...provided,
-                color: disabled ? '#666666' : focused ? '#90CAF9' : 'white',
+                color: disabled ? '#666666' : focused ? '#90CAF9' : 'gray',
                 backgroundColor:
                   state.hasValue || state.selectProps.inputValue
                     ? placeholderColor

@@ -6,7 +6,8 @@ export const GET_PROFILE = '/profile';
 
 // Token
 export const TOKEN = '/tokens';
-export const TOKEN_TRANSACTION_SETTING = '/token/settings';
+export const TOKEN_TRANSACTION_SETTING = '/tokens/trx-settings';
+
 export const TOKEN_PAIRS = '/swap/pairs';
 export const TOKEN_PAIRS_SETTING = '/swap/pairs';
 export const TOKEN_PAIRS_EDIT = '/swap/pairs';
@@ -129,3 +130,4 @@ export const ADMIN_ACCESS = '/user/access';
 export const DISTABLE_USER_2FA = '/user/2fa-disable';
 export const ADMIN_ACTIVITY = '/user/activity';
 export const ADMIN_PERMISSIONS = '/permissions';
+export const ADMIN_LIST = '';
