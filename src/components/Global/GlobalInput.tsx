@@ -1,7 +1,6 @@
 import React from 'react'
-import { ReactComponent as EyeOpenIcon } from '../../SVGIcons/eyeIcon.svg'
-import { ReactComponent as EyeCloseIcon } from '../../SVGIcons/eyeCloseIcon.svg'
-import { ReactComponent as WarningIcon } from '../../SVGIcons/warning.svg'
+import { EyeCloseIcon, EyeOpenIcon } from '../../images/svg';
+
 
 const GlobalInput = ({
     label,

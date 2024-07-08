@@ -23,9 +23,9 @@ const validationSchema = Yup.object().shape({
   minAmount: Yup.number().nullable(),
   maxAmount: Yup.number().nullable(),
   trxType: Yup.mixed(),
+  processType: Yup.mixed(),
   chargesType: Yup.mixed(),
   charges: Yup.number(),
-
   name: Yup.string(),
 });
 
@@ -69,7 +69,7 @@ const TokenTransactionSettingDetails = () => {
     maxAmount: 0,
     trxType: '',
     tokenName: '',
-    processType:''
+    processType: '',
   };
 
   const formik = useFormik({
@@ -82,7 +82,7 @@ const TokenTransactionSettingDetails = () => {
         feeType: values.feeType.value,
         trxType: values.trxType.value,
         chargesType: values.chargesType.value,
-        processType: values.trxProcess.processType,
+        processType: values.processType.value,
       };
       delete _values.token;
       setSaveLoading(true);
@@ -132,8 +132,12 @@ const TokenTransactionSettingDetails = () => {
               value: _state.trxSettings?.processType,
             },
 
+            // processType: {
+            //   label: CapitalizeFirstLetter(_state.trxSettings?.processType),
+            //   value: _state.trxSettings?.processType,
+            // },
+
             trxType: { label: CapitalizeFirstLetter(_state.trxSettings?.trxType), value: _state.trxSettings?.trxType },
-            symbol: _state.symbol,
             name: _state.name,
             // name: _state.name,
           });

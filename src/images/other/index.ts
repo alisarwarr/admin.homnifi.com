@@ -81,4 +81,5 @@ export const swapIcon = '/img/other/swap.svg';
 export const swapIconDark = '/img/other/swapDark.svg';
 export const impersonateIcon = '/img/other/impersonate.svg';
 export const arrowUp = '/img/other/arrowUp.svg';
-export const arrowDown = '/img/other/arrowDown.svg';
+export const arrowDown = '/img/other/arrowDown.svg'
+

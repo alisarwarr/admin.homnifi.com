@@ -185,7 +185,7 @@ export default function Layout(): JSX.Element {
           <div ref={drawerRef}>
             <div className="h-full">
               {allDrawerOptions
-                .slice(0, !user?.superAdmin ? allDrawerOptions.length - 1 : allDrawerOptions.length)
+
                 .map((item: any, index: number) => (
                   <div key={index}>
                     {index < allDrawerOptions.length && (
