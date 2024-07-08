@@ -87,7 +87,7 @@ const Menu = ({ menu }: { menu: any }) => {
               : '#7D7D7D !important',
           fontWeight:
             activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))
-              ? "bold !important"
+              ? "normal !important"
               : "normal !important"
         }}
         disabled={menu.disable}
@@ -128,14 +128,14 @@ const Menu = ({ menu }: { menu: any }) => {
         }}
       >
         <MenuIcon menu={menu} type={'menu'} length={-1} index={-1} />
-        {menu?.options?.length > 0 && (
+        {/* {menu?.options?.length > 0 && (
           <img
             src={up_arrow}
             alt=""
-            className={`!text-base sm:!text-lg cursor-pointer ${drawer.expendKey === menu.key && drawer.expendMenu ? 'rotate-180' : 'rotate-90'
+            className={`!text-base sm:!text-lg cursor-pointer bg-black ${drawer.expendKey === menu.key && drawer.expendMenu ? 'rotate-180' : 'rotate-90'
               }`}
           />
-        )}
+        )} */}
       </ListItem>
       {menu?.options?.length > 0 && (
         <Collapse in={drawer.expendMenu && menu.key === drawer.expendKey} timeout="auto" unmountOnExit>

@@ -10,15 +10,15 @@ import {
   FeauresDark,
   History,
   HistoryDark,
-  Admin,
   AdminDark,
 } from '../../images/drawer/light';
 import { ArrowDown_, emptyWallet_, flash_, Swap_ } from '../../images/drawer/dark';
 import { setting, settingDark, swapIcon, users, usersDark } from '../../images/other';
+import { Dashboard, Wallet , Admin, CloundK2} from '../../images/drawer';
 
 export interface DrawerOption {
   name: string;
-  icon_light: string;
+  icon: React.ReactNode;
   icon_dark: string;
   url: string | null;
   key?: string;
@@ -36,7 +36,7 @@ export const allDrawerOptions: DrawerSection[] = [
     options: [
       {
         name: 'Dashboard',
-        icon_light: Home,
+        icon: <Dashboard />,
         icon_dark: HomeDark,
         url: '/',
         key: 'dashboard',
@@ -50,7 +50,7 @@ export const allDrawerOptions: DrawerSection[] = [
     options: [
       {
         name: 'Features',
-        icon_light: Features,
+        icon: <Dashboard />,
         icon_dark: FeauresDark,
         url: '/features',
         key: 'features',
@@ -64,7 +64,7 @@ export const allDrawerOptions: DrawerSection[] = [
     options: [
       {
         name: 'Tokens Settings',
-        icon_light: emptyWallet,
+        icon: <Dashboard />,
         icon_dark: emptyWallet_,
         url: '',
         key: 'token-settings',
@@ -72,7 +72,7 @@ export const allDrawerOptions: DrawerSection[] = [
         options: [
           {
             name: 'Tokens',
-            icon_light: setting,
+            icon: <Dashboard />,
             icon_dark: setting,
             url: '/tokens',
             key: 'tokens',
@@ -82,7 +82,7 @@ export const allDrawerOptions: DrawerSection[] = [
           },
           {
             name: 'Transition Setting',
-            icon_light: setting,
+            icon: <Dashboard />,
             icon_dark: setting,
             url: '/tokens/settings/transition',
             key: 'tokens-deposit-transition',
@@ -90,8 +90,6 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-transition'],
           },
-
-
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
       },
@@ -101,55 +99,50 @@ export const allDrawerOptions: DrawerSection[] = [
     options: [
       {
         name: 'Wallet',
-        icon_light: emptyWallet,
+        icon: <Wallet />,
+
         icon_dark: emptyWallet_,
         url: '',
         key: 'wallet-settings',
         active: false,
         options: [
           {
-            name: 'Assets',
-            icon_light: setting,
-            icon_dark: setting,
-            url: '/wallet',
-            key: 'wallet',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-assets'],
-          },
-          {
             name: 'Deposit',
-            icon_light: setting,
+            icon: <Dashboard />,
+
             icon_dark: setting,
-            url: '/wallet/settings/deposit',
-            key: 'wallet-deposit-settings',
+            url: '/history/deposithistory',
+            key: 'deposit-history',
             active: false,
             options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-deposit'],
+            permissions: [`all`, `superadmin`, 'deposit-history'],
           },
           {
             name: 'Withdraw',
-            icon_light: setting,
+            icon: <Dashboard />,
+
             icon_dark: setting,
-            url: '/wallet/settings/withdraw',
+            url: '/history/withdrawhistory',
             key: 'wallet-withdraw-settings',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
           {
-            name: 'Migrate',
-            icon_light: setting,
+            name: 'Transfer',
+            icon: <Dashboard />,
+
             icon_dark: setting,
-            url: '/wallet/settings/migrate',
-            key: 'wallet-migrate-settings',
+            url: '/tokens/settings/migrate',
+            key: 'tokens_settings-migrate',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-migrate'],
           },
           {
             name: 'Swap',
-            icon_light: setting,
+            icon: <Dashboard />,
+
             icon_dark: setting,
             url: '/wallet/settings/swap',
             key: 'wallet-swap-settings',
@@ -157,22 +150,70 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-swap'],
           },
+          {
+            name: 'Faqs',
+            icon: <Dashboard />,
 
+            icon_dark: setting,
+            url: '/history/faq',
+            key: 'history-faq',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'history_faq'],
+          },
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
       },
     ],
   },
 
-
-
-
-
   {
     options: [
       {
         name: 'Admins',
-        icon_light: Admin,
+        icon: <Admin />,
+        icon_dark: AdminDark,
+        url: '/admins',
+        key: 'admins',
+        active: false,
+        options: [],
+        permissions: [`all`, `superadmin`, 'admins'],
+      },
+    ],
+  },
+  {
+    options: [
+      {
+        name: 'Admins',
+        icon: <Admin />,
+        icon_dark: AdminDark,
+        url: '/admins',
+        key: 'admins',
+        active: false,
+        options: [],
+        permissions: [`all`, `superadmin`, 'admins'],
+      },
+    ],
+  },
+  {
+    options: [
+      {
+        name: 'Cloud k 2.0',
+        icon: <CloundK2 />,
+        icon_dark: AdminDark,
+        url: '/admins',
+        key: 'admins',
+        active: false,
+        options: [],
+        permissions: [`all`, `superadmin`, 'admins'],
+      },
+    ],
+  },
+  {
+    options: [
+      {
+        name: 'Community',
+        icon: <Admin />,
         icon_dark: AdminDark,
         url: '/admins',
         key: 'admins',

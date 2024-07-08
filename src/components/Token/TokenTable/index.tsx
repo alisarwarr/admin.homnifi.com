@@ -47,7 +47,7 @@ const TokensTable = ({ data, loading }: Props) => {
               onClick={() => navigate(`/tokens/details/${_data._id}`)}
               className="cursor-pointer"
             />
-          </Tooltip>
+        </Tooltip>
         </div>
       ),
     };

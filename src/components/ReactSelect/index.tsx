@@ -89,7 +89,7 @@ const ReactSelect = ({
                   ...baseStyles,
                   minHeight: height,
                   backgroundColor: 'transparent',
-                  color: 'green',
+                  color: '#1B9FDA',
                   border: state.isFocused
                     ? 'none'
                     : formik?.errors[name] && formik?.touched[name]
@@ -104,7 +104,7 @@ const ReactSelect = ({
               },
               menuList: (baseStyles) => ({
                 ...baseStyles,
-                backgroundColor: '#353535',
+                backgroundColor: 'white',
               }),
               menuPortal(base) {
                 return {
@@ -140,12 +140,12 @@ const ReactSelect = ({
               }),
               placeholder: (provided, state) => ({
                 ...provided,
-                color: disabled ? '#666666' : focused ? '#90CAF9' : 'white',
+                color: disabled ? '#666666' : focused ? '#1B9FDA' : '#666666',
                 backgroundColor:
                   state.hasValue || state.selectProps.inputValue
                     ? placeholderColor
                       ? placeholderColor
-                      : 'black'
+                      : 'white'
                     : 'transparent',
                 padding: '0px 4px',
                 position: 'absolute',
