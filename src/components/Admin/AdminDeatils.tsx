@@ -391,9 +391,9 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                       placeholder="Select Admin Role..."
                       isSearchable={true}
                       onChange={(e) => {
-                        if(e){
-                        setIsSubmit(false)
-                      }
+                        if (e) {
+                          setIsSubmit(false);
+                        }
                         setFieldTouched('roles', true);
                         formikRef.current.setFieldValue('roles', e);
                       }}
