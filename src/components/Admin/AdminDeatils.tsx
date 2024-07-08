@@ -13,11 +13,6 @@ import { useCustomerActions } from '../../store/customer/customerActions';
 import ReactSelect from '../ReactSelect';
 import { useSelector } from 'react-redux';
 import { selectAdminPermissionsList } from '../../store/admin/adminSlice';
-import DialogButton from '../Dialog/DialogButton';
-import Loader from '../Loader/Loader';
-import { permission } from 'process';
-import GlobalDialog from '../Dialog';
-import FormikInput from '../FormikInput';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { updateCustomer } = useCustomerActions();
@@ -25,13 +20,11 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const navigate = useNavigate();
 
-  // console.log('adminPermissionsList ::', adminPermissionsList);
   const location: any = useLocation();
   const params: any = useParams();
 
   const [edit] = useState<boolean>(location?.state?.edit);
   const state = location?.state?._data;
-  console.log('state ::', location?.state);
 
   const formikRef = useRef<any>(null);
 
