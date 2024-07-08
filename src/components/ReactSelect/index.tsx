@@ -139,7 +139,7 @@ const ReactSelect = ({
               }),
               placeholder: (provided, state) => ({
                 ...provided,
-                color: disabled ? '#666666' : focused ? '#90CAF9' : 'white',
+                color: disabled ? '#666666' : focused ? '#90CAF9' : 'gray',
                 backgroundColor:
                   state.hasValue || state.selectProps.inputValue
                     ? placeholderColor

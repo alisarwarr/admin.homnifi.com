@@ -48,6 +48,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     phoneNumber: '',
     password: '',
     adminPermissions: [],
+    roles: [],
   };
 
   const validationSchema = Yup.object().shape({
@@ -362,6 +363,30 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                     <ErrorMessage name="password" component="div" className="text-red-500 text-xs" />
                   </div>
                 )}
+
+                {/* start  */}
+
+                <div className="flex flex-col gap-2 items-end justify-center">
+                  <div className="w-full">
+                    <ReactSelect
+                      formik={formikRef?.current}
+                      name="roles"
+                      label="Admin Role"
+                      options={adminPermissionsList.map((dt) => ({
+                        label: dt,
+                        value: dt,
+                      }))}
+                      isMulti={true}
+                      placeholder="Select Admin Role..."
+                      isSearchable={true}
+                      onChange={(e) => {
+                        formikRef.current.setFieldValue('roles', e);
+                      }}
+                    />
+                  </div>
+                  <ErrorMessage name="roles" component="div" className="text-red-500 text-xs" />
+                </div>
+
                 <div className="flex flex-col gap-2 items-end">
                   <div className="w-full">
                     <Button
@@ -374,6 +399,8 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                     </Button>
                   </div>
                 </div>
+
+                {/* end  */}
               </div>
               {(edit || edit === undefined) && (
                 <Button className="w-full bg-primary" loading={isSubmitting} loadingType="circular" buttonType="submit">
