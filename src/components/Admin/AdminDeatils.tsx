@@ -57,6 +57,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
     phoneNumber: Yup.string().required('Phone number is required'),
+    roles: Yup.array().min(1, 'At least one permission is required'),
     password: Yup.string()
       .min(6, 'Must be at least 6 characters')
       .matches(/[a-z]/, 'Must have at least 1 lowercase letter')
@@ -66,7 +67,6 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
       .required('Password is required'),
   });
 
-  console.log(state);
   useEffect(() => {
     (async () => {
       if (adminPermissionsList.length === 0) {
