@@ -1,40 +1,46 @@
 //REACT
 import { useEffect, useState } from 'react';
-//REDUX-TOOLKIT
 import { useSelector } from 'react-redux';
 import { useAdminActions } from '../../store/admin/adminActions';
-//MATERIAL-UI
+
 import { add } from '../../images/other';
-//ALERTS
 import { selectUser } from '../../store/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import AdminTable from '../../components/Admin/AdminTable';
+import { selectAdmin } from '../../store/admin/adminSlice';
+import Loader from '../../components/Loader/Loader';
 
 export default function Admins(): JSX.Element {
   const { getAdminList } = useAdminActions();
 
   const user = useSelector(selectUser);
+  const { list } = useSelector(selectAdmin);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user?.superAdmin) navigate('/');
-  }, []);
 
   const [loading, setLoading] = useState(true);
 
-  const [adminList, setAdminList] = useState([]);
   const fireApi = async () => {
-    setLoading(true);
     const response = await getAdminList();
-    setAdminList(response);
     setLoading(false);
   };
+
   useEffect(() => {
-    fireApi();
+    if (list?.length === 0) {
+      fireApi();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
-  if (!user?.superAdmin) return <></>;
-
+  // useEffect(() => {
+  //   if (user && !user?.isSuperAdmin) {
+  //     navigate('/');
+  //   }
+  // }, []);
+  if (loading) {
+    return <Loader />;
+  }
+  if (!user?.isSuperAdmin) return <></>;
   return (
     <div className="w-full px-2">
       {/* PAGE TITLE */}
@@ -51,7 +57,7 @@ export default function Admins(): JSX.Element {
       </div>
 
       {/* TABLE */}
-      <AdminTable data={adminList} loading={loading} fireApi={fireApi} />
+      <AdminTable data={list} loading={loading} fireApi={fireApi} />
     </div>
   );
 }

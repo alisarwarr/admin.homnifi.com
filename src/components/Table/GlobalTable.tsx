@@ -330,19 +330,16 @@ const GlobalTable = ({
                       >
                         <div className={`flex gap-2 items-center`}>
                           <span>{cell.label}</span>
-                          {cell.id !== 'id' &&
-                            cell.id !== 'actions' &&
-
-                            showSort && (
-                              <img
-                                src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
-                                alt=""
-                                className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer ${
-                                  sort.sortKey !== cell.id && 'opacity-50'
-                                }`}
-                                onClick={() => handleSort(cell.id)}
-                              />
-                            )}
+                          {cell.id !== 'id' && cell.id !== 'actions' && showSort && (
+                            <img
+                              src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
+                              alt=""
+                              className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer ${
+                                sort.sortKey !== cell.id && 'opacity-50'
+                              }`}
+                              onClick={() => handleSort(cell.id)}
+                            />
+                          )}
                         </div>
                       </th>
                     )
@@ -369,7 +366,6 @@ const GlobalTable = ({
               <>
                 <tbody>
                   {rows.map((row, index) => {
-                    console.log("🚀 ~ {rows.map ~ row:", row)
                     return (
                       <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
                         {/* Checkbox column */}

@@ -175,7 +175,12 @@ export default function Layout(): JSX.Element {
           }}
         >
           <DrawerHeader className="flex items-center justify-center z-[1] mt-2 h-10">
-            <img onClick={() => navigate('/')} src={homnifiLogo} alt='Homnifi Logo' className="z-[1] w-32 cursor-pointer" />
+            <img
+              onClick={() => navigate('/')}
+              src={homnifiLogo}
+              alt="Homnifi Logo"
+              className="z-[1] w-32 cursor-pointer"
+            />
           </DrawerHeader>
           <div ref={drawerRef}>
             <div className="h-full">
@@ -200,7 +205,7 @@ export default function Layout(): JSX.Element {
                           // ) : (
                           //   <></>
                           // );
-                          return <Menu key={menu.key} menu={menu} />
+                          return <Menu key={menu.key} menu={menu} />;
                         })}
                       </>
                     )}
@@ -210,9 +215,7 @@ export default function Layout(): JSX.Element {
           </div>
         </Drawer>
         <div className="w-full overflow-hidden flex flex-col">
-          <div
-            className="bg-white py-2 border-b border-graySecondary"
-          >
+          <div className="bg-white py-2 border-b border-graySecondary">
             <div className="">
               <Header
                 handleDrawer={() => {

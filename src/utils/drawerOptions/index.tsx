@@ -60,6 +60,22 @@ export const allDrawerOptions: DrawerSection[] = [
       },
     ],
   },
+
+  // {
+  //   options: [
+  //     {
+  //       name: 'Admins',
+  //       icon: Admin,
+  //       icon_dark: AdminDark,
+  //       url: '/admins',
+  //       key: 'admins',
+  //       active: false,
+  //       options: [],
+  //       permissions: [`all`, `superadmin`, 'admins'],
+  //     },
+  //   ],
+  // },
+
   {
     options: [
       {
@@ -79,6 +95,7 @@ export const allDrawerOptions: DrawerSection[] = [
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-assets'],
+            // 'ss'
           },
           {
             name: 'Transition Setting',

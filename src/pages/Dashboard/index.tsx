@@ -20,14 +20,15 @@ const Dashboard = () => {
   const UsersOverview = () => {
     return (
       <>
-        {Object?.keys(usersOverview)?.map((user) => {
-          return (
-            <div className="flex justify-between border border-gray-700 rounded-md p-2 bg-gradient">
-              <div>{dashboardUserOverviewTitles[user]}</div>
-              <div>{usersOverview[user]}</div>
-            </div>
-          );
-        })}
+        {usersOverview &&
+          Object?.keys(usersOverview)?.map((user) => {
+            return (
+              <div className="flex justify-between border border-gray-700 rounded-md p-2 bg-gradient">
+                <div>{dashboardUserOverviewTitles[user]}</div>
+                <div>{usersOverview[user]}</div>
+              </div>
+            );
+          })}
       </>
     );
   };
@@ -35,14 +36,15 @@ const Dashboard = () => {
   const OrdersOverview = () => {
     return (
       <>
-        {Object?.keys(ordersOverview)?.map((order) => {
-          return (
-            <div className="flex justify-between border border-gray-700 rounded-md p-2 bg-gradient">
-              <div>{dashboardOrdersOverviewTitles[order]}</div>
-              <div>{ordersOverview[order]}</div>
-            </div>
-          );
-        })}
+        {ordersOverview &&
+          Object?.keys(ordersOverview)?.map((order) => {
+            return (
+              <div className="flex justify-between border border-gray-700 rounded-md p-2 bg-gradient">
+                <div>{dashboardOrdersOverviewTitles[order]}</div>
+                <div>{ordersOverview[order]}</div>
+              </div>
+            );
+          })}
       </>
     );
   };
@@ -50,14 +52,15 @@ const Dashboard = () => {
   const ProductsOverview = () => {
     return (
       <>
-        {Object?.keys(productsOverview)?.map((product) => {
-          return (
-            <div className="flex justify-between border border-gray-700 rounded-md p-2 bg-gradient ">
-              <div>{dashboardProductsOverviewTitles[product]}</div>
-              <div>{productsOverview[product]}</div>
-            </div>
-          );
-        })}
+        {productsOverview &&
+          Object?.keys(productsOverview)?.map((product) => {
+            return (
+              <div className="flex justify-between border border-gray-700 rounded-md p-2 bg-gradient ">
+                <div>{dashboardProductsOverviewTitles[product]}</div>
+                <div>{productsOverview[product]}</div>
+              </div>
+            );
+          })}
       </>
     );
   };
