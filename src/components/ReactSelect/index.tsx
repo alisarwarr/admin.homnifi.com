@@ -101,11 +101,16 @@ const ReactSelect = ({
                   color: 'green',
                   border: state.isFocused
                     ? 'none'
-                    : (formik?.errors[name] && formik?.touched[name]) || isError
-                    ? '1px solid #f44336'
-                    : '1px solid #AEB6BF',
+                    : // : (formik?.errors[name] && formik?.touched[name]) || isError
+                    //   ? '1px solid #f44336'
+                    //   : '1px solid #AEB6BF',
+                    // '&:hover': {
+                    //   border: !state.isFocused && '1px solid gray',
+                    (formik?.errors[name] && formik?.touched[name]) || isError
+                    ? '1px solid #1B9FDA'
+                    : '1px solid #D7D7D7',
                   '&:hover': {
-                    border: !state.isFocused && '1px solid gray',
+                    border: !state.isFocused && '1px solid #1B9FDA',
                   },
                   boxShadow: '0px',
                   outline: state.isFocused && '2px #90CAF9 solid',

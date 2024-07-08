@@ -19,7 +19,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { createAdminData, getAdminPermissionsList, checkAdminEmail, checkAdminUsername } = useAdminActions();
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const navigate = useNavigate();
-
+  console.log('adminPermissionsList ::', adminPermissionsList);
   const location: any = useLocation();
   const params: any = useParams();
 
@@ -433,7 +433,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   );
 }
 
-const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: boolean; onClose: () => void }) => {
+const CreateRole = ({ onClose, open, permissions }: { permissions: any; open: boolean; onClose: () => void }) => {
   const handleSubmit = (values: any) => {
     console.log(values);
   };
@@ -458,7 +458,7 @@ const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: 
 
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'xs'} onClose={onClose}>
-      <div className="flex flex-col items-center w-full my-4">
+      <div className="flex flex-col items-center w-full my-8">
         <h2 className="text-md font-medium self-start mx-8">Create New Role</h2>
         <div className=" text-gray-500 w-full my-4 flex items-center justify-center ">
           <form onSubmit={formik.handleSubmit} className="h-full gap-10 space-y-9 w-full mx-12">
@@ -486,7 +486,7 @@ const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: 
                 formik={formik}
                 name="permission"
                 label="Admin Permissions"
-                options={permissions?.map((dt: any) => ({
+                options={permissions[0]?.actions?.map((dt: any) => ({
                   label: dt,
                   value: dt,
                 }))}
