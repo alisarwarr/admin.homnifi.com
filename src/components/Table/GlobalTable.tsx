@@ -180,7 +180,7 @@ const GlobalTable = ({
   }, [outerFilters?.country, outerFilters?.accountType, outerFilters?.twoFA, outerFilters?.verified]);
 
   return (
-    <div className=" backdrop-blur-md p-4 bg-slate-600">
+    <div className=" backdrop-blur-md p-4 border border-gray-300  ">
       <div className="h-full">
         {showInnerFilters && (
           <div className={`w-full flex justify-end mb-3 ${innerFiltersClassName}`}>
@@ -309,7 +309,7 @@ const GlobalTable = ({
         <div className="hidden lg:flex items-center gap-2 overflow-auto">
           <table className="w-full">
             <thead>
-              <tr className={`${rows.length > 0 ? 'text-white' : 'text-textSecondary'} w-full text-left bg-red-500`}>
+              <tr className={`${rows.length > 0 ? 'text-white' : 'text-textSecondary'} w-full text-left`}>
                 {/* Checkbox column */}
                 {/* {true && (
                   <th className={`py-4 hidden md:table-cell font-semibold sm:text-xs xl:text-sm`}>
@@ -384,14 +384,13 @@ const GlobalTable = ({
                         )}
 
                         {headCells.map((cell, index) => {
-                          console.log("🚀 ~ {he   :", row)
                           return (
                             cell.id !== '_id' && (
                               <td
                                 key={index}
                                 className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                               >
-                                {row[cell.id] ? row?.[cell.id] : row.setting?.[cell.id]}
+                                {row[cell.id]}
                               </td>
                             )
                           );

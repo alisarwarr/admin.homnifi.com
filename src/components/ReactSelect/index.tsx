@@ -68,7 +68,7 @@ const ReactSelect = ({
 
   return (
     <>
-      <div className={`${selectContainerClassName} flex flex-col w-full z-0`}>
+      <div className={`${selectContainerClassName} flex flex-col w-full z-0  text-primary `}>
         <div className="flex items-center w-full">
           <Select
             className={`w-full ${className}`}
@@ -89,13 +89,14 @@ const ReactSelect = ({
                   ...baseStyles,
                   minHeight: height,
                   backgroundColor: 'transparent',
+                  color: 'green',
                   border: state.isFocused
                     ? 'none'
                     : formik?.errors[name] && formik?.touched[name]
-                    ? '1px solid #f44336'
-                    : '1px solid #666666',
+                    ? '1px solid #1B9FDA'
+                    : '1px solid #D7D7D7',
                   '&:hover': {
-                    border: !state.isFocused && '1px solid white',
+                    border: !state.isFocused && '1px solid #1B9FDA',
                   },
                   boxShadow: '0px',
                   outline: state.isFocused && '2px #90CAF9 solid',
@@ -113,8 +114,8 @@ const ReactSelect = ({
               },
               option: (baseStyles, state) => ({
                 ...baseStyles,
-                backgroundColor: state.isSelected ? 'white' : 'transparent',
-                color: state.isSelected ? '#262626' : 'white',
+                backgroundColor: state.isSelected ? '#1B9FDA' : 'transparent',
+                color: state.isSelected ? 'white' : '#1B9FDA',
                 zIndex: 100,
                 '&:hover': {
                   color: '#262626',
@@ -127,15 +128,15 @@ const ReactSelect = ({
               }),
               singleValue: (baseStyles) => ({
                 ...baseStyles,
-                color: 'white',
+                color: '#666666',
               }),
               multiValue: (baseStyles) => ({
                 ...baseStyles,
-                backgroundColor: '#353535',
+                backgroundColor: 'red',
               }),
               multiValueLabel: (baseStyles) => ({
                 ...baseStyles,
-                color: 'white',
+                color: '#666666',
               }),
               placeholder: (provided, state) => ({
                 ...provided,

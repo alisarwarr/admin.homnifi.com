@@ -84,13 +84,13 @@ export const allDrawerOptions: DrawerSection[] = [
             name: 'Transition Setting',
             icon_light: setting,
             icon_dark: setting,
-            url: '/tokens/settings/deposit',
-            key: 'tokens-deposit-settings',
+            url: '/tokens/settings/transition',
+            key: 'tokens-deposit-transition',
             active: false,
             options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-deposit'],
+            permissions: [`all`, `superadmin`, 'tokens_settings-transition'],
           },
-         
+
 
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
