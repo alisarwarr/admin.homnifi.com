@@ -25,16 +25,19 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const navigate = useNavigate();
 
-  console.log('adminPermissionsList ::', adminPermissionsList);
+  // console.log('adminPermissionsList ::', adminPermissionsList);
   const location: any = useLocation();
   const params: any = useParams();
 
   const [edit] = useState<boolean>(location?.state?.edit);
   const state = location?.state?._data;
+  console.log('state ::', location?.state);
+
   const formikRef = useRef<any>(null);
 
   const [open, setOpen] = React.useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [isTypingEmail, setIsTypingEmail] = useState<boolean | null>(null);
   const [availablityEmail, setAvailablityEmail] = useState<boolean | null>(null);
   const [isTypingUsername, setIsTypingUsername] = useState<boolean>(false);
@@ -57,7 +60,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
     phoneNumber: Yup.string().required('Phone number is required'),
-    roles: Yup.array().min(1, 'At least one permission is required'),
+    roles: Yup.array().min(1, 'At least one permission is required').required('Role is required'),
     password: Yup.string()
       .min(6, 'Must be at least 6 characters')
       .matches(/[a-z]/, 'Must have at least 1 lowercase letter')
@@ -98,6 +101,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const handleSubmit = async (values) => {
     // enter the submitting
     setIsSubmitting(true);
+    setIsSubmit(true);
     const _values = {
       ...values,
       adminPermissions: values.adminPermissions?.map((permission) => permission.value),
@@ -176,6 +180,10 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
         innerRef={formikRef}
       >
         {({ errors, handleChange, values, touched, setFieldValue, setFieldTouched, setFieldError }) => {
+          console.log('values ::', values);
+          console.log('touched ::', touched);
+          console.log('errors ::', errors);
+
           return (
             <Form className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto">
               <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
@@ -363,16 +371,19 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                     <ErrorMessage name="password" component="div" className="text-red-500 text-xs" />
                   </div>
                 )}
+                <>{}</>
+              </div>
 
-                {/* start  */}
-
-                <div className="flex flex-col gap-2 items-end justify-center">
+              {/* start  */}
+              <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
+                <div className="flex flex-col gap-2 items-end justify-center ">
                   <div className="w-full">
                     <ReactSelect
+                      isError={errors?.roles ? true : false}
                       formik={formikRef?.current}
                       name="roles"
                       label="Admin Role"
-                      options={adminPermissionsList.map((dt) => ({
+                      options={adminPermissionsList?.map((dt) => ({
                         label: dt,
                         value: dt,
                       }))}
@@ -380,11 +391,16 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                       placeholder="Select Admin Role..."
                       isSearchable={true}
                       onChange={(e) => {
+                        if(e){
+                        setIsSubmit(false)
+                      }
+                        setFieldTouched('roles', true);
                         formikRef.current.setFieldValue('roles', e);
                       }}
                     />
                   </div>
-                  <ErrorMessage name="roles" component="div" className="text-red-500 text-xs" />
+                  {/* <ErrorMessage name="roles" component="div" className="text-red-500 text-xs" /> */}
+                  {isSubmit && <span className="text-red-500 text-xs">{errors?.roles}</span>}
                 </div>
 
                 <div className="flex flex-col gap-2 items-end">
@@ -399,9 +415,9 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                     </Button>
                   </div>
                 </div>
-
-                {/* end  */}
               </div>
+
+              {/* end  */}
               {(edit || edit === undefined) && (
                 <Button className="w-full bg-primary" loading={isSubmitting} loadingType="circular" buttonType="submit">
                   Submit
@@ -428,7 +444,7 @@ const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: 
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    permission: Yup.array().min(1, 'At least one permission is required'),
+    permission: Yup.array().min(1, 'At least one permission is required').required('Permission is required'),
   });
 
   const formik = useFormik({
