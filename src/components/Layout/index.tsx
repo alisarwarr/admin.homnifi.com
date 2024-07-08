@@ -225,8 +225,9 @@ export default function Layout(): JSX.Element {
               />
             </div>
           </div>
-          <div className="flex-grow py-4 px-2 h-screen">
+          <div className="flex-grow py-4 px-2">
             <Outlet />
+
           </div>
         </div>
       </div>

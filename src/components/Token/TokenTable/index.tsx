@@ -16,8 +16,8 @@ const headCells = [
   { id: 'symbol', label: 'Sybmol' },
   { id: 'depositEnabled', label: 'Deposit' },
   { id: 'withdrawEnabled', label: 'Withdraw' },
-  { id: 'swapFromEnabled', label: 'Swap From' },
-  { id: 'swapToEnabled', label: 'Swap To' },
+  { id: 'toSwapEnabled', label: 'Swap To' },
+  { id: 'fromSwapEnabled', label: 'Swap From' },
   { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
 ];
 
@@ -33,15 +33,16 @@ const TokensTable = ({ data, loading }: Props) => {
       withdrawEnabled: <StatusChip status={_data.settings.withdrawEnabled} />,
       // canTopup: <StatusChip status={_data.canTopup} />,
       // allowNegativeBalance: <StatusChip status={_data.allowNegativeBalance} />,
-      swapFromEnabled: <StatusChip status={_data.settings.swapFromEnabled} />,
-      swapToEnabled: <StatusChip status={_data.settings.swapToEnabled} />,
+      toSwapEnabled: <StatusChip status={_data.settings.toSwapEnabled} />,
+      fromSwapEnabled: <StatusChip status={_data.settings.fromSwapEnabled} />,
       actions: (
-        <div className="flex justify-center">
+        <div className="flex justify-start">
           <Tooltip title="Edit Token">
             <img
               src={edit}
               width={24}
               height={24}
+              color='red'
               alt="View Icon"
               onClick={() => navigate(`/tokens/details/${_data._id}`)}
               className="cursor-pointer"

@@ -1,0 +1,56 @@
+import { useEffect, useState } from 'react';
+// REDUX
+import { useTokenActions } from '../../../store/token/tokenAction';
+import { selectToken } from '../../../store/token/tokenSlice';
+import { useSelector } from 'react-redux';
+
+// COMMON
+import { refresh } from '../../../images/other';
+import TokenTransactionSettingsTable from '../../../components/TokenTransaction/TokenTransactionSettingsTable';
+
+const TokenTransactionSettings = () => {
+  const { getTokenTransactionSettingList } = useTokenActions();
+  const { tokenTransactionSettingList } = useSelector(selectToken);
+  console.log('🚀 ~ TokenTransactionSettings ~ tokenTransactionSettingList:', tokenTransactionSettingList);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      await getTokenTransactionSettingList();
+      setLoading(false);
+    })();
+  }, []);
+
+  return (
+    <div className="w-full px-2">
+      {/* PAGE TITLE */}
+      <div className="flex bg-primary items-center  text-white mt-4">
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Token Transaction Settings</h1>
+
+        <div
+          className="flex gap-1 items-center cursor-pointer px-3"
+          onClick={async () => {
+            setLoading(true);
+            await getTokenTransactionSettingList(true);
+            setLoading(false);
+          }}
+        >
+          <img src={refresh} alt="" width={24} height={24} />
+          <span>Refresh</span>
+        </div>
+      </div>
+
+      {/* TABLE */}
+      {Object.entries(tokenTransactionSettingList).map(([key, value]) => (
+        <div key={key} className='py-4'>
+          <p className='text-l font-medium py-2'>{key}</p>
+          <TokenTransactionSettingsTable data={value} loading={loading} />
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default TokenTransactionSettings;
