@@ -19,6 +19,7 @@ import { Product, selectProductSlice } from '../../../../store/products/productS
 import VouchersTable from '../../../../components/VouchersTable';
 import Dialog from '../../../../components/Dialog/BasicDialog';
 import { TRANSACTION_TYPES } from '../../../../constants';
+import GlobalSelect from '../../../../components/Global/GlobalSelect';
 
 const validationSchema = Yup.object().shape({
   type: Yup.mixed().required('Type is required.'),
@@ -135,11 +136,6 @@ const AddFaqs = () => {
     },
   });
 
-
-
-
-
-
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto ">
       <div className="mx-auto text-start">
@@ -148,34 +144,50 @@ const AddFaqs = () => {
 
       <form onSubmit={formik.handleSubmit} className="">
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 mt-12">
-          <ReactSelect
-            formik={formik}
-            label="Provider"
-            name="provider"
+
+          <GlobalSelect
+            required
+            label="Trx. Type"
+            name="type"
             options={[
               { label: 'Deposit', value: TRANSACTION_TYPES.DEPOSIT },
               { label: 'WithDraw', value: TRANSACTION_TYPES.WITHDRAW },
               { label: 'Transfer', value: TRANSACTION_TYPES.TRANSFER },
               { label: 'Swap', value: TRANSACTION_TYPES.SWAP },
             ]}
-            className="z-50"
+            placeholder='Select Value'
+            setFieldTouched={() => formik.setFieldTouched('type', true)}
+            setFieldValue={(e: any) => {
+              formik.setFieldValue('type', e);
+            }}
+            isError={formik.touched.type && !!formik.errors.type}
+            value={formik.values.type.value}
             onChange={(e: any) => {
               formik.setFieldValue('type', e);
             }}
+            onBlur={formik.handleBlur}
           />
 
-          <ReactSelect
-            formik={formik}
+
+          <GlobalSelect
+            required
             label="Status"
             name="status"
             options={[
               { label: 'Active', value: 'ACTIVE' },
               { label: 'In-Active', value: 'INACTIVE' },
             ]}
-            className="z-50"
+            placeholder='Select Value'
+            setFieldTouched={() => formik.setFieldTouched('status', true)}
+            setFieldValue={(e: any) => {
+              formik.setFieldValue('status', e);
+            }}
+            isError={formik.touched.status && !!formik.errors.status}
+            value={formik.values.status.value}
             onChange={(e: any) => {
               formik.setFieldValue('status', e);
             }}
+            onBlur={formik.handleBlur}
           />
 
           {formFields.map((field) => (

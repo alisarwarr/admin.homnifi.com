@@ -130,20 +130,15 @@ const GlobalSelect = ({
                 Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''
               }`}
               onClick={() => handleSelectValue(option)}
-              //   onClick={(e: any) => {
-              //     if (!e) var e: any = window.event;
-              //     e.cancelBubble = true;
-              //     if (e.stopPropagation) e.stopPropagation();
-              //     console.log('button clicked!');
-              //   }}
+
             >
               {option.label}
             </button>
           ))}
         </div>
-        <div className="absolute top-3 right-4" style={{ zIndex: 99 }}>
+        <div className={`absolute ${isOpen ? 'top-3' :'top-2'} right-3 bg-red`} style={{ zIndex: 100 }}>
           <ArrowDownIcon
-            className={`w-3 h-3 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
+            className={`w-4 h-4 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
           />
         </div>
       </div>

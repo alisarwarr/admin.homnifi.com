@@ -47,7 +47,7 @@ const DepositHistory = () => {
       createdAt: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
       fromToken: <TokenNameWithLogo tokenName={_data?.wallet?.token?.name} />,
       amount: _data?.amount,
-      status: <StatusChip status={_data?.status} />,
+      status: <StatusChip status={_data?.transactionStatus} />,
       fee: _data.fee,
     };
   });
@@ -113,7 +113,7 @@ const DepositHistory = () => {
       </div>
 
       <GlobalTable
-        rows={[1,2,3]}
+        rows={rows}
         headCells={columns?.filter((itm) => itm?.show === true)}
         isLoading={loading}
         totalPages={depositHistory?.totalPages}
