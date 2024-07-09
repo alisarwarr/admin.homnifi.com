@@ -1,65 +1,84 @@
-import React from 'react'
-import { EyeCloseIcon, EyeOpenIcon } from '../../images/svg';
+import React from 'react';
+import { ReactComponent as EyeOpenIcon } from '../../SVGIcons/eyeIcon.svg';
+import { ReactComponent as EyeCloseIcon } from '../../SVGIcons/eyeCloseIcon.svg';
+import { ReactComponent as WarningIcon } from '../../SVGIcons/warning.svg';
 
+type TGlobalInput = {
+  name: string;
+  label?: string;
+  placeholder?: string;
+  type: string;
+  required?: boolean;
+  isError?: boolean;
+  error?: string;
+  value?: string | any;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  disabled?: boolean;
+  labelStyle?: string;
+};
 
 const GlobalInput = ({
-    label,
-    placeholder,
-    type,
-    required,
-    name,
-    isError,
-    error,
-    value,
-    onChange
-}: {
-    name: string;
-    label?: string;
-    placeholder?: string;
-    type: string;
-    required?: boolean;
-    isError?: any;
-    error?: any;
-    value?: any,
-    onChange?: any;
-}) => {
+  label,
+  placeholder,
+  type,
+  required,
+  name,
+  isError,
+  error,
+  value,
+  onChange,
+  className,
+  disabled,
+  labelStyle,
+  onBlur,
+}: TGlobalInput) => {
+  const [showPassword, setShowPassword] = React.useState(false);
 
-    const [showPassword, setShowPassword] = React.useState(false);
-
-
-    return (
-        <div className='flex flex-col gap-2'>
-            <div className="text-sm font-medium">
-                {label} {required && <span className='text-redDanger'>*</span>}
-            </div>
-            <div className="relative flex items-center justify-center">
-                <input
-                    name={name}
-                    type={type === 'password' ? showPassword ? 'text' : 'password' : type}
-                    placeholder={placeholder}
-                    className={`outline-none border py-2 px-4 text-xs rounded-full w-full ${isError ? 'border-redDanger' : 'border-blueGrey'}`}
-                    value={value}
-                    onChange={onChange}
-                />
-                {type === 'password'
-                    &&
-                    <button
-                        className='absolute right-5'
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        {showPassword ? <EyeCloseIcon className='w-5' /> : <EyeOpenIcon className='w-5' />}
-                    </button>
-                }
-                {/* {isError &&
-                    <span className='absolute right-4'>
-                        <WarningIcon className='w-4' />
-                    </span>
-                } */}
-            </div>
-            <span className={`text-xs text-redDanger text-right ${isError ? `visible` : `invisible`}`}>{error}</span>
+  return (
+    <div className="flex flex-col gap-2">
+      {label && (
+        <div className={`text-sm font-medium text-primary ${labelStyle}`}>
+          {label} {required && <span className="text-redDanger">*</span>}
         </div>
-    )
-}
+      )}
+      <div className="relative flex items-center justify-center">
+        <input
+          disabled={disabled}
+          name={name}
+          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          className={`outline-none text-defaultBlack border py-2 px-4 text-xs rounded-full w-full ${isError ? 'border-redDanger' : 'border-blueGrey'} ${className}`}
+        />
+        {isError ? (
+          <span className="absolute right-4">
+            <WarningIcon className="w-4" />
+          </span>
+        ) : (
+          type === 'password' && (
+            <button
+              type="button"
+              className="absolute right-4"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeCloseIcon className="w-4" />
+              ) : (
+                <EyeOpenIcon className="w-4" />
+              )}
+            </button>
+          )
+        )}
+      </div>
+      {error && isError && (
+        <span className="text-xs text-redDanger text-right">{error}</span>
+      )}
+    </div>
+  );
+};
 
-export default GlobalInput
+export default GlobalInput;
