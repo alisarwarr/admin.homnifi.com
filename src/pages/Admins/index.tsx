@@ -43,10 +43,8 @@ export default function Admins(): JSX.Element {
   if (!user?.isSuperAdmin) return <></>;
   return (
     <div className="w-full px-2">
-      {/* PAGE TITLE */}
-      <div className="flex bg-primary items-center  text-white">
+      <div className="flex bg-primary items-center table-head-bg text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Admins</h1>
-
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
           onClick={() => navigate('/admins/create', { state: { edit: true } })}
@@ -55,7 +53,6 @@ export default function Admins(): JSX.Element {
           <span>Create</span>
         </div>
       </div>
-
       {/* TABLE */}
       <AdminTable data={list} loading={loading} fireApi={fireApi} />
     </div>

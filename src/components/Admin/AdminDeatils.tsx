@@ -13,25 +13,18 @@ import { useCustomerActions } from '../../store/customer/customerActions';
 import ReactSelect from '../ReactSelect';
 import { useSelector } from 'react-redux';
 import { selectAdminPermissionsList } from '../../store/admin/adminSlice';
-import DialogButton from '../Dialog/DialogButton';
-import Loader from '../Loader/Loader';
-import { permission } from 'process';
-import GlobalDialog from '../Dialog';
-import FormikInput from '../FormikInput';
+import CustomDropdown from '../CustomDropdown';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { updateCustomer } = useCustomerActions();
   const { createAdminData, getAdminPermissionsList, checkAdminEmail, checkAdminUsername } = useAdminActions();
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const navigate = useNavigate();
-
-  // console.log('adminPermissionsList ::', adminPermissionsList);
   const location: any = useLocation();
   const params: any = useParams();
 
   const [edit] = useState<boolean>(location?.state?.edit);
   const state = location?.state?._data;
-  console.log('state ::', location?.state);
 
   const formikRef = useRef<any>(null);
 
@@ -60,7 +53,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
     phoneNumber: Yup.string().required('Phone number is required'),
-    roles: Yup.array().min(1, 'At least one permission is required').required('Role is required'),
+    roles: Yup.array().required('Role is required'),
     password: Yup.string()
       .min(6, 'Must be at least 6 characters')
       .matches(/[a-z]/, 'Must have at least 1 lowercase letter')
@@ -86,8 +79,8 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           password: state?.password ? state?.password : '',
           adminPermissions: state?.adminPermissions?.map((permission) => {
             return {
-              label: permission,
-              value: permission,
+              label: permission?.name,
+              value: permission?.name,
             };
           }),
         });
@@ -180,12 +173,8 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
         innerRef={formikRef}
       >
         {({ errors, handleChange, values, touched, setFieldValue, setFieldTouched, setFieldError }) => {
-          console.log('values ::', values);
-          console.log('touched ::', touched);
-          console.log('errors ::', errors);
-
           return (
-            <Form className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto">
+            <Form className="h-full gap-10 space-y-9 w-full  md:w-[70%] sm:w-full m-auto">
               <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
                 <div className="flex flex-col gap-2 items-end">
                   <div className="w-full relative">
@@ -374,25 +363,27 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                 <>{}</>
               </div>
 
-              {/* start  */}
               <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
                 <div className="flex flex-col gap-2 items-end justify-center ">
                   <div className="w-full">
                     <ReactSelect
-                      isError={errors?.roles ? true : false}
+                      isError={isSubmit && errors?.roles ? true : false}
                       formik={formikRef?.current}
                       name="roles"
                       label="Admin Role"
                       options={adminPermissionsList?.map((dt) => ({
-                        label: dt,
-                        value: dt,
+                        label: dt?.name,
+                        value: dt?.name,
                       }))}
                       isMulti={true}
                       placeholder="Select Admin Role..."
                       isSearchable={true}
                       onChange={(e) => {
-                        if (e) {
+                        if (e.length > 0) {
                           setIsSubmit(false);
+                          formikRef.current.setFieldError('roles', undefined);
+                        } else {
+                          setIsSubmit(true);
                         }
                         setFieldTouched('roles', true);
                         formikRef.current.setFieldValue('roles', e);
@@ -400,7 +391,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                     />
                   </div>
                   {/* <ErrorMessage name="roles" component="div" className="text-red-500 text-xs" /> */}
-                  {isSubmit && <span className="text-red-500 text-xs">{errors?.roles}</span>}
+                  {isSubmit && errors?.roles && <span className="text-red-500 text-xs">{errors?.roles}</span>}
                 </div>
 
                 <div className="flex flex-col gap-2 items-end">
@@ -416,10 +407,18 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                   </div>
                 </div>
               </div>
-
-              {/* end  */}
+              <CustomDropdown />
               {(edit || edit === undefined) && (
-                <Button className="w-full bg-primary" loading={isSubmitting} loadingType="circular" buttonType="submit">
+                <Button
+                  onClick={() => {
+                    setIsSubmit(true);
+                    formikRef.current.setFieldError('roles', 'Role is required');
+                  }}
+                  className="w-full bg-primary"
+                  loading={isSubmitting}
+                  loadingType="circular"
+                  buttonType="submit"
+                >
                   Submit
                 </Button>
               )}
@@ -432,7 +431,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   );
 }
 
-const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: boolean; onClose: () => void }) => {
+const CreateRole = ({ onClose, open, permissions }: { permissions: any; open: boolean; onClose: () => void }) => {
   const handleSubmit = (values: any) => {
     console.log(values);
   };
@@ -457,7 +456,7 @@ const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: 
 
   return (
     <Dialog open={open} fullWidth={true} maxWidth={'xs'} onClose={onClose}>
-      <div className="flex flex-col items-center w-full my-4">
+      <div className="flex flex-col items-center w-full my-8">
         <h2 className="text-md font-medium self-start mx-8">Create New Role</h2>
         <div className=" text-gray-500 w-full my-4 flex items-center justify-center ">
           <form onSubmit={formik.handleSubmit} className="h-full gap-10 space-y-9 w-full mx-12">
@@ -485,7 +484,7 @@ const CreateRole = ({ onClose, open, permissions }: { permissions: any[]; open: 
                 formik={formik}
                 name="permission"
                 label="Admin Permissions"
-                options={permissions?.map((dt: any) => ({
+                options={permissions[0]?.actions?.map((dt: any) => ({
                   label: dt,
                   value: dt,
                 }))}
