@@ -9,7 +9,7 @@ type TGlobalInput = {
   placeholder?: string;
   type: string;
   required?: boolean;
-  isError?: boolean;
+  isError?: boolean | any;
   error?: string;
   value?: string | any;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;

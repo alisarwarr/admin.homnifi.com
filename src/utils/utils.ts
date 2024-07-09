@@ -8,11 +8,38 @@ export const CapitalizeFirstLetter = (string: any) => {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1).toLowerCase();
 };
 
-export const CapitalizeAllLetters = (s: string) => s?.charAt(0).toUpperCase() + s?.slice(1) || s;
+export const CapitalizeAllLetters = (s: any) => s?.charAt(0).toUpperCase() + s?.slice(1).toUpperCase() ;
+export const lowerCaseAllLetters = (s: any) => s?.charAt(0).toLowerCase() + s?.slice(1).toLowerCase() ;
 
 
 export const getTableIndexNumber = (page: number, index: number, limit: number) => {
   return (page - 1) * limit + (index + 1);
+};
+
+export const capitalizeFirstLetterOfObjectValues = (obj: any) => {
+  const result: any = {};
+  for (const key in obj) {
+    if (typeof obj[key] === 'string') {
+      result[key] = obj[key].charAt(0).toUpperCase() + obj[key].slice(1);
+    } else {
+      result[key] = obj[key];
+    }
+  }
+  return result;
+};
+
+export const convertObjectValuesToUpper = (value: any) => {
+  if (typeof value !== 'object' || value === null) {
+    throw new Error('Input value must be a non-null object');
+  }
+
+  const result: any = {};
+  for (const key in value) {
+    if (value.hasOwnProperty(key)) {
+      result[key] = typeof value[key] === 'string' ? value[key].toUpperCase() : value[key];
+    }
+  }
+  return result;
 };
 
 export const copyToClipboard = (text: string, setCopied: any) => {

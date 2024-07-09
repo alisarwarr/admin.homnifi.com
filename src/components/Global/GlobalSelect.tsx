@@ -1,5 +1,6 @@
 import React from 'react';
 import { ReactComponent as ArrowDownIcon } from '../../SVGIcons/arrowDown.svg';
+import { lowerCaseAllLetters } from '../../utils/utils';
 
 interface IOptions {
   label: string;
@@ -32,22 +33,23 @@ const GlobalSelect = ({
   setFieldTouched,
   isError,
   setFieldValue,
-  value = [],
+  value = '',
   isMulti = false,
 }: TGlobalSelect) => {
+  console.log('🚀 ~ valuevaluevaluevalue:', value);
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [filteredOptions, setFilteredOptions] = React.useState(options);
 
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
-  console.log('options.find((option) => option.value === value)?.name', options.find((option : IOptions) => option.value === value) , value ,)
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
     setFieldTouched(name, true);
   };
 
-  const handleSelectValue = (selectedValue: string) => {
+  const handleSelectValue = (selectedOption: IOptions) => {
+    const selectedValue = selectedOption.value;
     let newValue;
     if (isMulti) {
       if (Array.isArray(value)) {
@@ -63,15 +65,13 @@ const GlobalSelect = ({
       newValue = selectedValue;
       setIsOpen(false);
     }
-
-    setFieldValue(name, newValue);
-    onChange && onChange(newValue);
+    console.log('newValue', newValue);
+    setFieldValue(name, selectedOption);
+    // onChange && onChange(selectedOption); // Optionally trigger onChange if needed
   };
 
   const filterOptions = (input: string) => {
-    const filtered = options.filter((option) =>
-      option.label.toLowerCase().includes(input.toLowerCase())
-    );
+    const filtered = options.filter((option) => option.label.toLowerCase().includes(input.toLowerCase()));
     setFilteredOptions(filtered);
   };
 
@@ -100,23 +100,19 @@ const GlobalSelect = ({
       </div>
       <div className="relative select-none">
         <div
-          className={`bg-white text-defaultBlack  border ${isError ? 'border-redDanger' : 'border-blueGrey'} py-2 px-4 text-xs rounded-full w-full cursor-pointer`}
+          className={`bg-white text-defaultBlack  border ${
+            isError ? 'border-redDanger' : 'border-blueGrey'
+          } py-2 px-4 text-xs rounded-full w-full cursor-pointer`}
           onClick={toggleDropdown}
         >
-          {isMulti ? (
-            Array.isArray(value) && value.length > 0 ? (
-              value.map((val) => options.find((option) => option.label === val)?.label).join(', ')
-            ) : (
-              placeholder
-            )
-          ) : (
-            options.find((option) => option.label === value)?.label || placeholder
-          )}
+          {options.find((option) => option.value === value)?.label || placeholder}
         </div>
 
         <div
           ref={dropdownRef}
-          className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-0 border border-blueGrey bg-white overflow-auto max-h-52 ${isOpen ? 'translate-y-0 visible opacity-100' : '-translate-y-10 invisible opacity-0'} transition-all ease-in-out duration-300`}
+          className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-0 border border-blueGrey bg-white overflow-auto max-h-52 ${
+            isOpen ? 'translate-y-0 visible opacity-100' : '-translate-y-10 invisible opacity-0'
+          } transition-all ease-in-out duration-300`}
           style={{ zIndex: 99 }}
         >
           <input
@@ -128,16 +124,27 @@ const GlobalSelect = ({
           />
           {filteredOptions.map((option, index) => (
             <button
+              type="button"
               key={index}
-              className={`p-2 border-b border-blueGrey hover:bg-gray-100 transition-all ease-in-out duration-300 ${Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''}`}
-              onClick={() => handleSelectValue(option.value)}
+              className={`p-2 border-b border-blueGrey text-defaultBlack hover:bg-gray-100 transition-all ease-in-out duration-300 ${
+                Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''
+              }`}
+              onClick={() => handleSelectValue(option)}
+              //   onClick={(e: any) => {
+              //     if (!e) var e: any = window.event;
+              //     e.cancelBubble = true;
+              //     if (e.stopPropagation) e.stopPropagation();
+              //     console.log('button clicked!');
+              //   }}
             >
               {option.label}
             </button>
           ))}
         </div>
         <div className="absolute top-3 right-4" style={{ zIndex: 99 }}>
-          <ArrowDownIcon className={`w-3 h-3 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`} />
+          <ArrowDownIcon
+            className={`w-3 h-3 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
+          />
         </div>
       </div>
     </div>

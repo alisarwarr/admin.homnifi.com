@@ -53,6 +53,7 @@ const Signin = ({
                     text='Sign in'
                     setStatus={() => setStatus}
                     status={'verifyEmail'}
+                    loading={false}
                 />
                 <HelperText
                     text={<button onClick={() => navigate('/auth/forget-password')}>Forget Password?</button>}

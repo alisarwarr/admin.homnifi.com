@@ -5,11 +5,13 @@ const GlobalCheckbox = ({
   checked,
   setChecked,
   onChange,
+  className
 }: {
   label?: string;
   checked: boolean;
   setChecked: (e: boolean) => void;
   onChange?: any;
+  className?:string
 }) => {
   return (
     <div className="flex items-center gap-2 select-none">
@@ -22,12 +24,12 @@ const GlobalCheckbox = ({
         }}
       />
       {label && (
-        <span className="text-xs text-primaryGrey cursor-pointer" onClick={() => setChecked(!checked)}>
+        <span className={`text-xs text-primaryGrey cursor-pointer ${className}`} onClick={() => setChecked(!checked)}>
           {label}
         </span>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default GlobalCheckbox;
+export default GlobalCheckbox

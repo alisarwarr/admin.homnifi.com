@@ -13,7 +13,7 @@ import { errorAlert, successAlert } from '../../../../utils/alerts';
 import FormikInput from '../../../../components/FormikInput';
 import { TokenTransactionSettingType } from '../../../../store/token/tokenSlice';
 import { useTokenActions } from '../../../../store/token/tokenAction';
-import { CapitalizeFirstLetter } from '../../../../utils/utils';
+import { CapitalizeAllLetters, CapitalizeFirstLetter, lowerCaseAllLetters } from '../../../../utils/utils';
 import ReactSelect from '../../../../components/ReactSelect';
 import { TRANSACTION_PROCESS, TRANSACTION_TYPES, WITHDRAW_FEE_TYPES } from '../../../../constants';
 import GlobalSelect from '../../../../components/Global/GlobalSelect';
@@ -35,8 +35,6 @@ const formFields = [
   { key: 'minAmount', label: 'Min. Transaction Amount', type: 'text' },
   { key: 'maxAmount', label: 'Max. Transaction Amount', type: 'text' },
 
-  // { key: 'dailyTrxCountLimit', label: 'Daily Transaction Count', type: 'text' },
-  // { key: 'dailyAmountLimit', label: 'Daily Amount Limit', type: 'text' },
   { key: 'fee', label: 'Fee', type: 'text' },
   { key: 'charges', label: 'Charges', type: 'text' },
 ];
@@ -78,12 +76,13 @@ const TokenTransactionSettingDetails = () => {
     validationSchema: validationSchema,
 
     onSubmit: async (values) => {
+      console.log('🚀 ~ onSubmit: ~ values:', values);
       const _values = {
         ...values,
-        feeType: values.feeType.value,
-        trxType: values.trxType.value,
-        chargesType: values.chargesType.value,
-        processType: values.processType.value,
+        feeType: lowerCaseAllLetters(values.feeType.value),
+        trxType: lowerCaseAllLetters(values.trxType.value),
+        chargesType: lowerCaseAllLetters(values.chargesType.value),
+        processType: lowerCaseAllLetters(values.processType.value),
       };
       delete _values.token;
       setSaveLoading(true);
@@ -118,7 +117,10 @@ const TokenTransactionSettingDetails = () => {
         // SET VALUES
         if (_state) {
           formik.setValues({
-            feeType: { label: CapitalizeFirstLetter(_state.trxSettings?.feeType), value: _state.trxSettings?.feeType },
+            feeType: {
+              label: CapitalizeFirstLetter(_state.trxSettings?.feeType),
+              value: CapitalizeAllLetters(_state.trxSettings?.feeType),
+            },
             fee: _state.trxSettings?.fee,
 
             minAmount: _state.trxSettings?.minAmount,
@@ -126,21 +128,20 @@ const TokenTransactionSettingDetails = () => {
             charges: _state.trxSettings?.charges,
             chargesType: {
               label: CapitalizeFirstLetter(_state.trxSettings?.chargesType),
-              value: _state.trxSettings?.chargesType,
+              value: CapitalizeAllLetters(_state.trxSettings?.chargesType),
             },
             processType: {
               label: CapitalizeFirstLetter(_state.trxSettings?.processType),
-              value: _state.trxSettings?.processType,
+              value: CapitalizeAllLetters(_state.trxSettings?.processType),
             },
 
-            // processType: {
-            //   label: CapitalizeFirstLetter(_state.trxSettings?.processType),
-            //   value: _state.trxSettings?.processType,
-            // },
 
-            trxType: { label: CapitalizeFirstLetter(_state.trxSettings?.trxType), value: _state.trxSettings?.trxType },
+
+            trxType: {
+              label: CapitalizeFirstLetter(_state.trxSettings?.trxType),
+              value: CapitalizeAllLetters(_state.trxSettings?.trxType),
+            },
             name: _state.name,
-            // name: _state.name,
           });
         }
       }
@@ -154,11 +155,7 @@ const TokenTransactionSettingDetails = () => {
           id ? 'Update' : 'Add'
         } Token Setting (${CapitalizeFirstLetter(state?.trxSettings?.trxType ?? '')})`}</h2>
         <span className="flex items-center gap-1 text-2xl">
-          {/* <img
-            src={tokenImages[formik.values.tokenName ? formik.values.tokenName : 'USDT']}
-            alt=""
-            className="w-9 h-9 object-contain"
-          /> */}
+
           {formik.values.name === 'Tether' ? 'USDT' : formik.values.name}
         </span>
       </div>
@@ -166,7 +163,6 @@ const TokenTransactionSettingDetails = () => {
       <form onSubmit={formik.handleSubmit} className="">
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 mt-12">
           {formFields.map((field) => {
-            console.log('🚀 ~ {formFields.map ~ field:ssssssssss', state);
             return state?.transactionType === 'SWAP' && field.key === 'fee' ? (
               <></>
             ) : (
@@ -189,62 +185,69 @@ const TokenTransactionSettingDetails = () => {
 
           {state?.transactionType !== 'SWAP' && (
             <GlobalSelect
-              formik={formik}
+              required
               label="Fee Type"
               name="feeType"
               options={[
-                { name: 'Fixed', value: WITHDRAW_FEE_TYPES.FIXED },
-                { name: 'Percentage', value: WITHDRAW_FEE_TYPES.PERCENTAGE },
+                { label: 'Fixed', value: WITHDRAW_FEE_TYPES.FIXED },
+                { label: 'Percentage', value: WITHDRAW_FEE_TYPES.PERCENTAGE },
               ]}
-              className="z-50"
-              onChange={(e: any) => {
-                formik.setFieldValue('feeType', e);
-              }}
+              setFieldTouched={formik.setFieldTouched}
+              setFieldValue={formik.setFieldValue}
+              isError={formik.touched.feeType && !!formik.errors.feeType}
+              value={formik.values.feeType.value}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
           )}
-           <GlobalSelect
+          <GlobalSelect
             name="trxType"
-            label="Transaction Process"
+            label="Transaction Type"
             required
             placeholder="Select Transaction Type"
             options={[
-              { label: 'Deposit', value: 'DEPOSIT' },
-              { label: 'Withdraw', value: 'WITHDRAW' },
-              { label: 'Transfer', value: 'TRANSFER' },
-              { label: 'Swap', value: 'SWAP' },
+              { label: 'Deposit', value: TRANSACTION_TYPES.DEPOSIT },
+              { label: 'Withdraw', value: TRANSACTION_TYPES.WITHDRAW },
+              { label: 'Transfer', value: TRANSACTION_TYPES.TRANSFER },
+              { label: 'Swap', value: TRANSACTION_TYPES.SWAP },
             ]}
             setFieldTouched={formik.setFieldTouched}
             setFieldValue={formik.setFieldValue}
             isError={formik.touched.trxType && !!formik.errors.trxType}
             value={formik.values.trxType.value}
-            isMulti
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
 
           <GlobalSelect
-            formik={formik}
             label="Charges Fees"
             name="chargesType"
+            required
             options={[
               { label: 'Fixed', value: WITHDRAW_FEE_TYPES.FIXED },
               { label: 'Percentage', value: WITHDRAW_FEE_TYPES.PERCENTAGE },
             ]}
-            className="z-50"
-            onChange={(e: any) => {
-              formik.setFieldValue('chargesType', e);
-            }}
+            setFieldTouched={formik.setFieldTouched}
+            setFieldValue={formik.setFieldValue}
+            isError={formik.touched.chargesType && !!formik.errors.chargesType}
+            value={formik.values.chargesType.value}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
           <GlobalSelect
-            formik={formik}
+            required
             label="Trx Process"
             name="processType"
             options={[
               { label: 'Auto', value: TRANSACTION_PROCESS.AUTO },
               { label: 'Munual', value: TRANSACTION_PROCESS.MANUAL },
             ]}
-            className="z-50"
-            onChange={(e: any) => {
-              formik.setFieldValue('processType', e);
-            }}
+            setFieldTouched={formik.setFieldTouched}
+            setFieldValue={formik.setFieldValue}
+            isError={formik.touched.processType && !!formik.errors.processType}
+            value={formik.values.processType.value}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
         </div>
       </form>
