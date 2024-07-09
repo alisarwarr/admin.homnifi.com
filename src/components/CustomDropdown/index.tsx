@@ -103,13 +103,13 @@ const CustomDropdown: React.FC = () => {
               </div>
             </div>
             {isClick && filterResult?.length > 0 && (
-              <div className="flex flex-col justify-start items-start rounded-md z-[999] bg-white border border-gray-300 my-1 text-gray-500 absolute w-full min-w-[20wv]:">
+              <div className="flex flex-col justify-start items-start rounded-md z-[999] bg-white border border-gray-300 my-1 text-gray-500 absolute w-full min-w-[16wv]:">
                 {filterResult.map((dt) => (
                   <div key={dt.name} className="px-4 py-3 w-full border-b-2">
                     <div className="flex gap-4">
                       <div className="font-medium text-sm">{dt.name}</div>
                       {dt.roles.map((rl) => (
-                        <div key={rl} className="text-sm">
+                        <div key={rl} className="text-md">
                           <GlobalCheckbox
                             checked={selectedRoles[dt.name]?.includes(rl) ?? false}
                             setChecked={setTerms}
@@ -134,10 +134,10 @@ const CustomDropdown: React.FC = () => {
 
         {/* dropdown result section start */}
         {activedRoles.length > 0 && (
-          <div className="flex flex-col justify-end items-center rounded-md z-10 border border-gray-300  text-gray-500 overflow-y-auto ">
+          <div className="flex flex-col justify-end items-start rounded-md z-10 border  border-gray-300  text-gray-500 overflow-y-auto ">
             <div className="h-[21vh]">
               {activedRoles.map((dt) => (
-                <div key={dt.name} className="px-4 py-3 w-full border-b-2">
+                <div key={dt.name} className="px-4 py-3  border-b-2">
                   <div className="flex gap-4 justify-between">
                     <div className="flex gap-4">
                       <div className="font-medium text-sm">{dt.name}</div>

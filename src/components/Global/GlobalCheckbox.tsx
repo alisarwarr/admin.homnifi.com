@@ -12,8 +12,7 @@ const GlobalCheckbox = ({
   checked: boolean;
   setChecked: (e: boolean) => void;
   onChange?: any;
-  className?:string,
-
+  className?: string;
 }) => {
   return (
     <div className="flex items-center gap-2 select-none">
