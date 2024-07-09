@@ -7,10 +7,9 @@ import { RootState, store } from '../../store';
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { accessToken } = useSelector((state: RootState) => state.user);
-  console.log("🚀 ~ ProtectedRoute ~ accessToken:", accessToken)
+  console.log('🚀 ~ ProtectedRoute ~ accessToken:', accessToken);
 
   if (!accessToken) {
-
     // user is not authenticated
     return <Navigate to="/auth/signin" />;
   }

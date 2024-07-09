@@ -69,11 +69,11 @@ const ReactSelect = ({
     );
   };
 
-//   : formik?.errors[name] && formik?.touched[name]
-//   ? '1px solid #1B9FDA'
-//   : '1px solid #D7D7D7',
-// '&:hover': {
-//   border: !state.isFocused && '1px solid #1B9FDA',
+  //   : formik?.errors[name] && formik?.touched[name]
+  //   ? '1px solid #1B9FDA'
+  //   : '1px solid #D7D7D7',
+  // '&:hover': {
+  //   border: !state.isFocused && '1px solid #1B9FDA',
 
   return (
     <>
