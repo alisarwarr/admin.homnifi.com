@@ -51,7 +51,7 @@ const BootstrapInput = styled(InputBase)(({ theme }: { theme?: any }) => ({
   '& .MuiInputBase-input': {
     borderRadius: 4,
     position: 'relative',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'theme.palette.background.paper',
     border: '1px solid #ced4da',
     fontSize: 16,
     paddingTop: '6px',
@@ -414,7 +414,7 @@ const GlobalTable = ({
             {rows.map((row, index) => (
               <div key={index}>
                 {headCells.map((cell, index) => (
-                  <div key={index} className="w-full flex items-center mt-3">
+                  <div key={index} className="w-full  flex items-center mt-3">
                     <div className="w-1/3">{cell.label}:</div>
                     <div className="w-2/3">{row?.[cell.id]}</div>
                   </div>

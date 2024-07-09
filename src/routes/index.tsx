@@ -27,17 +27,17 @@ import TokenTransactionSettingDetails from '../pages/Tokens/TokenTransactionSett
 import Features from '../pages/Features';
 import QuickyPaySettings from '../pages/Settings/QucikyPaySettings';
 import Dashboard from '../pages/Dashboard';
-import TokenDepositSetting from '../pages/Tokens/TokenTransactionSettings/Deposit';
-import TokenWithdrawSettings from '../pages/Tokens/TokenTransactionSettings/Withdraw';
-import TokenSwapSettings from '../pages/Tokens/TokenTransactionSettings/Swap';
-import TokenPairs from '../pages/Tokens/TokenTransactionSettings/TokenPairs';
-import TokenMigrateSettings from '../pages/Tokens/TokenTransactionSettings/Migrate';
+// import TokenDepositSetting from '../pages/Tokens/TokenTransactionSettings/Deposit';
+// import TokenWithdrawSettings from '../pages/Tokens/TokenTransactionSettings/Withdraw';
+// import TokenSwapSettings from '../pages/Tokens/TokenTransactionSettings/Swap';
+// import TokenPairs from '../pages/Tokens/TokenTransactionSettings/TokenPairs';
+// import TokenMigrateSettings from '../pages/Tokens/TokenTransactionSettings/Migrate';
 import UserDetails from '../pages/Users/UserDetails';
 import Links from '../pages/Settings/Links';
 import PrivacyPolicy from '../pages/Settings/PrivacyPolicy';
 import TermsAndConditions from '../pages/Settings/TermsAndConditions';
 import SwapHistory from '../pages/TransactionHistory/SwapHistory';
-import TokenPairSettingDetails from '../pages/Tokens/TokenTransactionSettings/TokenPairSettingDetails';
+
 import WithdrawHistory from '../pages/TransactionHistory/WithdrawHistory';
 import DepositHistory from '../pages/TransactionHistory/DepositHistory';
 import MigrationHistory from '../pages/TransactionHistory/MIgrationHistory';
@@ -49,6 +49,8 @@ import ProductPurchaseHistory from '../pages/TransactionHistory/ProductPurchaseH
 import ShowPages from '../pages/Settings/ShowPages';
 import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
+import Faqs from '../pages/TransactionHistory/Faqs';
+import AddFaqs from '../pages/TransactionHistory/Faqs/AddFaqs';
 
 export const router = createBrowserRouter([
   {
@@ -99,66 +101,66 @@ export const router = createBrowserRouter([
           </React.Suspense>
         ),
       },
-      {
-        path: '/tokens/settings/withdraw',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenWithdrawSettings />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/tokens/settings/swap',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenSwapSettings />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/tokens/settings/transfer',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenSwapSettings />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/tokens/settings/token-pairs',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenPairs />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/tokens/settings/token-pair/details/:id',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenPairSettingDetails />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/tokens/settings/migrate',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenMigrateSettings />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
+      // {
+      //   path: '/tokens/settings/withdraw',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenWithdrawSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/swap',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenSwapSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/transfer',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenSwapSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/token-pairs',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenPairs />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/token-pair/details/:id',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenPairSettingDetails />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/migrate',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenMigrateSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
       {
         path: '/tokens/settings/:type/details/:id',
         element: (
@@ -259,6 +261,26 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <DepositHistory />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/history/faq',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Faqs />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/history/faq/add',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <AddFaqs />
             </ProtectedRoute>
           </React.Suspense>
         ),

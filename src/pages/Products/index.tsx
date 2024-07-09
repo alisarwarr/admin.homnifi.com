@@ -26,7 +26,7 @@ const Products = () => {
   return (
     <div className="w-full px-2">
       {/* PAGE TITLE */}
-      <div className="flex bg-primary items-center table-head-bg text-white">
+      <div className="flex bg-primary items-center  text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Products</h1>
 
         <div

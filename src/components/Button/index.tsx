@@ -22,7 +22,7 @@ const Button = ({
 }: Props) => {
   return (
     <button
-      className={`rounded px-6 py-3 flex justify-center items-center cursor-pointer bg-buttonColor shadow-[0_13px_39px_-15px_rgba(38,165,255,0.9)] text-white ${className}`}
+      className={`rounded  px-6 py-3 flex justify-center items-center cursor-pointer bg-buttonColor bg-primary text-white ${className}`}
       disabled={loading || disable}
       onClick={onClick}
       type={buttonType || 'submit'}

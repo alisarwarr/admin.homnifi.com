@@ -8,6 +8,9 @@ export const CapitalizeFirstLetter = (string: any) => {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1).toLowerCase();
 };
 
+export const CapitalizeAllLetters = (s: string) => s?.charAt(0).toUpperCase() + s?.slice(1) || s;
+
+
 export const getTableIndexNumber = (page: number, index: number, limit: number) => {
   return (page - 1) * limit + (index + 1);
 };

@@ -98,19 +98,16 @@ const ReactSelect = ({
                   ...baseStyles,
                   minHeight: height,
                   backgroundColor: 'transparent',
-                  color: 'green',
+                  color: '#1B9FDA',
                   border: state.isFocused
                     ? 'none'
-                    : // : (formik?.errors[name] && formik?.touched[name]) || isError
-                    //   ? '1px solid #f44336'
-                    //   : '1px solid #AEB6BF',
-                    // '&:hover': {
-                    //   border: !state.isFocused && '1px solid gray',
-                    (formik?.errors[name] && formik?.touched[name]) || isError
-                    ? '1px solid #1B9FDA'
+
+                    : (formik?.errors[name] && formik?.touched[name]) || isError
+                    ? '1px solid #f44336'
                     : '1px solid #D7D7D7',
                   '&:hover': {
                     border: !state.isFocused && '1px solid #1B9FDA',
+
                   },
                   boxShadow: '0px',
                   outline: state.isFocused && '2px #90CAF9 solid',
@@ -118,7 +115,7 @@ const ReactSelect = ({
               },
               menuList: (baseStyles) => ({
                 ...baseStyles,
-                backgroundColor: '#353535',
+                backgroundColor: 'white',
               }),
               menuPortal(base) {
                 return {
@@ -154,12 +151,12 @@ const ReactSelect = ({
               }),
               placeholder: (provided, state) => ({
                 ...provided,
-                color: disabled ? '#666666' : focused ? '#90CAF9' : 'gray',
+                color: disabled ? '#666666' : focused ? '#1B9FDA' : '#666666',
                 backgroundColor:
                   state.hasValue || state.selectProps.inputValue
                     ? placeholderColor
                       ? placeholderColor
-                      : 'black'
+                      : 'white'
                     : 'transparent',
                 padding: '0px 4px',
                 position: 'absolute',

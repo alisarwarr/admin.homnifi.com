@@ -12,17 +12,9 @@ const MenuIcon = ({ menu, type, length, index }: { menu: any; type: any; length:
   const menuClass = ' gap-3';
 
   return (
-    <div className={`flex-1 flex items-center ${type === 'menu' ? menuClass : subMenuClass}`}>
+    <div className={`flex-1 flex items-center  ${type === 'menu' ? menuClass : subMenuClass}`}>
       {type === 'menu' ? (
-        <img
-          className="w-4 h-4"
-          src={
-            activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))
-              ? menu.icon_dark
-              : menu.icon_dark
-          }
-          alt={menu.name}
-        />
+        menu?.icon
       ) : (
         <div>
           <div className={`${length === index && 'rounded-bl'} w-4 border-b border-l border-secondary h-4`}></div>

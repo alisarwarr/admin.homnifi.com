@@ -45,7 +45,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
         <Chip
           label={_data?.trxSettings?.feeType}
           size="small"
-          sx={{ fontSize: '11px' }}
+          sx={{ fontSize: '11px' ,color: 'white', }}
           color={_data.feeType === 'fixed' ? 'default' : 'primary'}
         ></Chip>
       ),
@@ -54,7 +54,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
         <Chip
           label={_data?.trxSettings?.chargesType}
           size="small"
-          sx={{ fontSize: '11px' }}
+          sx={{ fontSize: '11px' , color: 'white', }}
           color={_data.feeType === 'fixed' ? 'default' : 'primary'}
         ></Chip>
       ),

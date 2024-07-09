@@ -19,7 +19,6 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { createAdminData, getAdminPermissionsList, checkAdminEmail, checkAdminUsername } = useAdminActions();
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const navigate = useNavigate();
-  console.log('adminPermissionsList ::', adminPermissionsList);
   const location: any = useLocation();
   const params: any = useParams();
 

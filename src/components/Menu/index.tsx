@@ -129,15 +129,17 @@ const Menu = ({ menu }: { menu: any }) => {
         }}
       >
         <MenuIcon menu={menu} type={'menu'} length={-1} index={-1} />
-        {menu?.options?.length > 0 && (
+        {/* {menu?.options?.length > 0 && (
           <img
             src={up_arrow}
             alt=""
+            className={`!text-base sm:!text-lg cursor-pointer bg-black ${drawer.expendKey === menu.key && drawer.expendMenu ? 'rotate-180' : 'rotate-90'
+              }`}
             className={`!text-base sm:!text-lg cursor-pointer ${
               drawer.expendKey === menu.key && drawer.expendMenu ? 'rotate-180' : 'rotate-90'
             }`}
           />
-        )}
+        )} */}
       </ListItem>
       {menu?.options?.length > 0 && (
         <Collapse in={drawer.expendMenu && menu.key === drawer.expendKey} timeout="auto" unmountOnExit>

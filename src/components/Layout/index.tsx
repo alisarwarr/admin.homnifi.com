@@ -147,6 +147,14 @@ export default function Layout(): JSX.Element {
       fontFamily: 'Poppins, sans-serif !important',
       fontWeightBold: '400 !important',
     },
+    palette: {
+      primary: {
+        main: '#1B9FDA',
+      },
+      secondary: {
+        main: '#1B9FDA',
+      },
+    },
   });
 
   return (
@@ -185,7 +193,7 @@ export default function Layout(): JSX.Element {
           <div ref={drawerRef}>
             <div className="h-full">
               {allDrawerOptions
-                .slice(0, !user?.superAdmin ? allDrawerOptions.length - 1 : allDrawerOptions.length)
+
                 .map((item: any, index: number) => (
                   <div key={index}>
                     {index < allDrawerOptions.length && (

@@ -29,6 +29,8 @@ export interface Product {
   createdAt: string; // Assuming it's always a string (date)
 }
 
+
+
 export interface ProductStateSlice {
   products: {
     list: Product[];

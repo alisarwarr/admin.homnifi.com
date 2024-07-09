@@ -16,6 +16,7 @@ import { useTokenActions } from '../../../../store/token/tokenAction';
 import { CapitalizeFirstLetter } from '../../../../utils/utils';
 import ReactSelect from '../../../../components/ReactSelect';
 import { TRANSACTION_PROCESS, TRANSACTION_TYPES, WITHDRAW_FEE_TYPES } from '../../../../constants';
+import GlobalSelect from '../../../../components/Global/GlobalSelect';
 
 const validationSchema = Yup.object().shape({
   feeType: Yup.mixed(),
@@ -23,9 +24,9 @@ const validationSchema = Yup.object().shape({
   minAmount: Yup.number().nullable(),
   maxAmount: Yup.number().nullable(),
   trxType: Yup.mixed(),
+  processType: Yup.mixed(),
   chargesType: Yup.mixed(),
   charges: Yup.number(),
-
   name: Yup.string(),
 });
 
@@ -69,7 +70,7 @@ const TokenTransactionSettingDetails = () => {
     maxAmount: 0,
     trxType: '',
     tokenName: '',
-    processType:''
+    processType: '',
   };
 
   const formik = useFormik({
@@ -82,7 +83,7 @@ const TokenTransactionSettingDetails = () => {
         feeType: values.feeType.value,
         trxType: values.trxType.value,
         chargesType: values.chargesType.value,
-        processType: values.trxProcess.processType,
+        processType: values.processType.value,
       };
       delete _values.token;
       setSaveLoading(true);
@@ -132,8 +133,12 @@ const TokenTransactionSettingDetails = () => {
               value: _state.trxSettings?.processType,
             },
 
+            // processType: {
+            //   label: CapitalizeFirstLetter(_state.trxSettings?.processType),
+            //   value: _state.trxSettings?.processType,
+            // },
+
             trxType: { label: CapitalizeFirstLetter(_state.trxSettings?.trxType), value: _state.trxSettings?.trxType },
-            symbol: _state.symbol,
             name: _state.name,
             // name: _state.name,
           });
@@ -183,13 +188,13 @@ const TokenTransactionSettingDetails = () => {
           })}
 
           {state?.transactionType !== 'SWAP' && (
-            <ReactSelect
+            <GlobalSelect
               formik={formik}
               label="Fee Type"
               name="feeType"
               options={[
-                { label: 'Fixed', value: WITHDRAW_FEE_TYPES.FIXED },
-                { label: 'Percentage', value: WITHDRAW_FEE_TYPES.PERCENTAGE },
+                { name: 'Fixed', value: WITHDRAW_FEE_TYPES.FIXED },
+                { name: 'Percentage', value: WITHDRAW_FEE_TYPES.PERCENTAGE },
               ]}
               className="z-50"
               onChange={(e: any) => {
@@ -197,23 +202,25 @@ const TokenTransactionSettingDetails = () => {
               }}
             />
           )}
-          <ReactSelect
-            formik={formik}
-            label="Transaction Process"
+           <GlobalSelect
             name="trxType"
+            label="Transaction Process"
+            required
+            placeholder="Select Transaction Type"
             options={[
-              { label: 'Deposit', value: TRANSACTION_TYPES.DEPOSIT },
-              { label: 'WithDraw', value: TRANSACTION_TYPES.WITHDRAW },
-              { label: 'Transfer', value: TRANSACTION_TYPES.TRANSFER },
-              { label: 'Swap', value: TRANSACTION_TYPES.SWAP },
+              { label: 'Deposit', value: 'DEPOSIT' },
+              { label: 'Withdraw', value: 'WITHDRAW' },
+              { label: 'Transfer', value: 'TRANSFER' },
+              { label: 'Swap', value: 'SWAP' },
             ]}
-            className="z-50 text-primary"
-            onChange={(e: any) => {
-              formik.setFieldValue('trxType', e);
-            }}
+            setFieldTouched={formik.setFieldTouched}
+            setFieldValue={formik.setFieldValue}
+            isError={formik.touched.trxType && !!formik.errors.trxType}
+            value={formik.values.trxType.value}
+            isMulti
           />
 
-          <ReactSelect
+          <GlobalSelect
             formik={formik}
             label="Charges Fees"
             name="chargesType"
@@ -226,7 +233,7 @@ const TokenTransactionSettingDetails = () => {
               formik.setFieldValue('chargesType', e);
             }}
           />
-          <ReactSelect
+          <GlobalSelect
             formik={formik}
             label="Trx Process"
             name="processType"
