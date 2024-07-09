@@ -51,6 +51,8 @@ import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
 import Faqs from '../pages/TransactionHistory/Faqs';
 import AddFaqs from '../pages/TransactionHistory/Faqs/AddFaqs';
+import Maintenance from '../pages/Admins/Maintenance';
+import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
 
 export const router = createBrowserRouter([
   {
@@ -481,6 +483,36 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <AdminDeatils create={true} />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/adminsettings/maintenance',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Maintenance />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/adminsettings/authslider/images',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <SliderImages />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/adminsettings/authslider/text',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <SliderImages />
             </ProtectedRoute>
           </React.Suspense>
         ),

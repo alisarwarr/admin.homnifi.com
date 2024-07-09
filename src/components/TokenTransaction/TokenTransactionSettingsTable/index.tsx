@@ -4,6 +4,7 @@ import { TokenTransactionSettingType } from '../../../store/token/tokenSlice';
 import GlobalTable from '../../Table/GlobalTable';
 import { Chip, Tooltip } from '@mui/material';
 import TokenNameWithLogo from '../../TokenNameWithLogo';
+import { CapitalizeAllLetters, CapitalizeFirstLetter } from '../../../utils/utils';
 
 type Props = {
   data: TokenTransactionSettingType[];
@@ -30,11 +31,10 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
   const navigate = useNavigate();
 
   const rows = data?.map((_data) => {
-    console.log('🚀 ~ rows ~ _data: _data_data_data_data', _data);
     return {
       tokenName: <TokenNameWithLogo tokenName={_data.name ?? ''} />,
-      trxProcess: _data?.trxSettings?.trxType,
-      processType:_data?.trxSettings?.processType,
+      trxProcess: CapitalizeFirstLetter(_data?.trxSettings?.trxType),
+      processType:CapitalizeFirstLetter(_data?.trxSettings?.processType),
       minimumTrxAmount: _data?.trxSettings?.minAmount ?? 'Unlimited',
       maximumTrxAmount: _data?.trxSettings?.maxAmount ?? 'Unlimited',
 
@@ -43,7 +43,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
       fee: _data.trxSettings?.fee,
       feeType: (
         <Chip
-          label={_data?.trxSettings?.feeType}
+          label={CapitalizeFirstLetter(_data?.trxSettings?.feeType)}
           size="small"
           sx={{ fontSize: '11px' ,color: 'white', }}
           color={_data.feeType === 'fixed' ? 'default' : 'primary'}
@@ -52,7 +52,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
       charges: _data.trxSettings?.charges,
       chargesType: (
         <Chip
-          label={_data?.trxSettings?.chargesType}
+          label={CapitalizeFirstLetter(_data?.trxSettings?.chargesType)}
           size="small"
           sx={{ fontSize: '11px' , color: 'white', }}
           color={_data.feeType === 'fixed' ? 'default' : 'primary'}

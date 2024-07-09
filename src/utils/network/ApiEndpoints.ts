@@ -50,8 +50,8 @@ export const WALLET_MIGRATIONS_ACTIONS = '/wallet/migration/action';
 // HISTORY
 export const WALLET_SWAP_HISTORY = '/wallet/swap/history';
 export const WALLET_MIGRATE_HISTORY = '/wallet/migrate/history';
-export const WALLET_DEPOSIT_HISTORY = '/wallet/deposit/history';
-export const WALLET_WITHDRAW_HISTORY = '/wallet/withdraw/history';
+export const WALLET_DEPOSIT_HISTORY = '/wallets/deposits';
+export const WALLET_WITHDRAW_HISTORY = '/wallets/withdraw/history';
 export const FEATURE_PURCHASE_HISTORY = '/feature/purchase/history';
 export const PRODUCT_PURCHASE_HISTORY = '/product/purchase/history';
 

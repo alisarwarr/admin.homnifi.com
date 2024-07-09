@@ -21,6 +21,8 @@ const Signin = ({ setStatus }: { setStatus?: () => void }) => {
   const navigate = useNavigate();
   const Login = async (values) => {
     const { data } = await userLogin(values);
+    console.log("🚀 ~ Login ~ data:", data)
+
     if (!data.status) {
         errorNotify(data.message)
     //   toast.error(data.message);

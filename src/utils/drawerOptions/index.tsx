@@ -14,7 +14,7 @@ import {
 } from '../../images/drawer/light';
 import { ArrowDown_, emptyWallet_, flash_, Swap_ } from '../../images/drawer/dark';
 import { setting, settingDark, swapIcon, users, usersDark } from '../../images/other';
-import { Dashboard, Wallet , Admin, CloundK2} from '../../images/drawer';
+import { Dashboard, Wallet, Admin, CloundK2 } from '../../images/drawer';
 
 export interface DrawerOption {
   name: string;
@@ -46,20 +46,20 @@ export const allDrawerOptions: DrawerSection[] = [
       },
     ],
   },
-  {
-    options: [
-      {
-        name: 'Features',
-        icon: <Dashboard />,
-        icon_dark: FeauresDark,
-        url: '/features',
-        key: 'features',
-        active: false,
-        options: [],
-        permissions: [`all`, `superadmin`, 'features'],
-      },
-    ],
-  },
+  // {
+  //   options: [
+  //     {
+  //       name: 'Features',
+  //       icon: <Dashboard />,
+  //       icon_dark: FeauresDark,
+  //       url: '/features',
+  //       key: 'features',
+  //       active: false,
+  //       options: [],
+  //       permissions: [`all`, `superadmin`, 'features'],
+  //     },
+  //   ],
+  // },
 
   // {
   //   options: [
@@ -79,22 +79,22 @@ export const allDrawerOptions: DrawerSection[] = [
   {
     options: [
       {
-        name: 'Tokens Settings',
+        name: 'Tokens',
         icon: <Dashboard />,
         icon_dark: emptyWallet_,
         url: '',
-        key: 'token-settings',
+        key: 'token',
         active: false,
         options: [
           {
-            name: 'Tokens',
+            name: 'Tokens settings',
             icon: <Dashboard />,
             icon_dark: setting,
             url: '/tokens',
-            key: 'tokens',
+            key: 'tokens-settings',
             active: false,
             options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-assets'],
+            permissions: [`all`, `superadmin`, 'tokens_settings'],
             // 'ss'
           },
           {
@@ -198,20 +198,7 @@ export const allDrawerOptions: DrawerSection[] = [
       },
     ],
   },
-  {
-    options: [
-      {
-        name: 'Admins',
-        icon: <Admin />,
-        icon_dark: AdminDark,
-        url: '/admins',
-        key: 'admins',
-        active: false,
-        options: [],
-        permissions: [`all`, `superadmin`, 'admins'],
-      },
-    ],
-  },
+
   {
     options: [
       {
@@ -235,8 +222,66 @@ export const allDrawerOptions: DrawerSection[] = [
         url: '/admins',
         key: 'admins',
         active: false,
-        options: [],
+        options: [
+          {
+            name: 'Friends',
+            icon: <Admin />,
+            icon_dark: AdminDark,
+            url: '',
+            key: 'friends',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admins'],
+          },
+          {
+            name: 'Super Node',
+            icon: <Admin />,
+            icon_dark: AdminDark,
+            url: '',
+            key: 'super-node',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admins'],
+          },
+        ],
         permissions: [`all`, `superadmin`, 'admins'],
+      },
+    ],
+  },
+  {
+    options: [
+      {
+        name: 'Admin Setting',
+        icon: <Admin />,
+        icon_dark: AdminDark,
+        url: '',
+        key: 'admins-setting',
+        active: false,
+        options: [
+          {
+            name: 'Maintenance Setting',
+            icon: <Dashboard />,
+
+            icon_dark: setting,
+            url: 'adminsettings/maintenance',
+            key: 'admin-maintenance-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
+          },
+          {
+            name: 'Auth Slider Setting',
+            icon: <Dashboard />,
+
+            icon_dark: setting,
+            url: 'adminsettings/maintenance',
+            key: 'admin-maintenance-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
+          },
+        ],
+        permissions: [`all`, `superadmin`, 'admins_setting'],
       },
     ],
   },
