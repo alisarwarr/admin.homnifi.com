@@ -13,6 +13,7 @@ import { useCustomerActions } from '../../store/customer/customerActions';
 import ReactSelect from '../ReactSelect';
 import { useSelector } from 'react-redux';
 import { selectAdminPermissionsList } from '../../store/admin/adminSlice';
+import CustomDropdown from '../CustomDropdown';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { updateCustomer } = useCustomerActions();
@@ -173,7 +174,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
       >
         {({ errors, handleChange, values, touched, setFieldValue, setFieldTouched, setFieldError }) => {
           return (
-            <Form className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto">
+            <Form className="h-full gap-10 space-y-9 w-full  md:w-[70%] sm:w-full m-auto">
               <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
                 <div className="flex flex-col gap-2 items-end">
                   <div className="w-full relative">
@@ -362,7 +363,6 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                 <>{}</>
               </div>
 
-              {/* start  */}
               <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
                 <div className="flex flex-col gap-2 items-end justify-center ">
                   <div className="w-full">
@@ -407,8 +407,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
                   </div>
                 </div>
               </div>
-
-              {/* end  */}
+              <CustomDropdown />
               {(edit || edit === undefined) && (
                 <Button
                   onClick={() => {
