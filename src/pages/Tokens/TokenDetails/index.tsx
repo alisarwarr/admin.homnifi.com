@@ -13,6 +13,8 @@ import { useSelector } from 'react-redux';
 import { FormControlLabel, Switch } from '@mui/material';
 import { Token, selectToken } from '../../../store/token/tokenSlice';
 import { useTokenActions } from '../../../store/token/tokenAction';
+import GlobalFormControlLabel from '../../../components/Global/GlobalFormControlLabel';
+import GlobalSwitch from '../../../components/Global/GlobalSwitch';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required.'),
@@ -80,7 +82,7 @@ const TokenDetails = () => {
 
       try {
         const response = id && (await updateToken(values.id, values));
-        console.log("🚀 ~ onSu   nse:", response)
+        console.log('🚀 ~ onSu   nse:', response);
         if (response.status) {
           if (!id) {
             successAlert(response?.message);
@@ -125,7 +127,7 @@ const TokenDetails = () => {
             symbol: token.symbol,
             withdrawEnabled: token.settings.withdrawEnabled,
             depositEnabled: token.settings.depositEnabled,
-            id:token._id,
+            id: token._id,
             // canTopup: token.canTopup,
 
             fromSwapEnabled: token.settings.fromSwapEnabled,
@@ -163,7 +165,19 @@ const TokenDetails = () => {
           {switches.map((item) => {
             return (
               <>
-                <FormControlLabel
+                <GlobalFormControlLabel
+                  control={
+                    <GlobalSwitch
+                    checked={formik.values[item.key]}
+                      onChange={(e) => {
+                        formik.setFieldValue(item.key, e.target.checked);
+                      }}
+                    />
+                  }
+                  label="My Custom Switch"
+                  className="text-primary"
+                />
+                {/* <FormControlLabel
                   control={<Switch />}
                   label={item.label}
                   className="text-primary"
@@ -171,7 +185,7 @@ const TokenDetails = () => {
                   onChange={(e: any) => {
                     formik.setFieldValue(item.key, e.target.checked);
                   }}
-                />
+                /> */}
               </>
             );
           })}

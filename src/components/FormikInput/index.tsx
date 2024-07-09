@@ -1,4 +1,5 @@
-import { InputAdornment, TextField } from '@mui/material';
+import React from 'react';
+import GlobalInput from '../Global/GlobalInput';
 
 export default function FormikInput({
   label,
@@ -39,70 +40,22 @@ export default function FormikInput({
 }) {
   return (
     <div className="w-full">
-      <div className={`flex flex-col gap-1 relative  ${className}`}>
-        <>
-          <TextField
-            multiline={multiline}
-            rows={rows}
-            error={error && touched ? true : false}
-            label={label}
-            variant="outlined"
-            className={`w-full`}
-            type={type}
-            name={name}
-            onChange={onChange}
-            placeholder={placeholder}
-            value={value ? value : null}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                '& fieldset': {
-                  borderColor: '#D7D7D7', // default outline color
-                },
-                '&:hover fieldset': {
-                  borderColor: 'primary.main', // outline color on hover
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'primary.main', // outline color when focused
-                },
-              },
-              '& .MuiFormLabel-root': {
-                fontSize: '0.8rem',
-              },
-              '& .MuiInputBase-input': {
-                fontSize: '0.8rem',
-                ...inputStyle,
-              },
-              '&:hover fieldset': {
-                borderColor: '#115293', // primary.dark outline color on hover
-              },
-              '&.Mui-focused fieldset': {
-                borderColor: '#1976d2', // primary.main outline color when focused
-              }
-            }}
-            inputRef={inputRef}
-            InputLabelProps={{
-              shrink: shrink,
-            }}
-            InputProps={{
-              startAdornment: showAdornment ? <InputAdornment position="start">{adornment}</InputAdornment> : <></>,
-            }}
-            disabled={disabled}
-          />
-          {/* {isRuntimeCheck && (
-                <RuntimeCheck
-                    isTyping={isTyping}
-                    availablity={availablity}
-                    onClick={() => {
-                        setFieldValue(name, "")
-                    }}
-                    value={value}
-                    error={error}
-                    message={messageRuntimeCheck}
-                    className={`top-3 right-0 ${className}`}
-                />
-            )} */}
-          {error && touched && <span className="text-xs text-errorColor">{error}</span>}
-        </>
+      <div className={`flex flex-col gap-1 relative ${className}`}>
+        <GlobalInput
+          label={label}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={() => {}} // Adjust if you have onBlur functionality
+          isError={error && touched}
+          error={error}
+          disabled={disabled}
+          className={className}
+          labelStyle="text-sm font-medium" // Adjust the label style as needed
+        />
+        {error && touched && <span className="text-xs text-errorColor">{error}</span>}
       </div>
     </div>
   );

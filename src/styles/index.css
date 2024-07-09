@@ -416,3 +416,45 @@ opacity: 0.5
 .authSlider .slick-dots .slick-active button:before {
 opacity: 1 !important;
 }
+
+
+.custom-switch .nextui-switch-track {
+  background-color: #d5dbe0;
+}
+
+.custom-switch .nextui-switch-thumb {
+  background-color: white;
+}
+
+.custom-switch input:checked + .nextui-switch-track {
+  background-color: green;
+}
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #50505060;
+  border-radius: 10px;
+}
+
+.react-toggle--checked .react-toggle-track {
+  background-color: #5bac0a !important;
+}
+.react-toggle-track {
+  width: 48px !important;
+
+  background-color: #d5dbe0 !important;
+}
+.react-toggle-thumb{
+  box-shadow: none !important;
+}
+.react-toggle--checked .react-toggle-thumb{
+  left: 24px !important;
+}
