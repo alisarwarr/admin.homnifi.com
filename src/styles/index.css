@@ -458,3 +458,19 @@ opacity: 1 !important;
 .react-toggle--checked .react-toggle-thumb{
   left: 24px !important;
 }
+
+.custom-checkbox {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #d1d5db; /* Tailwind gray-300 */
+  border-radius: 0.125rem; /* Tailwind rounded-sm */
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 1.2em;
+  height: 1.2rem;
+  accent-color: green;
+}

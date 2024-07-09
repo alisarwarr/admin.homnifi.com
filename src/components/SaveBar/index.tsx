@@ -21,7 +21,7 @@ const SaveBar = ({
   return (
     <div className="w-full flex justify-end items-center gap-2">
       {showCancelButton && (
-        <Button buttonType="button" onClick={onCancel} className="!py-2  !text-primary">
+        <Button buttonType="button" onClick={onCancel} className="!py-2 bg-white !text-primary">
           {cancelBtnText}
         </Button>
       )}

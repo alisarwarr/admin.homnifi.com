@@ -8,7 +8,7 @@ import { setLogout } from '../../store/user/userSlice';
 
 const logout = () => {
   store.dispatch(setLogout());
-  window.location.href = '/auth/login';
+  window.location.href = '/auth/signin';
 };
 
 export default function ApiRequest() {
@@ -31,7 +31,7 @@ export default function ApiRequest() {
       }
 
       if (error.response.status === 401) {
-        logout();
+        // logout();
       }
 
       if (error.response.status === 403) {

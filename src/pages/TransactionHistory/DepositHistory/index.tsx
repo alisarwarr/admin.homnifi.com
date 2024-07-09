@@ -29,6 +29,7 @@ type FILTER = {
 const DepositHistory = () => {
   const { getDepositHistoryRequests } = useHistoryActions();
   const { depositHistory } = useSelector(selectHistorySlice);
+  console.log("🚀 ~ DepositHistory ~ depositHistory:", depositHistory)
   const [columns, setColumns] = useState<any[]>(headCells);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FILTER>({
@@ -112,7 +113,7 @@ const DepositHistory = () => {
       </div>
 
       <GlobalTable
-        rows={rows}
+        rows={[1,2,3]}
         headCells={columns?.filter((itm) => itm?.show === true)}
         isLoading={loading}
         totalPages={depositHistory?.totalPages}

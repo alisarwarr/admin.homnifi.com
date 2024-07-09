@@ -11,7 +11,6 @@ import TokenTransactionSettingsTable from '../../../components/TokenTransaction/
 const TokenTransactionSettings = () => {
   const { getTokenTransactionSettingList } = useTokenActions();
   const { tokenTransactionSettingList } = useSelector(selectToken);
-  console.log('🚀 ~ TokenTransactionSettings ~ tokenTransactionSettingList:', tokenTransactionSettingList);
 
   const [loading, setLoading] = useState(true);
 

@@ -29,8 +29,8 @@ export const useUserActions = () => {
         console.log('🚀 ~ .then ~ data:', data);
         dispatch(
           setLogin({
-            accessToken: data.user.token,
-            user: data.user,
+            accessToken: data.data.accessToken,
+            user: data.data.admin,
             loginLoading: false,
           })
         );
