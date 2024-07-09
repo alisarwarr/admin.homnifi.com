@@ -107,10 +107,11 @@ const CustomDropdown: React.FC = () => {
                 {filterResult.map((dt) => (
                   <div key={dt.name} className="px-4 py-3 w-full border-b-2">
                     <div className="flex gap-4">
-                      <div className="font-medium text-sm">{dt.name}</div>
+                      <div className="font-medium text-sm w-14">{dt.name}</div>
                       {dt.roles.map((rl) => (
-                        <div key={rl} className="text-md">
+                        <div key={rl}>
                           <GlobalCheckbox
+                            className="font-medium"
                             checked={selectedRoles[dt.name]?.includes(rl) ?? false}
                             setChecked={setTerms}
                             label={rl}
@@ -134,16 +135,17 @@ const CustomDropdown: React.FC = () => {
 
         {/* dropdown result section start */}
         {activedRoles.length > 0 && (
-          <div className="flex flex-col justify-end items-start rounded-md z-10 border  border-gray-300  text-gray-500 overflow-y-auto ">
-            <div className="h-[21vh]">
+          <div className="flex flex-col justify-end items-start rounded-md z-10 border border-gray-300  text-gray-500 overflow-y-auto">
+            <div className="h-[21vh] w-full">
               {activedRoles.map((dt) => (
-                <div key={dt.name} className="px-4 py-3  border-b-2">
+                <div key={dt.name} className="px-4 py-3 w-full border-b-2">
                   <div className="flex gap-4 justify-between">
                     <div className="flex gap-4">
-                      <div className="font-medium text-sm">{dt.name}</div>
+                      <div className="font-medium text-sm w-14">{dt.name}</div>
                       {dt.roles.map((rl) => (
-                        <div key={rl} className="text-sm">
+                        <div key={rl}>
                           <GlobalCheckbox
+                            className="font-medium"
                             checked={selectedRoles[dt.name]?.includes(rl) ?? false}
                             setChecked={setTerms}
                             label={rl}
