@@ -18,6 +18,7 @@ type TGlobalSelect = {
   setFieldTouched: any;
   setFieldValue: any;
   isError: boolean | undefined;
+ error?: string | any;
   value?: string | string[];
   isMulti?: boolean;
 };
@@ -32,6 +33,7 @@ const GlobalSelect = ({
   onChange,
   setFieldTouched,
   isError,
+  error,
   setFieldValue,
   value = '',
   isMulti = false,
@@ -49,6 +51,8 @@ const GlobalSelect = ({
   };
 
   const handleSelectValue = (selectedOption: IOptions) => {
+  console.log("🚀 ~ handleSelectValue ~ selectedOption:", selectedOption)
+
     const selectedValue = selectedOption.value;
     let newValue;
     if (isMulti) {
@@ -65,7 +69,6 @@ const GlobalSelect = ({
       newValue = selectedValue;
       setIsOpen(false);
     }
-    console.log('newValue', newValue);
     setFieldValue(name, selectedOption);
     // onChange && onChange(selectedOption); // Optionally trigger onChange if needed
   };
@@ -92,6 +95,7 @@ const GlobalSelect = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  console.log('isError , error', options.find((option) => option.value === value)?.label  , value , options)
 
   return (
     <div className="flex flex-col gap-2 text-sm">
@@ -110,8 +114,8 @@ const GlobalSelect = ({
 
         <div
           ref={dropdownRef}
-          className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-0 border border-blueGrey bg-white overflow-auto max-h-52 ${
-            isOpen ? 'translate-y-0 visible opacity-100' : '-translate-y-10 invisible opacity-0'
+          className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-1 border border-blueGrey bg-white overflow-auto max-h-52 ${
+            isOpen ? 'translate-y-0 visible opacity-100 ' : '-translate-y-10 invisible opacity-0'
           } transition-all ease-in-out duration-300`}
           style={{ zIndex: 99 }}
         >
@@ -142,6 +146,9 @@ const GlobalSelect = ({
           />
         </div>
       </div>
+      {isError  && (
+        <span className="text-xs text-redDanger text-right">{error}</span>
+      )}
     </div>
   );
 };

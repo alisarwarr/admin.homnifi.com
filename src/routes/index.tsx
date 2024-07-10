@@ -53,6 +53,7 @@ import MigrationHistory from '../pages/Wallet/MIgrationHistory';
 import FeaturePurchaseHistory from '../pages/Wallet/FeaturePurchaseHistory';
 import ProductPurchaseHistory from '../pages/Wallet/ProductPurchaseHistory';
 import SwapHistory from '../pages/Wallet/SwapHistory';
+import Cloud2 from '../pages/Cloud2';
 
 export const router = createBrowserRouter([
   {
@@ -99,6 +100,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <TokenTransactionSettings />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Cloud2 />
             </ProtectedRoute>
           </React.Suspense>
         ),
@@ -262,7 +273,7 @@ export const router = createBrowserRouter([
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <WithdrawHistory />
+              <WithdrawRequests />
             </ProtectedRoute>
           </React.Suspense>
         ),

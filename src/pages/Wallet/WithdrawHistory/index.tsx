@@ -38,6 +38,7 @@ type FILTER = {
 const WithdrawHistory = () => {
   const { getWithdrawHistoryRequests } = useHistoryActions();
   const { withdrawHistory } = useSelector(selectHistorySlice);
+  console.log("🚀 ~ WithdrawHistory ~ withdrawHistory:", withdrawHistory)
   const [columns, setColumns] = useState<any[]>(headCells);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FILTER>({
@@ -49,14 +50,13 @@ const WithdrawHistory = () => {
   const rows = withdrawHistory?.list?.map((_data, index) => {
     return {
       id: getTableIndexNumber(filter.page, index, filter.limit),
-      user: `${_data?.user?.firstName ? _data?.user?.firstName : ''} ${
-        _data?.user?.lastName ? _data?.user?.lastName : '-'
+      user: ` : '-'
       }`,
       requestId: _data.requestId,
       requestDate: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
-      token: <TokenNameWithLogo tokenName={_data.token.name} />,
+      token: <TokenNameWithLogo tokenName={_data?.token?.name} />,
       amount: _data.amount,
-      network: _data.network?.name,
+      network: '_data.network?.name',
       address: _data.address ? (
         <Tooltip title={_data.address}>
           <Chip label={_data.address} size="small" sx={{ fontSize: '11px' }} />
@@ -107,7 +107,7 @@ const WithdrawHistory = () => {
         user: `${row?.user?.firstName ? row?.user?.firstName : ''} ${row?.user?.lastName ? row?.user?.lastName : '-'}`,
         requestDate: moment(row?.createdAt).format('MMM, DD YYYY hh:mm'),
         token: row?.token?.name ?? '',
-        network: row?.network.name ?? '',
+        network: row?.network?.name ?? '',
       };
       showKeys.forEach((key) => (data[key] = _data[key] || ''));
       csvData.push(data);

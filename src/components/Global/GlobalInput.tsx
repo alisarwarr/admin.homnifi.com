@@ -55,8 +55,8 @@ const GlobalInput = ({
           className={`outline-none text-defaultBlack border py-2 px-4 text-xs rounded-full w-full ${isError ? 'border-redDanger' : 'border-blueGrey'} ${className}`}
         />
         {isError ? (
-          <span className="absolute right-4">
-            <WarningIcon className="w-4" />
+          <span className="absolute right-2">
+            <WarningIcon className="w-6" />
           </span>
         ) : (
           type === 'password' && (

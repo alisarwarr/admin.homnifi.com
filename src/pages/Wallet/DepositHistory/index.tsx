@@ -18,7 +18,9 @@ const headCells = [
   { id: 'createdAt', label: 'Date', show: true },
   { id: 'fromToken', label: 'From Token', show: true },
   { id: 'amount', label: 'Amount', show: true },
+  { id: 'hash', label: 'Fee', show: true },
   { id: 'fee', label: 'Fee', show: true },
+
   { id: 'status', label: 'Status', show: true, dataClass: 'text-center' },
 ];
 type FILTER = {
@@ -49,6 +51,7 @@ const DepositHistory = () => {
       amount: _data?.amount,
       status: <StatusChip status={_data?.transactionStatus} />,
       fee: _data.fee,
+      hash:_data.hash
     };
   });
 

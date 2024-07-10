@@ -1,7 +1,7 @@
 export const API_INSTANCE = import.meta.env.VITE_API_INSTANCE + '/admin';
 
 //Auth
-export const LOGIN = '/auth/login';
+export const LOGIN = '/auth/signin';
 export const GET_PROFILE = '/profile';
 
 // Token
@@ -54,7 +54,7 @@ export const WALLET_WITHDRAW_HISTORY = '/wallets/withdraws';
 export const FEATURE_PURCHASE_HISTORY = '/feature/purchase/history';
 export const PRODUCT_PURCHASE_HISTORY = '/product/purchase/history';
 
-export const WALLET_WITHDRAWS = 'WALLET_WITHDRAW_HISTORY';
+export const WALLET_WITHDRAWS = '/wallets/withdraws';
 export const WALLET_WITHDRAWS_ACTIONS = '/wallet/withdraw/action';
 
 // PROVIDER
@@ -62,7 +62,7 @@ export const PROVIDER = '/provider';
 
 // PRODUCT
 export const PRODUCT = '/product';
-
+export const FAQ = '/faq/modules';
 // UTILS
 export const COUNTRIES = '/utils/countries';
 

@@ -20,24 +20,29 @@ import VouchersTable from '../../../../components/VouchersTable';
 import Dialog from '../../../../components/Dialog/BasicDialog';
 import { TRANSACTION_TYPES } from '../../../../constants';
 import GlobalSelect from '../../../../components/Global/GlobalSelect';
+import { useFaqActions } from '../../../../store/wallet/faqs/faqActions';
+import { lowerCaseAllLetters } from '../../../../utils/utils';
 
 const validationSchema = Yup.object().shape({
   type: Yup.mixed().required('Type is required.'),
   status: Yup.mixed().required('Status is required.'),
   question: Yup.string().required('Description is required.'),
-  url: Yup.number().required('Price is required.'),
+  videoUrl: Yup.string().required('Price is required.'),
+  asnwer: Yup.string(),
 });
 
 const updateValidationSchema = Yup.object().shape({
   type: Yup.mixed().required('Type is required.'),
   status: Yup.mixed().required('Status is required.'),
   question: Yup.string().required('Description is required.'),
-  url: Yup.number().required('Price is required.'),
+  videoUrl: Yup.string().required('Url is required.'),
+  answer: Yup.string(),
 });
 
 const formFields = [
   { key: 'question', label: 'Question', type: 'text' },
-  { key: 'url', label: 'Question', type: 'text' },
+  { key: 'answer', label: 'Answer', type: 'text' },
+  { key: 'videoUrl', label: 'Video Url', type: 'text' },
 ];
 
 const PRODUCT_STATUS_LABEL: any = {
@@ -50,29 +55,26 @@ const AddFaqs = () => {
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
   const [duplicateVouchers, setDuplicateVouchers] = useState({ open: false, duplicates: [] });
 
-  const { addProduct, getProducts, updateProduct, getProductById } = useProductActions();
-  const { getProviders } = useProvidersActions();
+  const { addFaq, getFaqs } = useFaqActions();
 
   const navigate = useNavigate();
 
-  const { providers } = useSelector(selectProviderSlice);
-  const { products } = useSelector(selectProductSlice);
-
   const { id } = useParams();
-
-  const fileInputRef = useRef<any>(null);
 
   const initialValues: {
     type: any;
     status: any;
     question: string;
-    url: any;
+    answer: string;
+    videoUrl: string;
+
     [key: string]: any;
   } = {
     type: '',
     status: '',
+    answer: '',
     question: '',
-    url: '',
+    videoUrl: '',
   };
 
   const formik = useFormik({
@@ -83,51 +85,41 @@ const AddFaqs = () => {
       setSaveLoading(true);
       const _values: any = {
         ...values,
-        provider: values.provider?.value,
-        status: values.status?.value,
+        type: lowerCaseAllLetters(values.type?.value),
       };
 
-      const formData = new FormData();
-      for (const key in _values) {
-        if (key === 'image') {
-          if (_values.image instanceof Blob) {
-            formData.append(key, _values[key]);
-            continue;
-          } else {
-            continue;
-          }
-        }
-
-        // if (key === 'vouchers' && id) {
-        //   continue;
-        // }
-
-        formData.append(key, _values[key]);
-      }
       try {
         let response;
 
         if (id) {
-          response = await updateProduct(id, formData);
+          // response = await updateProduct(id, formData);
         } else {
-          response = await addProduct(formData);
+          response = await addFaq(_values);
         }
-
         if (response?.status) {
-          await getProducts(true);
-          if (!id) {
-            successAlert(response?.message);
-            navigate('/products');
-          } else {
-            successAlert(response?.message);
-          }
-        } else {
-          if (response.data?.errorVouchers) {
-            setDuplicateVouchers({ open: true, duplicates: response.data?.errorVouchers });
-          } else {
-            errorAlert(response?.message);
-          }
+          successAlert(response?.message);
+          await getFaqs(true);
+
+            navigate('/history/faq');
+
         }
+        console.log('response', response);
+
+        // if (response?.status) {
+        //   await getFaqs(true);
+        //   if (!id) {
+        //     successAlert(response?.message);
+        //     navigate('/wa');
+        //   } else {
+        //     successAlert(response?.message);
+        //   }
+        // } else {
+        //   if (response.data?.errorVouchers) {
+        //     setDuplicateVouchers({ open: true, duplicates: response.data?.errorVouchers });
+        //   } else {
+        //     errorAlert(response?.message);
+        //   }
+        // }
       } catch (error) {
         console.error(`Product ${id ? 'update' : 'add'} failed`, error);
       } finally {
@@ -144,10 +136,9 @@ const AddFaqs = () => {
 
       <form onSubmit={formik.handleSubmit} className="">
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 mt-12">
-
           <GlobalSelect
             required
-            label="Trx. Type"
+            label="Transaction Type"
             name="type"
             options={[
               { label: 'Deposit', value: TRANSACTION_TYPES.DEPOSIT },
@@ -155,19 +146,16 @@ const AddFaqs = () => {
               { label: 'Transfer', value: TRANSACTION_TYPES.TRANSFER },
               { label: 'Swap', value: TRANSACTION_TYPES.SWAP },
             ]}
-            placeholder='Select Value'
+            placeholder="Select Value"
             setFieldTouched={() => formik.setFieldTouched('type', true)}
-            setFieldValue={(e: any) => {
-              formik.setFieldValue('type', e);
+            setFieldValue={(e: any, opition: any) => {
+              formik.setFieldValue(e, opition);
             }}
             isError={formik.touched.type && !!formik.errors.type}
+            error={formik.errors.type}
             value={formik.values.type.value}
-            onChange={(e: any) => {
-              formik.setFieldValue('type', e);
-            }}
             onBlur={formik.handleBlur}
           />
-
 
           <GlobalSelect
             required
@@ -177,16 +165,14 @@ const AddFaqs = () => {
               { label: 'Active', value: 'ACTIVE' },
               { label: 'In-Active', value: 'INACTIVE' },
             ]}
-            placeholder='Select Value'
+            placeholder="Select Value"
             setFieldTouched={() => formik.setFieldTouched('status', true)}
-            setFieldValue={(e: any) => {
-              formik.setFieldValue('status', e);
+            setFieldValue={(e: any, opition: any) => {
+              formik.setFieldValue(e, opition);
             }}
             isError={formik.touched.status && !!formik.errors.status}
+            error={formik.errors.status}
             value={formik.values.status.value}
-            onChange={(e: any) => {
-              formik.setFieldValue('status', e);
-            }}
             onBlur={formik.handleBlur}
           />
 
