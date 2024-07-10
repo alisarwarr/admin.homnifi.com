@@ -80,7 +80,7 @@ const CustomDropdown: React.FC = () => {
         >
           <div className="relative">
             <input
-              className="w-full h-12 border border-gray-300 text-gray-500 outline-none rounded-md px-4"
+              className="w-full h-12 border outline-none text-defaultBlack py-2 px-4 text-xs rounded-full"
               type="text"
               name="search"
               onFocus={() => {

@@ -13,7 +13,7 @@ type TGlobalSelect = {
   required?: boolean;
   placeholder?: string;
   options: IOptions[];
-  onChange?: (value: string | string[]) => void;
+  onChange?: (value: string | string[] | any) => void;
   onBlur?: (e: React.ChangeEvent<HTMLDivElement>) => void;
   setFieldTouched: any;
   setFieldValue: any;
@@ -36,7 +36,6 @@ const GlobalSelect = ({
   value = '',
   isMulti = false,
 }: TGlobalSelect) => {
-  console.log('🚀 ~ valuevaluevaluevalue:', value);
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [filteredOptions, setFilteredOptions] = React.useState(options);
@@ -49,6 +48,7 @@ const GlobalSelect = ({
   };
 
   const handleSelectValue = (selectedOption: IOptions) => {
+    onChange && onChange(selectedOption);
     const selectedValue = selectedOption.value;
     let newValue;
     if (isMulti) {
@@ -65,7 +65,6 @@ const GlobalSelect = ({
       newValue = selectedValue;
       setIsOpen(false);
     }
-    console.log('newValue', newValue);
     setFieldValue(name, selectedOption);
     // onChange && onChange(selectedOption); // Optionally trigger onChange if needed
   };
