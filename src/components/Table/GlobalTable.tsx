@@ -1,7 +1,7 @@
 import { Checkbox, IconButton, InputBase, MenuItem, Pagination, Select, Skeleton, Tooltip } from '@mui/material';
 import NoData from './NoData';
 import { useEffect, useState } from 'react';
-import { arrowDown, arrowUp, exportIcon, filterIcon, lock, mail, print, unlock } from '../../images/other';
+import { arrowDown, arrowUp, copy, exportIcon, filterIcon, lock, mail, print, unlock } from '../../images/other';
 import styled from '@emotion/styled';
 import FormikInput from '../FormikInput';
 import { mkConfig, generateCsv, download } from 'export-to-csv';
@@ -10,7 +10,7 @@ import MailUser from '../Users/MailUser';
 import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
-// import PaginationButtons from './PaginationButtons';
+import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
 
 const ActionsColors = {
   Complete: 'primaryGreen',
@@ -376,7 +376,12 @@ const GlobalTable = ({
                 <tbody>
                   {rows.map((row, index) => {
                     return (
-                      <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
+                      <tr
+                        key={index}
+                        className={`font-medium text-sm w-full border-b border-secondary hover:bg-gray-100 ${
+                          setClickeddRow && 'cursor-pointer'
+                        }`}
+                      >
                         {/* Checkbox column */}
                         {checkBoxes && (
                           <td>
@@ -396,11 +401,18 @@ const GlobalTable = ({
                                   setClickeddRow && setClickeddRow(row);
                                 }}
                                 key={index}
-                                className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup text-${
+                                className={`relative table-cell gap-2 font-medium text-xs text-textSecondary py-4 px-2 topup text-${
                                   ActionsColors[row[cell.id]]
                                 } ${cell.rowDataClass} ${cell.dataClass}`}
                               >
                                 {row[cell.id]}
+
+                                {(cell.id === 'destinations' || cell.id === 'txId') && (
+                                  <Copy
+                                    className="ml-3 cursor-pointer absolute top-6 right-12"
+                                    onClick={() => navigator.clipboard.writeText(row[cell.id])}
+                                  />
+                                )}
                               </td>
                             )
                           );

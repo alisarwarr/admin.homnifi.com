@@ -5,8 +5,14 @@ import GlobalSelect from '../../Global/GlobalSelect';
 import FormikInput from '../../FormikInput';
 import { ReactComponent as SeachIcon } from '../../../SVGIcons/searchIcon.svg';
 import GlobalDialog from '../../Dialog';
+import StepNumber from '../../Global/StepNumber';
+import StepLine from '../../Global/StepLine';
+import GlobalStepper from '../../Global/GlobalSteper';
+import { ReactComponent as CrossIcon } from '../../../SVGIcons/crossIcon.svg';
+import HistoryPopup from './HistoryPopup';
+
 function HostoryTabla() {
-  const [activeTab, setActiveTab] = React.useState('');
+  const [activeTab, setActiveTab] = React.useState('withdraw');
   const [test, setTest] = React.useState();
   const [clickeddRow, setClickeddRow] = React.useState<any>();
   const [filterState, setFilterState] = React.useState({
@@ -37,13 +43,13 @@ function HostoryTabla() {
       withdrawToken: 'withdrawToken 321',
       receiveToken: 'receiveToken 123',
       receivable: 'USDT',
-      destinations: 'destinations ABC',
+      destinations: 'destinationsABC',
       txId: 'txId 234ABC',
       status: 'Complete',
       actions: (
         <div className="flex">
-          <button className="text-xs px-2 py-1 rounded-sm text-white bg-primaryGreen cursor-pointer">Accept</button>
-          <button className="text-xs px-2 py-1  rounded-sm text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
+          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">Accept</button>
+          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
         </div>
       ),
     },
@@ -59,8 +65,8 @@ function HostoryTabla() {
       status: 'Pending',
       actions: (
         <div className="flex">
-          <button className="text-xs px-2 py-1 rounded-sm text-white bg-primaryGreen cursor-pointer">Accept</button>
-          <button className="text-xs px-2 py-1  rounded-sm text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
+          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">Accept</button>
+          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
         </div>
       ),
     },
@@ -76,8 +82,8 @@ function HostoryTabla() {
       status: 'Failed',
       actions: (
         <div className="flex">
-          <button className="text-xs px-2 py-1 rounded-sm text-white bg-primaryGreen cursor-pointer">Accept</button>
-          <button className="text-xs px-2 py-1  rounded-sm text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
+          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">Accept</button>
+          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
         </div>
       ),
     },
@@ -140,11 +146,15 @@ function HostoryTabla() {
     setActiveTab('');
   };
 
+  const onPopupHandler = () => {
+    setClickeddRow('');
+  };
+
   return (
     <>
       <div className="w-full border py-2 px-2 rounded-md">
         <div className="flex items-center bg-gray-100">
-          <h1 className="flex-1 font-medium text-2xl px-3 py-1">Wallet</h1>
+          <h1 className="flex-1 font-semibold text-2xl px-3 py-1">Wallet</h1>
         </div>
 
         <div className="flex gap-2 my-4">
@@ -210,22 +220,11 @@ function HostoryTabla() {
           rows={row}
           headCells={headCells}
           isLoading={false}
-          paginate={true}
+          paginate={false}
           setClickeddRow={setClickeddRow}
         />
       </div>
-
-      <GlobalDialog
-        open={clickeddRow ? true : false}
-        size="sm"
-        onClose={() => setClickeddRow('')}
-        content={
-          <>
-            <h2>hello</h2>
-          </>
-        }
-        closeButtonShow={true}
-      ></GlobalDialog>
+      <HistoryPopup open={clickeddRow ? true : false} onClose={onPopupHandler} />
     </>
   );
 }

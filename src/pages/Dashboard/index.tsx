@@ -58,29 +58,35 @@ const Dashboard = () => {
 
   const data = [
     {
-      id: 'total user',
-      label: 'Total User',
-      value: 520,
+      id: 'Admin',
+      label: 'Total Admin',
+      value: 220,
       color: '#1B9FDA',
     },
     {
-      id: 'total subscriber',
-      label: 'total subscriber',
-      value: 500,
+      id: 'Subscriber',
+      label: 'Total Subscriber',
+      value: 200,
       color: '#EB6535',
+    },
+    {
+      id: 'Users',
+      label: 'Total User',
+      value: 300,
+      color: '#5BAC0A',
     },
   ];
 
-  const SuperNode = () => {
+  const Users = () => {
     return (
       <div className="w-full border py-4 px-6 rounded-md">
-        <h3 className="text-lg font-medium pt-2">Supper Node</h3>
+        <h3 className="text-lg font-medium pt-2">Users</h3>
         <div className="flex flex-col justify-between items-start h-[30vh] w-full -mt-12">
           <ResponsivePie
-            colors={['#357EEB', '#EB6535']}
+            colors={['#357EEB', '#EB6535', '#5BAC0A']}
             data={data}
             margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-            startAngle={0}
+            startAngle={2}
             innerRadius={0.7}
             padAngle={1}
             activeOuterRadiusOffset={8}
@@ -175,13 +181,13 @@ const Dashboard = () => {
                 justify: false,
                 translateX: 0,
                 translateY: 56,
-                itemsSpacing: 0,
+                itemsSpacing: 30,
                 itemWidth: 100,
                 itemHeight: 18,
-                itemTextColor: '#999',
+                itemTextColor: '#99',
                 itemDirection: 'left-to-right',
                 itemOpacity: 1,
-                symbolSize: 18,
+                symbolSize: 9,
                 symbolShape: 'circle',
                 effects: [
                   {
@@ -207,37 +213,6 @@ const Dashboard = () => {
     );
   };
 
-  const TokensBalanceOverview = () => {
-    return (
-      <>
-        {allTokensBalance?.map((token: any) => {
-          return (
-            <div className="flex justify-between border border-gray-700 rounded-md p-2 bg-gradient">
-              <TokenNameWithLogo tokenName={token.name} />
-              <div>{token.balance}</div>
-            </div>
-          );
-        })}
-      </>
-    );
-  };
-
-  const FeeCollectedOverview = () => {
-    return (
-      <>
-        {feeCollected?.length > 0 &&
-          feeCollected.map((fee: any) => {
-            return (
-              <div className="flex justify-between rounded-md p-2 bg-gradient">
-                <div>{fee.transactionType}</div>
-                <div>{fee.total}</div>
-              </div>
-            );
-          })}
-      </>
-    );
-  };
-
   // useEffect(() => {
   //   (async () => {
   //     await getDashboardStats();
@@ -253,9 +228,7 @@ const Dashboard = () => {
         <div>
           <div className="py-2 px-2 grid md:grid-cols-2 gap-6">
             <CloudK2 />
-            <SuperNode />
-            {/*<Card title={'Tokens Balance'} Content={TokensBalanceOverview} />
-          <Card title={'Fee Collected'} Content={FeeCollectedOverview} /> */}
+            <Users />
           </div>
           <Wallet />
         </div>
