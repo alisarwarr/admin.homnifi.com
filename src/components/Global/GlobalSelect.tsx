@@ -21,6 +21,7 @@ type TGlobalSelect = {
   value?: string | string[];
   isMulti?: boolean;
   inputClass?: string;
+  labelOptionClass?: string;
 };
 
 const GlobalSelect = ({
@@ -37,6 +38,7 @@ const GlobalSelect = ({
   value = '',
   isMulti = false,
   inputClass,
+  labelOptionClass,
 }: TGlobalSelect) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -127,7 +129,7 @@ const GlobalSelect = ({
             <button
               type="button"
               key={index}
-              className={`p-2 border-b border-blueGrey text-defaultBlack hover:bg-gray-100 transition-all ease-in-out duration-300 ${
+              className={`p-2 border-b px-4 border-blueGrey text-defaultBlack hover:bg-gray-100 transition-all ease-in-out duration-300  ${labelOptionClass} ${
                 Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''
               }`}
               onClick={() => handleSelectValue(option)}

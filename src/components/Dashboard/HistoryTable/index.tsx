@@ -173,7 +173,7 @@ function HostoryTabla() {
 
         <div className="flex items-center justify-start gap-2 my-4 w-full">
           <div className="flex gap-2 items-center relative">
-            <FormikInput
+            <FormikInput   
               type="string"
               name="id"
               shrink={true}
@@ -188,6 +188,7 @@ function HostoryTabla() {
             {filterData.map((dt: any, index) => {
               return (
                 <GlobalSelect
+                labelOptionClass ={"text-left"}
                   name={dt.name}
                   placeholder={dt.placeholder}
                   options={[
