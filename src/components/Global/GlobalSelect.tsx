@@ -15,11 +15,12 @@ type TGlobalSelect = {
   options: IOptions[];
   onChange?: (value: string | string[] | any) => void;
   onBlur?: (e: React.ChangeEvent<HTMLDivElement>) => void;
-  setFieldTouched: any;
+  setFieldTouched?: any;
   setFieldValue: any;
   isError: boolean | undefined;
   value?: string | string[];
   isMulti?: boolean;
+  inputClass?: string;
 };
 
 const GlobalSelect = ({
@@ -35,6 +36,7 @@ const GlobalSelect = ({
   setFieldValue,
   value = '',
   isMulti = false,
+  inputClass,
 }: TGlobalSelect) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -101,7 +103,7 @@ const GlobalSelect = ({
         <div
           className={`bg-white text-defaultBlack  border ${
             isError ? 'border-redDanger' : 'border-blueGrey'
-          } py-2 px-4 text-xs rounded-full w-full cursor-pointer`}
+          } py-2 px-4 text-xs rounded-full w-full cursor-pointer ${inputClass}`}
           onClick={toggleDropdown}
         >
           {options.find((option) => option.value === value)?.label || placeholder}

@@ -11,6 +11,13 @@ import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
 // import PaginationButtons from './PaginationButtons';
+
+const ActionsColors = {
+  Complete: 'primaryGreen',
+  Pending: 'primary',
+  Failed: 'primaryRed',
+};
+
 type Props = {
   rows: any[];
   isLoading: boolean | undefined;
@@ -42,6 +49,7 @@ type Props = {
   refetch?: any;
   showInnerFiltersSearch?: boolean;
   innerFiltersClassName?: string;
+  setClickeddRow?: any;
 };
 
 const BootstrapInput = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -92,6 +100,7 @@ const GlobalTable = ({
   refetch,
   showInnerFiltersSearch = true,
   innerFiltersClassName = '',
+  setClickeddRow,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -383,8 +392,13 @@ const GlobalTable = ({
                           return (
                             cell.id !== '_id' && (
                               <td
+                                onClick={() => {
+                                  setClickeddRow && setClickeddRow(row);
+                                }}
                                 key={index}
-                                className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
+                                className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup text-${
+                                  ActionsColors[row[cell.id]]
+                                } ${cell.rowDataClass} ${cell.dataClass}`}
                               >
                                 {row[cell.id]}
                               </td>

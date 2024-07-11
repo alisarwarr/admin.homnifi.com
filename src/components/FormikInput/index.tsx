@@ -21,7 +21,7 @@ export default function FormikInput({
   rows = 0,
   isError = true,
 }: {
-  label: string;
+  label?: string;
   type: string;
   name: string;
   onChange?: any;
