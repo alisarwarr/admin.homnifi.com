@@ -1,22 +1,21 @@
 import { useState } from 'react';
 import { MachineImage } from '../../../../images/cloud';
 import { ArrowDownSvg, CopyIcon } from '../../../../images/svg';
-// import GlobalTable from '../../../../components/Global/GlobalTable';
 import Toottip from '../../../../components/Global/Toottip';
-import GlobalTable from '../../../../components/Table/GlobalTable';
 import Product from './MachinesAccordion/Product';
 import LifetimeRewards from './MachinesAccordion/LifetimeRewards';
 import Staked from './MachinesAccordion/Staked';
 import ExpiresIn from './MachinesAccordion/ExpiresIn';
 import Skalable from './MachinesAccordion/Skalable';
 
-
 type Props = {};
+
 type FILTER = {
   page: number;
   limit: number;
   search: string | null;
 };
+
 const RenderMachinesHistory = (props: Props) => {
   const [Accordion, setAccordion] = useState('1');
 
@@ -36,33 +35,7 @@ const RenderMachinesHistory = (props: Props) => {
     };
   }) => {
     return (
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <button
-            type="button"
-            className="px-4 py-1 bg-primaryDark text-white rounded-full hover:bg-primary transition-all"
-          >
-            + Stake
-          </button>
-
-          <Toottip
-            content={
-              <div className="p-3 bg-white shadow-md rounded-lg text-xs font-normal w-52">
-                You’ll start claiming your reward after 3 Years of staking. The due date is:{' '}
-                <span className="text-primary">25-July-2027</span>
-              </div>
-            }
-          >
-            <button
-              type="button"
-              disabled
-              className="px-4 py-1 bg-primary text-white rounded-full transition-all flex items-center gap-2"
-            >
-              <CopyIcon className="text-white w-2 h-2" /> Claim
-            </button>
-          </Toottip>
-        </div>
-
+      <div className="flex gap-3 items-center justify-between">
         <button type="button" onClick={() => setAccordion((prev) => (prev !== cloud.id ? cloud.id : ''))}>
           <ArrowDownSvg
             className={`w-4 h-4 text-searchColor transition-all ease-in-out duration-75 ${
@@ -78,27 +51,27 @@ const RenderMachinesHistory = (props: Props) => {
     {
       id: 'product',
       label: 'Product',
-      dataClass: 'w-[25%] ',
+      dataClass: 'w-72',
     },
     {
       id: 'lifetimeRewards',
       label: 'Lifetime Rewards',
-      dataClass: 'w-[15%]',
+      dataClass: 'w-72',
     },
     {
       id: 'staked',
       label: 'Staked',
-      dataClass: 'w-[15%]',
+      dataClass: 'w-72',
     },
     {
       id: 'claimableRewards',
       label: 'Claimable Rewards',
-      dataClass: 'w-[20%]',
+      dataClass: 'w-72',
     },
     {
       id: 'quickActions',
       label: 'Quick Actions',
-      dataClass: 'w-[50%]',
+      dataClass: 'w-72',
     },
   ];
 
@@ -182,16 +155,10 @@ const RenderMachinesHistory = (props: Props) => {
     },
   ];
 
-
-
-
-
-
-
   const rows = rowData.map((trx, i) => ({
     id: trx.id,
     product: (
-      <td className=" font-medium text-sm flex gap-2 items-center text-defaultBlack">
+      <div className="font-medium flex flex-row  text-sm gap-2 items-center text-defaultBlack">
         <span className="relative flex h-2 w-2">
           <span
             className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
@@ -205,57 +172,118 @@ const RenderMachinesHistory = (props: Props) => {
           ></span>
         </span>
         <img src={trx.product.image} alt="Machine" className="w-20 bg-black" />
-        {trx.product.name}
-      </td>
+
+
+        <span className="w-24">{trx.product.name}</span>
+      </div>
     ),
-    lifetimeRewards: <span className="text-defaultBlack">${trx.lifetimeRewards.toLocaleString()} ~$2</span>,
-    staked: <span className="text-defaultBlack">$ {trx.staked.toLocaleString()}</span>,
-    claimableRewards: <span className="text-defaultBlack">$ {trx.claimableRewards.toLocaleString()}</span>,
+    lifetimeRewards: <span className="font-medium ">${trx.lifetimeRewards.toLocaleString()} ~$2</span>,
+    staked: <span className="font-medium ">$ {trx.staked.toLocaleString()}</span>,
+    claimableRewards: <span className=" font-medium">$ {trx.claimableRewards.toLocaleString()}</span>,
     quickActions: <RenderActions cloud={trx} />,
   }));
 
-
-  const accordingrow:  any = {
-    product: <Product   />,
-    lifetimeRewards: <LifetimeRewards  />,
-    staked: <Staked  />,
-    claimableRewards: <Skalable  />,
-    quickActions: <ExpiresIn  />,
-  }
-
+  const accordingrow: any = {
+    product: <Product />,
+    lifetimeRewards: <LifetimeRewards />,
+    staked: <Staked />,
+    claimableRewards: <Skalable />,
+    quickActions: <ExpiresIn />,
+  };
 
   const [filter, setFilter] = useState<FILTER>({
     page: 1,
     limit: 10,
     search: null,
   });
-  // const [columns, setColumns] = useState<any[]>(headCells);
 
   return (
-    <div className="w-full ">
-      <GlobalTable
-        rows={rows}
-        accordion={accordingrow}
+    <>
+      <div className="overflow-x-auto">
+        <div className="hidden  sm:flex flex-row bg-white  w-full  ">
+          {headCells.map((cell) => (
+            <div
+              key={cell.id}
+              className="flex justify-start text-sm font-light bg-white p-3 text-primaryGrey  items-center  min-w-40 w-72 "
+            >
+              {cell.label}
+            </div>
+          ))}
+        </div>
 
-        headCells={headCells}
-        isLoading={false}
-        totalPages={Math.ceil(10)}
-        page={filter.page}
-        handlePageChange={(page) => {
-          setFilter({ ...filter, page });
-        }}
-        handleLimitChange={(limit) => {
-          setFilter({ ...filter, limit });
-        }}
-        // setColumns={setColumns}
-        // ColumnsList={columns}
-        filter={filter}
-        setFilter={setFilter}
-        showInnerFilters={true}
-        showAccordion={Accordion}
-      />
+        <div className="hidden sm:flex flex-col gap-4  ">
+          {rows.map((row, index) => (
+            <div key={index} className=" flex flex-row bg-white  ">
+              {/* Cells */}
+              {headCells.map((cell) => (
+                <div
+                  key={cell.id}
+                  className="flex flex-col gap-2 justify-start  items-start text-start  p-3 min-w-40 w-72 "
+                >
+                  <div className="flex h-12 justify-center items-center ">{row[cell.id]}</div>
+                  <div className=' h-56 w-full'>{accordingrow[cell.id]}</div>
 
-    </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-5 sm:hidden overflow-x-auto">
+        {rows.map((row, index) => (
+          <div key={index} className="flex flex-col gap-5 w-full border-b border-gray-200 pb-5">
+            {headCells.map((cell) => (
+              <div key={cell.id} className="flex justify-between items-center p-2 ">
+                <div className="font-medium">{cell.label}</div>
+                <div className="self-end">{row[cell.id]}</div>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </>
+
+    // <div className="flex flex-col gap-5 overflow-x-auto w-full">
+    //   {/* Header for larger screens */}
+    //   <div className="hidden sm:grid grid-cols-5 gap-5 w-full bg-gray-50 sticky top-0 z-10">
+    //     {headCells.map((cell) => (
+    //       <div key={cell.id} className="flex justify-center items-center p-2 w-72 bg-red-400">
+    //         {/* {cell.label} */}
+    //         pppppppppppppppppppppppppp
+    //       </div>
+    //     ))}
+    //   </div>
+
+    //   {/* Scrollable Container */}
+    //   <div className="sm:flex flex-col gap-2 ">
+    //     {/* Table Rows */}
+    //     {rows.map((row, index) => (
+    //       <div key={index} className="grid grid-cols-5 gap-5 w-full bg-red-100">
+    //         {/* Cells */}
+    //         {headCells.map((cell) => (
+    //           <div key={cell.id} className="flex justify-center items-center p-2 w-72 bg-blue-400">
+    //             {row[cell.id]}
+    //           </div>
+    //         ))}
+    //       </div>
+    //     ))}
+    //   </div>
+
+    //   {/* Rows for mobile screens */}
+    //   <div className="flex flex-col gap-5 sm:hidden overflow-x-auto">
+    //     {rows.map((row, index) => (
+    //       <div key={index} className="flex flex-col gap-5 w-full border-b border-gray-200 pb-5">
+    //         {headCells.map((cell) => (
+    //           <div key={cell.id} className="flex justify-between items-center p-2 bg-red-50">
+    //             <div className="font-medium">{cell.label}</div>
+    //             <div>{row[cell.id]}</div>
+    //           </div>
+    //         ))}
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
   );
 };
 

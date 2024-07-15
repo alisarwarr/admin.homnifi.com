@@ -1,6 +1,6 @@
 import React from 'react';
 import GaugeChart from '../../../../../components/Cloud/Test1Chart';
-import { ArrowDownCircleOutlined } from '../../../../../images/svgs';
+// import { ArrowDownCircleOutlined } from '../../../../../images/svgs';
 
 
 const ReviewModeStakeMoreModal = () => {
@@ -27,7 +27,7 @@ const ReviewModeStakeMoreModal = () => {
       </article>
 
       <div className="w-[150px] flex items-center justify-center self-end">
-        <ArrowDownCircleOutlined />
+        {/* <ArrowDownCircleOutlined /> */}
       </div>
 
       <article className="flex items-center justify-between">

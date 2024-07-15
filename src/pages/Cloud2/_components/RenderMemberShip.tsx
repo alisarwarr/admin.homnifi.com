@@ -1,29 +1,26 @@
 import RewardHistory from '../../../components/Cloud/RewardHistory';
 import RewardsTillNow from './RenderMembership/RewardsTillNow';
 import RenderMachinesHistory from './RenderMembership/RenderMachinesHistory';
+import React from 'react';
 
 type Props = {};
 
 const RenderMemberShip = (props: Props) => {
+  const products = [
+    { id: 1, name: 'Product 1', price: '$10' },
+    { id: 2, name: 'Product 2', price: '$20' },
+    { id: 3, name: 'Product 3', price: '$30' },
+    { id: 4, name: 'Product 4', price: '$40' },
+    { id: 5, name: 'Product 5', price: '$50' },
+    { id: 6, name: 'Product 6', price: '$60' },
+    { id: 7, name: 'Product 7', price: '$70' },
+    { id: 8, name: 'Product 8', price: '$80' },
+    { id: 9, name: 'Product 9', price: '$90' },
+    { id: 10, name: 'Product 10', price: '$100' },
+  ];
   return (
-    <div className="flex flex-col gap-10">
-      <div className="w-full flex gap-4">
-        {/* <RewardsAnalytics /> */}
 
-        <RewardsTillNow />
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <div className="text-lg font-medium">Machines</div>
-        <div className="w-full bg-white border border-borderLightGray rounded-lg shadow overflow-hidden flex flex-wrap">
-          <RenderMachinesHistory />
-
-          {/* <RenderMachineRewardCharts /> */}
-        </div>
-      </div>
-
-
-    </div>
+      <RenderMachinesHistory />
   );
 };
 

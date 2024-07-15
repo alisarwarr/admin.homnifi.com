@@ -4,7 +4,7 @@ import GlobalPills from '../../../../../components/GlobalPills';
 
 const Product = () => {
   return (
-    <section className="px-2 py-3 border border-borderBlue flex flex-col gap-1 justify-center rounded-lg shadow-tableCardShadow text-primaryGrey font-normal w-full h-full">
+    <section className="px-2 py-3 border min-h-56 border-borderBlue flex flex-col gap-1 justify-center rounded-lg shadow-tableCardShadow text-primaryGrey font-normal w-full h-full">
       <article className="flex lg:flex-row flex-col items-center justify-between border-b border-borderBlue">
         <span className="md:w-1/2">Status: </span>
         <span className="text-primaryDark font-normal text-left md:w-1/2 pb-2">
