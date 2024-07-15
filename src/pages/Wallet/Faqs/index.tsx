@@ -11,7 +11,7 @@ import { selectFaqSlice } from '../../../store/wallet/faqs/faqSlice';
 
 const Faqs = () => {
   const { getFaqs } = useFaqActions();
-  const { products } = useSelector(selectFaqSlice);
+  const { faqs } = useSelector(selectFaqSlice);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +27,7 @@ const Faqs = () => {
     <div className="w-full px-2">
       {/* PAGE TITLE */}
       <div className="flex bg-primary items-center  text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Products</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">FAQs</h1>
 
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
@@ -38,7 +38,7 @@ const Faqs = () => {
           }}
         >
           <img src={refresh} alt="" width={24} height={24} />
-          <span>Refresh</span>
+          <span>FAQs</span>
         </div>
 
         <Link to={'/history/faq/add'} className="flex gap-1 text-white items-center cursor-pointer px-3">
@@ -48,7 +48,7 @@ const Faqs = () => {
       </div>
 
       {/* TABLE */}
-      <FaqTable data={products} loading={loading} page={page} setPage={setPage} />
+      <FaqTable data={faqs} loading={loading} page={page} setPage={setPage} />
     </div>
   );
 };

@@ -10,14 +10,14 @@ export interface FAQ {
   createdAt: string; // Assuming it's always a string (date)
 }
 export interface FAQStateSlice {
-  products: {
+  faqs: {
     list: FAQ[];
     paginate: any;
   };
 }
 
 const initialState: FAQStateSlice = {
-  products: {
+  faqs: {
     list: [],
     paginate: {},
   },

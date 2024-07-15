@@ -11,7 +11,7 @@ import { useWalletActions } from '../../../store/wallet/walletActions';
 type Props = {
   action: {
     type: string;
-    requestId: string;
+    id: string;
   };
   onClose: any;
   requestFor: string;
@@ -20,66 +20,72 @@ type Props = {
 const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
-  const { updateWithdrawRequest, getWithdrawRequests, updateMigrationRequest, getMigrationRequests } = useWalletActions();
+  const { updateWithdrawRequest, getWithdrawRequests, updateMigrationRequest, getMigrationRequests } =
+    useWalletActions();
 
   const initialValues: {
-    reason?: string;
-    trxHashUrl?: string;
+    denialReason?: string;
+    hash?: string;
     [key: string]: any;
   } = {
-    reason: '',
-    trxHashUrl: '',
+    denialReason: '',
+    hash: '',
   };
 
   const formik = useFormik({
     initialValues: initialValues,
 
     onSubmit: async (values) => {
+      console.log("🚀 ~ onSubmit: ~ values:", action)
       setSaveLoading(true);
 
       let _values: any = {
-        requestId: action.requestId,
-        action: action.type,
+        id: action.id,
+
+
       };
 
       if (action.type === WALLET_ACTIONS.ACCEPT) {
-        if (!values.trxHashUrl && requestFor === 'WITHDRAW' ) {
-          formik.setFieldError('trxHashUrl', 'Transaction Hash Url Required.');
+        if (!values.hash && requestFor === 'WITHDRAW') {
+          formik.setFieldError('hash', 'Transaction Hash Url Required.');
           setSaveLoading(false);
           return;
         }
 
-        if(requestFor === 'WITHDRAW') {
+        if (requestFor === 'WITHDRAW') {
           _values = {
             ..._values,
-            trxHashUrl: values.trxHashUrl,
+            hash: values.hash,
+            type:'approve'
           };
         }
-        
       } else {
-        if (!values.reason) {
-          formik.setFieldError('reason', 'Rejection Reason is Required.');
+        if (!values.denialReason) {
+          formik.setFieldError('denialReason', 'Rejection Reason is Required.');
           setSaveLoading(false);
           return;
         }
 
         _values = {
           ..._values,
-          reason: values.reason,
+          denialReason: values.reason,
+          type:'reject'
+
         };
       }
 
       try {
-        const response = requestFor === 'WITHDRAW' ? await updateWithdrawRequest(_values) : await updateMigrationRequest(_values);
+        const response =
+          requestFor === 'WITHDRAW'  && await updateWithdrawRequest(_values) ;
         if (response?.data?.status) {
           successAlert(response?.data?.message);
-          requestFor === 'WITHDRAW' ? getWithdrawRequests(true) : getMigrationRequests(true);
+          requestFor === 'WITHDRAW' && getWithdrawRequests(true);
           onClose();
         } else {
           errorAlert(response?.data?.message);
         }
       } catch (error) {
-        console.error(`Update ${requestFor === 'WITHDRAW' ? 'Withdraw':'Migration'} Request Error`, error);
+        console.error(`Update ${requestFor === 'WITHDRAW' ? 'Withdraw' : 'Migration'} Request Error`, error);
       } finally {
         setSaveLoading(false);
       }
@@ -95,12 +101,12 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
               <div>
                 <FormikInput
                   label={'Reason'}
-                  name={'reason'}
+                  name={'denialReason'}
                   type={'text'}
                   placeholder={`Enter Reason`}
-                  error={formik.errors.reason}
-                  value={formik.values.reason}
-                  onChange={(e: any) => formik.setFieldValue('reason', e.target.value)}
+                  error={formik.errors.denialReason}
+                  value={formik.values.denialReason}
+                  onChange={(e: any) => formik.setFieldValue('denialReason', e.target.value)}
                 />
               </div>
             )}
@@ -108,13 +114,13 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
             {action?.type === WALLET_ACTIONS.ACCEPT && requestFor === 'WITHDRAW' && (
               <div>
                 <FormikInput
-                  label={'Transaction Hash Url'}
-                  name={'trxHashUrl'}
+                  label={'Transaction Hash'}
+                  name={'hash'}
                   type={'text'}
-                  placeholder={`Enter Transaction Hash Url`}
-                  error={formik.errors.trxHashUrl}
-                  value={formik.values.trxHashUrl}
-                  onChange={(e: any) => formik.setFieldValue('trxHashUrl', e.target.value)}
+                  placeholder={`Enter Transaction Hash `}
+                  error={formik.errors.hash}
+                  value={formik.values.hash}
+                  onChange={(e: any) => formik.setFieldValue('hash', e.target.value)}
                 />
               </div>
             )}
@@ -133,7 +139,7 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
         </Button>
 
         <Button
-          className={`border text-xs lg:text-sm !px-4 !py-1 lg:!py-2 lg:!px-8 !bg-transparent hover:!bg-white/40 transition-all duration-200 ease-in-out`}
+          className={`border !text-primary !border-primary text-xs lg:text-sm !px-4 !py-1 lg:!py-2 lg:!px-8 bg-white hover:!bg-white/40 transition-all duration-200 ease-in-out`}
           onClick={onClose}
         >
           Close

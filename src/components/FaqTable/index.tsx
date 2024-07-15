@@ -18,8 +18,8 @@ type Props = {
 const headCells = [
   // { id: 'name', label: 'Name', dataClass: 'w-32' },
   { id: 'question', label: 'Question' },
-  { id: 'url', label: 'Video Url' },
-  { id: 'type', label: 'Wallet Type' },
+  { id: 'url', label: 'Answer' },
+  { id: 'type', label: 'Transaction Type' },
   // { id: 'image', label: 'Image' },
   { id: 'status', label: 'Status', dataClass: 'text-center' },
   { id: 'actions', label: 'Actions', headCellClass: 'text-center' },

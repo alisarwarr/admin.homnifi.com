@@ -6,6 +6,7 @@ import {
   WALLET_MIGRATIONS,
   WALLET_SWAP_HISTORY,
   WALLET_WITHDRAWS,
+  WALLET_WITHDRAW_HISTORY,
 } from '../../utils/network/ApiEndpoints';
 
 //API
@@ -71,7 +72,7 @@ export const useHistoryActions = () => {
 
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${WALLET_WITHDRAWS}`,
+      url: `${WALLET_WITHDRAW_HISTORY}`,
       params: {
         page: filter.page,
         limit: filter.limit,
