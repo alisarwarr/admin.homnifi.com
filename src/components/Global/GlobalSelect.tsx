@@ -13,14 +13,15 @@ type TGlobalSelect = {
   required?: boolean;
   placeholder?: string;
   options: IOptions[];
-  onChange?: (value: string | string[]) => void;
+  onChange?: (value: string | string[] | any) => void;
   onBlur?: (e: React.ChangeEvent<HTMLDivElement>) => void;
-  setFieldTouched: any;
+  setFieldTouched?: any;
   setFieldValue: any;
   isError: boolean | undefined;
  error?: string | any;
   value?: string | string[];
   isMulti?: boolean;
+  inputClass?: string;
 };
 
 const GlobalSelect = ({
@@ -37,8 +38,8 @@ const GlobalSelect = ({
   setFieldValue,
   value = '',
   isMulti = false,
+  inputClass,
 }: TGlobalSelect) => {
-  console.log('🚀 ~ valuevaluevaluevalue:', value);
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [filteredOptions, setFilteredOptions] = React.useState(options);
@@ -51,7 +52,11 @@ const GlobalSelect = ({
   };
 
   const handleSelectValue = (selectedOption: IOptions) => {
+
+    onChange && onChange(selectedOption);
+
   console.log("🚀 ~ handleSelectValue ~ selectedOption:", selectedOption)
+
 
     const selectedValue = selectedOption.value;
     let newValue;
@@ -106,7 +111,7 @@ const GlobalSelect = ({
         <div
           className={`bg-white text-defaultBlack  border ${
             isError ? 'border-redDanger' : 'border-blueGrey'
-          } py-2 px-4 text-xs rounded-full w-full cursor-pointer`}
+          } py-2 px-4 text-xs rounded-full w-full cursor-pointer ${inputClass}`}
           onClick={toggleDropdown}
         >
           {options.find((option) => option.value === value)?.label || placeholder}

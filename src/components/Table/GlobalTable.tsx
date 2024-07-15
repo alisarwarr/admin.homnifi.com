@@ -1,7 +1,7 @@
 import { Checkbox, IconButton, InputBase, MenuItem, Pagination, Select, Skeleton, Tooltip } from '@mui/material';
 import NoData from './NoData';
 import { useEffect, useState } from 'react';
-import { arrowDown, arrowUp, exportIcon, filterIcon, lock, mail, print, unlock } from '../../images/other';
+import { arrowDown, arrowUp, copy, exportIcon, filterIcon, lock, mail, print, unlock } from '../../images/other';
 import styled from '@emotion/styled';
 import FormikInput from '../FormikInput';
 import { mkConfig, generateCsv, download } from 'export-to-csv';
@@ -10,9 +10,15 @@ import MailUser from '../Users/MailUser';
 import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
+import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
+const ActionsColors = {
+  Complete: 'primaryGreen',
+  Pending: 'primary',
+  Failed: 'primaryRed',
+};
 import MachinesAccordion from '../Cloud/MachinesAccordion';
 
-// import PaginationButtons from './PaginationButtons';
+
 type Props = {
   rows: any[];
   accordion?: any;
@@ -45,7 +51,11 @@ type Props = {
   refetch?: any;
   showInnerFiltersSearch?: boolean;
   innerFiltersClassName?: string;
+
+  setClickeddRow?: any;
+
   showAccordion?: string;
+
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -96,8 +106,12 @@ const GlobalTable = ({
   refetch,
   showInnerFiltersSearch = true,
   innerFiltersClassName = '',
+
+  setClickeddRow,
+
   showAccordion,
   accordion = {},
+
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -373,6 +387,7 @@ const GlobalTable = ({
                 <tbody>
                   {rows.map((row, index) => {
                     return (
+
                       <>
                         <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
                           {/* Checkbox column */}
@@ -407,6 +422,7 @@ const GlobalTable = ({
 
                         {/* <MachinesAccordion /> */}
                       </>
+
                     );
                   })}
                 </tbody>

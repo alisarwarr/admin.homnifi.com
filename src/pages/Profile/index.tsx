@@ -95,8 +95,9 @@ export default function Profile(): JSX.Element {
         <div className="grid grid-cols-2 gap-3 w-full">
           {Object.keys(initialValues).map((key) => (
             <div key={key} className="flex flex-col gap-2 items-end">
-              <div className="w-full">
+              <div className="w-full  mt-4">
                 <FormikInput
+                  className="my-8"
                   label={capitalizeFirstLetter(key)}
                   type={key}
                   name={key}

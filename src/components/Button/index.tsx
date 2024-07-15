@@ -17,15 +17,15 @@ const Button = ({
   className,
   onClick,
   loadingType = 'text',
-  buttonType = 'submit',
+  buttonType = 'button',
   disable = false,
 }: Props) => {
   return (
     <button
-      className={`rounded  px-6 py-3 flex justify-center items-center cursor-pointer bg-buttonColor bg-primary text-white ${className}`}
+      className={`rounded-full  px-6 py-2 flex justify-center items-center cursor-pointer bg-buttonColor bg-primary text-white ${className}`}
       disabled={loading || disable}
       onClick={onClick}
-      type={buttonType || 'submit'}
+      type={buttonType}
     >
       {loading ? (
         <>
