@@ -1,0 +1,19 @@
+.react-toggle-track {
+  width: 30px !important;
+  height: 16px !important;
+}
+
+.react-toggle--checked .react-toggle-track {
+  background-color: #76ee59 !important;
+
+  box-shadow: inset -1px -1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.react-toggle--checked .react-toggle-thumb {
+  left: 16px;
+}
+
+.react-toggle-thumb {
+  width: 14px;
+  height: 14px;
+}

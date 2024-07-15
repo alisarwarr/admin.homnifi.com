@@ -11,15 +11,17 @@ import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
-
 const ActionsColors = {
   Complete: 'primaryGreen',
   Pending: 'primary',
   Failed: 'primaryRed',
 };
+import MachinesAccordion from '../Cloud/MachinesAccordion';
+
 
 type Props = {
   rows: any[];
+  accordion?: any;
   isLoading: boolean | undefined;
   headCells: {
     id: string;
@@ -49,10 +51,14 @@ type Props = {
   refetch?: any;
   showInnerFiltersSearch?: boolean;
   innerFiltersClassName?: string;
+
   setClickeddRow?: any;
+
+  showAccordion?: string;
+
 };
 
-const BootstrapInput = styled(InputBase)(({ theme }: { theme?: any }) => ({
+const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
   },
@@ -100,7 +106,12 @@ const GlobalTable = ({
   refetch,
   showInnerFiltersSearch = true,
   innerFiltersClassName = '',
+
   setClickeddRow,
+
+  showAccordion,
+  accordion = {},
+
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -318,7 +329,7 @@ const GlobalTable = ({
         <div className="hidden lg:flex items-center gap-2 overflow-auto">
           <table className="w-full">
             <thead>
-              <tr className={`${rows.length > 0 ? 'text-white' : 'text-textSecondary'} w-full text-left`}>
+              <tr className={`${rows.length > 0 ? 'text-defaultBlack' : 'text-textSecondary'} w-full text-left`}>
                 {/* Checkbox column */}
                 {/* {true && (
                   <th className={`py-4 hidden md:table-cell font-semibold sm:text-xs xl:text-sm`}>
@@ -335,7 +346,7 @@ const GlobalTable = ({
                     cell.id !== '_id' && (
                       <th
                         key={index}
-                        className={`py-4 px-2  hidden md:table-cell text-defaultBlack font-semibold sm:text-xs xl:text-sm ${cell.dataClass} ${cell.headCellClass}`}
+                        className={`py-4 px-2  hidden md:table-cell text-defaultBlack font-semibold  sm:text-xs xl:text-sm ${cell.dataClass} ${cell.headCellClass}`}
                       >
                         <div className={`flex gap-2 items-center`}>
                           <span>{cell.label}</span>
@@ -376,48 +387,42 @@ const GlobalTable = ({
                 <tbody>
                   {rows.map((row, index) => {
                     return (
-                      <tr
-                        key={index}
-                        className={`font-medium text-sm w-full border-b border-secondary hover:bg-gray-100 ${
-                          setClickeddRow && 'cursor-pointer'
-                        }`}
-                      >
-                        {/* Checkbox column */}
-                        {checkBoxes && (
-                          <td>
-                            <Checkbox
-                              checked={selectedRows.find((selectedRow) => selectedRow._id === row._id) ? true : false}
-                              onChange={() => handleRowCheckboxChange(row)}
-                              inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                          </td>
-                        )}
 
-                        {headCells.map((cell, index) => {
-                          return (
-                            cell.id !== '_id' && (
-                              <td
-                                onClick={() => {
-                                  setClickeddRow && setClickeddRow(row);
-                                }}
-                                key={index}
-                                className={`relative table-cell gap-2 font-medium text-xs text-textSecondary py-4 px-2 topup text-${
-                                  ActionsColors[row[cell.id]]
-                                } ${cell.rowDataClass} ${cell.dataClass}`}
-                              >
-                                {row[cell.id]}
+                      <>
+                        <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
+                          {/* Checkbox column */}
+                          {checkBoxes && (
+                            <td>
+                              <Checkbox
+                                checked={selectedRows.find((selectedRow) => selectedRow._id === row._id) ? true : false}
+                                onChange={() => handleRowCheckboxChange(row)}
+                                inputProps={{ 'aria-label': 'controlled' }}
+                              />
+                            </td>
+                          )}
 
-                                {(cell.id === 'destinations' || cell.id === 'txId') && (
-                                  <Copy
-                                    className="ml-3 cursor-pointer absolute top-6 right-12"
-                                    onClick={() => navigator.clipboard.writeText(row[cell.id])}
-                                  />
-                                )}
-                              </td>
-                            )
-                          );
-                        })}
-                      </tr>
+                          {headCells.map((cell, index) => {
+                            return (
+                              cell.id !== '_id' && (
+                                <td
+                                  key={index}
+                                  className={`  gap-5 table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
+                                >
+                                  <div className={'h-20 justify-center '}>{row[cell.id]}</div>
+
+                                  <div className={'h-44'}>{accordion[cell.id]}</div>
+
+                                  {/* {showAccordion?.length ? (
+                          showAccordion === rows[index].id ? <>: null;):null)} */}
+                                </td>
+                              )
+                            );
+                          })}
+                        </tr>
+
+                        {/* <MachinesAccordion /> */}
+                      </>
+
                     );
                   })}
                 </tbody>
@@ -427,7 +432,7 @@ const GlobalTable = ({
         </div>
 
         <div className="flex lg:hidden flex-col gap-3">
-          <div className="flex flex-col gap-4 w-full text-white text-xs">
+          <div className="flex flex-col gap-4 w-full text-defaultBlack text-xs">
             {isLoading &&
               headCells.map((cell, index) => (
                 <div key={index} className="w-full flex items-center">
@@ -443,6 +448,7 @@ const GlobalTable = ({
                   <div key={index} className="w-full  flex items-center mt-3">
                     <div className="w-1/3">{cell.label}:</div>
                     <div className="w-2/3">{row?.[cell.id]}</div>
+                    <div className="w-2/3">{accordion[cell.id]}</div>
                   </div>
                 ))}
                 <hr className="text-white my-3" />

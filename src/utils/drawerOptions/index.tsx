@@ -128,7 +128,7 @@ export const allDrawerOptions: DrawerSection[] = [
             icon: <Dashboard />,
 
             icon_dark: setting,
-            url: '/history/deposithistory',
+            url: '/wallet/deposit',
             key: 'deposit-history',
             active: false,
             options: [],
@@ -139,7 +139,7 @@ export const allDrawerOptions: DrawerSection[] = [
             icon: <Dashboard />,
 
             icon_dark: setting,
-            url: '/history/withdrawhistory',
+            url: '/wallet/withdraw',
             key: 'wallet-withdraw-settings',
             active: false,
             options: [],
@@ -150,7 +150,7 @@ export const allDrawerOptions: DrawerSection[] = [
             icon: <Dashboard />,
 
             icon_dark: setting,
-            url: '/tokens/settings/migrate',
+            url: '/wallet/transfer',
             key: 'tokens_settings-migrate',
             active: false,
             options: [],
@@ -161,7 +161,7 @@ export const allDrawerOptions: DrawerSection[] = [
             icon: <Dashboard />,
 
             icon_dark: setting,
-            url: '/wallet/settings/swap',
+            url: '/wallet/swap',
             key: 'wallet-swap-settings',
             active: false,
             options: [],

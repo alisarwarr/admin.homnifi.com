@@ -12,7 +12,9 @@ export interface WithdrawRequest {
   address: string;
   amount: number;
   fee: number;
-  status: 'PENDING' | 'DENIED' | 'COMPLETED';
+  charges: number;
+  total: number
+  requestStatus: 'PENDING' | 'DENIED' | 'COMPLETED';
   withdrawProcess: 'MANUAL' | 'AUTOMATIC';
   network: any;
   trxHashUrl: string;

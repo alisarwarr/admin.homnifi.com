@@ -122,27 +122,11 @@ export default function Layout(): JSX.Element {
 
   const { getNotifications } = useNotificationsActions();
 
-  // useEffect(() => {
-  //   const url = import.meta.env.VITE_API_INSTANCE;
-
-  //   const socket = io(url!, {
-  //     transports: ['websocket'],
-  //   });
-  //   socket.on(`adminNotify`, () => {
-  //     getNotifications(1, true);
-  //   });
-  //   socket.on(`adminUpdated-${user._id}`, () => {
-  //     dispatch(setLogout());
-  //     window.location.href = '/auth/signin';
-  //   });
-  // }, []);
 
   const appBarMargin = drawerWidth + 10;
 
   const darkTheme = createTheme({
-    // palette: {
-    //   mode: 'dark',
-    // },
+
     typography: {
       fontFamily: 'Poppins, sans-serif !important',
       fontWeightBold: '400 !important',
@@ -159,7 +143,7 @@ export default function Layout(): JSX.Element {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <div className="flex">
+      <div className="flex ">
         <Drawer
           disableScrollLock={true}
           anchor="left"
@@ -233,7 +217,7 @@ export default function Layout(): JSX.Element {
               />
             </div>
           </div>
-          <div className="flex-grow py-4 px-2">
+          <div className="flex-grow py-4 px-2 bg-pageBackground">
             <Outlet />
 
           </div>

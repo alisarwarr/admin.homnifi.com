@@ -36,23 +36,24 @@ import UserDetails from '../pages/Users/UserDetails';
 import Links from '../pages/Settings/Links';
 import PrivacyPolicy from '../pages/Settings/PrivacyPolicy';
 import TermsAndConditions from '../pages/Settings/TermsAndConditions';
-import SwapHistory from '../pages/TransactionHistory/SwapHistory';
 
-import WithdrawHistory from '../pages/TransactionHistory/WithdrawHistory';
-import DepositHistory from '../pages/TransactionHistory/DepositHistory';
-import MigrationHistory from '../pages/TransactionHistory/MIgrationHistory';
 import Profile from '../pages/Profile';
 import Admins from '../pages/Admins';
 import SwapPriority from '../pages/Settings/SwapPriority';
-import FeaturePurchaseHistory from '../pages/TransactionHistory/FeaturePurchaseHistory';
-import ProductPurchaseHistory from '../pages/TransactionHistory/ProductPurchaseHistory';
 import ShowPages from '../pages/Settings/ShowPages';
 import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
-import Faqs from '../pages/TransactionHistory/Faqs';
-import AddFaqs from '../pages/TransactionHistory/Faqs/AddFaqs';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
+import WithdrawHistory from '../pages/Wallet/WithdrawHistory';
+import DepositHistory from '../pages/Wallet/DepositHistory';
+import Faqs from '../pages/Wallet/Faqs';
+import AddFaqs from '../pages/Wallet/Faqs/AddFaqs';
+import MigrationHistory from '../pages/Wallet/MIgrationHistory';
+import FeaturePurchaseHistory from '../pages/Wallet/FeaturePurchaseHistory';
+import ProductPurchaseHistory from '../pages/Wallet/ProductPurchaseHistory';
+import SwapHistory from '../pages/Wallet/SwapHistory';
+import Cloud2 from '../pages/Cloud2';
 
 export const router = createBrowserRouter([
   {
@@ -99,6 +100,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <TokenTransactionSettings />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Cloud2 />
             </ProtectedRoute>
           </React.Suspense>
         ),
@@ -238,7 +249,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/history/swaphistory',
+        path: '/wallet/swap',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -248,17 +259,27 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/history/withdrawhistory',
+        path: '/wallet/transfer',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <WithdrawHistory />
+              <SwapHistory />
             </ProtectedRoute>
           </React.Suspense>
         ),
       },
       {
-        path: '/history/deposithistory',
+        path: '/wallet/withdraw',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <WithdrawRequests />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/wallet/deposit',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>

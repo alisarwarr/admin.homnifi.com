@@ -7,10 +7,14 @@ import { useSelector } from 'react-redux';
 import { selectAdminData } from '../../store/admin/adminSlice';
 import { useAdminActions } from '../../store/admin/adminActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
+import { selectUser } from '../../store/user/userSlice';
 
 export default function Profile(): JSX.Element {
   const { getAdminData, updateAdminData } = useAdminActions();
   const admin = useSelector(selectAdminData);
+
+  const user = useSelector(selectUser);
+
 
   const formikRef = useRef<any>(null);
 
@@ -23,7 +27,7 @@ export default function Profile(): JSX.Element {
   };
 
   useEffect(() => {
-    getAdminData();
+    getAdminData(user?.id);
   }, []);
 
   useEffect(() => {
