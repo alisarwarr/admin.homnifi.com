@@ -17,6 +17,8 @@ import featuresSlice from './features/featuresSlice';
 import dashboardSlice from './Dashboard/dashboardSlice';
 import historySlice from './wallet/historySlice';
 import adminSlice from './admin/adminSlice';
+import faqSlice from './wallet/faqs/faqSlice';
+
 import notificationsSlice from './notifications/notificationsSlice';
 
 const persistConfig = {
@@ -37,7 +39,8 @@ const rootReducer = combineReducers({
   dashboard: dashboardSlice,
   history: historySlice,
   notifications: notificationsSlice,
-  admin: adminSlice
+  admin: adminSlice,
+  faq:faqSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

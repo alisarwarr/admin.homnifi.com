@@ -4,14 +4,13 @@ import { ReactComponent as Spinner } from "../../SVGIcons/spinner.svg";
 type Props = {
   text: string;
   type?: "button" | "submit" | "reset" | undefined;
-  setStatus: any;
-  status: string;
+
   classNames?: string;
   onClick?: any;
-  loading:boolean
+  loading?:boolean
 };
 
-const GlobalButton = ({ text, type, setStatus, status, classNames , onClick , loading}: Props) => {
+const GlobalButton = ({ text, type,  classNames , onClick , loading}: Props) => {
 
   return (
     <button

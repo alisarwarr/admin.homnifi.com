@@ -15,6 +15,7 @@ export const useWalletActions = () => {
   const dispatch = useDispatch();
 
   const { withdrawRequests, migrationRequests } = useSelector(selectWalletSlice);
+  console.log("🚀 ~ useWalletActions ~ withdrawRequests:", withdrawRequests)
 
   const getWithdrawRequests = async (force: boolean = false, filter?: any) => {
     if (withdrawRequests?.list?.length && !force) return;
@@ -29,20 +30,26 @@ export const useWalletActions = () => {
         status: 'PENDING',
       },
     });
+
     const _withdrawRequests = response?.data?.data;
+    console.log("🚀 ~ getWithdrawRequests ~ _withdrawRequests:", _withdrawRequests ,  response?.data?.data)
     dispatch(setWithdrawRequests(_withdrawRequests));
   };
 
   const updateWithdrawRequest = async (data: any) => {
+    console.log("🚀 ~ updateWithdrawRequest ~ data:", data)
     return await ApiRequest()
       .request({
         method: 'POST',
-        url: WALLET_WITHDRAWS_ACTIONS,
+        url: `${WALLET_WITHDRAWS}/${data?.id}/${data?.type}`,
         data: data,
       })
       .then((response: any) => response)
       .catch((error: any) => error);
   };
+
+
+
 
   const getMigrationRequests = async (force: boolean = false, page: any = 1) => {
     if (migrationRequests?.list?.length && !force) return;

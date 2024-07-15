@@ -11,7 +11,7 @@ import WithdrawActionButton from '../WithdrawActionButton';
 import StatusChip from '../../StatusChip';
 import TokenNameWithLogo from '../../TokenNameWithLogo';
 import { copy } from '../../../images/other';
-import { copyToClipboard, getTableIndexNumber } from '../../../utils/utils';
+import { CapitalizeAllLetters, copyToClipboard, getTableIndexNumber } from '../../../utils/utils';
 
 type Props = {
   data: {
@@ -27,16 +27,17 @@ type Props = {
 
 const headCells = [
   { id: 'id', label: 'ID', dataClass: '', show: true },
-  { id: 'user', label: 'User Name', dataClass: 'min-w-40', show: true },
+  { id: 'user', label: 'User Name', dataClass: 'min-w-24', show: true },
   { id: 'requestId', label: 'Request ID', dataClass: 'min-w-32', show: true },
-  { id: 'requestDate', label: 'Request Date', dataClass: 'min-w-36', show: true },
+  { id: 'requestDate', label: 'Request Date', dataClass: 'min-w-36', show: true , },
   { id: 'token', label: 'Token', dataClass: 'min-w-24', show: true },
   { id: 'network', label: 'Network', dataClass: 'min-w-24', show: true },
-  { id: 'address', label: 'Wallet Address', dataClass: 'max-w-40', show: true },
-  { id: 'fee', label: 'Withdrawal Fee', dataClass: 'min-w-40', show: true },
-  { id: 'amount', label: 'Withdrawal Amount', dataClass: 'min-w-44', show: true },
-  { id: 'trxHashUrl', label: 'Transaction Hash', dataClass: 'max-w-32', show: true },
-  { id: 'status', label: 'Status', dataClass: 'min-w-32 text-center', show: true },
+  { id: 'address', label: 'Wallet Address', dataClass: 'max-w-32', show: true },
+  { id: 'fee', label: 'Withdrawal Fee', dataClass: 'min-w-28 text-center', show: true },
+  { id: 'amount', label: 'Withdrawal Amount', dataClass: 'min-w-32 text-center', show: true },
+  { id: 'total', label: 'Total Amount', dataClass: 'min-w-32 text-center', show: true },
+  { id: 'trxHashUrl', label: 'Transaction Hash', dataClass: 'max-w-32 text-center', show: true },
+  { id: 'status', label: 'Status', dataClass: 'min-w-32 text-start ', show: true },
   { id: 'actions', label: 'Actions', headCellClass: 'text-center min-w-[100px]', show: true },
 ];
 
@@ -52,22 +53,22 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
       user: `${_data?.user?.firstName ? _data?.user?.firstName : ''} ${
         _data?.user?.lastName ? _data?.user?.lastName : '-'
       }`,
-      requestId: _data.requestId,
+      requestId: _data._id,
       requestDate: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
-      token: <TokenNameWithLogo tokenName={_data.token.name} />,
+      token: <TokenNameWithLogo tokenName={_data?.token?.name} />,
       network: _data.network?.name,
       address: _data.address ? (
         <div>
-          <Tooltip title={_data.address}>
+          <Tooltip title={_data?.address}>
             <Chip
               label={
                 <div className="flex items-center relative w-[140px] py-1">
-                  <span className="pr-10 w-[75%] overflow-hidden">{_data.address}</span>
+                  <span className="pr-10 w-[75%] overflow-hidden">{_data?.address}</span>
                   <Tooltip title={copied ? 'Copied' : 'Copy'} placement="top">
                     <img
                       src={copy}
                       className="cursor-pointer absolute right-2"
-                      onClick={() => copyToClipboard(_data.address, setCopied)}
+                      onClick={() => copyToClipboard(_data?.address, setCopied)}
                     />
                   </Tooltip>
                 </div>
@@ -82,6 +83,8 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
       ),
       fee: _data.fee,
       amount: _data.amount,
+      total: _data.total,
+
       trxHashUrl: _data.trxHashUrl ? (
         <Tooltip title={_data.trxHashUrl}>
           <Link to={_data.trxHashUrl}>
@@ -91,7 +94,7 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
       ) : (
         '-'
       ),
-      status: <StatusChip status={_data.status} />,
+      status: <StatusChip status={CapitalizeAllLetters(_data.requestStatus)} />,
       denialReason: (
         <Tooltip title={_data.denialReason ?? '-'}>
           <span>{_data.denialReason ?? '-'}</span>
@@ -100,10 +103,10 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
       actions: (
         <div className="flex flex-col screen1500:flex-row justify-center gap-2">
           <WithdrawActionButton
-            status={_data.status}
+            status={_data.requestStatus}
             onClick={() => {
               setOpenWithdrawAction(true);
-              setWithdrawAction({ type: WALLET_ACTIONS.ACCEPT, requestId: _data._id });
+              setWithdrawAction({ type: WALLET_ACTIONS.ACCEPT, id: _data._id });
             }}
             className=" bg-green-800 hover:bg-green-800/70"
           >
@@ -111,10 +114,10 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
           </WithdrawActionButton>
 
           <WithdrawActionButton
-            status={_data.status}
+            status={_data.requestStatus}
             onClick={() => {
               setOpenWithdrawAction(true);
-              setWithdrawAction({ type: WALLET_ACTIONS.REJECT, requestId: _data._id });
+              setWithdrawAction({ type: WALLET_ACTIONS.REJECT, id: _data._id });
             }}
             className="bg-red-600 hover:bg-red-600/70"
           >

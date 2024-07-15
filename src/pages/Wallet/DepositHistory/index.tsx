@@ -18,7 +18,9 @@ const headCells = [
   { id: 'createdAt', label: 'Date', show: true },
   { id: 'fromToken', label: 'From Token', show: true },
   { id: 'amount', label: 'Amount', show: true },
+  { id: 'hash', label: 'Fee', show: true },
   { id: 'fee', label: 'Fee', show: true },
+
   { id: 'status', label: 'Status', show: true, dataClass: 'text-center' },
 ];
 type FILTER = {
@@ -47,8 +49,9 @@ const DepositHistory = () => {
       createdAt: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
       fromToken: <TokenNameWithLogo tokenName={_data?.wallet?.token?.name} />,
       amount: _data?.amount,
-      status: <StatusChip status={_data?.status} />,
+      status: <StatusChip status={_data?.transactionStatus} />,
       fee: _data.fee,
+      hash:_data.hash
     };
   });
 
@@ -113,7 +116,7 @@ const DepositHistory = () => {
       </div>
 
       <GlobalTable
-        rows={[1,2,3]}
+        rows={rows}
         headCells={columns?.filter((itm) => itm?.show === true)}
         isLoading={loading}
         totalPages={depositHistory?.totalPages}
