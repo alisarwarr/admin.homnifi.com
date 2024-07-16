@@ -34,7 +34,7 @@ function HostoryTabla() {
     { id: 'status', label: 'Status' },
     { id: 'actions', label: 'Actions' },
   ];
-
+  const copyIconList = ['destinations', 'txId'];
   const row = [
     {
       id: 1,
@@ -173,7 +173,7 @@ function HostoryTabla() {
 
         <div className="flex items-center justify-start gap-2 my-4 w-full">
           <div className="flex gap-2 items-center relative">
-            <FormikInput   
+            <FormikInput
               type="string"
               name="id"
               shrink={true}
@@ -188,7 +188,7 @@ function HostoryTabla() {
             {filterData.map((dt: any, index) => {
               return (
                 <GlobalSelect
-                labelOptionClass ={"text-left"}
+                  labelOptionClass={'text-left'}
                   name={dt.name}
                   placeholder={dt.placeholder}
                   options={[
@@ -223,6 +223,7 @@ function HostoryTabla() {
           isLoading={false}
           paginate={false}
           setClickeddRow={setClickeddRow}
+          copyIconList={copyIconList}
         />
       </div>
       <HistoryPopup open={clickeddRow ? true : false} onClose={onPopupHandler} />

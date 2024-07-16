@@ -11,11 +11,13 @@ import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
+
 const ActionsColors = {
   Complete: 'primaryGreen',
   Pending: 'primary',
   Failed: 'primaryRed',
 };
+
 import MachinesAccordion from '../Cloud/MachinesAccordion';
 
 type Props = {
@@ -52,7 +54,7 @@ type Props = {
   innerFiltersClassName?: string;
 
   setClickeddRow?: any;
-
+  copyIconList?: any[];
   showAccordion?: string;
 };
 
@@ -106,7 +108,7 @@ const GlobalTable = ({
   innerFiltersClassName = '',
 
   setClickeddRow,
-
+  copyIconList = [],
   showAccordion,
   accordion = {},
 }: Props) => {
@@ -402,14 +404,18 @@ const GlobalTable = ({
                               cell.id !== '_id' && (
                                 <td
                                   key={index}
-                                  className={`  gap-5 table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
+                                  className={` gap-5 table-cell font-medium text-xs text-textSecondary pb-2 pt-4 px-2 topup items-center ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={'h-20 justify-center '}>{row[cell.id]}</div>
-
-                                  <div className={'max-h-44'}>{accordion[cell.id]}</div>
-
-                                  {/* {showAccordion?.length ? (
-                          showAccordion === rows[index].id ? <>: null;):null)} */}
+                                  <div className={'py-2 flex justify-start items-center '}>
+                                    {row[cell.id]}{' '}
+                                    {copyIconList.find((dt) => dt === cell.id) && (
+                                      <Copy
+                                        className="ml-3 cursor-pointer"
+                                        onClick={() => navigator.clipboard.writeText(row[cell.id])}
+                                      />
+                                    )}{' '}
+                                  </div>
+                                  {accordion && <div className={'max-h-44'}>{accordion[cell.id]}</div>}
                                 </td>
                               )
                             );

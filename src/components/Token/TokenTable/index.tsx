@@ -5,36 +5,37 @@ import GlobalTable from '../../Table/GlobalTable';
 import { Tooltip } from '@mui/material';
 import StatusChip from '../../StatusChip';
 import TokenNameWithLogo from '../../TokenNameWithLogo';
+import { displayName } from 'react-quill';
+import { ReactComponent as DeleteIcon } from '../../../SVGIcons/deleteIcon.svg';
 
 type Props = {
-  data: Token[];
+  // data: Token[];
+  data: any[];
   loading: boolean;
+  onEditHanlder: Function;
 };
 
 const headCells = [
+  { id: 'id', label: 'Id' },
   { id: 'name', label: 'Name' },
-  { id: 'symbol', label: 'Sybmol' },
-  { id: 'depositEnabled', label: 'Deposit' },
-  { id: 'withdrawEnabled', label: 'Withdraw' },
-  { id: 'toSwapEnabled', label: 'Swap To' },
-  { id: 'fromSwapEnabled', label: 'Swap From' },
+  { id: 'displayName', label: 'Display Name' },
+  { id: 'type', label: 'Type' },
+  { id: 'rate', label: 'Rate' },
   { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
 ];
 
-const TokensTable = ({ data, loading }: Props) => {
+const copyIconList = ['id'];
+
+const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
   const navigate = useNavigate();
 
   const rows = data?.map((_data) => {
-    console.log('🚀 ~ rows ~ _data:', _data);
     return {
-      name: <TokenNameWithLogo tokenName={_data.name} />,
-      symbol: _data.symbol,
-      depositEnabled: <StatusChip status={_data.settings.depositEnabled} />,
-      withdrawEnabled: <StatusChip status={_data.settings.withdrawEnabled} />,
-      // canTopup: <StatusChip status={_data.canTopup} />,
-      // allowNegativeBalance: <StatusChip status={_data.allowNegativeBalance} />,
-      toSwapEnabled: <StatusChip status={_data.settings.toSwapEnabled} />,
-      fromSwapEnabled: <StatusChip status={_data.settings.fromSwapEnabled} />,
+      id: _data.id,
+      name: _data.name,
+      displayName: _data.displayName,
+      type: _data.type,
+      rate: _data.rate,
       actions: (
         <div className="flex justify-start">
           <Tooltip title="Edit Token">
@@ -42,12 +43,19 @@ const TokensTable = ({ data, loading }: Props) => {
               src={edit}
               width={24}
               height={24}
-              color='red'
+              color="red"
               alt="View Icon"
-              onClick={() => navigate(`/tokens/details/${_data._id}`)}
+              onClick={() => {
+                onEditHanlder(_data);
+              }}
               className="cursor-pointer"
             />
-        </Tooltip>
+          </Tooltip>
+          <div className="w-6 h-6 bg-primaryRed flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
+            <Tooltip title="Delete Token">
+              <DeleteIcon />
+            </Tooltip>
+          </div>
         </div>
       ),
     };
@@ -55,7 +63,7 @@ const TokensTable = ({ data, loading }: Props) => {
 
   return (
     // TABLE
-    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} />
+    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} copyIconList={copyIconList} />
   );
 };
 

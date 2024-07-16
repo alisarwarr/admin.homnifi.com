@@ -54,9 +54,7 @@ const GlobalSelect = ({
   };
 
   const handleSelectValue = (selectedOption: IOptions) => {
-    onChange && onChange(selectedOption);
-
-    console.log('🚀 ~ handleSelectValue ~ selectedOption:', selectedOption);
+    onChange && onChange(selectedOption.value);
 
     const selectedValue = selectedOption.value;
     let newValue;
@@ -100,7 +98,6 @@ const GlobalSelect = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  console.log('isError , error', options.find((option) => option.value === value)?.label, value, options);
 
   return (
     <div className="flex flex-col gap-2 text-sm">
