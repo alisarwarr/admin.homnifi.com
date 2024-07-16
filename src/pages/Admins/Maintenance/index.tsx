@@ -14,7 +14,6 @@ interface FormValues {
   maintenance: boolean;
 }
 
-const Maintenance: React.FC = () => {
   const initialValues: FormValues = {
     cronJob: true,
     autoLogout: false,
@@ -48,6 +47,7 @@ const Maintenance: React.FC = () => {
     { key: 'other', label: 'Other' },
   ];
 
+const  Maintenance = () =>{
   return (
     <div>
       <div className="w-full px-2">
