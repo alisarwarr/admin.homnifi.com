@@ -54,6 +54,7 @@ import FeaturePurchaseHistory from '../pages/Wallet/FeaturePurchaseHistory';
 import ProductPurchaseHistory from '../pages/Wallet/ProductPurchaseHistory';
 import SwapHistory from '../pages/Wallet/SwapHistory';
 import Cloud2 from '../pages/Cloud2';
+import WithdrawSetting from '../pages/Wallet/WithdrawSetting';
 
 export const router = createBrowserRouter([
   {
@@ -274,6 +275,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <WithdrawRequests />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/wallet/withdraw-settings',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <WithdrawSetting />
             </ProtectedRoute>
           </React.Suspense>
         ),

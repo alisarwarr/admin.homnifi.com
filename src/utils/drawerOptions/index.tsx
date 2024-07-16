@@ -98,7 +98,7 @@ export const allDrawerOptions: DrawerSection[] = [
             // 'ss'
           },
           {
-            name: 'Transition Setting',
+            name: 'Transaction Setting',
             icon: <Dashboard />,
             icon_dark: setting,
             url: '/tokens/settings/transition',
@@ -140,11 +140,22 @@ export const allDrawerOptions: DrawerSection[] = [
 
             icon_dark: setting,
             url: '/wallet/withdraw',
+            key: 'wallet-withdraw',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
+          },
+          {
+            name: 'Withdraw Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/wallet/withdraw-settings',
             key: 'wallet-withdraw-settings',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
+
           {
             name: 'Transfer',
             icon: <Dashboard />,

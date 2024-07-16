@@ -50,6 +50,7 @@ export default function GlobalDialog({
         <div className="flex items-center gap-4 justify-end">
           {closeButtonShow && (
             <button
+              type="button"
               className="flex flex-row gap-4 border border-primary text-xs lg:text-sm px-4 py-1 lg:py-2 lg:px-8 text-primary rounded hover:bg-primary hover:text-white"
               onClick={onClose}
             >
@@ -59,6 +60,7 @@ export default function GlobalDialog({
           <div className="flex gap-4">
             {backButtonText && (
               <button
+                type="button"
                 className="flex flex-row gap-4 border border-primary text-xs lg:text-sm px-4 py-1 lg:py-2 lg:px-8 text-primary rounded hover:bg-primary hover:text-white"
                 onClick={backButtonAction}
               >
