@@ -16,9 +16,9 @@ type TGlobalSelect = {
   onChange?: (value: string | string[] | any) => void;
   onBlur?: (e: React.ChangeEvent<HTMLDivElement>) => void;
   setFieldTouched?: any;
-  setFieldValue: any;
+  setFieldValue?: any;
   isError: boolean | undefined;
- error?: string | any;
+  error?: string | any;
   value?: string | string[];
   isMulti?: boolean;
   inputClass?: string;
@@ -54,11 +54,9 @@ const GlobalSelect = ({
   };
 
   const handleSelectValue = (selectedOption: IOptions) => {
-
     onChange && onChange(selectedOption);
 
-  console.log("🚀 ~ handleSelectValue ~ selectedOption:", selectedOption)
-
+    console.log('🚀 ~ handleSelectValue ~ selectedOption:', selectedOption);
 
     const selectedValue = selectedOption.value;
     let newValue;
@@ -76,7 +74,7 @@ const GlobalSelect = ({
       newValue = selectedValue;
       setIsOpen(false);
     }
-    setFieldValue(name, selectedOption);
+    setFieldValue && setFieldValue(name, selectedOption);
     // onChange && onChange(selectedOption); // Optionally trigger onChange if needed
   };
 
@@ -102,7 +100,7 @@ const GlobalSelect = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  console.log('isError , error', options.find((option) => option.value === value)?.label  , value , options)
+  console.log('isError , error', options.find((option) => option.value === value)?.label, value, options);
 
   return (
     <div className="flex flex-col gap-2 text-sm">
@@ -141,21 +139,18 @@ const GlobalSelect = ({
                 Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''
               }`}
               onClick={() => handleSelectValue(option)}
-
             >
               {option.label}
             </button>
           ))}
         </div>
-        <div className={`absolute ${isOpen ? 'top-3' :'top-2'} right-3 bg-red`} style={{ zIndex: 100 }}>
+        <div className={`absolute ${isOpen ? 'top-3' : 'top-2'} right-3 bg-red`} style={{ zIndex: 100 }}>
           <ArrowDownIcon
             className={`w-4 h-4 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
           />
         </div>
       </div>
-      {isError  && (
-        <span className="text-xs text-redDanger text-right">{error}</span>
-      )}
+      {isError && <span className="text-xs text-redDanger text-right">{error}</span>}
     </div>
   );
 };

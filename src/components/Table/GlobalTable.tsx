@@ -18,7 +18,6 @@ const ActionsColors = {
 };
 import MachinesAccordion from '../Cloud/MachinesAccordion';
 
-
 type Props = {
   rows: any[];
   accordion?: any;
@@ -55,7 +54,6 @@ type Props = {
   setClickeddRow?: any;
 
   showAccordion?: string;
-
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -111,7 +109,6 @@ const GlobalTable = ({
 
   showAccordion,
   accordion = {},
-
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -387,7 +384,6 @@ const GlobalTable = ({
                 <tbody>
                   {rows.map((row, index) => {
                     return (
-
                       <>
                         <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
                           {/* Checkbox column */}
@@ -410,7 +406,7 @@ const GlobalTable = ({
                                 >
                                   <div className={'h-20 justify-center '}>{row[cell.id]}</div>
 
-                                  <div className={'h-44'}>{accordion[cell.id]}</div>
+                                  <div className={'max-h-44'}>{accordion[cell.id]}</div>
 
                                   {/* {showAccordion?.length ? (
                           showAccordion === rows[index].id ? <>: null;):null)} */}
@@ -422,7 +418,6 @@ const GlobalTable = ({
 
                         {/* <MachinesAccordion /> */}
                       </>
-
                     );
                   })}
                 </tbody>
