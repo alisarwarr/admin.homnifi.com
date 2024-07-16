@@ -391,11 +391,11 @@ const GlobalTable = ({
                               cell.id !== '_id' && (
                                 <td
                                   key={index}
-                                  className={`  gap-5 table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
+                                  className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={'h-20 justify-center '}>{row[cell.id]}</div>
+                                  <div className={'justify-center '}>{row[cell.id]}</div>
 
-                                  <div className={'h-44'}>{accordion[cell.id]}</div>
+                                  {/* <div className={'h-44'}>{accordion[cell.id]}</div> */}
 
                                   {/* {showAccordion?.length ? (
                           showAccordion === rows[index].id ? <>: null;):null)} */}
