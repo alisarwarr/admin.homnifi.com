@@ -50,6 +50,10 @@ import Cloud2 from '../pages/Cloud2';
 import CommunityFriends from '../pages/community/friends';
 import CommunitySupernode from '../pages/community/super-node';
 import AuthSlider from '../pages/Admins/AuthSlider';
+import WithdrawSettings from '../pages/Tokens/WithdrawSettings';
+import SwapSettings from '../pages/Tokens/SwapSettings';
+import DepositSettings from '../pages/Tokens/DepositSettings';
+import NetworkSettings from '../pages/Tokens/NetworkSettings';
 
 export const router = createBrowserRouter([
   {
@@ -80,26 +84,42 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      ////////////////////////
+      ////////////////////////
       {
-        path: '/tokens/details/:id',
+        path: '/tokens',
         element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenDetails />
-            </ProtectedRoute>
-          </React.Suspense>
+          <ProtectedRoute>
+            <Tokens />
+          </ProtectedRoute>
         ),
       },
       {
-        path: '/tokens/settings/transition',
+        path: '/token/swap-settings',
         element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenTransactionSettings />
-            </ProtectedRoute>
-          </React.Suspense>
+          <ProtectedRoute>
+            <SwapSettings />
+          </ProtectedRoute>
         ),
       },
+      {
+        path: '/token/deposit-settings',
+        element: (
+          <ProtectedRoute>
+            <DepositSettings />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/token/network-settings',
+        element: (
+          <ProtectedRoute>
+            <NetworkSettings />
+          </ProtectedRoute>
+        ),
+      },
+      ////////////////////////
+      ////////////////////////
       {
         path: '/cloudk',
         element: (
@@ -189,17 +209,7 @@ export const router = createBrowserRouter([
       //       </ProtectedRoute>
       //     </React.Suspense>
       //   ),
-      // },
-      {
-        path: '/tokens/settings/:type/details/:id',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <TokenTransactionSettingDetails />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
+      // }
       {
         path: '/users',
         element: (

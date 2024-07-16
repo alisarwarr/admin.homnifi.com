@@ -10,7 +10,7 @@ type GlobalSwitchProps = {
 };
 
 const GlobalSwitch: React.FC<GlobalSwitchProps> = ({ checked, onChange, disabled }) => {
-  return <Toggle  defaultChecked={checked} icons={false} size={20} onChange={onChange} />;
+  return <Toggle defaultChecked={checked} icons={false} size={20} onChange={onChange} />;
 };
 
 export default GlobalSwitch;

@@ -52,7 +52,7 @@ const GlobalInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`outline-none text-defaultBlack border py-2 px-8 text-xs rounded-full w-full ${isError ? 'border-redDanger' : 'border-blueGrey'} ${className}`}
+          className={`outline-none text-defaultBlack border py-2 pr-8 pl-4 text-xs rounded-full w-full ${isError ? 'border-redDanger' : 'border-blueGrey'} ${className}`}
         />
         {isError ? (
           <span className="absolute right-2">
