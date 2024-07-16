@@ -198,21 +198,6 @@ export const allDrawerOptions: DrawerSection[] = [
   {
     options: [
       {
-        name: 'Admins',
-        icon: <Admin />,
-        icon_dark: AdminDark,
-        url: '/admins',
-        key: 'admins',
-        active: false,
-        options: [],
-        permissions: [`all`, `superadmin`, 'admins'],
-      },
-    ],
-  },
-
-  {
-    options: [
-      {
         name: 'Cloud k 2.0',
         icon: <CloundK2 />,
         icon_dark: AdminDark,
@@ -230,7 +215,7 @@ export const allDrawerOptions: DrawerSection[] = [
         name: 'Community',
         icon: <Admin />,
         icon_dark: AdminDark,
-        url: '/admins',
+        url: '/',
         key: 'admins',
         active: false,
         options: [
@@ -269,6 +254,36 @@ export const allDrawerOptions: DrawerSection[] = [
         key: 'admins-setting',
         active: false,
         options: [
+          {
+            name: 'Admins',
+            icon: <Admin />,
+            icon_dark: setting,
+            url: 'admin-setting/admins',
+            key: 'admin-settings-admin',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
+          },
+          {
+            name: 'Roles',
+            icon: <Admin />,
+            icon_dark: setting,
+            url: 'admin-setting/roles',
+            key: 'admin-settings-roles',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
+          },
+          {
+            name: 'Cron Jobs',
+            icon: <Admin />,
+            icon_dark: setting,
+            url: 'admin-setting/cron-jobs',
+            key: 'admin-settings-cron-jobs',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
+          },
           {
             name: 'Maintenance Setting',
             icon: <Dashboard />,

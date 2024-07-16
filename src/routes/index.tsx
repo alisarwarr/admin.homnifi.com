@@ -55,6 +55,7 @@ import ProductPurchaseHistory from '../pages/Wallet/ProductPurchaseHistory';
 import SwapHistory from '../pages/Wallet/SwapHistory';
 import Cloud2 from '../pages/Cloud2';
 import WithdrawSetting from '../pages/Wallet/WithdrawSetting';
+import AdminRoles from '../pages/Admins/AdminRoles';
 
 export const router = createBrowserRouter([
   {
@@ -480,7 +481,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins',
+        path: '/admin-setting/admins',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -490,7 +491,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/view/:id',
+        path: '/admin-setting/admins/view/:id',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -500,7 +501,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/edit/:id',
+        path: '/admin-setting/admins/edit/:id',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -510,11 +511,21 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/create',
+        path: '/admin-setting/admins/create',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <AdminDeatils create={true} />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: 'admin-setting/roles',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <AdminRoles />
             </ProtectedRoute>
           </React.Suspense>
         ),
