@@ -27,16 +27,10 @@ import TokenTransactionSettingDetails from '../pages/Tokens/TokenTransactionSett
 import Features from '../pages/Features';
 import QuickyPaySettings from '../pages/Settings/QucikyPaySettings';
 import Dashboard from '../pages/Dashboard';
-// import TokenDepositSetting from '../pages/Tokens/TokenTransactionSettings/Deposit';
-// import TokenWithdrawSettings from '../pages/Tokens/TokenTransactionSettings/Withdraw';
-// import TokenSwapSettings from '../pages/Tokens/TokenTransactionSettings/Swap';
-// import TokenPairs from '../pages/Tokens/TokenTransactionSettings/TokenPairs';
-// import TokenMigrateSettings from '../pages/Tokens/TokenTransactionSettings/Migrate';
 import UserDetails from '../pages/Users/UserDetails';
 import Links from '../pages/Settings/Links';
 import PrivacyPolicy from '../pages/Settings/PrivacyPolicy';
 import TermsAndConditions from '../pages/Settings/TermsAndConditions';
-
 import Profile from '../pages/Profile';
 import Admins from '../pages/Admins';
 import SwapPriority from '../pages/Settings/SwapPriority';
@@ -45,7 +39,6 @@ import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
-import WithdrawHistory from '../pages/Wallet/WithdrawHistory';
 import DepositHistory from '../pages/Wallet/DepositHistory';
 import Faqs from '../pages/Wallet/Faqs';
 import AddFaqs from '../pages/Wallet/Faqs/AddFaqs';
@@ -54,6 +47,9 @@ import FeaturePurchaseHistory from '../pages/Wallet/FeaturePurchaseHistory';
 import ProductPurchaseHistory from '../pages/Wallet/ProductPurchaseHistory';
 import SwapHistory from '../pages/Wallet/SwapHistory';
 import Cloud2 from '../pages/Cloud2';
+import CommunityFriends from '../pages/community/friends';
+import CommunitySupernode from '../pages/community/super-node';
+import AuthSlider from '../pages/Admins/AuthSlider';
 
 export const router = createBrowserRouter([
   {
@@ -110,6 +106,26 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <Cloud2 />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/community/friends',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <CommunityFriends />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/community/super-node',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <CommunitySupernode />
             </ProtectedRoute>
           </React.Suspense>
         ),
@@ -509,11 +525,21 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/adminsettings/maintenance',
+        path: '/admin-settings/maintenance',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <Maintenance />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/admin-settings/auth-slider-settings',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <AuthSlider />
             </ProtectedRoute>
           </React.Suspense>
         ),
