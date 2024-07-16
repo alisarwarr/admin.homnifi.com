@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Maintenance extends Component {
-  render() {
-    return (
-      <div>index</div>
-    )
-  }
+export default function Maintenance() {
+  return (
+    <div>Maintenance</div>
+  )
 }

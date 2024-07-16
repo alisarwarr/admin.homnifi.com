@@ -1,36 +1,25 @@
 //REACT
 import { useEffect, useRef, useState } from 'react';
-
-// SOCKET
-import io from 'socket.io-client';
-
 //MATERIAL-UI
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
 //REDUX-TOOLKIT
 import { useSelector, useDispatch } from 'react-redux';
 import { selectDrawerWidth, selectDrawerOpen, setDrawerWidth, setDrawerOpen } from '../../store/drawer/drawerSlice';
-import { selectUser, selectUserSlice, setLogout } from '../../store/user/userSlice';
+import { selectUser, selectUserSlice } from '../../store/user/userSlice';
 import { handleTabChange } from '../../store';
-
 //ROUTER-DOM
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-
 //COMPONENTS
 import Header from '../Header';
-
-//IMAGES
-import { logo } from '../../images/other';
-
 //UTILS
 import { DrawerOption, allDrawerOptions } from '../../utils/drawerOptions';
 import Menu from '../Menu';
 import { useNotificationsActions } from '../../store/notifications/notificationsAction';
-import { calculateSubmenuCount } from '../../utils/utils';
 import { homnifiLogo } from '../../images';
+
 
 export default function Layout(): JSX.Element {
   const drawerWidth = useSelector(selectDrawerWidth);
@@ -122,11 +111,9 @@ export default function Layout(): JSX.Element {
 
   const { getNotifications } = useNotificationsActions();
 
-
   const appBarMargin = drawerWidth + 10;
 
   const darkTheme = createTheme({
-
     typography: {
       fontFamily: 'Poppins, sans-serif !important',
       fontWeightBold: '400 !important',
@@ -175,7 +162,7 @@ export default function Layout(): JSX.Element {
             />
           </DrawerHeader>
           <div ref={drawerRef}>
-            <div className="h-full">
+            <div className="pr-6 h-full">
               {allDrawerOptions
 
                 .map((item: any, index: number) => (
@@ -183,20 +170,6 @@ export default function Layout(): JSX.Element {
                     {index < allDrawerOptions.length && (
                       <>
                         {item.options.map((menu: DrawerOption) => {
-                          // const count = calculateSubmenuCount(menu, user);
-                          // return user.adminPermissions?.length > 0 || user.superAdmin ? (
-                          //   (menu.permissions?.some((permission) => {
-                          //     return user?.adminPermissions?.includes(permission);
-                          //   }) &&
-                          //     count !== -1) ||
-                          //   user.superAdmin ? (
-                          //     <Menu key={menu.key} menu={menu} />
-                          //   ) : (
-                          //     <></>
-                          //   )
-                          // ) : (
-                          //   <></>
-                          // );
                           return <Menu key={menu.key} menu={menu} />;
                         })}
                       </>

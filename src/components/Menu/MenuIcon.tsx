@@ -1,18 +1,18 @@
-import { useSelector } from 'react-redux';
-import { selectActiveMenu } from '../../store/drawer/drawerSlice';
-import { useLocation } from 'react-router-dom';
+import { Up, Down } from '../../images/drawer';
+import { useSelector } from "react-redux";
+import { selectDrawer } from "../../store/drawer/drawerSlice";
+
 
 const MenuIcon = ({ menu, type, length, index }: { menu: any; type: any; length: number; index: number }) => {
-  const activeMenu = useSelector(selectActiveMenu);
-
-  const location = useLocation();
-
   const indexClass = length === 0 ? 'pt-2' : '';
   const subMenuClass = `ml-5 gap-2 ` + indexClass;
   const menuClass = ' gap-3';
 
+  const drawer = useSelector(selectDrawer);
+
   return (
-    <div className={`flex-1 flex items-center  ${type === 'menu' ? menuClass : subMenuClass}`}>
+    <div className={`flex items-center w-full justify-between ${type === 'menu' ? menuClass : subMenuClass}`}>
+      <div className="w-full flex gap-2">
       {type === 'menu' ? (
         menu?.icon
       ) : (
@@ -24,6 +24,12 @@ const MenuIcon = ({ menu, type, length, index }: { menu: any; type: any; length:
       )}
 
       <span className="text-[0.65rem] sm:text-xs whitespace-nowrap">{menu.name}</span>
+      </div>
+      {menu?.options?.length > 0 && (
+        <div className={`transition-all ${(drawer.expendMenu && (menu.key === drawer.expendKey)) ? 'rotate-180': ''}`}>
+          <Down />
+        </div>
+      )}
     </div>
   );
 };
