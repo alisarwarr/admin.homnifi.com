@@ -1,12 +1,70 @@
 import React, { useState } from 'react';
-import { add } from '../../../images/other';
+import { add, edit, view, viewWhite } from '../../../images/other';
 import AddAdminRole from '../../../components/Admin/AddAdminRole';
+import GlobalTable from '../../../components/Table/GlobalTable';
+import { Tooltip } from 'antd';
+import { ReactComponent as DeleteIcon } from '../../../SVGIcons/deleteIcon.svg';
 
 function AdminRoles() {
   const [open, setOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
   const onPopupHandler = () => {
     setOpen(!open);
   };
+
+  const headCells = [
+    { id: 'id', label: 'Id' },
+    { id: 'name', label: 'Name' },
+    { id: 'role', label: 'Roles' },
+    { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
+  ];
+
+  const data = [
+    { name: 'Admin', roles: ['all', 'view', 'edit', 'delete'] },
+    { name: 'Supper Admin', roles: ['all', 'view', 'edit', 'delete'] },
+    { name: 'Sub Admin', roles: ['view', 'edit'] },
+  ];
+
+  const rows = data?.map((_data: any, index: number) => {
+    return {
+      id: index,
+      name: _data.name,
+      role: _data.roles.join(', '),
+      actions: (
+        <div className="flex items-center gap-2">
+          <Tooltip title="View Admin">
+            <img src={view} width={18} height={18} alt="View Icon" className="cursor-pointer" />
+          </Tooltip>
+
+          <Tooltip title="Edit Admin">
+            <img
+              src={edit}
+              width={18}
+              height={18}
+              alt="Edit Icon"
+              onClick={() => {
+                onPopupHandler();
+                setSelectedRole(_data);
+              }}
+              className="cursor-pointer"
+            />
+          </Tooltip>
+
+          <Tooltip title={'Delete'}>
+            <div onClick={() => onDeleteHandler(_data)}>
+              <DeleteIcon />
+            </div>
+          </Tooltip>
+        </div>
+      ),
+    };
+  });
+
+  const onDeleteHandler = (itm: any) => {
+    console.log('itm ::', itm);
+  };
+
+  
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center table-head-bg text-white">
@@ -17,7 +75,8 @@ function AdminRoles() {
         </div>
       </div>
 
-      <AddAdminRole open={open} onClose={onPopupHandler} />
+      <AddAdminRole open={open} onClose={onPopupHandler} editRole = {selectedRole}/>
+      <GlobalTable rows={rows} headCells={headCells} isLoading={false} paginate={false} />
     </div>
   );
 }

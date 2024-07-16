@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../../components/Button';
 import { CancelIcon } from '../../../images/svg';
 import GlobalInput from '../../Global/GlobalInput';
@@ -13,9 +13,10 @@ import { permissionsList, rolesList } from '../../../utils/data';
 interface Props {
   open: boolean;
   onClose: () => void;
+  editRole?: any;
 }
 
-function AddAdminRole({ open, onClose }: Props) {
+function AddAdminRole({ open, onClose, editRole }: Props) {
   const [activeRoles, setActiveRoles] = useState<string[]>([]);
   const [selectedRoles, setSelectedRoles] = useState<any[]>([]);
   const [isRoleSubmit, setIsRoleSubmit] = useState<boolean>(false);
@@ -66,7 +67,19 @@ function AddAdminRole({ open, onClose }: Props) {
       console.log('Submitted values:', values);
     },
   });
-  const { handleChange, handleSubmit, values, errors, touched } = formik;
+  const { handleChange, handleSubmit, values, errors, touched, setFieldValue } = formik;
+
+  useEffect(() => {
+    if (editRole) {
+      setFieldValue('name', editRole.name);
+      setSelectedRoles([editRole.name]);
+      setActiveRoles((prev) => ({
+        ...prev,
+        [editRole.name]: editRole.roles,
+      }));
+    }
+  }, [editRole]);
+
   return (
     <div>
       <GlobalDialog

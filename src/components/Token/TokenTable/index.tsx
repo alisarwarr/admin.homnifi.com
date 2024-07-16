@@ -51,7 +51,7 @@ const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
               className="cursor-pointer"
             />
           </Tooltip>
-          <div className="w-6 h-6 bg-primaryRed flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
+          <div className="w-6 h-6 flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
             <Tooltip title="Delete Token">
               <DeleteIcon />
             </Tooltip>
