@@ -121,9 +121,9 @@ function AdminRoles() {
   };
 
   useEffect(() => {
-    if (rolesList.length === 0) {
+    // if (rolesList.length === 0) {
       getAdminRole();
-    }
+    // }
   }, []);
 
   return (

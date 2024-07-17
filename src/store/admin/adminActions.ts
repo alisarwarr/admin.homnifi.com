@@ -150,7 +150,6 @@ export const useAdminActions = () => {
       .then((response: any) => {
         console.log('response role list ::', response.data);
         dispatch(setRoleList(response?.data?.data));
-        getAdminRole();
         return response;
       })
       .catch((err: any) => err.data);
