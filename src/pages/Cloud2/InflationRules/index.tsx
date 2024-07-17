@@ -16,24 +16,28 @@ import GlobalModal from '../../../components/Global/GlobalModal';
 import CloneModalContent from './_components/CloneModal';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import useLoading from '../../../utils/hooks/useLoading';
+import GlobalSelect from '../../../components/Global/GlobalSelect';
 
 const headCells = [
-  { id: 'id', label: 'ID', show: true },
-  { id: 'dropPercentage', label: '% Fall in the LYK Price', show: true },
-  { id: 'productionDecreasePercentage', label: 'Decrease Producation', show: true },
-  { id: 'increaseDLPPercentage', label: 'Increase DLP', show: true },
-  { id: 'mintingBoost', label: 'Minting Boost', show: true },
+  { id: 'id', label: 'ID', show: true, rowDataClass: '!py-1' },
+  { id: 'dropPercentage', label: '% Fall in the LYK Price', show: true, rowDataClass: '!py-1' },
+  { id: 'productionDecreasePercentage', label: 'Decrease Producation', show: true, rowDataClass: '!py-1' },
+  { id: 'increaseDLPPercentage', label: 'Increase DLP', show: true, rowDataClass: '!py-1' },
+  { id: 'mintingBoost', label: 'Minting Boost', show: true, rowDataClass: '!py-1' },
 ];
 type FILTER = {
   page: number;
   limit: number;
   search: string | null;
 };
+
 const InflationRules = () => {
   //   const { getDepositHistoryRequests } = useHistoryActions();
-  const { getInfalationRules } = useCloudActions();
-  const { infalationRules } = useSelector(selectCloudkSlice);
+  const { getInfalationRules, createInfalationRules, getCurrentInfalationRules } = useCloudActions();
+  const { infalationRules, currentinfalationRules } = useSelector(selectCloudkSlice);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isLoading, startLoading, stopLoading } = useLoading();
 
   const [columns, setColumns] = useState<any[]>(headCells);
   const [loading, setLoading] = useState(true);
@@ -44,8 +48,7 @@ const InflationRules = () => {
   });
   const [cloneRows, setCloneRows] = useState();
 
-  const rows = infalationRules?.[0]?.rules?.map((_data, index) => {
-    console.log('🚀 ~ rows ~ _data:', _data.mintingBoost);
+  const rows = currentinfalationRules?.rules?.map((_data, index) => {
     return {
       id: getTableIndexNumber(filter.page, index, filter.limit),
       dropPercentage: _data?.dropPercentage,
@@ -56,26 +59,28 @@ const InflationRules = () => {
   });
 
   useEffect(() => {
-    setLoading(true);
+    startLoading();
     getInfalationRules();
-    setLoading(false);
+    getCurrentInfalationRules();
+    stopLoading();
   }, [filter.limit, filter.page]);
-
-
-
 
   useEffect(() => {
     if (filter.search !== null) {
       const search = setTimeout(async () => {
         await getInfalationRules();
+        getCurrentInfalationRules();
       }, 400);
       return () => clearTimeout(search);
     }
   }, [filter.search]);
 
   const handleSave = (values: any) => {
-    
-    console.log('🚀 ~ InflationRules ~ values:', values);
+    startLoading();
+    const resp: any = createInfalationRules(values);
+    console.log('🚀 ~ handleSave ~ resp:', resp);
+    setIsModalOpen(false);
+    stopLoading();
   };
 
   return (
@@ -90,14 +95,23 @@ const InflationRules = () => {
 
       <section className="flex  flex-row gap-5 justify-end items-center py-5">
         <div>
-          <GlobalButton onClick={() => setIsModalOpen(true)} type="button" text="Clone" classNames="!w-52" />
+          <GlobalSelect
+
+          options={[
+            {label:'Clone  Pervious Rules' , value:'clone_pervious_rules'}
+            {label:'Create New Rules' , value:'create_new_rules'}
+
+
+          ]}
+          />
+          {/* <GlobalButton onClick={() => setIsModalOpen(true)} type="button" text="Clone" classNames="!w-52" /> */}
         </div>
       </section>
 
       <GlobalTable
         rows={rows}
         headCells={columns?.filter((itm) => itm?.show === true)}
-        isLoading={loading}
+        isLoading={isLoading}
         page={filter.page}
         handlePageChange={(page) => {
           setFilter({ ...filter, page });
@@ -113,8 +127,8 @@ const InflationRules = () => {
         // csvData={getCsvData}
       />
 
-      <GlobalModal size="5xl" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Clone Inflation Rules">
-        <CloneModalContent rows={rows} setCloneRows={setCloneRows} handleSave={handleSave} />
+      <GlobalModal size="5xl" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add Inflation Rules">
+        <CloneModalContent loading={isLoading} rows={rows} setCloneRows={setCloneRows} handleSave={handleSave} />
       </GlobalModal>
     </div>
   );

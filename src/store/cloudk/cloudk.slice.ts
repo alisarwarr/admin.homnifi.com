@@ -5,10 +5,15 @@ import { TINFLATIONRULES } from '../../interfaces/cloudk';
 export interface TemplateState {
   value: string;
   infalationRules: TINFLATIONRULES[];
+  currentinfalationRules: TINFLATIONRULES;
+  products: any[];
+  userRewards: any[];
 }
 export const CLOUD_SLICE_NAME = 'cloudk';
 const initialState: TemplateState = {
   value: '',
+  products: [],
+  userRewards: [],
   infalationRules: [
     {
       inflation: {
@@ -26,6 +31,21 @@ const initialState: TemplateState = {
       ],
     },
   ],
+  currentinfalationRules: {
+    inflation: {
+      _id: '668be0be705e6de012ac3615',
+      adminNote: 'test',
+      name: 'Genesis',
+    },
+    rules: [
+      {
+        dropPercentage: 95,
+        productionDecreasePercentage: 65,
+        increaseDLPPercentage: 5,
+        mintingBoost: 0.12,
+      },
+    ],
+  },
 };
 
 const slice = createSlice({

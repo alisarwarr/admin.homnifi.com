@@ -5,7 +5,7 @@ import GlobalInput from '../../../../components/Global/GlobalInput';
 import GlobalButton from '../../../../components/Global/GlobalButton';
 import { DeleteIcon } from '../../../../images/svg';
 
-const CloneModalContent = ({ rows, setCloneRows, handleSave }) => {
+const CloneModalContent = ({ rows, setCloneRows, handleSave , loading }) => {
   useEffect(() => {
     setCloneRows(rows);
   }, []);
@@ -158,7 +158,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave }) => {
       </table>
       <div className="flex flex-col gap-4 py-5">
         <GlobalButton type="button" outlined text="Add Row" onClick={handleAddRow} />
-        <GlobalButton type="submit" text="Save" />
+        <GlobalButton type="submit" text="Save" loading={loading} />
       </div>
     </form>
   );

@@ -87,7 +87,6 @@ export const allDrawerOptions: DrawerSection[] = [
             permissions: [`all`, `superadmin`, 'tokens'],
           },
 
-
           {
             name: 'Tokens settings',
             icon: <Dashboard />,
@@ -201,6 +200,26 @@ export const allDrawerOptions: DrawerSection[] = [
         active: false,
         options: [
           {
+            name: 'Product List',
+            icon: <></>,
+            icon_dark: setting,
+            url: '/cloudk2/products',
+            key: 'product_list',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings'],
+          },
+          {
+            name: 'Machine List',
+            icon: <></>,
+            icon_dark: setting,
+            url: '/cloudk2/machines',
+            key: 'machine_list',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings'],
+          },
+          {
             name: 'Inflation Rules',
             icon: <Dashboard />,
             icon_dark: setting,
@@ -210,7 +229,6 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings'],
           },
-
         ],
         permissions: [`all`, `superadmin`, 'admins'],
       },
@@ -301,7 +319,6 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'admins_setting_maintenance'],
           },
-
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
       },

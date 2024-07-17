@@ -152,7 +152,7 @@ function HostoryTabla() {
 
   return (
     <>
-      <div className="w-full border py-2 px-2 rounded-md">
+      <div className="w-full  py-2 px-2 rounded-md">
         <div className="flex items-center bg-gray-100">
           <h1 className="flex-1 font-semibold text-2xl px-3 py-1">Wallet</h1>
         </div>
