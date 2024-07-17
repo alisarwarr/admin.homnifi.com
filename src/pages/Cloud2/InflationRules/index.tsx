@@ -8,16 +8,15 @@ import { refresh } from '../../../images/other';
 import GlobalTable from '../../../components/Table/GlobalTable';
 
 import { getTableIndexNumber } from '../../../utils/utils';
-import GlobalInput from '../../../components/Global/GlobalInput';
-import GlobalButton from '../../../components/Global/GlobalButton';
 import { useCloudActions } from '../../../store/cloudk/cloudk.action';
 import { selectCloudkSlice } from '../../../store/cloudk/cloudk.slice';
 import GlobalModal from '../../../components/Global/GlobalModal';
 import CloneModalContent from './_components/CloneModal';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import useLoading from '../../../utils/hooks/useLoading';
 import GlobalSelect from '../../../components/Global/GlobalSelect';
+import GlobalAccordian from '../../../components/Accordian';
+import { AccordionItem } from '@nextui-org/react';
 
 const headCells = [
   { id: 'id', label: 'ID', show: true, rowDataClass: '!py-1' },
@@ -33,12 +32,11 @@ type FILTER = {
 };
 
 const InflationRules = () => {
-  //   const { getDepositHistoryRequests } = useHistoryActions();
   const { getInfalationRules, createInfalationRules, getCurrentInfalationRules } = useCloudActions();
   const { infalationRules, currentinfalationRules } = useSelector(selectCloudkSlice);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isLoading, startLoading, stopLoading } = useLoading();
-
+  const [selectValue, setSelectValue] = useState('');
   const [columns, setColumns] = useState<any[]>(headCells);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FILTER>({
@@ -46,7 +44,6 @@ const InflationRules = () => {
     limit: 10,
     search: null,
   });
-  const [cloneRows, setCloneRows] = useState();
 
   const rows = currentinfalationRules?.rules?.map((_data, index) => {
     return {
@@ -57,6 +54,8 @@ const InflationRules = () => {
       mintingBoost: _data.mintingBoost,
     };
   });
+
+  const [cloneRows, setCloneRows] = useState<any>(rows); // Ensure cloneRows is always an array
 
   useEffect(() => {
     startLoading();
@@ -78,9 +77,18 @@ const InflationRules = () => {
   const handleSave = (values: any) => {
     startLoading();
     const resp: any = createInfalationRules(values);
-    console.log('🚀 ~ handleSave ~ resp:', resp);
     setIsModalOpen(false);
     stopLoading();
+  };
+
+  const handledropDown = (value: string) => {
+    if (value === 'create_new_rules') {
+      setCloneRows([{ dropPercentage: 0, productionDecreasePercentage: 0, increaseDLPPercentage: 0, mintingBoost: 0 }]);
+    } else if (value === 'clone_pervious_rules') {
+      console.log(selectValue === 'clone_pervious_rules', selectValue);
+      setCloneRows(rows);
+    }
+    setIsModalOpen(true);
   };
 
   return (
@@ -95,6 +103,21 @@ const InflationRules = () => {
 
       <section className="flex  flex-row gap-5 justify-end items-center py-5">
         <div>
+
+          <GlobalSelect
+            // label="Clone/Create Rules"
+            name="clone_create_rules"
+            placeholder="Clone/Create Rules"
+            options={[
+              { label: 'Clone  Pervious Rules', value: 'clone_pervious_rules' },
+              { label: 'Create New Rules', value: 'create_new_rules' },
+            ]}
+            isError={false}
+            value={selectValue}
+            inputClass="!w-72 !bg-primary !text-white"
+            onChange={(value) => handledropDown(value)}
+          />
+
           {/* <GlobalSelect
 
           options={[
@@ -105,6 +128,7 @@ const InflationRules = () => {
           ]}
           /> */}
           {/* <GlobalButton onClick={() => setIsModalOpen(true)} type="button" text="Clone" classNames="!w-52" /> */}
+
         </div>
       </section>
 
@@ -112,24 +136,51 @@ const InflationRules = () => {
         rows={rows}
         headCells={columns?.filter((itm) => itm?.show === true)}
         isLoading={isLoading}
-        page={filter.page}
-        handlePageChange={(page) => {
-          setFilter({ ...filter, page });
-        }}
-        handleLimitChange={(limit) => {
-          setFilter({ ...filter, limit });
-        }}
-        setColumns={setColumns}
-        ColumnsList={columns}
-        filter={filter}
-        setFilter={setFilter}
+        paginate={false}
+
         // showInnerFilters={true}
         // csvData={getCsvData}
       />
 
       <GlobalModal size="5xl" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add Inflation Rules">
-        <CloneModalContent loading={isLoading} rows={rows} setCloneRows={setCloneRows} handleSave={handleSave} />
+        <CloneModalContent loading={isLoading} rows={cloneRows} setCloneRows={setCloneRows} handleSave={handleSave} />
       </GlobalModal>
+
+      <h1 className="flex-1 font-semibold text-2xl px-3 py-5">All Inflation Rules</h1>
+
+      <div className="bg-white rounder-lg p-2">
+        {infalationRules.map((e, ind) => {
+          const rows = e?.rules?.map((_data, index) => {
+            return {
+              id: getTableIndexNumber(filter.page, index, filter.limit),
+              dropPercentage: _data?.dropPercentage,
+              productionDecreasePercentage: _data.productionDecreasePercentage,
+              increaseDLPPercentage: _data.increaseDLPPercentage,
+              mintingBoost: _data.mintingBoost,
+            };
+          });
+          return (
+            <GlobalAccordian
+              selectionMode="single"
+              headingClassName="bg-gradient-white rounded-lg text-lg text-defaultBlack font-medium px-4 border-b border-borderBlue"
+            >
+              <AccordionItem key={e?.inflation?.name} aria-label={e?.inflation?.name} title={e?.inflation?.name}>
+                <GlobalTable
+                  rows={rows}
+                  headCells={columns?.filter((itm) => itm?.show === true)}
+                  isLoading={isLoading}
+                  paginate={false}
+
+                  // showInnerFilters={true}
+                  // csvData={getCsvData}
+                />
+              </AccordionItem>
+            </GlobalAccordian>
+          );
+        })}
+
+        {}
+      </div>
     </div>
   );
 };

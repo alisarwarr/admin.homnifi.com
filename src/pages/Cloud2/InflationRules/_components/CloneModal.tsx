@@ -5,7 +5,7 @@ import GlobalInput from '../../../../components/Global/GlobalInput';
 import GlobalButton from '../../../../components/Global/GlobalButton';
 import { DeleteIcon } from '../../../../images/svg';
 
-const CloneModalContent = ({ rows, setCloneRows, handleSave , loading }) => {
+const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
   useEffect(() => {
     setCloneRows(rows);
   }, []);
@@ -72,29 +72,28 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave , loading }) => {
           value={formik.values.adminNote}
           onChange={formik.handleChange}
           label="Remarks"
-          name="remarks"
+          name="adminNote"
           placeholder="Enter Remarks"
-
           onBlur={formik.handleBlur}
           isError={formik.touched.adminNote && formik.errors.adminNote}
           className="!px-4"
           error={formik.errors.adminNote}
         />
       </div>
-      <table className="border-collapse border border-slate-500">
+      <table className="table-bordered border-collapse w-full">
         <thead>
-          <tr>
-            <th className="border border-slate-200">% Fall in the LYK Price</th>
-            <th className="border border-slate-200">Decrease Producation</th>
-            <th className="border border-slate-200">Increase DLP</th>
-            <th className="border border-slate-200">Minting Boost</th>
-            <th className="border border-slate-200">Actions</th>
+          <tr className="text-left font-semibold text-sm p-3 border-b border-borderGray">
+            <th className="text-sm">% Fall in the LYK Price</th>
+            <th className="">Decrease Producation</th>
+            <th className="">Increase DLP</th>
+            <th className="">Minting Boost</th>
+            <th className="">Actions</th>
           </tr>
         </thead>
-        <tbody className="border ">
+        <tbody className=" ">
           {formik.values.rules?.map((row, index) => (
             <tr key={index} className="p-5 ">
-              <td className="border border-slate-700">
+              <td className="">
                 <GlobalInput
                   name={`rules[${index}].dropPercentage`}
                   type="number"
@@ -103,12 +102,11 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave , loading }) => {
                   onChange={(e) => handleInputChange(index, 'dropPercentage', e.target.value)}
                   onBlur={formik.handleBlur}
                   isError={
-                    formik.touched.rules?.[index]?.dropPercentage &&
-                    formik.errors.rules?.[index]?.dropPercentage
+                    formik.touched.rules?.[index]?.dropPercentage && formik.errors.rules?.[index]?.dropPercentage
                   }
                 />
               </td>
-              <td className="border border-slate-700">
+              <td className="">
                 <GlobalInput
                   name={`rules[${index}].productionDecreasePercentage`}
                   type="number"
@@ -122,7 +120,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave , loading }) => {
                   }
                 />
               </td>
-              <td className="border border-slate-700">
+              <td className="">
                 <GlobalInput
                   name={`rules[${index}].increaseDLPPercentage`}
                   type="number"
@@ -136,7 +134,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave , loading }) => {
                   }
                 />
               </td>
-              <td className="border border-slate-700">
+              <td className="">
                 <GlobalInput
                   name={`rules[${index}].mintingBoost`}
                   type="number"
@@ -144,9 +142,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave , loading }) => {
                   className="rounded-none border-none !px-0 !py-0 w"
                   onChange={(e) => handleInputChange(index, 'mintingBoost', e.target.value)}
                   onBlur={formik.handleBlur}
-                  isError={
-                    formik.touched.rules?.[index]?.mintingBoost && formik.errors.rules?.[index]?.mintingBoost
-                  }
+                  isError={formik.touched.rules?.[index]?.mintingBoost && formik.errors.rules?.[index]?.mintingBoost}
                 />
               </td>
               <td>
