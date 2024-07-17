@@ -44,12 +44,13 @@ export default function GlobalDialog({
 
   return (
     <Dialog open={open} fullWidth={true} maxWidth={getSizeMaxWidth(size ? size : 'md')} onClose={onClose}>
-      <div className="flex flex-col gap-4 py-4 lg:py-8 px-4 lg:px-6">
+      <div className="flex flex-col gap-4 pb-0 lg:pb-4 pt-4 lg:pt-8 px-4 lg:px-6">
         {title && <div className="text-md text-Heading font-medium">{title}</div>}
         <div className={`${contentClass}`}>{content}</div>
         <div className="flex items-center gap-4 justify-end">
           {closeButtonShow && (
             <button
+              type="button"
               className="flex flex-row gap-4 border border-primary text-xs lg:text-sm px-4 py-1 lg:py-2 lg:px-8 text-primary rounded hover:bg-primary hover:text-white"
               onClick={onClose}
             >
@@ -59,6 +60,7 @@ export default function GlobalDialog({
           <div className="flex gap-4">
             {backButtonText && (
               <button
+                type="button"
                 className="flex flex-row gap-4 border border-primary text-xs lg:text-sm px-4 py-1 lg:py-2 lg:px-8 text-primary rounded hover:bg-primary hover:text-white"
                 onClick={backButtonAction}
               >

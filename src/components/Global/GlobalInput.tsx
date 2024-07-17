@@ -37,7 +37,7 @@ const GlobalInput = ({
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
-    <div className="flex flex-col gap-2 my-2">
+    <div className="flex flex-col gap-2 my-2 w-full">
       {label && (
         <div className={`text-sm font-medium text-primary ${labelStyle}`}>
           {label} {required && <span className="text-redDanger">*</span>}
@@ -52,7 +52,9 @@ const GlobalInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`outline-none text-defaultBlack border py-2 px-8 text-xs rounded-full w-full ${isError ? 'border-redDanger' : 'border-blueGrey'} ${className}`}
+          className={`outline-none text-defaultBlack border py-2 px-8 text-xs rounded-full w-full ${
+            isError ? 'border-redDanger' : 'border-blueGrey'
+          } ${className}`}
         />
         {isError ? (
           <span className="absolute right-2">
@@ -60,23 +62,13 @@ const GlobalInput = ({
           </span>
         ) : (
           type === 'password' && (
-            <button
-              type="button"
-              className="absolute right-4"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <EyeCloseIcon className="w-4" />
-              ) : (
-                <EyeOpenIcon className="w-4" />
-              )}
+            <button type="button" className="absolute right-4" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <EyeCloseIcon className="w-4" /> : <EyeOpenIcon className="w-4" />}
             </button>
           )
         )}
       </div>
-      {error && isError && (
-        <span className="text-xs text-redDanger text-right">{error}</span>
-      )}
+      {error && isError && <span className="text-xs text-redDanger text-right">{error}</span>}
     </div>
   );
 };

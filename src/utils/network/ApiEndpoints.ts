@@ -24,7 +24,6 @@ export const IMPERSONATE_USER = '/user/impersonate';
 
 // WALLET
 
-
 // FEATURE
 export const FEATURE = '/feature';
 
@@ -135,3 +134,7 @@ export const DISTABLE_USER_2FA = '/user/2fa-disable';
 export const ADMIN_ACTIVITY = '/user/activity';
 export const ADMIN_PERMISSIONS = '/permissions';
 export const ADMIN_LIST = '';
+
+//cloudk
+
+export const INFLATION_RULES = 'cloud-k/inflation-rules';
