@@ -22,7 +22,9 @@ const Button = ({
 }: Props) => {
   return (
     <button
-      className={`rounded-full  px-6 py-2 flex justify-center items-center cursor-pointer bg-buttonColor bg-primary text-white ${className}`}
+      className={`rounded-full  px-6 py-2 flex justify-center items-center ${
+        disable ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+      } bg-buttonColor bg-primary text-white ${className}`}
       disabled={loading || disable}
       onClick={onClick}
       type={buttonType}

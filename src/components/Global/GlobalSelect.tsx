@@ -101,6 +101,9 @@ const GlobalSelect = ({
     };
   }, []);
 
+  React.useEffect(() => {
+    setFilteredOptions(options);
+  }, [options]);
   return (
     <div className="flex flex-col gap-2 text-sm py-2">
       <div className="font-medium text-primary">
@@ -108,9 +111,11 @@ const GlobalSelect = ({
       </div>
       <div className="relative select-none">
         <div
-          className={`bg-white text-gray-400  border ${
+          className={`bg-white text-defaultBlack    border ${
             isError ? 'border-redDanger' : 'border-blueGrey'
-          } py-2 px-4 text-xs rounded-full w-full ${disabled ? 'cursor-not-allowed' : ' cursor-pointer'} ${inputClass}`}
+          } py-2 px-4 text-xs rounded-full w-full ${
+            disabled ? 'cursor-not-allowed bg-gray-150' : ' cursor-pointer'
+          } ${inputClass}`}
           onClick={toggleDropdown}
         >
           {options?.find((option) => option.value === value)?.label || placeholder}

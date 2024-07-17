@@ -7,6 +7,7 @@ import AddAdminRole from '../../../components/Admin/AddAdminRole';
 import { add, edit, view, viewWhite } from '../../../images/other';
 import { useAdminActions } from '../../../store/admin/adminActions';
 import { ReactComponent as DeleteIcon } from '../../../SVGIcons/deleteIcon.svg';
+import Loader from '../../../components/Loader/Loader';
 
 function AdminRoles() {
   const { getAdminRole } = useAdminActions();
@@ -14,6 +15,7 @@ function AdminRoles() {
 
   const [open, setOpen] = useState(false);
   const [isView, setIsView] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedRole, setSelectedRole] = useState(null);
 
   const onPopupHandler = () => {
@@ -28,45 +30,6 @@ function AdminRoles() {
     { id: 'name', label: 'Name' },
     { id: 'role', label: 'Roles' },
     { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
-  ];
-
-  const data = [
-    {
-      name: 'Admin',
-      roles: [
-        { name: 'tokens-setting', roles: ['all', 'view', 'delete'] },
-        { name: 'transaction-setting', roles: ['edit', 'delete'] },
-        { name: 'desposit', roles: ['all', 'delete'] },
-        { name: 'withdraw', roles: ['all', 'view', 'edit', 'delete'] },
-        { name: 'withdraw-setting', roles: ['all', 'view', 'edit', 'delete'] },
-        { name: 'transfer', roles: ['all', 'edit', 'delete'] },
-        { name: 'swap', roles: ['all', 'view', 'delete'] },
-        { name: 'faqs', roles: ['all', 'view', 'edit'] },
-        { name: 'cloud-k-2.0', roles: ['all', 'view', 'edit', 'delete'] },
-        { name: 'community', roles: ['view', 'edit'] },
-        { name: 'cron-jobs', roles: ['all', 'delete'] },
-        { name: 'maintenance-setting', roles: ['all', 'view', 'edit', 'delete'] },
-      ],
-    },
-    {
-      name: 'Supper Admin',
-      roles: [
-        { name: 'faqs', roles: ['all', 'view'] },
-        { name: 'cloud-k-2.0', roles: ['all', 'view', 'edit', 'delete'] },
-        { name: 'community', roles: ['all', 'view', 'delete'] },
-        { name: 'cron-jobs', roles: ['all', 'view', 'edit'] },
-        { name: 'maintenance-setting', roles: ['view', 'edit', 'delete'] },
-      ],
-    },
-    {
-      name: 'Sub Admin',
-      roles: [
-        { name: 'tokens-setting', roles: ['all', 'delete'] },
-        { name: 'transaction-setting', roles: ['all', 'view', 'edit', 'delete'] },
-        { name: 'desposit', roles: ['all', 'view'] },
-        { name: 'withdraw', roles: ['edit', 'delete'] },
-      ],
-    },
   ];
 
   const rows = rolesList?.map((_data: any, index: number) => {
@@ -121,11 +84,18 @@ function AdminRoles() {
   };
 
   useEffect(() => {
-    // if (rolesList.length === 0) {
+    if (rolesList.length === 0) {
       getAdminRole();
-    // }
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
+  
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center table-head-bg text-white">
@@ -144,7 +114,7 @@ function AdminRoles() {
       </div>
 
       <AddAdminRole open={open} onClose={onPopupHandler} editRole={selectedRole} isView={isView} />
-      <GlobalTable rows={rows} headCells={headCells} isLoading={false} paginate={false} />
+      <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} />
     </div>
   );
 }
