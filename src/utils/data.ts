@@ -14,4 +14,4 @@ export const rolesList = [
   { name: 'auth-slider-setting', roles: ['all', 'view', 'edit', 'delete'] },
 ];
 
-export const permissionsList = ['all', 'view', 'edit', 'delete'];
+export const permissionsList = ['ALL', 'READ', 'WRITE', 'DELETE', 'UPDATE'];
