@@ -112,7 +112,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
 
       if (response?.admin) {
         successAlert('Admin created, Successfully!');
-        navigate('/admins');
+        navigate('/admin-setting/admins');
       } else {
         errorAlert(response?.message);
       }
@@ -125,7 +125,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
 
       if (response?.status) {
         successAlert('Admin edited, Successfully!');
-        navigate('/admins');
+        navigate('/admin-setting/admins');
       } else if (!response?.status) {
         errorAlert(response?.message);
       }

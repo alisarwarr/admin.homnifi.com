@@ -10,14 +10,15 @@ import MailUser from '../Users/MailUser';
 import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
-import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
+
 const ActionsColors = {
   Complete: 'primaryGreen',
   Pending: 'primary',
   Failed: 'primaryRed',
 };
-import MachinesAccordion from '../Cloud/MachinesAccordion';
 
+import MachinesAccordion from '../Cloud/MachinesAccordion';
+import { Copy } from '../../images/svg';
 
 type Props = {
   rows: any[];
@@ -53,9 +54,8 @@ type Props = {
   innerFiltersClassName?: string;
 
   setClickeddRow?: any;
-
+  copyIconList?: any[];
   showAccordion?: string;
-
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -108,10 +108,9 @@ const GlobalTable = ({
   innerFiltersClassName = '',
 
   setClickeddRow,
-
+  copyIconList = [],
   showAccordion,
   accordion = {},
-
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -387,7 +386,6 @@ const GlobalTable = ({
                 <tbody>
                   {rows.map((row, index) => {
                     return (
-
                       <>
                         <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
                           {/* Checkbox column */}
@@ -408,10 +406,16 @@ const GlobalTable = ({
                                   key={index}
                                   className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={'justify-center '}>{row[cell.id]}</div>
-
+                                  <div className={'py-2 flex justify-start items-center '}>
+                                    {row[cell.id]}
+                                    {copyIconList.find((dt) => dt === cell.id) && (
+                                      <Copy
+                                        className="ml-3 cursor-pointer"
+                                        onClick={() => navigator.clipboard.writeText(row[cell.id])}
+                                      />
+                                    )}{' '}
+                                  </div>
                                   {/* <div className={'h-44'}>{accordion[cell.id]}</div> */}
-
                                   {/* {showAccordion?.length ? (
                           showAccordion === rows[index].id ? <>: null;):null)} */}
                                 </td>
@@ -422,7 +426,6 @@ const GlobalTable = ({
 
                         {/* <MachinesAccordion /> */}
                       </>
-
                     );
                   })}
                 </tbody>

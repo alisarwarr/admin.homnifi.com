@@ -3,6 +3,7 @@ import { Dashboard, Wallet, Admin, CloundK2 } from '../../images/drawer';
 import { HomeDark, AdminDark } from '../../images/drawer/light';
 import { emptyWallet_ } from '../../images/drawer/dark';
 import { setting } from '../../images/other';
+import Maintenance from '../../pages/Admins/Maintenance';
 
 export interface DrawerOption {
   name: string;
@@ -55,7 +56,7 @@ export const allDrawerOptions: DrawerSection[] = [
             permissions: [`all`, `superadmin`, 'tokens_settings'],
           },
           {
-            name: 'Transition Setting',
+            name: 'Transaction Setting',
             icon: <Dashboard />,
             icon_dark: setting,
             url: '/tokens/settings/transition',
@@ -99,6 +100,17 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
+          {
+            name: 'Withdraw Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/wallet/withdraw-settings',
+            key: 'wallet-withdraw-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
+          },
+
           {
             name: 'Transfer',
             icon: <Dashboard />,
@@ -180,8 +192,8 @@ export const allDrawerOptions: DrawerSection[] = [
         name: 'Community',
         icon: <Admin />,
         icon_dark: AdminDark,
-        url: '',
-        key: 'community',
+        url: '/',
+        key: 'admins',
         active: false,
         options: [
           {
@@ -220,25 +232,46 @@ export const allDrawerOptions: DrawerSection[] = [
         active: false,
         options: [
           {
-            name: 'Maintenance settings',
-            icon: <Dashboard />,
+            name: 'Admins',
+            icon: <Admin />,
+            icon_dark: setting,
+            url: 'admin-setting/admins',
+            key: 'admin-settings-admin',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
+          },
+          {
+            name: 'Roles',
+            icon: <Admin />,
+            icon_dark: setting,
+            url: 'admin-setting/roles',
+            key: 'admin-settings-roles',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_settings_roles'],
+          },
+          {
+            name: 'Cron Jobs',
+            icon: <Admin />,
+            icon_dark: setting,
+            url: 'admin-setting/cron-jobs',
+            key: 'admin-settings-cron-jobs',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_settings_cron_jobs'],
+          },
+          {
+            name: 'Maintenance Setting',
+            icon: <></>,
             icon_dark: setting,
             url: '/admin-settings/maintenance',
             key: 'admins-setting-maintenance',
             active: false,
             options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings'],
+            permissions: [`all`, `superadmin`, 'admins_setting_maintenance'],
           },
-          {
-            name: 'Auth Slider Setting',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/admin-settings/auth-slider-settings',
-            key: 'admins-setting-auth-slider',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings'],
-          }
+
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
       },

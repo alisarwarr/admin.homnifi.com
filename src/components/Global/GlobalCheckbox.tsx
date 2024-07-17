@@ -9,7 +9,7 @@ const GlobalCheckbox = ({
 }: {
   label?: string;
   checked: boolean;
-  setChecked: (e: boolean) => void;
+  setChecked?: (e: boolean) => void;
   onChange?: any;
   className?: string;
 }) => {
@@ -19,13 +19,18 @@ const GlobalCheckbox = ({
         type="checkbox"
         checked={checked}
         onChange={(e) => {
-          setChecked(!checked);
+          setChecked && setChecked(!checked);
           onChange && onChange(e);
         }}
         className={`custom-checkbox`}
       />
       {label && (
-        <span className={`text-sm text-primaryGrey cursor-pointer ${className}`} onClick={() => setChecked(!checked)}>
+        <span
+          className={`text-sm text-primaryGrey cursor-pointer  ${className}`}
+          onClick={() => {
+            setChecked && setChecked(!checked);
+          }}
+        >
           {label}
         </span>
       )}

@@ -51,6 +51,8 @@ import CommunityFriends from '../pages/community/friends';
 import CommunitySupernode from '../pages/community/super-node';
 import AuthSlider from '../pages/Admins/AuthSlider';
 import InflationRules from '../pages/Cloud2/InflationRules';
+import AdminRoles from '../pages/Admins/AdminRoles';
+import WithdrawSetting from '../pages/Wallet/WithdrawSetting';
 
 export const router = createBrowserRouter([
   {
@@ -296,6 +298,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/wallet/withdraw-settings',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <WithdrawSetting />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
         path: '/wallet/deposit',
         element: (
           <React.Suspense fallback={<Loader />}>
@@ -486,7 +498,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins',
+        path: '/admin-setting/admins',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -496,7 +508,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/view/:id',
+        path: '/admin-setting/admins/view/:id',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -506,7 +518,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/edit/:id',
+        path: '/admin-setting/admins/edit/:id',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -516,11 +528,22 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/create',
+        path: '/admin-setting/admins/create',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <AdminDeatils create={true} />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+
+        path: 'admin-setting/roles',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <AdminRoles />
             </ProtectedRoute>
           </React.Suspense>
         ),
