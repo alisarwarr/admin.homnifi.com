@@ -28,7 +28,6 @@ const GlobalButton = ({
   disabled = false,
   animate = true,
 }: Props) => {
-  //   const [loading, setLoading] = React.useState(false);
   return (
     <button
       className={`w-full flex gap-2  ${disabled || loading ? 'cursor-not-allowed bg-primaryGrey opacity-50 border-primaryGrey' : 'cursor-pointer'} ${outlined ? `bg-white border border-primary` : `bg-primary`} rounded-full items-center justify-center py-3 ${!disabled && outlined ? `text-primary` : `text-white`} font-medium relative overflow-hidden outline-none

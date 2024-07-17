@@ -100,13 +100,13 @@ const GlobalSelect = ({
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 text-sm">
+    <div className="flex flex-col gap-2 text-sm py-2">
       <div className="font-medium text-primary">
         {label} {required && <span className="text-redDanger">*</span>}
       </div>
       <div className="relative select-none">
         <div
-          className={`bg-white text-defaultBlack  border ${
+          className={`bg-white text-gray-400  border ${
             isError ? 'border-redDanger' : 'border-blueGrey'
           } py-2 px-4 text-xs rounded-full w-full cursor-pointer ${inputClass}`}
           onClick={toggleDropdown}

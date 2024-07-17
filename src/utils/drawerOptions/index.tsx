@@ -3,7 +3,6 @@ import { Dashboard, Wallet, Admin, CloundK2 } from '../../images/drawer';
 import { HomeDark, AdminDark } from '../../images/drawer/light';
 import { emptyWallet_ } from '../../images/drawer/dark';
 import { setting } from '../../images/other';
-import Maintenance from '../../pages/Admins/Maintenance';
 
 export interface DrawerOption {
   name: string;
@@ -46,6 +45,38 @@ export const allDrawerOptions: DrawerSection[] = [
         active: false,
         options: [
           {
+            name: 'Deposit Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/token/deposit-settings',
+            key: 'deposit-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+          {
+            name: 'Swap Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/token/swap-settings',
+            key: 'swap-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+          {
+            name: 'Network Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/token/network-settings',
+            key: 'network-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+
+
+          {
             name: 'Tokens settings',
             icon: <Dashboard />,
             icon_dark: setting,
@@ -53,18 +84,18 @@ export const allDrawerOptions: DrawerSection[] = [
             key: 'tokens-settings',
             active: false,
             options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings'],
+            permissions: [`all`, `superadmin`, 'tokens'],
           },
-          {
-            name: 'Transaction Setting',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/tokens/settings/transition',
-            key: 'tokens-transition-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-transition'],
-          },
+          // {
+          //   name: 'Transition Setting',
+          //   icon: <Dashboard />,
+          //   icon_dark: setting,
+          //   url: '/tokens/settings/transition',
+          //   key: 'tokens-transition-settings',
+          //   active: false,
+          //   options: [],
+          //   permissions: [`all`, `superadmin`, 'tokens'],
+          // },
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
       },
@@ -146,20 +177,7 @@ export const allDrawerOptions: DrawerSection[] = [
       },
     ],
   },
-  {
-    options: [
-      {
-        name: 'Admins',
-        icon: <Admin />,
-        icon_dark: AdminDark,
-        url: '/admins',
-        key: 'admins',
-        active: false,
-        options: [],
-        permissions: [`all`, `superadmin`, 'admins'],
-      },
-    ],
-  },
+
   {
     options: [
       {
