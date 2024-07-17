@@ -1,8 +1,20 @@
 //IMAGES
-import { Dashboard, Wallet, Admin, CloundK2 } from '../../images/drawer';
-import { HomeDark, AdminDark } from '../../images/drawer/light';
-import { emptyWallet_ } from '../../images/drawer/dark';
-import { setting } from '../../images/other';
+import {
+  Home,
+  ArrowDown,
+  emptyWallet,
+  flash,
+  Swap,
+  HomeDark,
+  Features,
+  FeauresDark,
+  History,
+  HistoryDark,
+  AdminDark,
+} from '../../images/drawer/light';
+import { ArrowDown_, emptyWallet_, flash_, Swap_ } from '../../images/drawer/dark';
+import { setting, settingDark, swapIcon, users, usersDark } from '../../images/other';
+import { Dashboard, Wallet, Admin, CloundK2, Token, AdminSetting, Community } from '../../images/drawer';
 
 export interface DrawerOption {
   name: string;
@@ -38,7 +50,7 @@ export const allDrawerOptions: DrawerSection[] = [
     options: [
       {
         name: 'Tokens',
-        icon: <Dashboard />,
+        icon: <Token />,
         icon_dark: emptyWallet_,
         url: '',
         key: 'tokens',
@@ -208,10 +220,10 @@ export const allDrawerOptions: DrawerSection[] = [
     options: [
       {
         name: 'Community',
-        icon: <Admin />,
+        icon: <Community />,
         icon_dark: AdminDark,
-        url: '/',
-        key: 'admins',
+        url: '/community',
+        key: 'community',
         active: false,
         options: [
           {
@@ -243,8 +255,8 @@ export const allDrawerOptions: DrawerSection[] = [
     options: [
       {
         name: 'Admin Setting',
-        icon: <Admin />,
-        icon_dark: emptyWallet_,
+        icon: <AdminSetting />,
+        icon_dark: AdminDark,
         url: '',
         key: 'admin',
         active: false,

@@ -39,6 +39,7 @@ import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
+import { Community } from '../images/drawer';
 import DepositHistory from '../pages/Wallet/DepositHistory';
 import Faqs from '../pages/Wallet/Faqs';
 import AddFaqs from '../pages/Wallet/Faqs/AddFaqs';
@@ -613,6 +614,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <TermsAndConditions />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/community',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Community />
             </ProtectedRoute>
           </React.Suspense>
         ),
