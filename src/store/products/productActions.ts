@@ -1,6 +1,6 @@
 import { selectProductSlice, setProducts } from './productSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { PRODUCT } from '../../utils/network/ApiEndpoints';
+import { PRODUCTS } from '../../utils/network/ApiEndpoints';
 
 //API
 import ApiRequest from '../../utils/network/ApiRequest';
@@ -11,11 +11,11 @@ export const useProductActions = () => {
   const { products } = useSelector(selectProductSlice);
 
   const getProducts = async (force: boolean = false, page: any = 1) => {
-    if (products?.list?.length && !force) return;
+    if (products?.length && !force) return;
 
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${PRODUCT}?page=${page}`,
+      url: `${PRODUCTS}?page=${page}`,
     });
     const _products = response?.data?.data;
     dispatch(setProducts(_products));
@@ -24,7 +24,7 @@ export const useProductActions = () => {
   const getProductById = async (id: string | undefined) => {
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${PRODUCT}/${id}`,
+      url: `${PRODUCTS}/${id}`,
     });
     return response?.data?.data;
   };
@@ -32,7 +32,7 @@ export const useProductActions = () => {
   const getProductVouchers = async (id: string | undefined, status: string, page: number) => {
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${PRODUCT}/vouchers/${id}?page=${page}`,
+      url: `${PRODUCTS}/vouchers/${id}?page=${page}`,
       params: { status },
     });
     return response?.data?.data;
@@ -42,7 +42,7 @@ export const useProductActions = () => {
     return await ApiRequest()
       .request({
         method: 'POST',
-        url: PRODUCT,
+        url: PRODUCTS,
         data: data,
       })
       .then((response: any) => response.data)
@@ -53,7 +53,7 @@ export const useProductActions = () => {
     return await ApiRequest()
       .request({
         method: 'PUT',
-        url: `${PRODUCT}/${id}`,
+        url: `${PRODUCTS}/${id}`,
         data: data,
       })
       .then((response: any) => response.data)

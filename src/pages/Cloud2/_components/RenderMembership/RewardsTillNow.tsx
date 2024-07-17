@@ -10,7 +10,7 @@ const RewardsTillNow = (props: Props) => {
     <section className="bg-white border border-borderLightGray rounded-lg shadow p-6 w-full flex gap-5 justify-between flex-wrap">
       <TotalRewardsTillNow />
 
-      <SLYK />
+      {/* <SLYK /> */}
     </section>
   );
 };

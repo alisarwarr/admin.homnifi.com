@@ -21,7 +21,7 @@ import faqSlice from './wallet/faqs/faqSlice';
 
 import notificationsSlice from './notifications/notificationsSlice';
 import cloudkSlice from './cloudk/cloudk.slice';
-
+import generalSlice from './general/generalSlice'
 import { CLOUD_SLICE_NAME } from './cloudk/cloudk.slice';
 import tokensSettingsSlice from './tokensSettings/tokensSettingsSlice';
 
@@ -35,6 +35,7 @@ const rootReducer = combineReducers({
   drawer: drawerSlice,
   user: userSlice,
   token: tokenSlice,
+  general: generalSlice,
   wallet: walletSlice,
   provider: providerSlice,
   customer: customerSlice,

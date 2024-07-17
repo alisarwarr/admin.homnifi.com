@@ -20,7 +20,6 @@ import Menu from '../Menu';
 import { useNotificationsActions } from '../../store/notifications/notificationsAction';
 import { homnifiLogo } from '../../images';
 
-
 export default function Layout(): JSX.Element {
   const drawerWidth = useSelector(selectDrawerWidth);
   const drawerOpen = useSelector(selectDrawerOpen);
@@ -163,19 +162,17 @@ export default function Layout(): JSX.Element {
           </DrawerHeader>
           <div ref={drawerRef}>
             <div className="pr-6 h-full">
-              {allDrawerOptions
-
-                .map((item: any, index: number) => (
-                  <div key={index}>
-                    {index < allDrawerOptions.length && (
-                      <>
-                        {item.options.map((menu: DrawerOption) => {
-                          return <Menu key={menu.key} menu={menu} />;
-                        })}
-                      </>
-                    )}
-                  </div>
-                ))}
+              {allDrawerOptions.map((item: any, index: number) => (
+                <div key={index}>
+                  {index < allDrawerOptions.length && (
+                    <>
+                      {item.options.map((menu: DrawerOption) => {
+                        return <Menu key={menu.key} menu={menu} />;
+                      })}
+                    </>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </Drawer>
@@ -190,9 +187,8 @@ export default function Layout(): JSX.Element {
               />
             </div>
           </div>
-          <div className="flex-grow py-4 px-2 bg-pageBackground">
+          <div className="flex-grow py-8 px-6 bg-pageBackground">
             <Outlet />
-
           </div>
         </div>
       </div>

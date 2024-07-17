@@ -60,7 +60,7 @@ export const WALLET_WITHDRAWS_ACTIONS = '/wallet/withdraw/action';
 export const PROVIDER = '/provider';
 
 // PRODUCT
-export const PRODUCT = '/product';
+export const PRODUCTS = '/cloud-k/products';
 export const FAQ = '/faq/modules';
 // UTILS
 export const COUNTRIES = '/utils/countries';

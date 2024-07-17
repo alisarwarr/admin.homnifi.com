@@ -1,48 +1,43 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface Product {
+export interface TProduct {
   _id: string;
-  provider: {
-    _id: string;
-    name: string;
-    logo: {
-      _id: string;
-      path: string;
-      [key: string]: any; // Dynamic properties
-    };
-  };
   name: string;
-  description: string;
+  url: string;
+  imageUrl: string;
+  externalProductId: string;
+  skuId: string;
   price: number;
-  image: {
-    _id: string;
-    path: string;
-    [key: string]: any; // Dynamic properties
-  };
-  images: {
-    _id: string;
-    path: string;
-    [key: string]: any; // Dynamic properties
-  }[];
-  status: 'ACTIVE' | 'INACTIVE'; // Assuming these are the only two possible values
-  deletedAt: string | null; // Assuming it could be a string (date) or null
-  createdAt: string; // Assuming it's always a string (date)
+  mintingPower: number;
+  mintingPowerPerc: number;
+  defiPortal: boolean;
+  airdropPromo: number;
+  stakeLimit: number;
+  tokenAirdrop: number;
+  licenseName: string;
+  profitSplitFee: number;
+  aiTradingNews: boolean;
+  capping: number | null; // null if unlimited
+  aiTradingSoftwareName: string;
+  superNodeLevel: number;
+  globalPool: number;
+  bonus: number;
 }
 
-
-
 export interface ProductStateSlice {
-  products: {
-    list: Product[];
-    paginate: any;
-  };
+  // products: {
+  //   list: Product[];
+  //   paginate: any;
+  // };
+  products: TProduct[];
 }
 
 const initialState: ProductStateSlice = {
-  products: {
-    list: [],
-    paginate: {},
-  },
+  // products: {
+  //   list: [],
+  //   paginate: {},
+  // },
+  products: [],
 };
 
 const productSlice = createSlice({

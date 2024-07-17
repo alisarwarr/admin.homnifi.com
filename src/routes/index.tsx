@@ -56,6 +56,8 @@ import WithdrawSetting from '../pages/Wallet/WithdrawSetting';
 import SwapSettings from '../pages/Tokens/SwapSettings';
 import DepositSettings from '../pages/Tokens/DepositSettings';
 import NetworkSettings from '../pages/Tokens/NetworkSettings';
+import ProductList from '../pages/Cloud2/ProductList';
+import MachineList from '../pages/Cloud2/MachineList';
 
 export const router = createBrowserRouter([
   {
@@ -547,7 +549,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-
         path: 'admin-setting/roles',
         element: (
           <React.Suspense fallback={<Loader />}>
@@ -573,6 +574,26 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <InflationRules />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk2/products',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <ProductList />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk2/machines',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <MachineList />
             </ProtectedRoute>
           </React.Suspense>
         ),

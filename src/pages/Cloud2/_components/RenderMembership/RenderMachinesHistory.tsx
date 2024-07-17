@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { MachineImage } from '../../../../images/cloud';
-import { ArrowDownSvg, CopyIcon } from '../../../../images/svg';
+import { ArrowDownSvg, CopyIcon, InfoIcon } from '../../../../images/svg';
 import Toottip from '../../../../components/Global/Toottip';
 import Product from './MachinesAccordion/Product';
 import LifetimeRewards from './MachinesAccordion/LifetimeRewards';
 import Staked from './MachinesAccordion/Staked';
 import ExpiresIn from './MachinesAccordion/ExpiresIn';
 import Skalable from './MachinesAccordion/Skalable';
+import GlobalTable from '../../../../components/Table/GlobalTable';
+import GlobalModal from '../../../../components/Global/GlobalModal';
+import useModalHook from '../../../../utils/hooks/useModalHook';
+import SingleMachineModalBody from './SingleMachineModalBody';
+import GlobalButton from '../../../../components/Global/GlobalButton';
 
 type Props = {};
 
@@ -18,7 +23,8 @@ type FILTER = {
 
 const RenderMachinesHistory = (props: Props) => {
   const [Accordion, setAccordion] = useState('1');
-
+  const stakeModalHook = useModalHook();
+  const machineDetailHook = useModalHook();
   const RenderActions = ({
     cloud,
   }: {
@@ -35,14 +41,21 @@ const RenderMachinesHistory = (props: Props) => {
     };
   }) => {
     return (
-      <div className="flex gap-3 items-center justify-between">
-        <button type="button" onClick={() => setAccordion((prev) => (prev !== cloud.id ? cloud.id : ''))}>
+      <div className="flex gap-3 items-center justify-between text-xs font-light">
+        <div className="flex  gap-3">
+          <GlobalButton classNames="!text-xs !font-light " text="Stack History" />
+          <GlobalButton classNames="!text-xs !font-light " text="Reward History" />
+        </div>
+
+        <InfoIcon onClick={() => stakeModalHook.handleOpen()} className="cursor-pointer" />
+
+        {/* <button type="button" onClick={() => stakeModalHook.handleOpen()}>
           <ArrowDownSvg
             className={`w-4 h-4 text-searchColor transition-all ease-in-out duration-75 ${
               Accordion === cloud.id ? 'rotate-180' : 'rotate-0'
             } `}
           />
-        </button>
+        </button> */}
       </div>
     );
   };
@@ -173,7 +186,6 @@ const RenderMachinesHistory = (props: Props) => {
         </span>
         <img src={trx.product.image} alt="Machine" className="w-20 bg-black" />
 
-
         <span className="w-24">{trx.product.name}</span>
       </div>
     ),
@@ -199,38 +211,58 @@ const RenderMachinesHistory = (props: Props) => {
 
   return (
     <>
-      <div className="overflow-x-auto">
-        <div className="hidden  sm:flex flex-row bg-white  w-full  ">
-          {headCells.map((cell) => (
-            <div
-              key={cell.id}
-              className="flex justify-start text-sm font-light bg-white p-3 text-primaryGrey  items-center  min-w-40 w-72 "
-            >
-              {cell.label}
-            </div>
-          ))}
-        </div>
+      <GlobalModal
+        onClose={() => {
+          stakeModalHook.handleClose();
+          // dispatch(setStackMoreAmount(0));
+          // dispatch(setMoreStackPercentage(0));
+          // setClouldk2Slice({
+          //   stackMoreToken: '',
+          // });
+        }}
+        isOpen={stakeModalHook.open}
+        size="5xl"
+      >
+        <SingleMachineModalBody id={'1222'} />
+      </GlobalModal>
 
-        <div className="hidden sm:flex flex-col gap-4  ">
-          {rows.map((row, index) => (
-            <div key={index} className=" flex flex-row bg-white  ">
-              {/* Cells */}
-              {headCells.map((cell) => (
-                <div
-                  key={cell.id}
-                  className="flex flex-col gap-2 justify-start  items-start text-start  p-3 min-w-40 w-72 "
-                >
-                  <div className="flex h-12 justify-center items-center ">{row[cell.id]}</div>
-                  <div className=' h-56 w-full'>{accordingrow[cell.id]}</div>
+      <GlobalTable
+        rows={rows.length ? rows : []}
+        headCells={headCells}
+        isLoading={false}
+        showSort={true}
+        tableTitle="Product History"
+        // searchIsLoading={false}
+        showInnerFilters={true}
+        totalPages={Math.ceil(rows.length / 10)}
+        // emptyDataMessage="No Machines History!"
+        // showTotalRecords={false}
+        // searchFieldPlaceholderText="Search"
+        // paginationPosition={'right'}
+        // rowBorder={true}
+        // rounded={true}
+        // borderClassName="!border !border-borderLightGray !rounded-lg !shadow"
+        // searchClassName="!font-normal"
+        // showSearch={false}
+        // pagination={false}
+        // showFilters={false}
+        // headStyles="text-cardSecondaryText !font-normal"
+        // filterSearchClassName="text-xs text-blueGrey h-max !bg-transparent"
+        // filterSearchBaseClassName="border border-borderLightGray"
+        // filterSearchPlaceholderText="Enter TxID"
+        // showAccordion={Accordion}
+        // setAccordion={setAccordion}
+        // handlePageChange={(page) => {
+        //   // setFilters({ ...filters, page });
+        // }}
+        // openModal={(id: string) => {
+        //   // machineDetailHook.handleOpen();
+        //   // setMachineId(id);
+        // }}
+        // tableContainerClassname=""
+      />
 
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-5 sm:hidden overflow-x-auto">
+      {/* <div className="flex flex-col gap-5 sm:hidden overflow-x-auto">
         {rows.map((row, index) => (
           <div key={index} className="flex flex-col gap-5 w-full border-b border-gray-200 pb-5">
             {headCells.map((cell) => (
@@ -241,7 +273,7 @@ const RenderMachinesHistory = (props: Props) => {
             ))}
           </div>
         ))}
-      </div>
+      </div> */}
     </>
 
     // <div className="flex flex-col gap-5 overflow-x-auto w-full">
