@@ -53,6 +53,7 @@ import Faqs from '../pages/TransactionHistory/Faqs';
 import AddFaqs from '../pages/TransactionHistory/Faqs/AddFaqs';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
+import { Community } from '../images/drawer';
 
 export const router = createBrowserRouter([
   {
@@ -103,66 +104,6 @@ export const router = createBrowserRouter([
           </React.Suspense>
         ),
       },
-      // {
-      //   path: '/tokens/settings/withdraw',
-      //   element: (
-      //     <React.Suspense fallback={<Loader />}>
-      //       <ProtectedRoute>
-      //         <TokenWithdrawSettings />
-      //       </ProtectedRoute>
-      //     </React.Suspense>
-      //   ),
-      // },
-      // {
-      //   path: '/tokens/settings/swap',
-      //   element: (
-      //     <React.Suspense fallback={<Loader />}>
-      //       <ProtectedRoute>
-      //         <TokenSwapSettings />
-      //       </ProtectedRoute>
-      //     </React.Suspense>
-      //   ),
-      // },
-      // {
-      //   path: '/tokens/settings/transfer',
-      //   element: (
-      //     <React.Suspense fallback={<Loader />}>
-      //       <ProtectedRoute>
-      //         <TokenSwapSettings />
-      //       </ProtectedRoute>
-      //     </React.Suspense>
-      //   ),
-      // },
-      // {
-      //   path: '/tokens/settings/token-pairs',
-      //   element: (
-      //     <React.Suspense fallback={<Loader />}>
-      //       <ProtectedRoute>
-      //         <TokenPairs />
-      //       </ProtectedRoute>
-      //     </React.Suspense>
-      //   ),
-      // },
-      // {
-      //   path: '/tokens/settings/token-pair/details/:id',
-      //   element: (
-      //     <React.Suspense fallback={<Loader />}>
-      //       <ProtectedRoute>
-      //         <TokenPairSettingDetails />
-      //       </ProtectedRoute>
-      //     </React.Suspense>
-      //   ),
-      // },
-      // {
-      //   path: '/tokens/settings/migrate',
-      //   element: (
-      //     <React.Suspense fallback={<Loader />}>
-      //       <ProtectedRoute>
-      //         <TokenMigrateSettings />
-      //       </ProtectedRoute>
-      //     </React.Suspense>
-      //   ),
-      // },
       {
         path: '/tokens/settings/:type/details/:id',
         element: (
@@ -523,6 +464,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <TermsAndConditions />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/community',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Community />
             </ProtectedRoute>
           </React.Suspense>
         ),
