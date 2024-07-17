@@ -8,24 +8,33 @@ import GlobalSelect from '../../Global/GlobalSelect';
 import GlobalDialog from '../../../components/Dialog';
 import GlobalCheckbox from '../../Global/GlobalCheckbox';
 import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
-import { permissionsList, rolesList } from '../../../utils/data';
+import { permissionsList } from '../../../utils/data';
+import { selectAdminPermissionsList } from '../../../store/admin/adminSlice';
+import { useSelector } from 'react-redux';
+import { useAdminActions } from '../../../store/admin/adminActions';
+import {errorNotify, successAlert } from '../../../utils/alerts';
 
 interface Props {
   open: boolean;
   onClose: () => void;
   editRole?: any;
+  isView?: boolean;
 }
 
-function AddAdminRole({ open, onClose, editRole }: Props) {
+function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
+  const adminPermissionsList = useSelector(selectAdminPermissionsList);
+  const { createAdminData, getAdminPermissionsList, createAdminRole } = useAdminActions();
+
   const [activeRoles, setActiveRoles] = useState<string[]>([]);
   const [selectedRoles, setSelectedRoles] = useState<any[]>([]);
   const [isRoleSubmit, setIsRoleSubmit] = useState<boolean>(false);
 
+  //permission checkbox handler
   const handleRoleSelection = (name: string, role: string) => {
-    if (role === 'all' && !activeRoles[name]?.includes(role)) {
+    if (role === 'ALL' && !activeRoles[name]?.includes(role)) {
       setActiveRoles((prev) => ({
         ...prev,
-        [name]: ['all', 'view', 'edit', 'delete'],
+        [name]: permissionsList,
       }));
       return;
     }
@@ -33,12 +42,10 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
     setActiveRoles((prev: any) => {
       const userRoles = prev[name] || [];
       const updatedRoles = userRoles.includes(role) ? userRoles.filter((r) => r !== role) : [...userRoles, role];
-
       if (updatedRoles.length === 0) {
         const { [name]: _, ...rest } = prev;
         return rest;
       }
-
       return {
         ...prev,
         [name]: updatedRoles,
@@ -46,6 +53,7 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
     });
   };
 
+  //delete permissions
   const handleUserClick = (name: string) => {
     setSelectedRoles((prevItems) => prevItems.filter((dt) => dt !== name));
   };
@@ -62,23 +70,48 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setIsRoleSubmit(true);
-      console.log('Submitted values:', values);
+      const body = Object.keys(activeRoles)?.map((dt: string) => {
+        return {
+          module: dt,
+          action: activeRoles[dt],
+        };
+      });
+      const response = await createAdminRole({ name: 'Main Role', permissions: body });
+      if (response.status) {
+        successAlert(response.message);
+        setIsRoleSubmit(false);
+        return resetForm();
+      } else {
+        return errorNotify(response.message);
+      }
     },
   });
-  const { handleChange, handleSubmit, values, errors, touched, setFieldValue } = formik;
 
+  const { handleChange, handleSubmit, values, errors, touched, setFieldValue, resetForm } = formik;
+
+  //edit data set state
   useEffect(() => {
     if (editRole) {
       setFieldValue('name', editRole.name);
-      setSelectedRoles([editRole.name]);
+      const obj = {};
+      editRole.roles.map((dt: any) => {
+        obj[dt.name] = dt.roles;
+      });
       setActiveRoles((prev) => ({
         ...prev,
-        [editRole.name]: editRole.roles,
+        ...obj,
       }));
+
+      const keys = Object.keys(obj);
+      setSelectedRoles(keys);
     }
   }, [editRole]);
+
+  useEffect(() => {
+    getAdminPermissionsList();
+  }, []);
 
   return (
     <div>
@@ -90,7 +123,9 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
         content={
           <form onSubmit={handleSubmit} className="h-full gap-10 space-y-9 w-full ">
             <div className="flex justify-between items-center py-2">
-              <div className=" text-md font-medium">Create Admin Role</div>
+              <div className=" text-md font-medium">
+                {editRole && !isView ? 'Edit' : isView ? 'View' : 'Create'} Admin Role
+              </div>
               <div className="cursor-pointer" onClick={onClose}>
                 <CrossIcon />
               </div>
@@ -99,9 +134,10 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
               <div className="flex flex-col items-end">
                 <div className="w-full relative">
                   <GlobalInput
+                    disabled={isView}
                     name="name"
                     label="Name"
-                    placeholder="Enter your name"
+                    placeholder="Enter Role name"
                     type="text"
                     required
                     value={values.name}
@@ -111,15 +147,16 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
                   />
                 </div>
               </div>
-              <div className="flex flex-col mt-2">
+              <div className="flex flex-col">
                 <GlobalSelect
+                  disabled={isView}
                   name="permission"
                   label="Permission"
                   required={!selectedRoles.length}
                   placeholder="Select Permission"
-                  options={rolesList.map((dt) => ({
-                    label: dt?.name,
-                    value: dt?.name,
+                  options={adminPermissionsList?.map((dt) => ({
+                    label: dt.module,
+                    value: dt.module,
                   }))}
                   isMulti={true}
                   isError={isRoleSubmit && !selectedRoles.length ? true : false}
@@ -149,6 +186,7 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
                             {permissionsList.map((rl) => (
                               <div key={rl}>
                                 <GlobalCheckbox
+                                  disabled={isView}
                                   className="font-medium"
                                   checked={activeRoles[dt]?.includes(rl) ?? false}
                                   label={rl}
@@ -160,9 +198,11 @@ function AddAdminRole({ open, onClose, editRole }: Props) {
                             ))}
                           </div>
                           <div
-                            className="selt-end cursor-pointer"
+                            className={`selt-end  ${isView ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                             onClick={() => {
-                              handleUserClick(dt);
+                              if (!isView) {
+                                handleUserClick(dt);
+                              }
                             }}
                           >
                             <CancelIcon />

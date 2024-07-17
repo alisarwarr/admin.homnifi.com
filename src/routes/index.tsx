@@ -57,6 +57,7 @@ import WithdrawSetting from '../pages/Wallet/WithdrawSetting';
 import SwapSettings from '../pages/Tokens/SwapSettings';
 import DepositSettings from '../pages/Tokens/DepositSettings';
 import NetworkSettings from '../pages/Tokens/NetworkSettings';
+import CronJob from '../pages/Admins/CronJobs';
 
 export const router = createBrowserRouter([
   {
@@ -548,12 +549,21 @@ export const router = createBrowserRouter([
         ),
       },
       {
-
         path: 'admin-setting/roles',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <AdminRoles />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: 'admin-setting/cron-jobs',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <CronJob />
             </ProtectedRoute>
           </React.Suspense>
         ),

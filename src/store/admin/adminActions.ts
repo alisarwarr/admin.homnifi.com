@@ -9,9 +9,12 @@ import {
   ADMIN_LIST,
   ADMIN_PERMISSIONS,
   ADMIN_UPDATE,
+  CREATE_ADMIN_ROLES,
+  GET_ADDMIN_ROLES,
+  CREATE_ADMIN,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
-import { setAdminActivity, setAdminData, setAdminList, setAdminPermissionsList } from './adminSlice';
+import { setAdminActivity, setAdminData, setAdminList, setAdminPermissionsList, setRoleList } from './adminSlice';
 
 export const useAdminActions = () => {
   const dispatch = useDispatch();
@@ -122,6 +125,62 @@ export const useAdminActions = () => {
       .catch((err: any) => err.data);
   };
 
+  const createAdminRole = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: CREATE_ADMIN_ROLES,
+        data,
+      })
+      .then((response: any) => {
+        console.log('create Admin role response :::', response.data);
+        return response.data;
+      })
+      .catch((err: any) => err.data);
+  };
+
+  const getAdminRole = async () => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: GET_ADDMIN_ROLES,
+      })
+      .then((response: any) => {
+        console.log('response role list ::', response.data);
+        // dispatch(setRoleList(response?.data?.users));
+        return response;
+      })
+      .catch((err: any) => err.data);
+  };
+
+  const createAdmin = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: CREATE_ADMIN,
+        data,
+      })
+      .then((response: any) => {
+        console.log('create Admin role response :::', response.data);
+        return response.data;
+      })
+      .catch((err: any) => err.data);
+  };
+
+  const getAdminById = async (id: string) => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: `${ADMIN_LIST}/${id}`,
+      })
+      .then((response: any) => {
+        console.log('get Admin by id ::', response.data);
+        // dispatch(setSelectedAdmin(response?.data));
+        return response;
+      })
+      .catch((err: any) => err.data);
+  };
+
   return {
     getAdminData,
     createAdminData,
@@ -132,5 +191,9 @@ export const useAdminActions = () => {
     updateAdminAccess,
     getAdminActivity,
     getAdminPermissionsList,
+    createAdminRole,
+    getAdminRole,
+    createAdmin,
+    getAdminById
   };
 };
