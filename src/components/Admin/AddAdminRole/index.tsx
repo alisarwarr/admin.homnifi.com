@@ -121,7 +121,9 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
   }, [editRole]);
 
   useEffect(() => {
-    getAdminPermissionsList();
+    if (adminPermissionsList.length === 0) {
+      getAdminPermissionsList();
+    }
   }, []);
 
   const resetStates = () => {

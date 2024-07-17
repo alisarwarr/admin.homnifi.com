@@ -5,8 +5,8 @@ import FormikInput from '../FormikInput';
 import { useSelector } from 'react-redux';
 import AddAdminRole from './AddAdminRole';
 import GlobalSelect from '../Global/GlobalSelect';
+import React, { useEffect, useState } from 'react';
 import { CapitalizeFirstLetter } from '../../utils/utils';
-import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { useAdminActions } from '../../store/admin/adminActions';
@@ -20,7 +20,6 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const location: any = useLocation();
   const navigate = useNavigate();
 
-  const formikRef = useRef<any>(null);
   const state = location?.state?._data;
   const [edit] = useState<boolean>(location?.state?.edit);
   const [open, setOpen] = React.useState<boolean>(false);
@@ -84,7 +83,6 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
         successAlert('Admin Added Successfully!');
         return navigate('/admin-setting/admins');
       }
-      console.log('response 321 123 ::', response.message);
       errorAlert(response.message);
     },
   });
