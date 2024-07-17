@@ -1,18 +1,18 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '../../../components/Button';
 import { CancelIcon } from '../../../images/svg';
+import React, { useEffect, useState } from 'react';
 import GlobalInput from '../../Global/GlobalInput';
 import GlobalSelect from '../../Global/GlobalSelect';
 import GlobalDialog from '../../../components/Dialog';
-import GlobalCheckbox from '../../Global/GlobalCheckbox';
-import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
 import { permissionsList } from '../../../utils/data';
-import { selectAdminPermissionsList } from '../../../store/admin/adminSlice';
-import { useSelector } from 'react-redux';
+import GlobalCheckbox from '../../Global/GlobalCheckbox';
+import { errorNotify, successAlert } from '../../../utils/alerts';
 import { useAdminActions } from '../../../store/admin/adminActions';
-import {errorNotify, successAlert } from '../../../utils/alerts';
+import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
+import { selectAdminPermissionsList } from '../../../store/admin/adminSlice';
 
 interface Props {
   open: boolean;
@@ -23,9 +23,9 @@ interface Props {
 
 function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
-  const { createAdminData, getAdminPermissionsList, createAdminRole } = useAdminActions();
+  const { createAdminData, getAdminPermissionsList, createAdminRole, updateAdminPermisson } = useAdminActions();
 
-  const [activeRoles, setActiveRoles] = useState<string[]>([]);
+  const [activeRoles, setActiveRoles] = useState<any>({});
   const [selectedRoles, setSelectedRoles] = useState<any[]>([]);
   const [isRoleSubmit, setIsRoleSubmit] = useState<boolean>(false);
 
@@ -56,6 +56,14 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
   //delete permissions
   const handleUserClick = (name: string) => {
     setSelectedRoles((prevItems) => prevItems.filter((dt) => dt !== name));
+
+    setActiveRoles((prev: any) => {
+      const roleObject = { ...prev };
+      if (roleObject.hasOwnProperty(name)) {
+        delete roleObject[name];
+      }
+      return roleObject;
+    });
   };
 
   const validationSchema = Yup.object().shape({
@@ -72,13 +80,25 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       setIsRoleSubmit(true);
-      const body = Object.keys(activeRoles)?.map((dt: string) => {
-        return {
-          module: dt,
-          action: activeRoles[dt],
-        };
-      });
-      const response = await createAdminRole({ name: 'Main Role', permissions: body });
+      let response;
+
+      if (editRole) {
+        const body = Object.keys(activeRoles)?.map((dt: string) => {
+          return {
+            source: dt,
+            actions: activeRoles[dt],
+          };
+        });
+        response = await updateAdminPermisson(editRole._id, { permissions: body });
+      } else {
+        const body = Object.keys(activeRoles)?.map((dt: string) => {
+          return {
+            module: dt,
+            action: activeRoles[dt],
+          };
+        });
+        response = await createAdminRole({ name: values.name, permissions: body });
+      }
       if (response.status) {
         successAlert(response.message);
         setIsRoleSubmit(false);
@@ -96,13 +116,10 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
     if (editRole) {
       setFieldValue('name', editRole.name);
       const obj = {};
-      editRole.roles.map((dt: any) => {
-        obj[dt.name] = dt.roles;
+      editRole.permissions.map((dt: any) => {
+        obj[dt.module] = dt.action;
       });
-      setActiveRoles((prev) => ({
-        ...prev,
-        ...obj,
-      }));
+      setActiveRoles(obj);
 
       const keys = Object.keys(obj);
       setSelectedRoles(keys);
@@ -119,14 +136,23 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
         open={open}
         size="md"
         closeButtonShow={false}
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          setActiveRoles({});
+        }}
         content={
           <form onSubmit={handleSubmit} className="h-full gap-10 space-y-9 w-full ">
             <div className="flex justify-between items-center py-2">
               <div className=" text-md font-medium">
                 {editRole && !isView ? 'Edit' : isView ? 'View' : 'Create'} Admin Role
               </div>
-              <div className="cursor-pointer" onClick={onClose}>
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  onClose();
+                  setActiveRoles({});
+                }}
+              >
                 <CrossIcon />
               </div>
             </div>

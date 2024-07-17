@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
-import { add, edit, view, viewWhite } from '../../../images/other';
-import AddAdminRole from '../../../components/Admin/AddAdminRole';
-import GlobalTable from '../../../components/Table/GlobalTable';
 import { Tooltip } from 'antd';
+import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { selectAdmin } from '../../../store/admin/adminSlice';
+import GlobalTable from '../../../components/Table/GlobalTable';
+import AddAdminRole from '../../../components/Admin/AddAdminRole';
+import { add, edit, view, viewWhite } from '../../../images/other';
+import { useAdminActions } from '../../../store/admin/adminActions';
 import { ReactComponent as DeleteIcon } from '../../../SVGIcons/deleteIcon.svg';
 
 function AdminRoles() {
-  const [isView, setIsView] = useState(false);
+  const { getAdminRole } = useAdminActions();
+  const { rolesList } = useSelector(selectAdmin);
+
   const [open, setOpen] = useState(false);
+  const [isView, setIsView] = useState(false);
   const [selectedRole, setSelectedRole] = useState(null);
+
   const onPopupHandler = () => {
     setOpen(!open);
+    if (open) {
+      setSelectedRole(null);
+    }
   };
 
   const headCells = [
@@ -59,14 +69,14 @@ function AdminRoles() {
     },
   ];
 
-  const rows = data?.map((_data: any, index: number) => {
+  const rows = rolesList?.map((_data: any, index: number) => {
     return {
       id: index,
       name: _data.name,
-      role: `${_data.roles
-        .slice(0, 4)
-        .map((dt: any) => dt.name)
-        .join(', ')} ${_data.roles.length > 4 ? '...' : ''}`,
+      role: `${_data.permissions
+        ?.slice(0, 4)
+        .map((dt: any) => dt.module)
+        .join(', ')} ${_data.permissions?.length > 4 ? '...' : ''}`,
       actions: (
         <div className="flex items-center gap-2">
           <Tooltip title="View Admin Role">
@@ -109,6 +119,12 @@ function AdminRoles() {
   const onDeleteHandler = (itm: any) => {
     console.log('itm ::', itm);
   };
+
+  useEffect(() => {
+    if (rolesList.length === 0) {
+      getAdminRole();
+    }
+  }, []);
 
   return (
     <div className="w-full px-2">

@@ -12,6 +12,8 @@ import {
   CREATE_ADMIN_ROLES,
   GET_ADDMIN_ROLES,
   CREATE_ADMIN,
+  UPDATE_ADMIN_PERMISSION,
+  DELETE_ADMIN,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 import { setAdminActivity, setAdminData, setAdminList, setAdminPermissionsList, setRoleList } from './adminSlice';
@@ -147,7 +149,8 @@ export const useAdminActions = () => {
       })
       .then((response: any) => {
         console.log('response role list ::', response.data);
-        // dispatch(setRoleList(response?.data?.users));
+        dispatch(setRoleList(response?.data?.data));
+        getAdminRole();
         return response;
       })
       .catch((err: any) => err.data);
@@ -176,6 +179,35 @@ export const useAdminActions = () => {
       .then((response: any) => {
         console.log('get Admin by id ::', response.data);
         // dispatch(setSelectedAdmin(response?.data));
+
+        return response;
+      })
+      .catch((err: any) => err.data);
+  };
+
+  const updateAdminPermisson = async (id: string, data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'PUT',
+        url: `${UPDATE_ADMIN_PERMISSION}/${id}`,
+        data,
+      })
+      .then((response: any) => {
+        console.log('create Admin role response :::', response.data);
+        getAdminPermissionsList();
+        return response.data;
+      })
+      .catch((err: any) => err.data);
+  };
+
+  const deleteAdmin = async (id: string) => {
+    return await ApiRequest()
+      .request({
+        method: 'DELETE',
+        url: `${DELETE_ADMIN}/${id}`,
+      })
+      .then((response: any) => {
+        console.log('delete Admin by id ::', response.data);
         return response;
       })
       .catch((err: any) => err.data);
@@ -194,6 +226,8 @@ export const useAdminActions = () => {
     createAdminRole,
     getAdminRole,
     createAdmin,
-    getAdminById
+    getAdminById,
+    updateAdminPermisson,
+    deleteAdmin,
   };
 };
