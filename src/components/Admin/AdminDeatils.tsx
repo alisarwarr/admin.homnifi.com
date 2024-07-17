@@ -10,7 +10,7 @@ import GlobalSelect from '../Global/GlobalSelect';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAdminActions } from '../../store/admin/adminActions';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { selectAdminPermissionsList } from '../../store/admin/adminSlice';
+import { selectAdmin, selectAdminPermissionsList } from '../../store/admin/adminSlice';
 import { CapitalizeAllLetters, CapitalizeFirstLetter } from '../../utils/utils';
 // import { errorAlert, successAlert } from '../../utils/alerts';
 // import { check, close } from '../../images/other';
@@ -105,6 +105,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     createAdmin,
     getAdminById,
   } = useAdminActions();
+  const { rolesList, selectedAdmin } = useSelector(selectAdmin);
 
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const location: any = useLocation();
@@ -224,7 +225,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
             required
             name="roles"
             label={CapitalizeFirstLetter('Admin Role')}
-            options={adminPermissionsList?.map((dt) => ({
+            options={rolesList?.map((dt) => ({
               label: dt?.name,
               value: dt?.name,
             }))}
