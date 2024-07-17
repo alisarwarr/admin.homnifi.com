@@ -20,16 +20,35 @@ function AdminRoles() {
   ];
 
   const data = [
-    { name: 'Admin', roles: ['all', 'view', 'edit', 'delete'] },
-    { name: 'Supper Admin', roles: ['all', 'view', 'edit', 'delete'] },
-    { name: 'Sub Admin', roles: ['view', 'edit'] },
+    {
+      name: 'Admin',
+      roles: [
+        'tokens-setting',
+        'transaction-setting',
+        'desposit',
+        'withdraw',
+        'withdraw-setting',
+        'transfer',
+        'swap',
+        'faqs',
+        'cloud-k-2.0',
+        'community',
+        'cron-jobs',
+        'maintenance-setting',
+        'auth-slider-setting',
+        'edit',
+        'delete',
+      ],
+    },
+    { name: 'Supper Admin', roles: ['transfer', 'swap', 'faqs', 'cloud-k-2.0', 'community'] },
+    { name: 'Sub Admin', roles: ['cron-jobs', 'maintenance-setting', 'auth-slider-setting', 'edit', 'delete'] },
   ];
 
   const rows = data?.map((_data: any, index: number) => {
     return {
       id: index,
       name: _data.name,
-      role: _data.roles.join(', '),
+      role: `${_data.roles.slice(0, 4).join(', ')} ${_data.roles.length > 4 && '...'}`,
       actions: (
         <div className="flex items-center gap-2">
           <Tooltip title="View Admin">
@@ -64,18 +83,17 @@ function AdminRoles() {
     console.log('itm ::', itm);
   };
 
-  
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center table-head-bg text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Admins</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Admin Roles</h1>
         <div className="flex gap-1 items-center cursor-pointer px-3" onClick={onPopupHandler}>
           <img src={add} alt="" width={24} height={24} />
           <span>Create Role</span>
         </div>
       </div>
 
-      <AddAdminRole open={open} onClose={onPopupHandler} editRole = {selectedRole}/>
+      <AddAdminRole open={open} onClose={onPopupHandler} editRole={selectedRole} />
       <GlobalTable rows={rows} headCells={headCells} isLoading={false} paginate={false} />
     </div>
   );
