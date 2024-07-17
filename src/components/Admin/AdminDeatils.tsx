@@ -1,116 +1,25 @@
-import { ErrorMessage, Form, Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
-// import TextInput from '../TextInput';
 import Button from '../Button';
+import { useFormik } from 'formik';
 import FormikInput from '../FormikInput';
 import { useSelector } from 'react-redux';
 import AddAdminRole from './AddAdminRole';
-import { debounce } from '../../utils/debounce';
 import GlobalSelect from '../Global/GlobalSelect';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { CapitalizeFirstLetter } from '../../utils/utils';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { errorAlert, successAlert } from '../../utils/alerts';
 import { useAdminActions } from '../../store/admin/adminActions';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { selectAdmin, selectAdminPermissionsList } from '../../store/admin/adminSlice';
-import { CapitalizeAllLetters, CapitalizeFirstLetter } from '../../utils/utils';
-// import { errorAlert, successAlert } from '../../utils/alerts';
-// import { check, close } from '../../images/other';
-// import { CircularProgress, Dialog } from '@mui/material';
-// import { useCustomerActions } from '../../store/customer/customerActions';
-// import ReactSelect from '../ReactSelect';
-// import CustomDropdown from '../CustomDropdown';
-// import { TRANSACTION_PROCESS, TRANSACTION_TYPES } from '../../constants';
-// import GlobalCheckbox from '../Global/GlobalCheckbox';
-// import { ReactComponent as CancelIcon } from '../../SVGIcons/cancelIcon.svg';
-// import GlobalButton from '../Global/GlobalButton';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
-  // const { updateCustomer } = useCustomerActions();
-  // const params: any = useParams();
-  // const navigate = useNavigate();
-  // const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  // const [isTypingEmail, setIsTypingEmail] = useState<boolean | null>(null);
-  // const [availablityEmail, setAvailablityEmail] = useState<boolean | null>(null);
-  // const [isTypingUsername, setIsTypingUsername] = useState<boolean>(false);
-  // const [availablityUsername, setAvailablityUsername] = useState<boolean | null>(null);
-
-  // const onHandleSubmit = async (values) => {
-  //   // enter the submitting
-  //   setIsSubmitting(true);
-  //   setIsSubmit(true);
-  //   const _values = {
-  //     ...values,
-  //     adminPermissions: values.adminPermissions?.map((permission) => permission.value),
-  //   };
-  //   if (
-  //     //CREATE ADMIN
-  //     edit === undefined
-  //   ) {
-  //     const response = await createAdminData(_values);
-
-  //     if (response?.admin) {
-  //       successAlert('Admin created, Successfully!');
-  //       navigate('/admin-setting/admins');
-  //     } else {
-  //       errorAlert(response?.message);
-  //     }
-  //   } else if (
-  //     //EDIT ADMIN
-  //     edit
-  //   ) {
-  //     const response = await updateCustomer(params.id, _values);
-  //     console.log({ response });
-
-  //     if (response?.status) {
-  //       successAlert('Admin edited, Successfully!');
-  //       navigate('/admin-setting/admins');
-  //     } else if (!response?.status) {
-  //       errorAlert(response?.message);
-  //     }
-  //   }
-
-  //   // exit the submitting
-  //   setIsSubmitting(false);
-  // };
-
-  // const handleInput = async (input: string, type: 'email' | 'username'): Promise<void> => {
-  //   if (type === 'email') setIsTypingEmail(true);
-  //   if (type === 'username') setIsTypingUsername(true);
-
-  //   debounce(input, 1000, async () => {
-  //     try {
-  //       if (type === 'email') {
-  //         const responseEmail = await checkAdminEmail(input);
-  //         setAvailablityEmail(responseEmail.available);
-  //       }
-  //       if (type === 'username') {
-  //         const responseUsername = await checkAdminUsername(input);
-  //         setAvailablityUsername(responseUsername.available);
-  //       }
-  //     } catch (error) {
-  //       if (type === 'email') setAvailablityEmail(false);
-  //       else if (type === 'username') setAvailablityUsername(false);
-  //     }
-
-  //     if (type === 'email') setIsTypingEmail(false);
-  //     else if (type === 'username') setIsTypingUsername(false);
-  //   });
-  // };
-
-  const {
-    createAdminData,
-    getAdminPermissionsList,
-    // checkAdminEmail,
-    // checkAdminUsername,
-    getAdminRole,
-    createAdmin,
-    getAdminById,
-  } = useAdminActions();
+  const { getAdminPermissionsList, getAdminRole, createAdmin, getAdminById, updateAdmin } = useAdminActions();
   const { rolesList, selectedAdmin } = useSelector(selectAdmin);
 
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const location: any = useLocation();
+  const navigate = useNavigate();
 
-  const formikRef = useRef<any>(null);
   const state = location?.state?._data;
   const [edit] = useState<boolean>(location?.state?.edit);
   const [open, setOpen] = React.useState<boolean>(false);
@@ -125,44 +34,35 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required'),
+    email: Yup.string().email('Invalid Email').required('Email is required'),
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
     roles: Yup.string().required('Role is required'),
-    password: Yup.string()
-      .min(6, 'Must be at least 6 characters')
-      .matches(/[a-z]/, 'Must have at least 1 lowercase letter')
-      .matches(/[A-Z]/, 'Must have at least 1 uppercase letter')
-      .matches(/[0-9]/, 'Must have at least 1 number')
-      .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Must have at least 1 symbol')
-      .required('Password is required'),
+    password: state
+      ? Yup.string()
+      : Yup.string()
+          .min(6, 'Must be at least 6 characters')
+          .matches(/[a-z]/, 'Must have at least 1 lowercase letter')
+          .matches(/[A-Z]/, 'Must have at least 1 uppercase letter')
+          .matches(/[0-9]/, 'Must have at least 1 number')
+          .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Must have at least 1 symbol')
+          .required('Password is required'),
   });
 
   useEffect(() => {
-    (async () => {
-      // if (adminPermissionsList.length === 0) {
-      await getAdminPermissionsList();
-      // }
-
-      if (formikRef && state) {
-        formikRef.current.setValues({
-          email: state?.email ? state?.email : '',
-          firstName: state?.firstName ? state?.firstName : '',
-          lastName: state?.lastName ? state?.lastName : '',
-          password: state?.password ? state?.password : '',
-          adminPermissions: state?.adminPermissions?.map((permission) => {
-            return {
-              label: permission?.module,
-              value: permission?.module,
-            };
-          }),
-        });
-        formikRef.current.setFieldTouched('username', false);
-      }
-    })();
+    if (adminPermissionsList.length === 0) {
+      getAdminPermissionsList();
+    }
+    if (state) {
+      setValues({
+        email: state.email ?? '',
+        firstName: state.firstName ?? '',
+        lastName: state.lastName ?? '',
+        password: state.password ?? '',
+        roles: state?.role[0]?._id ?? '',
+      });
+    }
   }, []);
-
-  useEffect(() => {}, [adminPermissionsList, formikRef.current]);
 
   const handleClose = () => {
     setOpen(!open);
@@ -172,23 +72,26 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      const response = await createAdmin(values);
-      console.log('create admin api response ::', response.data);
-      // onHandleSubmit(values);
-    },
-    initialTouched: {
-      email: true,
-      firstName: true,
-      lastName: true,
-    },
-    innerRef: formikRef,
-  });
+      let response: any;
+      if (edit) {
+        response = await updateAdmin(state._id, values);
+      } else {
+        response = await createAdmin(values);
+      }
 
-  const { handleChange, handleSubmit, values, errors, touched } = formik;
+      if (response.data?.status) {
+        successAlert('Admin Added Successfully!');
+        return navigate('/admin-setting/admins');
+      }
+      errorAlert(response.message);
+    },
+  });
+  const { handleChange, handleSubmit, values, errors, touched, setValues } = formik;
 
   useEffect(() => {
-    getAdminRole();
-    // getAdminById()
+    if (rolesList.length === 0) {
+      getAdminRole();
+    }
   }, []);
 
   return (
@@ -206,7 +109,9 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
             return (
               <>
                 <FormikInput
+                  disabled={!edit || (state && key === 'password')}
                   label={CapitalizeFirstLetter(key)}
+                  placeholder={`Enter your ${key}`}
                   type={key}
                   name={key}
                   shrink={true}
@@ -220,20 +125,16 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
             );
           })}
         <div className=" flex flex-col justify-end">
-          <>{console.log('values', values?.roles)}</>
           <GlobalSelect
+            disabled={!edit}
             required
             name="roles"
-            label={CapitalizeFirstLetter('Admin Role')}
+            label={'Admin Role'}
             options={rolesList?.map((dt) => ({
               label: dt?.name,
-              value: dt?.name,
+              value: dt?._id,
             }))}
             placeholder="Select Value"
-            setFieldTouched={() => formik.setFieldTouched('roles', true)}
-            setFieldValue={(e: any) => {
-              formik.setFieldValue('roles', e);
-            }}
             isError={formik.touched.roles && !!formik.errors.roles}
             value={formik.values.roles}
             onChange={(e: any) => {
@@ -246,14 +147,21 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           )}
         </div>
 
-        <div className="rounded-full py-4 items-baseline">
-          <Button className="w-full bg-primary" loadingType="circular" buttonType="button" onClick={handleClose}>
+        <div className="rounded-full py-4 items-baseline md:mt-4">
+          <Button
+            disable={!edit}
+            className="w-full bg-primary"
+            loadingType="circular"
+            buttonType="button"
+            onClick={handleClose}
+          >
             Create New Role
           </Button>
         </div>
       </div>
       <div className="px-6 lg:px-8 mx-auto mt-4">
         <Button
+          disable={!edit}
           className="w-full bg-primary"
           loadingType="circular"
           buttonType="button"

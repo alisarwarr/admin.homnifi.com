@@ -11,11 +11,11 @@ import { selectAdmin } from '../../store/admin/adminSlice';
 import Loader from '../../components/Loader/Loader';
 
 export default function Admins(): JSX.Element {
-  const { getAdminList } = useAdminActions();
-
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
   const { list } = useSelector(selectAdmin);
-  const navigate = useNavigate();
+  const { rolesList } = useSelector(selectAdmin);
+  const { getAdminList, getAdminRole } = useAdminActions();
 
   const [loading, setLoading] = useState(true);
 
@@ -32,15 +32,18 @@ export default function Admins(): JSX.Element {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (user && !user?.isSuperAdmin) {
-  //     navigate('/');
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (rolesList.length === 0) {
+      getAdminRole();
+    }
+  }, []);
+
   if (loading) {
     return <Loader />;
   }
+
   if (!user?.isSuperAdmin) return <></>;
+
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center table-head-bg text-white">

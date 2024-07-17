@@ -137,15 +137,18 @@ export const ADMIN_LIST = '';
 export const CREATE_ADMIN_ROLES = '/role';
 export const CREATE_ADMIN = '/auth/signup';
 export const GET_ADDMIN_ROLES = '/role';
-export const UPDATE_ADMIN_PERMISSION = '';
-export const DELETE_ADMIN = '';
+export const UPDATE_ADMIN_PERMISSION = '/role';
+export const DELETE_ADMIN = '/admins';
+export const UPDATE_ADMIN = '/admins';
 
 //cloudk
 
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
+export const USER_MACHINE_LIST = '/cloud-k/user-machines';
 
 
 //Wallet Admin
 export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
 export const WALLET_ADMIN_SWAPS = '/wallets/swaps';
-export const WALLET_ADMIN_NETWORKS = '/wallets/networks';
+export const WALLET_ADMIN_NETWORKS = '/tokens/networks';
+export const WALLET_ADMIN_NETWORKS_NEW = '/tokens/networks';

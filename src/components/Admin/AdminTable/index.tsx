@@ -1,15 +1,16 @@
 import { Tooltip } from 'antd';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import StatusChip from '../../StatusChip';
+import { Delete } from '../../../images/svg';
 import { useNavigate } from 'react-router-dom';
 import GlobalTable from '../../Table/GlobalTable';
+import { edit, view } from '../../../images/other';
+import { useDispatch, useSelector } from 'react-redux';
 import ConfirmDialog from '../../Dialog/ConfirmDialog';
 import { Token } from '../../../store/token/tokenSlice';
-import { viewWhite, edit, lock, unlock } from '../../../images/other';
-import { useAdminActions } from '../../../store/admin/adminActions';
-import { setSelectedAdmin } from '../../../store/admin/adminSlice';
 import { errorAlert, successAlert } from '../../../utils/alerts';
+import { useAdminActions } from '../../../store/admin/adminActions';
+import { selectAdmin, selectAdminPermissionsList, setSelectedAdmin } from '../../../store/admin/adminSlice';
 
 type Props = {
   data: any;
@@ -27,11 +28,13 @@ const headCells = [
 
 const AdminTable = ({ data, loading, fireApi }: Props) => {
   const dispatch = useDispatch();
-  const [openLockUserDialog, setOpenLockUserDialog] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>();
   const navigate = useNavigate();
-
+  const { adminDataDetail } = useSelector(selectAdmin);
+  const [selectedUser, setSelectedUser] = useState<any>();
+  const adminPermissionsList = useSelector(selectAdminPermissionsList);
+  const [openLockUserDialog, setOpenLockUserDialog] = useState(false);
   const { updateAdminAccess, deleteAdmin } = useAdminActions();
+
   const rows =
     data?.length > 0
       ? data?.map((_data: any) => {
@@ -44,7 +47,7 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
               <div className="flex items-center gap-2">
                 <Tooltip title="View User">
                   <img
-                    src={viewWhite}
+                    src={view}
                     width={18}
                     height={18}
                     alt="View Icon"
@@ -57,34 +60,28 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
                     className="cursor-pointer"
                   />
                 </Tooltip>
-
-                <Tooltip title="Edit User">
+                <Tooltip title="Edit Admin">
                   <img
                     src={edit}
                     width={18}
                     height={18}
                     alt="Edit Icon"
-                    onClick={() =>
+                    onClick={() => {
                       navigate('/admin-setting/admins/edit/' + _data?._id, {
                         state: { _data, edit: true },
-                      })
-                    }
-                    className="cursor-pointer"
-                  />
-                </Tooltip>
-
-                <Tooltip title={_data.status === 'ACTIVE' ? 'Block Admin' : 'Un-Block Admin'}>
-                  <img
-                    src={_data.status === 'ACTIVE' ? unlock : lock}
-                    width={18}
-                    height={18}
-                    alt="Lock Icon"
-                    onClick={() => {
-                      setOpenLockUserDialog(true);
-                      setSelectedUser(_data);
+                      });
                     }}
                     className="cursor-pointer"
                   />
+                </Tooltip>
+                <Tooltip title="Delete Admin">
+                  <div
+                    onClick={() => {
+                      onDeleteAdmin(_data._id);
+                    }}
+                  >
+                    <Delete />
+                  </div>
                 </Tooltip>
               </div>
             ),
@@ -92,9 +89,16 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
         })
       : [];
 
-  return (
-    // TABLE
+  //delete admin
+  const onDeleteAdmin = async (id: string) => {
+    const response = await deleteAdmin(id);
+    if (response.data?.status) {
+      return successAlert(response.data.message);
+    }
+    errorAlert(response.message);
+  };
 
+  return (
     <>
       <ConfirmDialog
         title={selectedUser?.status === 'ACTIVE' ? 'Block Admin?' : 'Un-Block Admin?'}
@@ -120,7 +124,6 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
       >
         Are you sure you want to {selectedUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this Admin?
       </ConfirmDialog>
-
       <GlobalTable rows={rows} headCells={headCells} isLoading={false} paginate={false} />
     </>
   );

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import ApiRequest from '../../utils/network/ApiRequest';
-import { INFLATION_RULES, PRODUCTS } from '../../utils/network/ApiEndpoints';
+import { INFLATION_RULES, PRODUCTS, USER_MACHINE_LIST } from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
 
 export const useCloudActions = () => {
@@ -138,10 +138,26 @@ export const useCloudActions = () => {
       });
   };
 
+
+  const getUserMachineList = async () => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: USER_MACHINE_LIST,
+      })
+      .then((response: any) => {
+        dispatch(cloudkSliceAction.setUserMachineList(response.data.data));
+        return response;
+      })
+      .catch((error: any) => error);
+  }
+
+
   return {
     getInfalationRules,
     createInfalationRules,
     getCurrentInfalationRules,
     getUserMachinesList,
+    getUserMachineList
   };
 };

@@ -1,5 +1,10 @@
 //UTILS
-import { WALLET_ADMIN_DEPOSITS, WALLET_ADMIN_SWAPS, WALLET_ADMIN_NETWORKS } from '../../utils/network/ApiEndpoints';
+import {
+  WALLET_ADMIN_DEPOSITS,
+  WALLET_ADMIN_SWAPS,
+  WALLET_ADMIN_NETWORKS,
+  WALLET_ADMIN_NETWORKS_NEW,
+} from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 import { setDepositSettings, setNetworkSettings, setSwapSettings } from './tokensSettingsSlice';
 import { useDispatch } from 'react-redux';
@@ -44,29 +49,12 @@ export const useTokensSettingsAction = () => {
       .catch((error: any) => error);
   };
 
-  const addDepositSettings = async () => {
+  const addNetworkSettings = async (data: any) => {
     return await ApiRequest()
       .request({
-        method: 'GET',
-        url: '',
-      })
-      .then((response: any) => response)
-      .catch((error: any) => error);
-  };
-  const addSwapSettings = async () => {
-    return await ApiRequest()
-      .request({
-        method: 'GET',
-        url: '',
-      })
-      .then((response: any) => response)
-      .catch((error: any) => error);
-  };
-  const addNetworkSettings = async () => {
-    return await ApiRequest()
-      .request({
-        method: 'GET',
-        url: '',
+        method: 'POST',
+        url: WALLET_ADMIN_NETWORKS_NEW,
+        data
       })
       .then((response: any) => response)
       .catch((error: any) => error);
@@ -77,8 +65,6 @@ export const useTokensSettingsAction = () => {
     getSwapSettings,
     getNetworkSettings,
     ///////////////////
-    addDepositSettings,
-    addSwapSettings,
     addNetworkSettings,
   };
 };

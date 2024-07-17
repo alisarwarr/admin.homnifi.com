@@ -14,9 +14,17 @@ import {
   CREATE_ADMIN,
   UPDATE_ADMIN_PERMISSION,
   DELETE_ADMIN,
+  UPDATE_ADMIN,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
-import { setAdminActivity, setAdminData, setAdminList, setAdminPermissionsList, setRoleList } from './adminSlice';
+import {
+  setAdminActivity,
+  setAdminData,
+  setAdminList,
+  setAdminPermissionsList,
+  setRoleList,
+  setAdminDetail,
+} from './adminSlice';
 
 export const useAdminActions = () => {
   const dispatch = useDispatch();
@@ -121,7 +129,8 @@ export const useAdminActions = () => {
         url: ADMIN_LIST,
       })
       .then((response: any) => {
-        dispatch(setAdminList(response?.data?.users));
+        dispatch(setAdminDetail(response?.data?.data));
+        dispatch(setAdminList(response?.data?.data.paginatedResults));
         return response;
       })
       .catch((err: any) => err.data);
@@ -136,6 +145,7 @@ export const useAdminActions = () => {
       })
       .then((response: any) => {
         console.log('create Admin role response :::', response.data);
+        getAdminRole();
         return response.data;
       })
       .catch((err: any) => err.data);
@@ -163,8 +173,8 @@ export const useAdminActions = () => {
         data,
       })
       .then((response: any) => {
-        console.log('create Admin role response :::', response.data);
-        return response.data;
+        getAdminList();
+        return response;
       })
       .catch((err: any) => err.data);
   };
@@ -188,12 +198,12 @@ export const useAdminActions = () => {
     return await ApiRequest()
       .request({
         method: 'PUT',
-        url: `${UPDATE_ADMIN_PERMISSION}/${id}`,
+        url: `${UPDATE_ADMIN_PERMISSION}?id=${id}`,
         data,
       })
       .then((response: any) => {
         console.log('create Admin role response :::', response.data);
-        getAdminPermissionsList();
+        getAdminRole();
         return response.data;
       })
       .catch((err: any) => err.data);
@@ -206,12 +216,26 @@ export const useAdminActions = () => {
         url: `${DELETE_ADMIN}/${id}`,
       })
       .then((response: any) => {
-        console.log('delete Admin by id ::', response.data);
+        getAdminList();
         return response;
       })
       .catch((err: any) => err.data);
   };
 
+  const updateAdmin = async (id: string, data: any) => {
+    delete data.password;
+    return await ApiRequest()
+      .request({
+        method: 'PUT',
+        url: `${UPDATE_ADMIN}/${id}`,
+        data,
+      })
+      .then((response: any) => {
+        getAdminList();
+        return response;
+      })
+      .catch((err: any) => err.data);
+  };
   return {
     getAdminData,
     createAdminData,
@@ -228,5 +252,6 @@ export const useAdminActions = () => {
     getAdminById,
     updateAdminPermisson,
     deleteAdmin,
+    updateAdmin,
   };
 };
