@@ -138,3 +138,8 @@ export const ADMIN_LIST = '';
 //cloudk
 
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
+
+
+//Wallet Admin
+export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
+export const WALLET_ADMIN_SWAP = '/wallets/swaps';
