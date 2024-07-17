@@ -21,10 +21,10 @@ import MachinesAccordion from '../Cloud/MachinesAccordion';
 import { Copy } from '../../images/svg';
 
 type Props = {
-  rows: any[];
+  rows?: any[];
   accordion?: any;
-  isLoading: boolean | undefined;
-  headCells: {
+  isLoading?: boolean | undefined;
+  headCells?: {
     id: string;
     label: string;
     dataClass?: string;
@@ -52,10 +52,12 @@ type Props = {
   refetch?: any;
   showInnerFiltersSearch?: boolean;
   innerFiltersClassName?: string;
-
   setClickeddRow?: any;
   copyIconList?: any[];
   showAccordion?: string;
+  copyItems?: any[];
+  colorItems?: any[];
+  imageItems?: any[];
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -111,6 +113,10 @@ const GlobalTable = ({
   copyIconList = [],
   showAccordion,
   accordion = {},
+
+  copyItems,
+  colorItems,
+  imageItems
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -353,9 +359,8 @@ const GlobalTable = ({
                             <img
                               src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
                               alt=""
-                              className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer ${
-                                sort.sortKey !== cell.id && 'opacity-50'
-                              }`}
+                              className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer ${sort.sortKey !== cell.id && 'opacity-50'
+                                }`}
                               onClick={() => handleSort(cell.id)}
                             />
                           )}
@@ -400,14 +405,37 @@ const GlobalTable = ({
                           )}
 
                           {headCells.map((cell, index) => {
+                            let color = '';
+                            if (
+                              row[cell.id] === 'success' ||
+                              row[cell.id] === 'approved'
+                            )
+                              color = 'text-primaryGreen';
+                            else if (row[cell.id] === 'pending')
+                              color = 'text-primary';
+                            else if (row[cell.id] === 'failed')
+                              color = 'text-primaryRed';
+
                             return (
                               cell.id !== '_id' && (
                                 <td
                                   key={index}
                                   className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={'py-2 flex justify-start items-center '}>
-                                    {row[cell.id]}
+                                  <div className={`py-2 flex justify-start items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}>
+                                    {
+                                      imageItems?.includes(headCells[index].id) ? (
+                                        <img
+                                          src={row[cell.id]}
+                                          className="w-7 h-7"
+                                          alt=""
+                                        />
+                                      ) : (
+                                        <>
+                                          {row[cell.id]}
+                                        </>
+                                      )
+                                    }
                                     {copyIconList.find((dt) => dt === cell.id) && (
                                       <Copy
                                         className="ml-3 cursor-pointer"

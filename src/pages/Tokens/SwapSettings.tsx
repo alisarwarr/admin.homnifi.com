@@ -16,44 +16,59 @@ import { useSelector } from 'react-redux';
 
 const headCells = [
     { id: 'id', label: 'ID', show: true },
-    { id: 'fromToken', label: 'From Token', show: true },
-    { id: 'toToken', label: 'To Token', show: true },
-    { id: 'minAmount', label: 'Min. Amount', show: true },
-    { id: 'maxAmount', label: 'Max. Amount', show: true },
-    { id: 'commisionType', label: 'Commision Type', show: true },
-    { id: 'customRate', label: 'Custom Rate', show: true },
+    { id: 'userEmail', label: 'Email', show: true },
+    { id: 'amount', label: 'Amount', show: true },
+    { id: 'time', label: 'Time', show: true },
+    { id: 'toWallet', label: 'To Wallet', show: true },
+    { id: 'fromWallet', label: 'From Wallet', show: true },
+    { id: 'charges', label: 'Charges', show: true },
+    { id: 'fee', label: 'Fee', show: true },
+    { id: 'total', label: 'Total', show: true }
 ];
 
 
 export default function SwapSettings() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
 
+    const fetchData = (page: number) => {
+        setLoading(true);
+        setTimeout(() => {
+            getSwapSettings({ page, limit: 10 });
+            setLoading(false);
+        }, 1000);
+    };
+
+
+    const { getSwapSettings } = useTokensSettingsAction();
+    const { swapSettings } = useSelector(selectTokensSettings);
     useEffect(() => {
-        // getWithdrawHistoryRequests(true, filter);
+        fetchData(1);
     }, []);
 
 
-    const rows = []?.map((_data: any, index: number) => {
+    const rows = swapSettings?.list ? swapSettings?.list?.map((_data: any) => {
         return {
-            id: "",
-            fromToken: "",
-            toToken: "",
-            assertTo: "",
-            minAmount: "",
-            maxAmount: "",
-            feeType: "",
-            commisionType: "",
-            customRate: ""
+            id: _data.requestId,
+            userEmail: _data.user.email,
+            amount: _data.amount,
+            time: _data.createdAt,
+            toWallet: _data.toWallet.token.name,
+            fromWallet: _data.fromWallet.token.name,
+            charges: _data.charges,
+            fee: _data.fee,
+            total: _data.total
         };
-    });
+    }) : [];
 
 
     const [open, setOpen] = useState(false);
     const onOpen = () => setOpen(true);
     const onClose = () => {
         setOpen(false);
-        setTimeout(() => { formik.resetForm(); }, 1000);
+        setTimeout(() => {
+            formik.resetForm();
+        }, 1000);
     };
 
 
@@ -81,13 +96,6 @@ export default function SwapSettings() {
             onClose();
         }
     });
-
-
-    const { getSwapSettings } = useTokensSettingsAction();
-    const { swapSettings } = useSelector(selectTokensSettings);
-    useEffect(() => {
-        // getSwapSettings();
-    }, []);
 
 
     return (
@@ -210,7 +218,6 @@ export default function SwapSettings() {
                 }
             />
 
-
             <div className="w-full px-2">
                 {/* PAGE TITLE */}
                 <div className="flex bg-primary items-center  text-white">
@@ -218,11 +225,7 @@ export default function SwapSettings() {
 
                     <div
                         className="flex gap-1 items-center cursor-pointer px-3"
-                        onClick={async () => {
-                            setLoading(true);
-                            // await getWithdrawHistoryRequests(true, filter);
-                            setLoading(false);
-                        }}
+                        onClick={() => fetchData(1)}
                     >
                         <img src={refresh} alt="" width={24} height={24} />
                         <span>Refresh</span>
@@ -238,25 +241,22 @@ export default function SwapSettings() {
                 </div>
 
                 {/* TABLE */}
-                <GlobalTable
-                    rows={rows}
-                    headCells={headCells}
-                // isLoading={loading}
-                // totalPages={swapHistory?.totalPages}
-                // page={filter.page}
-                // handlePageChange={(page) => {
-                //     setFilter({ ...filter, page });
-                // }}
-                // handleLimitChange={(limit) => {
-                //     setFilter({ ...filter, limit });
-                // }}
-                // setColumns={setColumns}
-                // ColumnsList={columns}
-                // filter={filter}
-                // setFilter={setFilter}
-                // showInnerFilters={true}
-                // csvData={getCsvData}
-                />
+                {
+                    swapSettings && (
+                        <GlobalTable
+                            rows={rows}
+                            headCells={headCells}
+                            copyItems={['']}
+                            colorItems={['']}
+                            imageItems={['']}
+                            isLoading={loading}
+                            totalPages={swapSettings?.totalPages}
+                            handlePageChange={(page: number) => {
+                                fetchData(page);
+                            }}
+                        />
+                    )
+                }
             </div>
         </>
     )

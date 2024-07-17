@@ -19,28 +19,41 @@ const headCells = [
 
 
 export default function NetworkSettings() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
 
+    const fetchData = (page: number) => {
+        setLoading(true);
+        setTimeout(() => {
+            getNetworkSettings({ page, limit: 10 });
+            setLoading(false);
+        }, 1000);
+    };
+
+
+    const { getNetworkSettings } = useTokensSettingsAction();
+    const { networkSettings } = useSelector(selectTokensSettings);
     useEffect(() => {
-        // getWithdrawHistoryRequests(true, filter);
+        fetchData(1);
     }, []);
 
 
-    const rows = []?.map((_data: any, index: number) => {
+    const rows = networkSettings?.list ? networkSettings?.list?.map((_data: any) => {
         return {
-            id: "",
-            name: "",
-            blockchainCode: ""
+            id: _data.requestId,
+            name: _data.name,
+            blockchainCode: _data.blockchainCode
         };
-    });
+    }) : [];
 
 
     const [open, setOpen] = useState(false);
     const onOpen = () => setOpen(true);
     const onClose = () => {
         setOpen(false);
-        setTimeout(() => { formik.resetForm(); }, 1000);
+        setTimeout(() => {
+            formik.resetForm();
+        }, 1000);
     };
 
 
@@ -58,13 +71,6 @@ export default function NetworkSettings() {
             onClose();
         }
     });
-
-
-    const { getNetworkSettings } = useTokensSettingsAction();
-    const { networkSettings } = useSelector(selectTokensSettings);
-    useEffect(() => {
-        // getNetworkSettings();
-    }, []);
 
 
     return (
@@ -111,7 +117,6 @@ export default function NetworkSettings() {
                 }
             />
 
-
             <div className="w-full px-2">
                 {/* PAGE TITLE */}
                 <div className="flex bg-primary items-center  text-white">
@@ -119,11 +124,7 @@ export default function NetworkSettings() {
 
                     <div
                         className="flex gap-1 items-center cursor-pointer px-3"
-                        onClick={async () => {
-                            setLoading(true);
-                            // await getWithdrawHistoryRequests(true, filter);
-                            setLoading(false);
-                        }}
+                        onClick={() => fetchData(1)}
                     >
                         <img src={refresh} alt="" width={24} height={24} />
                         <span>Refresh</span>
@@ -139,25 +140,22 @@ export default function NetworkSettings() {
                 </div>
 
                 {/* TABLE */}
-                <GlobalTable
-                    rows={rows}
-                    headCells={headCells}
-                // isLoading={loading}
-                // totalPages={swapHistory?.totalPages}
-                // page={filter.page}
-                // handlePageChange={(page) => {
-                //     setFilter({ ...filter, page });
-                // }}
-                // handleLimitChange={(limit) => {
-                //     setFilter({ ...filter, limit });
-                // }}
-                // setColumns={setColumns}
-                // ColumnsList={columns}
-                // filter={filter}
-                // setFilter={setFilter}
-                // showInnerFilters={true}
-                // csvData={getCsvData}
-                />
+                {
+                    networkSettings && (
+                        <GlobalTable
+                            rows={rows}
+                            headCells={headCells}
+                            copyItems={['']}
+                            colorItems={['']}
+                            imageItems={['']}
+                            isLoading={loading}
+                            totalPages={networkSettings?.totalPages}
+                            handlePageChange={(page: number) => {
+                                fetchData(page);
+                            }}
+                        />
+                    )
+                }
             </div>
         </>
     )
