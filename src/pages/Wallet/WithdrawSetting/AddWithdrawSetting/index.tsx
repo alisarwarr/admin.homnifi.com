@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '../../../../components/Button';
@@ -10,9 +10,10 @@ import { ReactComponent as CrossIcon } from '../../../../SVGIcons/cancelIcon.svg
 interface Props {
   open: boolean;
   onClose: () => void;
+  selectedSetting?: any;
 }
 
-function AddWithdrawSettings({ open, onClose }: Props) {
+function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
   const [isSubmit, setIsSubmit] = React.useState(false);
   const initialValues = {
     type: '',
@@ -50,6 +51,10 @@ function AddWithdrawSettings({ open, onClose }: Props) {
   });
 
   const { handleChange, handleSubmit, values, errors, touched, resetForm } = formik;
+
+  useEffect(() => {
+    console.log('selectedSetting ::', selectedSetting);
+  }, [selectedSetting]);
 
   return (
     <div>

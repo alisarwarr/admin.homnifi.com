@@ -3,9 +3,9 @@ import { RootState } from '../index';
 
 
 interface tokensSettingsState {
-  depositSettings: any[] | null;
-  swapSettings: any[] | null;
-  networkSettings: any[] | null;
+  depositSettings: any| null;
+  swapSettings: any | null;
+  networkSettings: any | null;
 }
 
 const initialState: tokensSettingsState = {

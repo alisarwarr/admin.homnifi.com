@@ -466,7 +466,6 @@ opacity: 1 !important;
   border-radius: 0.125rem; /* Tailwind rounded-sm */
   display: inline-block;
   position: relative;
-  cursor: pointer;
 }
 
 input[type="checkbox"] {

@@ -14,43 +14,55 @@ import { useSelector } from 'react-redux';
 
 const headCells = [
     { id: 'id', label: 'ID', show: true },
-    { id: 'fromToken', label: 'Type', show: true },
-    { id: 'toToken', label: 'ID', show: true },
-    { id: 'minAmount', label: 'Min. Amount', show: true },
-    { id: 'mimDisplayAmount', label: 'Min. Display Amount', show: true },
-    { id: 'feeType', label: 'Fee Type', show: true },
-    { id: 'commisionType', label: 'Commision Type', show: true },
+    { id: 'userEmail', label: 'Email', show: true },
+    { id: 'amount', label: 'Amount', show: true },
+    { id: 'transactionStatus', label: 'Transaction', show: true },
+    { id: 'time', label: 'Time', show: true },
+    { id: 'toWallet', label: 'To Wallet', show: true },
+    { id: 'toWalletIcon', label: 'Icon', show: true }
 ];
 
 
 export default function DepositSettings() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
 
+    const fetchData = (page: number) => {
+        setLoading(true);
+        setTimeout(() => {
+            getDepositSettings({ page, limit: 10 });
+            setLoading(false);
+        }, 1000);
+    };
+
+
+    const { getDepositSettings } = useTokensSettingsAction();
+    const { depositSettings } = useSelector(selectTokensSettings);
     useEffect(() => {
-        // getWithdrawHistoryRequests(true, filter);
+        fetchData(1);
     }, []);
 
 
-    const rows = []?.map((_data: any, index: number) => {
+    const rows = depositSettings?.list ? depositSettings?.list?.map((_data: any) => {
         return {
-            id: "",
-            fromToken: "",
-            toToken: "",
-            assertTo: "",
-            minAmount: "",
-            mimDisplayAmount: "",
-            feeType: "",
-            commisionType: ""
+            id: _data.requestId,
+            userEmail: _data.user.email,
+            amount: _data.amount,
+            transactionStatus: _data.transactionStatus,
+            time: _data.createdAt,
+            toWallet: _data.toWallet.token.name,
+            toWalletIcon: _data.toWallet.token.iconUrl
         };
-    });
+    }) : [];
 
 
     const [open, setOpen] = useState(false);
     const onOpen = () => setOpen(true);
     const onClose = () => {
         setOpen(false);
-        setTimeout(() => { formik.resetForm(); }, 1000);
+        setTimeout(() => {
+            formik.resetForm();
+        }, 1000);
     };
 
 
@@ -75,15 +87,8 @@ export default function DepositSettings() {
         onSubmit: (values) => {
             alert(JSON.stringify(values));
             onClose();
-        },
+        }
     });
-
-
-    const { getDepositSettings } = useTokensSettingsAction();
-    const { depositSettings } = useSelector(selectTokensSettings);
-    useEffect(() => {
-        // getSwapSettings();
-    }, []);
 
 
     return (
@@ -184,7 +189,6 @@ export default function DepositSettings() {
                 }
             />
 
-
             <div className="w-full px-2">
                 {/* PAGE TITLE */}
                 <div className="flex bg-primary items-center  text-white">
@@ -192,11 +196,7 @@ export default function DepositSettings() {
 
                     <div
                         className="flex gap-1 items-center cursor-pointer px-3"
-                        onClick={async () => {
-                            setLoading(true);
-                            // await getWithdrawHistoryRequests(true, filter);
-                            setLoading(false);
-                        }}
+                        onClick={() => fetchData(1)}
                     >
                         <img src={refresh} alt="" width={24} height={24} />
                         <span>Refresh</span>
@@ -212,25 +212,22 @@ export default function DepositSettings() {
                 </div>
 
                 {/* TABLE */}
-                <GlobalTable
-                    rows={rows}
-                    headCells={headCells}
-                // isLoading={loading}
-                // totalPages={swapHistory?.totalPages}
-                // page={filter.page}
-                // handlePageChange={(page) => {
-                //     setFilter({ ...filter, page });
-                // }}
-                // handleLimitChange={(limit) => {
-                //     setFilter({ ...filter, limit });
-                // }}
-                // setColumns={setColumns}
-                // ColumnsList={columns}
-                // filter={filter}
-                // setFilter={setFilter}
-                // showInnerFilters={true}
-                // csvData={getCsvData}
-                />
+                {
+                    depositSettings && (
+                        <GlobalTable
+                            rows={rows}
+                            headCells={headCells}
+                            copyItems={['']}
+                            colorItems={['transactionStatus']}
+                            imageItems={['toWalletIcon']}
+                            isLoading={loading}
+                            totalPages={depositSettings?.totalPages}
+                            handlePageChange={(page: number) => {
+                                fetchData(page);
+                            }}
+                        />
+                    )
+                }
             </div>
         </>
     )

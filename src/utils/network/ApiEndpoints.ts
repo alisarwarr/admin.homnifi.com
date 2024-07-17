@@ -134,7 +134,18 @@ export const DISTABLE_USER_2FA = '/user/2fa-disable';
 export const ADMIN_ACTIVITY = '/user/activity';
 export const ADMIN_PERMISSIONS = '/permissions';
 export const ADMIN_LIST = '';
+export const CREATE_ADMIN_ROLES = '/role';
+export const CREATE_ADMIN = '/auth/signup';
+export const GET_ADDMIN_ROLES = '/role';
+export const UPDATE_ADMIN_PERMISSION = '';
+export const DELETE_ADMIN = '';
 
 //cloudk
 
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
+
+
+//Wallet Admin
+export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
+export const WALLET_ADMIN_SWAPS = '/wallets/swaps';
+export const WALLET_ADMIN_NETWORKS = '/wallets/networks';

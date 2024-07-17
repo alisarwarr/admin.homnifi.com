@@ -39,6 +39,7 @@ import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
+import { Community } from '../images/drawer';
 import DepositHistory from '../pages/Wallet/DepositHistory';
 import Faqs from '../pages/Wallet/Faqs';
 import AddFaqs from '../pages/Wallet/Faqs/AddFaqs';
@@ -58,6 +59,7 @@ import DepositSettings from '../pages/Tokens/DepositSettings';
 import NetworkSettings from '../pages/Tokens/NetworkSettings';
 import ProductList from '../pages/Cloud2/ProductList';
 import MachineList from '../pages/Cloud2/MachineList';
+import CronJob from '../pages/Admins/CronJobs';
 
 export const router = createBrowserRouter([
   {
@@ -559,6 +561,16 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: 'admin-setting/cron-jobs',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <CronJob />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
         path: '/admin-settings/maintenance',
         element: (
           <React.Suspense fallback={<Loader />}>
@@ -634,6 +646,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <TermsAndConditions />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/community',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Community />
             </ProtectedRoute>
           </React.Suspense>
         ),
