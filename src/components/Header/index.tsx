@@ -68,7 +68,7 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
   const user = useSelector(selectUser);
 
   return (
-    <div className="flex items-center justify-between w-[96%] m-auto text-black">
+    <div className="flex items-center justify-between m-auto text-black">
       {!screen640 && (
         <>
           <button onClick={handleDrawer} className="ml-2">
@@ -77,6 +77,7 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
         </>
       )}
 
+      <div>
       <GlobalInput
         name="email"
         placeholder="Search"
@@ -86,6 +87,7 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
         // isError={formik.errors.email}
         // error={formik.errors.email}
       />
+      </div>
 
       <div className="flex items-center">
         {/* <div className="relative">

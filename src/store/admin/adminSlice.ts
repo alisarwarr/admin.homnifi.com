@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface IAdminPermission {
   _id: string;
   name: string;
+  module: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -12,6 +13,8 @@ export interface AdminStateSlice {
   list: any[];
   activity: any;
   adminPermissionsList: IAdminPermission[];
+  rolesList: any[];
+  selectedAdmin: any;
 }
 
 const initialState: AdminStateSlice = {
@@ -19,6 +22,8 @@ const initialState: AdminStateSlice = {
   list: [],
   activity: null,
   adminPermissionsList: [],
+  rolesList: [],
+  selectedAdmin: null,
 };
 
 const adminSlice = createSlice({
@@ -37,10 +42,17 @@ const adminSlice = createSlice({
     setAdminPermissionsList: (state, action: PayloadAction<any>) => {
       return { ...state, adminPermissionsList: action.payload };
     },
+    setRoleList: (state, action: PayloadAction<any>) => {
+      return { ...state, rolesList: action.payload };
+    },
+    setSelectedAdmin: (state, action: PayloadAction<any>) => {
+      return { ...state, selectedAdmin: action.payload };
+    },
   },
 });
 
-export const { setAdminData, setAdminList, setAdminActivity, setAdminPermissionsList } = adminSlice.actions;
+export const { setAdminData, setAdminList, setAdminActivity, setAdminPermissionsList, setRoleList, setSelectedAdmin } =
+  adminSlice.actions;
 
 export const selectAdmin = (state: { admin: AdminStateSlice }) => state.admin;
 export const selectAdminData = (state: { admin: AdminStateSlice }) => state.admin.data;

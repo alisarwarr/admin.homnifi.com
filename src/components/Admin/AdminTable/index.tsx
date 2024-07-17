@@ -1,12 +1,14 @@
-import { Token } from '../../../store/token/tokenSlice';
-import GlobalTable from '../../Table/GlobalTable';
-import StatusChip from '../../StatusChip';
-import { viewWhite, edit, lock, unlock } from '../../../images/other';
 import { Tooltip } from 'antd';
-import ConfirmDialog from '../../Dialog/ConfirmDialog';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import StatusChip from '../../StatusChip';
 import { useNavigate } from 'react-router-dom';
+import GlobalTable from '../../Table/GlobalTable';
+import ConfirmDialog from '../../Dialog/ConfirmDialog';
+import { Token } from '../../../store/token/tokenSlice';
+import { viewWhite, edit, lock, unlock } from '../../../images/other';
 import { useAdminActions } from '../../../store/admin/adminActions';
+import { setSelectedAdmin } from '../../../store/admin/adminSlice';
 import { errorAlert, successAlert } from '../../../utils/alerts';
 
 type Props = {
@@ -24,11 +26,12 @@ const headCells = [
 ];
 
 const AdminTable = ({ data, loading, fireApi }: Props) => {
+  const dispatch = useDispatch();
   const [openLockUserDialog, setOpenLockUserDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>();
   const navigate = useNavigate();
 
-  const { updateAdminAccess } = useAdminActions();
+  const { updateAdminAccess, deleteAdmin } = useAdminActions();
   const rows =
     data?.length > 0
       ? data?.map((_data: any) => {
@@ -45,11 +48,12 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
                     width={18}
                     height={18}
                     alt="View Icon"
-                    onClick={() =>
+                    onClick={() => {
                       navigate('/admin-setting/admins/view/' + _data?._id, {
                         state: { _data, edit: false },
-                      })
-                    }
+                      });
+                      dispatch(setSelectedAdmin(_data));
+                    }}
                     className="cursor-pointer"
                   />
                 </Tooltip>
