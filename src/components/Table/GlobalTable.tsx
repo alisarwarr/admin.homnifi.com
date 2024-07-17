@@ -19,12 +19,13 @@ const ActionsColors = {
 
 import MachinesAccordion from '../Cloud/MachinesAccordion';
 import { Copy } from '../../images/svg';
+import { ArrowDown } from '../../images/icons';
 
 type Props = {
-  rows: any[];
+  rows?: any[];
   accordion?: any;
-  isLoading: boolean | undefined;
-  headCells: {
+  isLoading?: boolean | undefined;
+  headCells?: {
     id: string;
     label: string;
     dataClass?: string;
@@ -52,10 +53,12 @@ type Props = {
   refetch?: any;
   showInnerFiltersSearch?: boolean;
   innerFiltersClassName?: string;
-
   setClickeddRow?: any;
   copyIconList?: any[];
   showAccordion?: string;
+  copyItems?: any[];
+  colorItems?: any[];
+  imageItems?: any[];
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -111,6 +114,10 @@ const GlobalTable = ({
   copyIconList = [],
   showAccordion,
   accordion = {},
+
+  copyItems,
+  colorItems,
+  imageItems
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -199,7 +206,7 @@ const GlobalTable = ({
   }, [outerFilters?.country, outerFilters?.accountType, outerFilters?.twoFA, outerFilters?.verified]);
 
   return (
-    <div className=" backdrop-blur-md p-4 border border-gray-300  ">
+    <div className=" backdrop-blur-md  w-full col-span-12  relative  ">
       <div className="h-full">
         {showInnerFilters && (
           <div className={`w-full flex justify-end mb-3 ${innerFiltersClassName}`}>
@@ -228,7 +235,7 @@ const GlobalTable = ({
                   }
                 }}
               >
-                <img src={exportIcon} className="w-6 h-6" />
+                <img src={exportIcon} className="w-6 bg-primary h-6" />
               </IconButton>
               <IconButton
                 className="text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
@@ -325,8 +332,11 @@ const GlobalTable = ({
             </div>
           </div>
         )}
-        <div className="hidden lg:flex items-center gap-2 overflow-auto">
-          <table className="w-full">
+        <div
+          className={`hidden md:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
+        >
+          {/* <div className="hidden lg:flex items-center gap-2 overflow-auto"> */}
+          <table className={`table-bordered border-collapse w-full`}>
             <thead>
               <tr className={`${rows.length > 0 ? 'text-defaultBlack' : 'text-textSecondary'} w-full text-left`}>
                 {/* Checkbox column */}
@@ -340,7 +350,7 @@ const GlobalTable = ({
                   </th>
                 )} */}
 
-                {headCells.map((cell, index) => {
+                {/* {headCells.map((cell, index) => {
                   return (
                     cell.id !== '_id' && (
                       <th
@@ -353,9 +363,8 @@ const GlobalTable = ({
                             <img
                               src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
                               alt=""
-                              className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer ${
-                                sort.sortKey !== cell.id && 'opacity-50'
-                              }`}
+                              className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer ${sort.sortKey !== cell.id && 'opacity-50'
+                                }`}
                               onClick={() => handleSort(cell.id)}
                             />
                           )}
@@ -363,7 +372,29 @@ const GlobalTable = ({
                       </th>
                     )
                   );
-                })}
+                })} */}
+              </tr>
+              <tr className={`${rows.length > 0 ? 'text-black' : 'text-textSecondary'} w-full `}>
+                {headCells &&
+                  headCells.map((cell, index) => (
+                    <th
+                      key={index}
+                      className={`hidden md:table-cell text-left font-semibold text-sm p-3 border-b border-borderGray
+                       ${cell.dataClass}  border-b`}
+                    >
+                      {cell.label}
+                      {/* {cell.id !== 'id' && cell.id !== 'actions' && showSort && (
+                        <img
+                          src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
+                          alt=""
+                          className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer  ${
+                            sort.sortKey !== cell.id && 'opacity-50'
+                          }`}
+                          onClick={() => handleSort(cell.id)}
+                        />
+                      )} */}
+                    </th>
+                  ))}
               </tr>
             </thead>
             {isLoading ? (
@@ -400,14 +431,37 @@ const GlobalTable = ({
                           )}
 
                           {headCells.map((cell, index) => {
+                            let color = '';
+                            if (
+                              row[cell.id] === 'success' ||
+                              row[cell.id] === 'approved'
+                            )
+                              color = 'text-primaryGreen';
+                            else if (row[cell.id] === 'pending')
+                              color = 'text-primary';
+                            else if (row[cell.id] === 'failed')
+                              color = 'text-primaryRed';
+
                             return (
                               cell.id !== '_id' && (
                                 <td
                                   key={index}
                                   className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={'py-2 flex justify-start items-center '}>
-                                    {row[cell.id]}
+                                  <div className={`py-2 flex justify-start items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}>
+                                    {
+                                      imageItems?.includes(headCells[index].id) ? (
+                                        <img
+                                          src={row[cell.id]}
+                                          className="w-7 h-7"
+                                          alt=""
+                                        />
+                                      ) : (
+                                        <>
+                                          {row[cell.id]}
+                                        </>
+                                      )
+                                    }
                                     {copyIconList.find((dt) => dt === cell.id) && (
                                       <Copy
                                         className="ml-3 cursor-pointer"

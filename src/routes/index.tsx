@@ -39,6 +39,7 @@ import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
+import { Community } from '../images/drawer';
 import DepositHistory from '../pages/Wallet/DepositHistory';
 import Faqs from '../pages/Wallet/Faqs';
 import AddFaqs from '../pages/Wallet/Faqs/AddFaqs';
@@ -56,6 +57,8 @@ import WithdrawSetting from '../pages/Wallet/WithdrawSetting';
 import SwapSettings from '../pages/Tokens/SwapSettings';
 import DepositSettings from '../pages/Tokens/DepositSettings';
 import NetworkSettings from '../pages/Tokens/NetworkSettings';
+import ProductList from '../pages/Cloud2/ProductList';
+import MachineList from '../pages/Cloud2/MachineList';
 import CronJob from '../pages/Admins/CronJobs';
 
 export const router = createBrowserRouter([
@@ -588,6 +591,26 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: '/cloudk2/products',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <ProductList />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk2/machines',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <MachineList />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
         path: '/admin-settings/auth-slider-settings',
         element: (
           <React.Suspense fallback={<Loader />}>
@@ -623,6 +646,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <TermsAndConditions />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/community',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Community />
             </ProtectedRoute>
           </React.Suspense>
         ),

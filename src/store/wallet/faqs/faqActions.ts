@@ -1,6 +1,6 @@
-import { selectFaqSlice,  setFaqs } from './faqSlice';
+import { selectFaqSlice, setFaqs } from './faqSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { FAQ, PRODUCT } from '../../../utils/network/ApiEndpoints';
+import { FAQ, PRODUCTS } from '../../../utils/network/ApiEndpoints';
 
 //API
 import ApiRequest from '../../../utils/network/ApiRequest';
@@ -21,14 +21,6 @@ export const useFaqActions = () => {
     dispatch(setFaqs(_faqs));
   };
 
-  const getFaqById = async (id: string | undefined) => {
-    const response = await ApiRequest().request({
-      method: 'GET',
-      url: `${PRODUCT}/${id}`,
-    });
-    return response?.data?.data;
-  };
-
   // const getProductVouchers = async (id: string | undefined, status: string, page: number) => {
   //   const response = await ApiRequest().request({
   //     method: 'GET',
@@ -39,7 +31,7 @@ export const useFaqActions = () => {
   // };
 
   const addFaq = async (data: any) => {
-    console.log("🚀 ~ addFaq ~ data:", data)
+    console.log('🚀 ~ addFaq ~ data:', data);
     return await ApiRequest()
       .request({
         method: 'POST',
@@ -54,7 +46,7 @@ export const useFaqActions = () => {
     return await ApiRequest()
       .request({
         method: 'PUT',
-        url: `${PRODUCT}/${id}`,
+        url: `${PRODUCTS}/${id}`,
         data: data,
       })
       .then((response: any) => response.data)
@@ -65,7 +57,6 @@ export const useFaqActions = () => {
     getFaqs,
     addFaq,
     updateFaq,
-    getFaqById
     // getProductById,
     // getProductVouchers,
   };
