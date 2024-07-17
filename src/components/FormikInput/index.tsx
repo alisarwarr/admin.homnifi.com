@@ -44,6 +44,7 @@ export default function FormikInput({
     <div className="w-full">
       <div className={`flex flex-col gap-1 relative ${className}`}>
         <GlobalInput
+          required
           label={label}
           type={type}
           name={name}
@@ -61,7 +62,6 @@ export default function FormikInput({
         {error && isError && touched && <span className="text-xs text-errorColor">{error}</span>}
 
         {/* {error ||  touched && <span className="text-xs text-primary">{error}</span>} */}
-
       </div>
     </div>
   );
