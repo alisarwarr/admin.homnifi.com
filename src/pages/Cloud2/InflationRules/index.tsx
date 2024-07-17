@@ -95,7 +95,7 @@ const InflationRules = () => {
 
       <section className="flex  flex-row gap-5 justify-end items-center py-5">
         <div>
-          <GlobalSelect
+          {/* <GlobalSelect
 
           options={[
             {label:'Clone  Pervious Rules' , value:'clone_pervious_rules'}
@@ -103,7 +103,7 @@ const InflationRules = () => {
 
 
           ]}
-          />
+          /> */}
           {/* <GlobalButton onClick={() => setIsModalOpen(true)} type="button" text="Clone" classNames="!w-52" /> */}
         </div>
       </section>
