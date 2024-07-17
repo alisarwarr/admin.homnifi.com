@@ -8,6 +8,7 @@ export interface TemplateState {
   currentinfalationRules: TINFLATIONRULES;
   products: any[];
   userRewards: any[];
+  userMachineList: any[] | null;
 }
 export const CLOUD_SLICE_NAME = 'cloudk';
 const initialState: TemplateState = {
@@ -46,6 +47,7 @@ const initialState: TemplateState = {
       },
     ],
   },
+  userMachineList: null
 };
 
 const slice = createSlice({
@@ -54,6 +56,9 @@ const slice = createSlice({
   reducers: {
     setCloudkSlice: (state, action: PayloadAction<any>) => {
       return { ...state, ...action.payload };
+    },
+    setUserMachineList: (state, action: PayloadAction<any>) => {
+      return { ...state, userMachineList: action.payload };
     },
   },
 });

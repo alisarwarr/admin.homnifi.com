@@ -143,6 +143,7 @@ export const DELETE_ADMIN = '';
 //cloudk
 
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
+export const USER_MACHINE_LIST = '/cloud-k/user-machines';
 
 
 //Wallet Admin

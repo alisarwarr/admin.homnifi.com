@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-
 import { useLocation } from 'react-router-dom';
-import RenderMemberShip from '../_components/RenderMemberShip';
 import RewardsTillNow from '../_components/RenderMembership/RewardsTillNow';
 import RenderMachinesHistory from '../_components/RenderMembership/RenderMachinesHistory';
 
