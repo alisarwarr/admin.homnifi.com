@@ -13,13 +13,13 @@ import { useSelector } from 'react-redux';
 
 
 const headCells = [
-    { id: 'id', label: 'ID', show: true },
-    { id: 'fromToken', label: 'Type', show: true },
-    { id: 'toToken', label: 'ID', show: true },
-    { id: 'minAmount', label: 'Min. Amount', show: true },
-    { id: 'mimDisplayAmount', label: 'Min. Display Amount', show: true },
-    { id: 'feeType', label: 'Fee Type', show: true },
-    { id: 'commisionType', label: 'Commision Type', show: true },
+    { id: 'requestId', label: 'ID', show: true },
+    { id: 'userEmail', label: 'Email', show: true },
+    { id: 'amount', label: 'Amount', show: true },
+    { id: 'transactionStatus', label: 'Transaction', show: true },
+    { id: 'time', label: 'Time', show: true },
+    { id: 'toWallet', label: 'To Wallet', show: true },
+    { id: 'toWalletIcon', label: 'Icon', show: true },
 ];
 
 
@@ -27,23 +27,25 @@ export default function DepositSettings() {
     const [loading, setLoading] = useState(true);
 
 
+    const { getDepositSettings } = useTokensSettingsAction();
+    const { depositSettings } = useSelector(selectTokensSettings);
     useEffect(() => {
-        // getWithdrawHistoryRequests(true, filter);
+        getDepositSettings({ page: 1, limit: 10 });
     }, []);
+    console.log({ depositSettings });
 
 
-    const rows = []?.map((_data: any, index: number) => {
+    const rows = depositSettings?.list ? depositSettings?.list?.map((_data: any, index: number) => {
         return {
-            id: "",
-            fromToken: "",
-            toToken: "",
-            assertTo: "",
-            minAmount: "",
-            mimDisplayAmount: "",
-            feeType: "",
-            commisionType: ""
+            requestId: _data.requestId,
+            userEmail: _data.user.email,
+            amount: _data.amount,
+            transactionStatus: _data.transactionStatus,
+            time: _data.createdAt,
+            toWallet: _data.toWallet.token.name,
+            toWalletIcon: _data.toWallet.token.iconUrl
         };
-    });
+    }) : [];
 
 
     const [open, setOpen] = useState(false);
@@ -77,13 +79,6 @@ export default function DepositSettings() {
             onClose();
         },
     });
-
-
-    const { getDepositSettings } = useTokensSettingsAction();
-    const { depositSettings } = useSelector(selectTokensSettings);
-    useEffect(() => {
-        // getSwapSettings();
-    }, []);
 
 
     return (
