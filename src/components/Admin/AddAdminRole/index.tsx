@@ -82,27 +82,22 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
       setIsRoleSubmit(true);
       let response;
 
+      const body = Object.keys(activeRoles)?.map((dt: string) => {
+        return {
+          module: dt,
+          action: activeRoles[dt],
+        };
+      });
+
       if (editRole) {
-        const body = Object.keys(activeRoles)?.map((dt: string) => {
-          return {
-            source: dt,
-            actions: activeRoles[dt],
-          };
-        });
         response = await updateAdminPermisson(editRole._id, { permissions: body });
       } else {
-        const body = Object.keys(activeRoles)?.map((dt: string) => {
-          return {
-            module: dt,
-            action: activeRoles[dt],
-          };
-        });
         response = await createAdminRole({ name: values.name, permissions: body });
       }
       if (response.status) {
         successAlert(response.message);
-        setIsRoleSubmit(false);
-        return resetForm();
+        onClose();
+        return resetStates();
       } else {
         return errorNotify(response.message);
       }
@@ -120,7 +115,6 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
         obj[dt.module] = dt.action;
       });
       setActiveRoles(obj);
-
       const keys = Object.keys(obj);
       setSelectedRoles(keys);
     }
@@ -130,6 +124,13 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
     getAdminPermissionsList();
   }, []);
 
+  const resetStates = () => {
+    setSelectedRoles([]);
+    setActiveRoles({});
+    resetForm();
+    setIsRoleSubmit(false);
+  };
+
   return (
     <div>
       <GlobalDialog
@@ -138,7 +139,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
         closeButtonShow={false}
         onClose={() => {
           onClose();
-          setActiveRoles({});
+          resetStates();
         }}
         content={
           <form onSubmit={handleSubmit} className="h-full gap-10 space-y-9 w-full ">
@@ -150,7 +151,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                 className="cursor-pointer"
                 onClick={() => {
                   onClose();
-                  setActiveRoles({});
+                  resetStates();
                 }}
               >
                 <CrossIcon />
@@ -208,7 +209,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                       <div key={dt} className="px-4 py-3 w-full border-b-2">
                         <div className="flex gap-4 justify-between">
                           <div className="flex gap-4">
-                            <div className="font-medium text-sm w-36">{dt}</div>
+                            <div className="font-medium text-sm md:w-36">{dt}</div>
                             {permissionsList.map((rl) => (
                               <div key={rl}>
                                 <GlobalCheckbox

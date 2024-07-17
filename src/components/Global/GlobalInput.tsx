@@ -45,6 +45,7 @@ const GlobalInput = ({
       )}
       <div className="relative flex items-center justify-center">
         <input
+          autoComplete="off"
           disabled={disabled}
           name={name}
           type={type === 'password' ? (showPassword ? 'text' : 'password') : type}

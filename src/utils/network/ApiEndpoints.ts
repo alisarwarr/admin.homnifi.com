@@ -137,8 +137,9 @@ export const ADMIN_LIST = '';
 export const CREATE_ADMIN_ROLES = '/role';
 export const CREATE_ADMIN = '/auth/signup';
 export const GET_ADDMIN_ROLES = '/role';
-export const UPDATE_ADMIN_PERMISSION = '';
-export const DELETE_ADMIN = '';
+export const UPDATE_ADMIN_PERMISSION = '/role';
+export const DELETE_ADMIN = '/admins';
+export const UPDATE_ADMIN = '/admins';
 
 //cloudk
 

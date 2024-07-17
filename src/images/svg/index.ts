@@ -9,7 +9,8 @@ import { ReactComponent as CopyIcon } from './../../SVGIcons/copy.svg';
 import { ReactComponent as ArrowDownSvg } from './../../SVGIcons/arrowDown.svg';
 import { ReactComponent as TriangleIcon } from '../../SVGIcons/triangle.svg';
 import { ReactComponent as DeleteIcon } from '../../SVGIcons/delete.svg';
+import { ReactComponent as Delete } from '../../SVGIcons/deleteIcon.svg';
 import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
 
 
-export { EyeOpenIcon, EyeCloseIcon, WarningIcon ,CancelIcon  ,ClaimableIcon , GASKIcon , InfoIcon , ArrowDownSvg , CopyIcon , TriangleIcon ,DeleteIcon , Copy};
+export { EyeOpenIcon, EyeCloseIcon, WarningIcon ,CancelIcon  ,ClaimableIcon , GASKIcon , InfoIcon , ArrowDownSvg , CopyIcon , TriangleIcon ,DeleteIcon , Copy, Delete};

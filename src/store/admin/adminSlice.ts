@@ -15,6 +15,7 @@ export interface AdminStateSlice {
   adminPermissionsList: IAdminPermission[];
   rolesList: any[];
   selectedAdmin: any;
+  adminDataDetail: any;
 }
 
 const initialState: AdminStateSlice = {
@@ -24,6 +25,7 @@ const initialState: AdminStateSlice = {
   adminPermissionsList: [],
   rolesList: [],
   selectedAdmin: null,
+  adminDataDetail: null,
 };
 
 const adminSlice = createSlice({
@@ -48,11 +50,21 @@ const adminSlice = createSlice({
     setSelectedAdmin: (state, action: PayloadAction<any>) => {
       return { ...state, selectedAdmin: action.payload };
     },
+    setAdminDetail: (state, action: PayloadAction<any>) => {
+      return { ...state, adminDataDetail: action.payload };
+    },
   },
 });
 
-export const { setAdminData, setAdminList, setAdminActivity, setAdminPermissionsList, setRoleList, setSelectedAdmin } =
-  adminSlice.actions;
+export const {
+  setAdminData,
+  setAdminList,
+  setAdminActivity,
+  setAdminPermissionsList,
+  setRoleList,
+  setSelectedAdmin,
+  setAdminDetail,
+} = adminSlice.actions;
 
 export const selectAdmin = (state: { admin: AdminStateSlice }) => state.admin;
 export const selectAdminData = (state: { admin: AdminStateSlice }) => state.admin.data;
