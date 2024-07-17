@@ -31,18 +31,18 @@ export default function NetworkSettings() {
     };
 
 
-    const { getNetworkSettings } = useTokensSettingsAction();
+    const { getNetworkSettings, addNetworkSettings } = useTokensSettingsAction();
     const { networkSettings } = useSelector(selectTokensSettings);
     useEffect(() => {
         fetchData(1);
     }, []);
 
 
-    const rows = networkSettings?.list ? networkSettings?.list?.map((_data: any) => {
+    const rows = networkSettings ? networkSettings?.map((_data: any) => {
         return {
-            id: _data.requestId,
+            id: _data._id,
             name: _data.name,
-            blockchainCode: _data.blockchainCode
+            blockchainCode: _data.code
         };
     }) : [];
 
@@ -66,8 +66,13 @@ export default function NetworkSettings() {
             name: Yup.string().required('Name is required'),
             blockchainCode: Yup.string().required('Blockchain Code is required'),
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values));
+        onSubmit: async(values) => {
+            const data = {
+                name: values.name,
+                code: values.blockchainCode
+            };
+            await addNetworkSettings(data);
+            fetchData(1);
             onClose();
         }
     });

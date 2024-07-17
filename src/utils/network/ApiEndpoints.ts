@@ -148,4 +148,5 @@ export const INFLATION_RULES = 'cloud-k/inflation-rules';
 //Wallet Admin
 export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
 export const WALLET_ADMIN_SWAPS = '/wallets/swaps';
-export const WALLET_ADMIN_NETWORKS = '/wallets/networks';
+export const WALLET_ADMIN_NETWORKS = '/tokens/networks';
+export const WALLET_ADMIN_NETWORKS_NEW = '/tokens/networks';

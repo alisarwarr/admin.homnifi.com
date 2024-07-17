@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useTokenActions } from '../../store/token/tokenAction';
 import { selectToken } from '../../store/token/tokenSlice';
 import { useSelector } from 'react-redux';
-
 // COMMON
 import { refresh, add } from '../../images/other';
 import TokensTable from '../../components/Token/TokenTable';

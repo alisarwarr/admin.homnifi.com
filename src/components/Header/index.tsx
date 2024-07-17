@@ -68,7 +68,7 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
   const user = useSelector(selectUser);
 
   return (
-    <div className="flex items-center justify-between m-auto text-black">
+    <div className="flex items-center justify-between m-auto text-black px-4">
       {!screen640 && (
         <>
           <button onClick={handleDrawer} className="ml-2">
