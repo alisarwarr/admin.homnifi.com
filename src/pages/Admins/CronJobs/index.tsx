@@ -12,7 +12,7 @@ function CronJob() {
     { id: 'status', label: 'Status' },
     { id: 'tatalMachine', label: 'Total Machine' },
     { id: 'timeTaken', label: 'Time Taken' },
-    { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
+    // { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
   ];
   const data = [
     {
@@ -36,19 +36,19 @@ function CronJob() {
             status: _data.status,
             tatalMachine: _data.tatalMachine,
             timeTaken: _data.timeTaken,
-            actions: (
-              <div className="flex items-center gap-2">
-                <Tooltip title="View Admin Role">
-                  <div>
-                    <img src={view} width={18} height={18} alt="View Icon" className="cursor-pointer" />
-                  </div>
-                </Tooltip>
+            // actions: (
+            //   <div className="flex items-center gap-2">
+            //     <Tooltip title="View Cron Job">
+            //       <div>
+            //         <img src={view} width={18} height={18} alt="View Icon" className="cursor-pointer" />
+            //       </div>
+            //     </Tooltip>
 
-                <Tooltip title="Edit Admin Role">
-                  <img src={edit} width={18} height={18} alt="Edit Icon" className="cursor-pointer" />
-                </Tooltip>
-              </div>
-            ),
+            //     <Tooltip title="Edit Cron Job">
+            //       <img src={edit} width={18} height={18} alt="Edit Icon" className="cursor-pointer" />
+            //     </Tooltip>
+            //   </div>
+            // ),
           };
         })
       : [];
