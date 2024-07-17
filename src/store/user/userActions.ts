@@ -36,7 +36,7 @@ export const useUserActions = () => {
         );
         navigate('/');
 
-        return response;
+        return response.data;
       })
       .catch((error: any) => {
         dispatch(

@@ -1,6 +1,6 @@
 import { selectFaqSlice,  setFaqs } from './faqSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { PRODUCT } from '../../../utils/network/ApiEndpoints';
+import { FAQ, PRODUCT } from '../../../utils/network/ApiEndpoints';
 
 //API
 import ApiRequest from '../../../utils/network/ApiRequest';
@@ -8,14 +8,14 @@ import ApiRequest from '../../../utils/network/ApiRequest';
 export const useFaqActions = () => {
   const dispatch = useDispatch();
 
-  const { products } = useSelector(selectFaqSlice);
+  const { faqs } = useSelector(selectFaqSlice);
 
   const getFaqs = async (force: boolean = false, page: any = 1) => {
-    if (products?.list?.length && !force) return;
+    if (faqs?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${PRODUCT}?page=${page}`,
+      url: `${FAQ}/deposit?page=${page}`,
     });
     const _faqs = response?.data?.data;
     dispatch(setFaqs(_faqs));
@@ -39,10 +39,11 @@ export const useFaqActions = () => {
   // };
 
   const addFaq = async (data: any) => {
+    console.log("🚀 ~ addFaq ~ data:", data)
     return await ApiRequest()
       .request({
         method: 'POST',
-        url: PRODUCT,
+        url: `${FAQ}/${data.type}`,
         data: data,
       })
       .then((response: any) => response.data)

@@ -1,7 +1,7 @@
 export const API_INSTANCE = import.meta.env.VITE_API_INSTANCE + '/admin';
 
 //Auth
-export const LOGIN = '/auth/login';
+export const LOGIN = '/auth/signin';
 export const GET_PROFILE = '/profile';
 
 // Token
@@ -23,8 +23,6 @@ export const BULK_USER_ACCESS = '/user/bulk-access';
 export const IMPERSONATE_USER = '/user/impersonate';
 
 // WALLET
-export const WALLET_WITHDRAWS = '/wallet/withdraws';
-export const WALLET_WITHDRAWS_ACTIONS = '/wallet/withdraw/action';
 
 // FEATURE
 export const FEATURE = '/feature';
@@ -51,16 +49,19 @@ export const WALLET_MIGRATIONS_ACTIONS = '/wallet/migration/action';
 export const WALLET_SWAP_HISTORY = '/wallet/swap/history';
 export const WALLET_MIGRATE_HISTORY = '/wallet/migrate/history';
 export const WALLET_DEPOSIT_HISTORY = '/wallets/deposits';
-export const WALLET_WITHDRAW_HISTORY = '/wallets/withdraw/history';
+export const WALLET_WITHDRAW_HISTORY = '/wallets/withdraws';
 export const FEATURE_PURCHASE_HISTORY = '/feature/purchase/history';
 export const PRODUCT_PURCHASE_HISTORY = '/product/purchase/history';
+
+export const WALLET_WITHDRAWS = '/wallets/withdraws';
+export const WALLET_WITHDRAWS_ACTIONS = '/wallet/withdraw/action';
 
 // PROVIDER
 export const PROVIDER = '/provider';
 
 // PRODUCT
 export const PRODUCT = '/product';
-
+export const FAQ = '/faq/modules';
 // UTILS
 export const COUNTRIES = '/utils/countries';
 
@@ -121,6 +122,8 @@ export const ACTIVE_STRATEGY = TOOLS_BASE_SERVER + '/active-strategy';
 export const BROKER_ACCOUNT_REGISTRATION: string = TOOLS_BASE_SERVER + '/register-broker';
 
 //ADMIN
+export const ADMIN = '/';
+
 export const ADMIN_INFO = '/user/admin-information';
 export const ADMIN_CREATE = '/user/admin-create';
 export const ADMIN_UPDATE = '/user/admin-update';
@@ -131,3 +134,7 @@ export const DISTABLE_USER_2FA = '/user/2fa-disable';
 export const ADMIN_ACTIVITY = '/user/activity';
 export const ADMIN_PERMISSIONS = '/permissions';
 export const ADMIN_LIST = '';
+
+//cloudk
+
+export const INFLATION_RULES = 'cloud-k/inflation-rules';

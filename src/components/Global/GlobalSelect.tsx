@@ -13,13 +13,16 @@ type TGlobalSelect = {
   required?: boolean;
   placeholder?: string;
   options: IOptions[];
-  onChange?: (value: string | string[]) => void;
+  onChange?: (value: string | string[] | any) => void;
   onBlur?: (e: React.ChangeEvent<HTMLDivElement>) => void;
-  setFieldTouched: any;
-  setFieldValue: any;
+  setFieldTouched?: any;
+  setFieldValue?: any;
   isError: boolean | undefined;
+  error?: string | any;
   value?: string | string[];
   isMulti?: boolean;
+  inputClass?: string;
+  labelOptionClass?: string;
 };
 
 const GlobalSelect = ({
@@ -32,11 +35,13 @@ const GlobalSelect = ({
   onChange,
   setFieldTouched,
   isError,
+  error,
   setFieldValue,
   value = '',
   isMulti = false,
+  inputClass,
+  labelOptionClass,
 }: TGlobalSelect) => {
-  console.log('🚀 ~ valuevaluevaluevalue:', value);
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [filteredOptions, setFilteredOptions] = React.useState(options);
@@ -49,6 +54,8 @@ const GlobalSelect = ({
   };
 
   const handleSelectValue = (selectedOption: IOptions) => {
+    onChange && onChange(selectedOption.value);
+
     const selectedValue = selectedOption.value;
     let newValue;
     if (isMulti) {
@@ -65,8 +72,7 @@ const GlobalSelect = ({
       newValue = selectedValue;
       setIsOpen(false);
     }
-    console.log('newValue', newValue);
-    setFieldValue(name, selectedOption);
+    setFieldValue && setFieldValue(name, selectedOption);
     // onChange && onChange(selectedOption); // Optionally trigger onChange if needed
   };
 
@@ -94,15 +100,15 @@ const GlobalSelect = ({
   }, []);
 
   return (
-    <div className="flex flex-col gap-2 text-sm">
+    <div className="flex flex-col gap-2 text-sm py-2">
       <div className="font-medium text-primary">
         {label} {required && <span className="text-redDanger">*</span>}
       </div>
       <div className="relative select-none">
         <div
-          className={`bg-white text-defaultBlack  border ${
+          className={`bg-white text-gray-400  border ${
             isError ? 'border-redDanger' : 'border-blueGrey'
-          } py-2 px-4 text-xs rounded-full w-full cursor-pointer`}
+          } py-2 px-4 text-xs rounded-full w-full cursor-pointer ${inputClass}`}
           onClick={toggleDropdown}
         >
           {options.find((option) => option.value === value)?.label || placeholder}
@@ -110,8 +116,8 @@ const GlobalSelect = ({
 
         <div
           ref={dropdownRef}
-          className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-0 border border-blueGrey bg-white overflow-auto max-h-52 ${
-            isOpen ? 'translate-y-0 visible opacity-100' : '-translate-y-10 invisible opacity-0'
+          className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-1 border border-blueGrey bg-white overflow-auto max-h-52 ${
+            isOpen ? 'translate-y-0 visible opacity-100 ' : '-translate-y-10 invisible opacity-0'
           } transition-all ease-in-out duration-300`}
           style={{ zIndex: 99 }}
         >
@@ -126,27 +132,22 @@ const GlobalSelect = ({
             <button
               type="button"
               key={index}
-              className={`p-2 border-b border-blueGrey text-defaultBlack hover:bg-gray-100 transition-all ease-in-out duration-300 ${
+              className={`p-2 border-b px-4 border-blueGrey text-defaultBlack hover:bg-gray-100 transition-all ease-in-out duration-300  ${labelOptionClass} ${
                 Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''
               }`}
               onClick={() => handleSelectValue(option)}
-              //   onClick={(e: any) => {
-              //     if (!e) var e: any = window.event;
-              //     e.cancelBubble = true;
-              //     if (e.stopPropagation) e.stopPropagation();
-              //     console.log('button clicked!');
-              //   }}
             >
               {option.label}
             </button>
           ))}
         </div>
-        <div className="absolute top-3 right-4" style={{ zIndex: 99 }}>
+        <div className={`absolute ${isOpen ? 'top-3' : 'top-2'} right-3 bg-red`} style={{ zIndex: 100 }}>
           <ArrowDownIcon
-            className={`w-3 h-3 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
+            className={`w-4 h-4 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
           />
         </div>
       </div>
+      {isError && <span className="text-xs text-redDanger text-right">{error}</span>}
     </div>
   );
 };

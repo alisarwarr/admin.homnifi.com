@@ -14,7 +14,13 @@ import ReactSelect from '../ReactSelect';
 import { useSelector } from 'react-redux';
 import { selectAdminPermissionsList } from '../../store/admin/adminSlice';
 import CustomDropdown from '../CustomDropdown';
-
+import FormikInput from '../FormikInput';
+import { CapitalizeAllLetters, CapitalizeFirstLetter } from '../../utils/utils';
+import GlobalSelect from '../Global/GlobalSelect';
+import { TRANSACTION_PROCESS, TRANSACTION_TYPES } from '../../constants';
+import GlobalCheckbox from '../Global/GlobalCheckbox';
+import { ReactComponent as CancelIcon } from '../../SVGIcons/cancelIcon.svg';
+import GlobalButton from '../Global/GlobalButton';
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { updateCustomer } = useCustomerActions();
   const { createAdminData, getAdminPermissionsList, checkAdminEmail, checkAdminUsername } = useAdminActions();
@@ -43,8 +49,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     lastName: '',
     phoneNumber: '',
     password: '',
-    adminPermissions: [],
-    roles: [],
+    roles: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -53,7 +58,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
     phoneNumber: Yup.string().required('Phone number is required'),
-    roles: Yup.array().required('Role is required'),
+    roles: Yup.string().required('Role is required'),
     password: Yup.string()
       .min(6, 'Must be at least 6 characters')
       .matches(/[a-z]/, 'Must have at least 1 lowercase letter')
@@ -91,7 +96,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
 
   useEffect(() => {}, [adminPermissionsList, formikRef.current]);
 
-  const handleSubmit = async (values) => {
+  const onHandleSubmit = async (values) => {
     // enter the submitting
     setIsSubmitting(true);
     setIsSubmit(true);
@@ -107,7 +112,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
 
       if (response?.admin) {
         successAlert('Admin created, Successfully!');
-        navigate('/admins');
+        navigate('/admin-setting/admins');
       } else {
         errorAlert(response?.message);
       }
@@ -120,7 +125,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
 
       if (response?.status) {
         successAlert('Admin edited, Successfully!');
-        navigate('/admins');
+        navigate('/admin-setting/admins');
       } else if (!response?.status) {
         errorAlert(response?.message);
       }
@@ -158,6 +163,25 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     setOpen(!open);
   };
 
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values) => {
+      console.log('values', values);
+      onHandleSubmit(values);
+    },
+    initialTouched: {
+      email: true,
+      username: true,
+      firstName: true,
+      lastName: true,
+      phoneNumber: true,
+    },
+    innerRef: formikRef,
+  });
+
+  const { handleChange, handleSubmit, values, errors, touched } = formik;
+
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto">
       <div className="mx-auto text-start flex gap-4 items-center">
@@ -166,285 +190,99 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
         </h2>
       </div>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        innerRef={formikRef}
-      >
-        {({ errors, handleChange, values, touched, setFieldValue, setFieldTouched, setFieldError }) => {
-          return (
-            <Form className="h-full gap-10 space-y-9 w-full  md:w-[70%] sm:w-full m-auto">
-              <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
-                <div className="flex flex-col gap-2 items-end">
-                  <div className="w-full relative">
-                    <TextInput
-                      label="Email"
-                      name="email"
-                      shrink={true}
-                      isError={errors.email && touched.email ? true : false}
-                      value={values.email}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setFieldTouched('email', true);
-                        setFieldValue('email', e.target.value.trim());
-                        handleInput(e.target.value, 'email');
-                      }}
-                      disabled={edit !== undefined && !edit}
-                      showAdornment={true}
-                      adornment={
-                        <>
-                          {touched.email && isTypingEmail !== null && !isTypingEmail && (
-                            <>
-                              {availablityEmail ? (
-                                <img src={check} className="mr-2 w-5 h-5" />
-                              ) : (
-                                <img src={close} className="cursor-pointer mr-2 w-5 h-5" />
-                              )}
-                            </>
-                          )}
-                        </>
-                      }
-                      adornmentOnClick={() => {
-                        setFieldValue('email', ' ');
-                        setFieldError('email', '');
-                        setIsTypingEmail(null);
-                        setAvailablityEmail(null);
-                      }}
-                    />
-                    {touched.email && (edit || edit === undefined) && (
-                      <>
-                        {(!errors.email || (typeof errors.email === 'string' && errors.email)) &&
-                          values.email !== '' && (
-                            <div className={`absolute top-[20px] right-[0px] flex items-center px-4 text-gray-600`}>
-                              {isTypingEmail && <CircularProgress size={20} className="-mt-0.5" />}
-                            </div>
-                          )}
-                        {values.email !== '' && isTypingEmail !== null && !isTypingEmail && !availablityEmail && (
-                          <div className="flex justify-end mt-2">
-                            <div className="text-red-500 text-xs"> {'Email already exists'} </div>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </div>
+      <div className="grid grid-cols-1 gap-x-6 lg:grid-cols-2 mt-12 mx-12 items-start">
+        {Object.keys(initialValues)
+          .filter((dt) => dt !== 'roles')
+          .map((key) => {
+            return (
+              <>
+                <FormikInput
+                  label={CapitalizeFirstLetter(key)}
+                  type={key}
+                  name={key}
+                  shrink={true}
+                  error={isSubmit && errors[key]}
+                  touched={isSubmit ? touched[key] : false}
+                  value={values[key]}
+                  onChange={handleChange}
+                  isError={false}
+                />
+              </>
+            );
+          })}
+        <div className=" flex flex-col justify-end">
+          <>{console.log('values', values?.roles)}</>
+          <GlobalSelect
+            required
+            name="roles"
+            label={CapitalizeFirstLetter('Admin Role')}
+            options={adminPermissionsList?.map((dt) => ({
+              label: dt?.name,
+              value: dt?.name,
+            }))}
+            placeholder="Select Value"
+            setFieldTouched={() => formik.setFieldTouched('roles', true)}
+            setFieldValue={(e: any) => {
+              formik.setFieldValue('roles', e);
+            }}
+            isError={formik.touched.roles && !!formik.errors.roles}
+            value={formik.values.roles}
+            onChange={(e: any) => {
+              formik.setFieldValue('roles', e);
+            }}
+            onBlur={formik.handleBlur}
+          />
+          {touched.roles && errors.roles && isSubmit && (
+            <span className="text-xs text-red-500 self-end ">{errors.roles}</span>
+          )}
+        </div>
 
-                <div className="flex flex-col gap-2 items-end">
-                  <div className="w-full relative">
-                    <TextInput
-                      label="Username"
-                      type="username"
-                      name="username"
-                      shrink={true}
-                      isError={errors.username !== '' && touched.username ? true : false}
-                      value={values.username}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setFieldTouched('username', true);
-                        handleChange(e);
-                        handleInput(e.target.value, 'username');
-                      }}
-                      disabled={edit !== undefined && !edit}
-                      showAdornment={true}
-                      adornment={
-                        <>
-                          {touched.username && isTypingUsername !== null && !isTypingUsername && (
-                            <>
-                              {availablityUsername ? (
-                                <img src={check} className="w-5 h-5 mr-2" />
-                              ) : (
-                                <img
-                                  src={close}
-                                  onClick={() => {
-                                    setFieldValue('username', '');
-                                  }}
-                                  className="cursor-pointer w-5 h-5 mr-2"
-                                />
-                              )}
-                            </>
-                          )}
-                        </>
-                      }
-                    />
-                    {touched.username && (edit || edit === undefined) && (
-                      <>
-                        {(!errors.username || (typeof errors.username === 'string' && errors.username)) &&
-                          values.username !== '' && (
-                            <div className={`absolute top-[20px] right-[0px] flex items-center px-4 text-gray-600`}>
-                              {isTypingUsername && <CircularProgress size={20} className="-mt-0.5" />}
-                            </div>
-                          )}
-                        {touched.username &&
-                          values.username !== '' &&
-                          isTypingUsername !== null &&
-                          !isTypingUsername &&
-                          !availablityUsername && (
-                            <div className="flex justify-end mt-2">
-                              <div className="text-red-500 text-xs"> {'Username already exists'} </div>
-                            </div>
-                          )}
-                      </>
-                    )}
-                  </div>
-                </div>
+        <div className="rounded-full py-4 items-baseline">
+          <Button className="w-full bg-primary" loadingType="circular" buttonType="button" onClick={handleClose}>
+            Create New Role
+          </Button>
+        </div>
+      </div>
+      <div className="px-6 lg:px-8 mx-auto mt-4">
+        <Button
+          className="w-full bg-primary"
+          loadingType="circular"
+          buttonType="button"
+          onClick={() => {
+            setIsSubmit(true);
+            handleSubmit();
+          }}
+        >
+          Submit
+        </Button>
+      </div>
 
-                <div className="flex flex-col gap-2 items-end">
-                  <div className="w-full">
-                    <TextInput
-                      label="First Name"
-                      type="firstName"
-                      name="firstName"
-                      shrink={true}
-                      isError={errors.firstName !== '' && touched.firstName ? true : false}
-                      value={values.firstName}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        handleChange(e);
-                      }}
-                      disabled={edit !== undefined && !edit}
-                    />
-                  </div>
-                  <ErrorMessage name="firstName" component="div" className="text-red-500 text-xs" />
-                </div>
-
-                <div className="flex flex-col gap-2 items-end">
-                  <div className="w-full">
-                    <TextInput
-                      label="Last Name"
-                      type="lastName"
-                      name="lastName"
-                      shrink={true}
-                      isError={errors.lastName !== '' && touched.lastName ? true : false}
-                      value={values.lastName}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        handleChange(e);
-                      }}
-                      disabled={edit !== undefined && !edit}
-                    />
-                  </div>
-                  <ErrorMessage name="lastName" component="div" className="text-red-500 text-xs" />
-                </div>
-
-                <div className="flex flex-col gap-2 items-end">
-                  <div className="w-full">
-                    <TextInput
-                      label="Phone Number"
-                      type="phoneNumber"
-                      name="phoneNumber"
-                      shrink={true}
-                      isError={errors.phoneNumber !== '' && touched.phoneNumber ? true : false}
-                      value={values.phoneNumber}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        handleChange(e);
-                      }}
-                      disabled={edit !== undefined && !edit}
-                    />
-                  </div>
-                  <ErrorMessage name="phoneNumber" component="div" className="text-red-500 text-xs" />
-                </div>
-
-                {edit === undefined && (
-                  <div className="flex flex-col gap-2 items-end">
-                    <div className="w-full">
-                      <TextInput
-                        label="Password"
-                        type="password"
-                        name="password"
-                        shrink={true}
-                        isError={errors.password !== '' && touched.password ? true : false}
-                        value={values.password}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          handleChange(e);
-                        }}
-                        disabled={edit !== undefined && !edit}
-                      />
-                    </div>
-                    <ErrorMessage name="password" component="div" className="text-red-500 text-xs" />
-                  </div>
-                )}
-                <>{}</>
-              </div>
-
-              <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
-                <div className="flex flex-col gap-2 items-end justify-center ">
-                  <div className="w-full">
-                    <ReactSelect
-                      isError={isSubmit && errors?.roles ? true : false}
-                      formik={formikRef?.current}
-                      name="roles"
-                      label="Admin Role"
-                      options={adminPermissionsList?.map((dt) => ({
-                        label: dt?.name,
-                        value: dt?.name,
-                      }))}
-                      isMulti={true}
-                      placeholder="Select Admin Role..."
-                      isSearchable={true}
-                      onChange={(e) => {
-                        if (e.length > 0) {
-                          setIsSubmit(false);
-                          formikRef.current.setFieldError('roles', undefined);
-                        } else {
-                          setIsSubmit(true);
-                        }
-                        setFieldTouched('roles', true);
-                        formikRef.current.setFieldValue('roles', e);
-                      }}
-                    />
-                  </div>
-                  {/* <ErrorMessage name="roles" component="div" className="text-red-500 text-xs" /> */}
-                  {isSubmit && errors?.roles && <span className="text-red-500 text-xs">{errors?.roles}</span>}
-                </div>
-
-                <div className="flex flex-col gap-2 items-end">
-                  <div className="w-full">
-                    <Button
-                      className="w-full bg-primary"
-                      loadingType="circular"
-                      buttonType="button"
-                      onClick={handleClose}
-                    >
-                      Create New Role
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <CustomDropdown />
-              {(edit || edit === undefined) && (
-                <Button
-                  onClick={() => {
-                    setIsSubmit(true);
-                    formikRef.current.setFieldError('roles', 'Role is required');
-                  }}
-                  className="w-full bg-primary"
-                  loading={isSubmitting}
-                  loadingType="circular"
-                  buttonType="submit"
-                >
-                  Submit
-                </Button>
-              )}
-            </Form>
-          );
-        }}
-      </Formik>
-      <CreateRole onClose={handleClose} open={open} permissions={adminPermissionsList} />
+      <CreateRole onClose={handleClose} open={open} adminPermissionsList={adminPermissionsList} />
     </div>
   );
 }
 
-const CreateRole = ({ onClose, open, permissions }: { permissions: any; open: boolean; onClose: () => void }) => {
-  const handleSubmit = (values: any) => {
-    console.log(values);
+const CreateRole = ({
+  onClose,
+  open,
+  adminPermissionsList,
+}: {
+  adminPermissionsList: any;
+  open: boolean;
+  onClose: () => void;
+}) => {
+  const [isRoleSubmit, setIsRoleSubmit] = React.useState(false);
+  const onHandleSubmit = (values: any) => {
+    console.log('Submitted values:', values);
   };
-
-  const initialValues = {
-    name: '',
-    permission: [],
-  };
-
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    permission: Yup.array().min(1, 'At least one permission is required').required('Permission is required'),
+    name: Yup.string().required(),
   });
+
+  const initialValues: any = {
+    name: '',
+    permission: null,
+  };
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -453,57 +291,156 @@ const CreateRole = ({ onClose, open, permissions }: { permissions: any; open: bo
       console.log('Submitted values:', values);
     },
   });
+  const { handleChange, values, errors, touched, setFieldValue, handleBlur, setFieldTouched, handleSubmit } = formik;
+  const [selectedRoles, setSelectedRoles] = useState<any[]>([]);
+  const [activedRoles, setActiveRoles] = useState<any[]>([]);
+  const [term, setTerms] = useState<boolean>(false);
+
+  const roleAndPermission: any = [
+    {
+      name: 'user',
+      roles: ['all', 'view', 'edit', 'delete'],
+    },
+    {
+      name: 'support',
+      roles: ['all', 'view', 'edit', 'delete'],
+    },
+    {
+      name: 'client',
+      roles: ['all', 'view', 'edit', 'delete'],
+    },
+  ];
+
+  const handleRoleSelection = (name: string, role: string) => {
+    if (role === 'all' && !activedRoles[name]?.includes(role)) {
+      setActiveRoles((prev) => ({
+        ...prev,
+        [name]: ['all', 'view', 'edit', 'delete'],
+      }));
+      return;
+    }
+
+    setActiveRoles((prev: any) => {
+      const userRoles = prev[name] || [];
+      const updatedRoles = userRoles.includes(role) ? userRoles.filter((r) => r !== role) : [...userRoles, role];
+
+      if (updatedRoles.length === 0) {
+        const { [name]: _, ...rest } = prev;
+        return rest;
+      }
+
+      return {
+        ...prev,
+        [name]: updatedRoles,
+      };
+    });
+  };
+
+  const handleUserClick = (name: string) => {
+    setSelectedRoles((prevItems) => prevItems.filter((dt) => dt !== name));
+  };
 
   return (
-    <Dialog open={open} fullWidth={true} maxWidth={'xs'} onClose={onClose}>
+    <Dialog open={open} fullWidth={true} maxWidth={'md'} onClose={onClose}>
       <div className="flex flex-col items-center w-full my-8">
         <h2 className="text-md font-medium self-start mx-8">Create New Role</h2>
         <div className=" text-gray-500 w-full my-4 flex items-center justify-center ">
           <form onSubmit={formik.handleSubmit} className="h-full gap-10 space-y-9 w-full mx-12">
-            <div className="grid grid-cols-1  gap-y-6 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4 mt-4">
               <div className="flex flex-col items-end">
                 <div className="w-full relative">
-                  <TextInput
+                  <FormikInput
                     type="string"
                     label="Name"
                     name="name"
                     shrink={true}
-                    value={formik.values.name}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      formik.setFieldValue('name', e.target.value);
-                      formik.setFieldTouched('name', true);
-                    }}
-                    disabled={false}
+                    error={isRoleSubmit && errors['name']}
+                    touched={isRoleSubmit ? touched['name'] : false}
+                    value={values['name']}
+                    onChange={handleChange}
+                    isError={false}
                   />
                 </div>
               </div>
+              <div className="flex flex-col mt-2">
+                <GlobalSelect
+                  name="permission"
+                  label="Permission"
+                  required={!selectedRoles.length}
+                  placeholder="Select Permission"
+                  options={roleAndPermission.map((dt) => ({
+                    label: dt?.name,
+                    value: dt?.name,
+                  }))}
+                  setFieldTouched={formik.setFieldTouched}
+                  setFieldValue={formik.setFieldValue}
+                  isMulti={true}
+                  isError={formik.touched.permission && !!formik.errors.permission && !selectedRoles.length}
+                  value={formik.values.permission?.value}
+                  onChange={(e: any) => {
+                    setSelectedRoles((prev) => {
+                      if (prev.includes(e.value)) {
+                        return prev.filter((i) => i !== e.value);
+                      } else {
+                        return [...prev, e.value];
+                      }
+                    });
+                    formik.handleChange(e);
+                  }}
+                  onBlur={formik.handleBlur}
+                />
+                {selectedRoles.length === 0 && isRoleSubmit && (
+                  <span className="text-xs text-red-500 self-end ">Role is required</span>
+                )}
+              </div>
             </div>
             <div className="flex flex-col">
-              <span className={`text-sm mb-1 ${false && 'text-[#666666] font-medium'}`}>Admin Permissions</span>
-              <ReactSelect
-                formik={formik}
-                name="permission"
-                label="Admin Permissions"
-                options={permissions[0]?.actions?.map((dt: any) => ({
-                  label: dt,
-                  value: dt,
-                }))}
-                isMulti={true}
-                placeholder="Select Admin Permissions..."
-                disabled={false}
-                isSearchable={true}
-                onChange={(e) => {
-                  formik.setFieldValue('permission', e);
-                }}
-              />
+              {/* dropdown result section start */}
+              {selectedRoles.length > 0 && (
+                <div className="flex flex-col justify-end items-start rounded-md z-10 border border-gray-300  text-gray-500 overflow-y-auto">
+                  <div className="h-[21vh] w-full">
+                    {selectedRoles.map((dt) => (
+                      <div key={dt} className="px-4 py-3 w-full border-b-2">
+                        <div className="flex gap-4 justify-between">
+                          <div className="flex gap-4">
+                            <div className="font-medium text-sm w-14">{dt}</div>
+                            {['all', 'view', 'edit', 'delete'].map((rl) => (
+                              <div key={rl}>
+                                <GlobalCheckbox
+                                  className="font-medium"
+                                  checked={activedRoles[dt]?.includes(rl) ?? false}
+                                  setChecked={setTerms}
+                                  label={rl}
+                                  onChange={() => {
+                                    handleRoleSelection(dt, rl);
+                                  }}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                          <div
+                            className="selt-end cursor-pointer"
+                            onClick={() => {
+                              handleUserClick(dt);
+                            }}
+                          >
+                            <CancelIcon />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {/* dropdown result section end */}
             </div>
             <Button
               className="w-full bg-primary"
               loadingType="circular"
               buttonType="submit"
               onClick={(e) => {
-                formik.handleSubmit();
-                e.preventDefault();
+                setIsRoleSubmit(true);
+                handleSubmit();
               }}
             >
               Submit

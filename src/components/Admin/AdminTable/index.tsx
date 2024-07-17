@@ -46,7 +46,7 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
                     height={18}
                     alt="View Icon"
                     onClick={() =>
-                      navigate('/admins/view/' + _data?._id, {
+                      navigate('/admin-setting/admins/view/' + _data?._id, {
                         state: { _data, edit: false },
                       })
                     }
@@ -61,7 +61,7 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
                     height={18}
                     alt="Edit Icon"
                     onClick={() =>
-                      navigate('/admins/edit/' + _data?._id, {
+                      navigate('/admin-setting/admins/edit/' + _data?._id, {
                         state: { _data, edit: true },
                       })
                     }

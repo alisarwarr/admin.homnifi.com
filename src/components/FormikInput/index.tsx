@@ -19,8 +19,9 @@ export default function FormikInput({
   adornment,
   multiline = false,
   rows = 0,
+  isError = true,
 }: {
-  label: string;
+  label?: string;
   type: string;
   name: string;
   onChange?: any;
@@ -37,6 +38,7 @@ export default function FormikInput({
   adornment?: any;
   multiline?: boolean;
   rows?: number;
+  isError?: boolean;
 }) {
   return (
     <div className="w-full">
@@ -55,7 +57,11 @@ export default function FormikInput({
           className={className}
           labelStyle="text-sm font-medium" // Adjust the label style as needed
         />
-        {error && touched && <span className="text-xs text-errorColor">{error}</span>}
+
+        {error && isError && touched && <span className="text-xs text-errorColor">{error}</span>}
+
+        {/* {error ||  touched && <span className="text-xs text-primary">{error}</span>} */}
+
       </div>
     </div>
   );

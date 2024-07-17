@@ -17,7 +17,13 @@ import featuresSlice from './features/featuresSlice';
 import dashboardSlice from './Dashboard/dashboardSlice';
 import historySlice from './wallet/historySlice';
 import adminSlice from './admin/adminSlice';
+import faqSlice from './wallet/faqs/faqSlice';
+
 import notificationsSlice from './notifications/notificationsSlice';
+import cloudkSlice from './cloudk/cloudk.slice';
+
+import { CLOUD_SLICE_NAME } from './cloudk/cloudk.slice';
+import tokensSettingsSlice from './tokensSettings/tokensSettingsSlice';
 
 const persistConfig = {
   key: 'root',
@@ -37,7 +43,10 @@ const rootReducer = combineReducers({
   dashboard: dashboardSlice,
   history: historySlice,
   notifications: notificationsSlice,
-  admin: adminSlice
+  admin: adminSlice,
+  faq:faqSlice,
+  [CLOUD_SLICE_NAME]: cloudkSlice,
+  tokensSettings: tokensSettingsSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

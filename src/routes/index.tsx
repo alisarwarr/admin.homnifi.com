@@ -27,33 +27,36 @@ import TokenTransactionSettingDetails from '../pages/Tokens/TokenTransactionSett
 import Features from '../pages/Features';
 import QuickyPaySettings from '../pages/Settings/QucikyPaySettings';
 import Dashboard from '../pages/Dashboard';
-// import TokenDepositSetting from '../pages/Tokens/TokenTransactionSettings/Deposit';
-// import TokenWithdrawSettings from '../pages/Tokens/TokenTransactionSettings/Withdraw';
-// import TokenSwapSettings from '../pages/Tokens/TokenTransactionSettings/Swap';
-// import TokenPairs from '../pages/Tokens/TokenTransactionSettings/TokenPairs';
-// import TokenMigrateSettings from '../pages/Tokens/TokenTransactionSettings/Migrate';
 import UserDetails from '../pages/Users/UserDetails';
 import Links from '../pages/Settings/Links';
 import PrivacyPolicy from '../pages/Settings/PrivacyPolicy';
 import TermsAndConditions from '../pages/Settings/TermsAndConditions';
-import SwapHistory from '../pages/TransactionHistory/SwapHistory';
-
-import WithdrawHistory from '../pages/TransactionHistory/WithdrawHistory';
-import DepositHistory from '../pages/TransactionHistory/DepositHistory';
-import MigrationHistory from '../pages/TransactionHistory/MIgrationHistory';
 import Profile from '../pages/Profile';
 import Admins from '../pages/Admins';
 import SwapPriority from '../pages/Settings/SwapPriority';
-import FeaturePurchaseHistory from '../pages/TransactionHistory/FeaturePurchaseHistory';
-import ProductPurchaseHistory from '../pages/TransactionHistory/ProductPurchaseHistory';
 import ShowPages from '../pages/Settings/ShowPages';
 import AdminDeatils from '../components/Admin/AdminDeatils';
 import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
-import Faqs from '../pages/TransactionHistory/Faqs';
-import AddFaqs from '../pages/TransactionHistory/Faqs/AddFaqs';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
 import { Community } from '../images/drawer';
+import DepositHistory from '../pages/Wallet/DepositHistory';
+import Faqs from '../pages/Wallet/Faqs';
+import AddFaqs from '../pages/Wallet/Faqs/AddFaqs';
+import MigrationHistory from '../pages/Wallet/MIgrationHistory';
+import FeaturePurchaseHistory from '../pages/Wallet/FeaturePurchaseHistory';
+import ProductPurchaseHistory from '../pages/Wallet/ProductPurchaseHistory';
+import SwapHistory from '../pages/Wallet/SwapHistory';
+import Cloud2 from '../pages/Cloud2';
+import CommunityFriends from '../pages/community/friends';
+import CommunitySupernode from '../pages/community/super-node';
+import AuthSlider from '../pages/Admins/AuthSlider';
+import InflationRules from '../pages/Cloud2/InflationRules';
+import AdminRoles from '../pages/Admins/AdminRoles';
+import WithdrawSetting from '../pages/Wallet/WithdrawSetting';
+import SwapSettings from '../pages/Tokens/SwapSettings';
+import DepositSettings from '../pages/Tokens/DepositSettings';
+import NetworkSettings from '../pages/Tokens/NetworkSettings';
 
 export const router = createBrowserRouter([
   {
@@ -84,36 +87,132 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      ////////////////////////
+      ////////////////////////
       {
-        path: '/tokens/details/:id',
+        path: '/tokens',
+        element: (
+          <ProtectedRoute>
+            <Tokens />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/token/swap-settings',
+        element: (
+          <ProtectedRoute>
+            <SwapSettings />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/token/deposit-settings',
+        element: (
+          <ProtectedRoute>
+            <DepositSettings />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/token/network-settings',
+        element: (
+          <ProtectedRoute>
+            <NetworkSettings />
+          </ProtectedRoute>
+        ),
+      },
+      ////////////////////////
+      ////////////////////////
+      {
+        path: '/cloudk',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <TokenDetails />
+              <Cloud2 />
             </ProtectedRoute>
           </React.Suspense>
         ),
       },
       {
-        path: '/tokens/settings/transition',
+        path: '/community/friends',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <TokenTransactionSettings />
+              <CommunityFriends />
             </ProtectedRoute>
           </React.Suspense>
         ),
       },
       {
-        path: '/tokens/settings/:type/details/:id',
+        path: '/community/super-node',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <TokenTransactionSettingDetails />
+              <CommunitySupernode />
             </ProtectedRoute>
           </React.Suspense>
         ),
       },
+      // {
+      //   path: '/tokens/settings/withdraw',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenWithdrawSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/swap',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenSwapSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/transfer',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenSwapSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/token-pairs',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenPairs />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/token-pair/details/:id',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenPairSettingDetails />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/tokens/settings/migrate',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <TokenMigrateSettings />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // }
       {
         path: '/users',
         element: (
@@ -179,7 +278,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/history/swaphistory',
+        path: '/wallet/swap',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -189,17 +288,37 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/history/withdrawhistory',
+        path: '/wallet/transfer',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <WithdrawHistory />
+              <SwapHistory />
             </ProtectedRoute>
           </React.Suspense>
         ),
       },
       {
-        path: '/history/deposithistory',
+        path: '/wallet/withdraw',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <WithdrawRequests />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/wallet/withdraw-settings',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <WithdrawSetting />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/wallet/deposit',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -389,7 +508,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins',
+        path: '/admin-setting/admins',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -399,7 +518,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/view/:id',
+        path: '/admin-setting/admins/view/:id',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -409,7 +528,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/edit/:id',
+        path: '/admin-setting/admins/edit/:id',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -419,7 +538,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/admins/create',
+        path: '/admin-setting/admins/create',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -429,11 +548,42 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/adminsettings/maintenance',
+
+        path: 'admin-setting/roles',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <AdminRoles />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/admin-settings/maintenance',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <Maintenance />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk2/inflation-rules',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <InflationRules />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/admin-settings/auth-slider-settings',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <AuthSlider />
             </ProtectedRoute>
           </React.Suspense>
         ),

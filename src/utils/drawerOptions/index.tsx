@@ -46,36 +46,6 @@ export const allDrawerOptions: DrawerSection[] = [
       },
     ],
   },
-  // {
-  //   options: [
-  //     {
-  //       name: 'Features',
-  //       icon: <Dashboard />,
-  //       icon_dark: FeauresDark,
-  //       url: '/features',
-  //       key: 'features',
-  //       active: false,
-  //       options: [],
-  //       permissions: [`all`, `superadmin`, 'features'],
-  //     },
-  //   ],
-  // },
-
-  // {
-  //   options: [
-  //     {
-  //       name: 'Admins',
-  //       icon: Admin,
-  //       icon_dark: AdminDark,
-  //       url: '/admins',
-  //       key: 'admins',
-  //       active: false,
-  //       options: [],
-  //       permissions: [`all`, `superadmin`, 'admins'],
-  //     },
-  //   ],
-  // },
-
   {
     options: [
       {
@@ -83,9 +53,41 @@ export const allDrawerOptions: DrawerSection[] = [
         icon: <Token />,
         icon_dark: emptyWallet_,
         url: '',
-        key: 'token',
+        key: 'tokens',
         active: false,
         options: [
+          {
+            name: 'Deposit Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/token/deposit-settings',
+            key: 'deposit-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+          {
+            name: 'Swap Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/token/swap-settings',
+            key: 'swap-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+          {
+            name: 'Network Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/token/network-settings',
+            key: 'network-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+
+
           {
             name: 'Tokens settings',
             icon: <Dashboard />,
@@ -94,19 +96,18 @@ export const allDrawerOptions: DrawerSection[] = [
             key: 'tokens-settings',
             active: false,
             options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings'],
-            // 'ss'
+            permissions: [`all`, `superadmin`, 'tokens'],
           },
-          {
-            name: 'Transition Setting',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/tokens/settings/transition',
-            key: 'tokens-deposit-transition',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-transition'],
-          },
+          // {
+          //   name: 'Transition Setting',
+          //   icon: <Dashboard />,
+          //   icon_dark: setting,
+          //   url: '/tokens/settings/transition',
+          //   key: 'tokens-transition-settings',
+          //   active: false,
+          //   options: [],
+          //   permissions: [`all`, `superadmin`, 'tokens'],
+          // },
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
       },
@@ -117,19 +118,17 @@ export const allDrawerOptions: DrawerSection[] = [
       {
         name: 'Wallet',
         icon: <Wallet />,
-
         icon_dark: emptyWallet_,
         url: '',
-        key: 'wallet-settings',
+        key: 'wallet',
         active: false,
         options: [
           {
             name: 'Deposit',
             icon: <Dashboard />,
-
             icon_dark: setting,
-            url: '/history/deposithistory',
-            key: 'deposit-history',
+            url: '/wallet/deposit',
+            key: 'wallet-deposit',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'deposit-history'],
@@ -137,21 +136,30 @@ export const allDrawerOptions: DrawerSection[] = [
           {
             name: 'Withdraw',
             icon: <Dashboard />,
-
             icon_dark: setting,
-            url: '/history/withdrawhistory',
-            key: 'wallet-withdraw-settings',
+            url: '/wallet/withdraw',
+            key: 'wallet-withdraw',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
           {
+            name: 'Withdraw Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/wallet/withdraw-settings',
+            key: 'wallet-withdraw-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
+          },
+
+          {
             name: 'Transfer',
             icon: <Dashboard />,
-
             icon_dark: setting,
-            url: '/tokens/settings/migrate',
-            key: 'tokens_settings-migrate',
+            url: '/wallet/transfer',
+            key: 'wallet-transfer',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-migrate'],
@@ -159,10 +167,9 @@ export const allDrawerOptions: DrawerSection[] = [
           {
             name: 'Swap',
             icon: <Dashboard />,
-
             icon_dark: setting,
-            url: '/wallet/settings/swap',
-            key: 'wallet-swap-settings',
+            url: '/wallet/swap',
+            key: 'wallet-swap',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-swap'],
@@ -170,10 +177,9 @@ export const allDrawerOptions: DrawerSection[] = [
           {
             name: 'Faqs',
             icon: <Dashboard />,
-
             icon_dark: setting,
             url: '/history/faq',
-            key: 'history-faq',
+            key: 'wallet-faq',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'history_faq'],
@@ -187,28 +193,25 @@ export const allDrawerOptions: DrawerSection[] = [
   {
     options: [
       {
-        name: 'Admins',
-        icon: <Admin />,
-        icon_dark: AdminDark,
-        url: '/admins',
-        key: 'admins',
-        active: false,
-        options: [],
-        permissions: [`all`, `superadmin`, 'admins'],
-      },
-    ],
-  },
-
-  {
-    options: [
-      {
         name: 'Cloud k 2.0',
         icon: <CloundK2 />,
         icon_dark: AdminDark,
-        url: '/admins',
-        key: 'admins',
+        url: '',
+        key: 'cloudk2',
         active: false,
-        options: [],
+        options: [
+          {
+            name: 'Inflation Rules',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/cloudk2/inflation-rules',
+            key: 'inflation-rules',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings'],
+          },
+
+        ],
         permissions: [`all`, `superadmin`, 'admins'],
       },
     ],
@@ -227,8 +230,8 @@ export const allDrawerOptions: DrawerSection[] = [
             name: 'Friends',
             icon: <Admin />,
             icon_dark: AdminDark,
-            url: '',
-            key: 'friends',
+            url: '/community/friends',
+            key: 'community-friends',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'admins'],
@@ -237,8 +240,8 @@ export const allDrawerOptions: DrawerSection[] = [
             name: 'Super Node',
             icon: <Admin />,
             icon_dark: AdminDark,
-            url: '',
-            key: 'super-node',
+            url: '/community/super-node',
+            key: 'community-super-node',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'admins'],
@@ -255,33 +258,52 @@ export const allDrawerOptions: DrawerSection[] = [
         icon: <AdminSetting />,
         icon_dark: AdminDark,
         url: '',
-        key: 'admins-setting',
+        key: 'admin',
         active: false,
         options: [
           {
-            name: 'Maintenance Setting',
-            icon: <Dashboard />,
-
+            name: 'Admins',
+            icon: <Admin />,
             icon_dark: setting,
-            url: 'adminsettings/maintenance',
-            key: 'admin-maintenance-settings',
+            url: 'admin-setting/admins',
+            key: 'admin-settings-admin',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
           },
           {
-            name: 'Auth Slider Setting',
-            icon: <Dashboard />,
-
+            name: 'Roles',
+            icon: <Admin />,
             icon_dark: setting,
-            url: 'adminsettings/maintenance',
-            key: 'admin-maintenance-settings',
+            url: 'admin-setting/roles',
+            key: 'admin-settings-roles',
             active: false,
             options: [],
-            permissions: [`all`, `superadmin`, 'admin_maintenance_settings'],
+            permissions: [`all`, `superadmin`, 'admin_settings_roles'],
           },
+          {
+            name: 'Cron Jobs',
+            icon: <Admin />,
+            icon_dark: setting,
+            url: 'admin-setting/cron-jobs',
+            key: 'admin-settings-cron-jobs',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admin_settings_cron_jobs'],
+          },
+          {
+            name: 'Maintenance Setting',
+            icon: <></>,
+            icon_dark: setting,
+            url: '/admin-settings/maintenance',
+            key: 'admins-setting-maintenance',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admins_setting_maintenance'],
+          },
+
         ],
-        permissions: [`all`, `superadmin`, 'admins_setting'],
+        permissions: [`all`, `superadmin`, 'tokens_settings'],
       },
     ],
   },
