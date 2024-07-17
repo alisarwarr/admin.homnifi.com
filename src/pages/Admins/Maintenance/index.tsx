@@ -14,6 +14,7 @@ interface FormValues {
   maintenance: boolean;
 }
 
+const Maintenance: React.FC = () => {
   const initialValues: FormValues = {
     cronJob: true,
     autoLogout: false,
@@ -29,16 +30,13 @@ interface FormValues {
     // Example: perform API call or update state
   };
 
-  // Formik hook setup
   const formik = useFormik({
     initialValues,
     onSubmit,
   });
+  // Formik hook setup
 
-
-  React.useEffect(()=>{
-
-  },[])
+  React.useEffect(() => {}, []);
   // Array of checkboxes with labels
   const checkboxes = [
     { key: 'cronJob', label: 'Cron Job' },
@@ -47,7 +45,6 @@ interface FormValues {
     { key: 'other', label: 'Other' },
   ];
 
-const  Maintenance = () =>{
   return (
     <div>
       <div className="w-full px-2">

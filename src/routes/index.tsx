@@ -50,6 +50,7 @@ import Cloud2 from '../pages/Cloud2';
 import CommunityFriends from '../pages/community/friends';
 import CommunitySupernode from '../pages/community/super-node';
 import AuthSlider from '../pages/Admins/AuthSlider';
+import InflationRules from '../pages/Cloud2/InflationRules';
 
 export const router = createBrowserRouter([
   {
@@ -530,6 +531,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <Maintenance />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk2/inflation-rules',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <InflationRules />
             </ProtectedRoute>
           </React.Suspense>
         ),
