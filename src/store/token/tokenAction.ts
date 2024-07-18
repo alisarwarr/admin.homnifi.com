@@ -192,6 +192,38 @@ export const useTokenActions = () => {
         return err.data;
       });
   };
+  const createNewToken = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: `${TOKEN}`,
+        data: data,
+      })
+      .then((response: any) => {
+        getTokensList(true);
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
+  const onUpdateToken = async (id: string | undefined, data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'PUT',
+        url: `${TOKEN}/${id}`,
+        data: data,
+      })
+      .then((response: any) => {
+        getTokensList(true);
+        console.log('response update token::', response.data);
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
 
   return {
     createWithdrawSetting,
@@ -205,5 +237,7 @@ export const useTokenActions = () => {
     getTokenPairById,
     getSingleTokenPairSetting,
     editSingleTokenPairSetting,
+    createNewToken,
+    onUpdateToken,
   };
 };

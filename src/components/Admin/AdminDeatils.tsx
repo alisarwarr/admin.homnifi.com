@@ -11,14 +11,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { useAdminActions } from '../../store/admin/adminActions';
 import { selectAdmin, selectAdminPermissionsList } from '../../store/admin/adminSlice';
+import useLoading from '../../utils/hooks/useLoading';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
-  const { getAdminPermissionsList, getAdminRole, createAdmin, getAdminById, updateAdmin } = useAdminActions();
-  const { rolesList, selectedAdmin } = useSelector(selectAdmin);
-
-  const adminPermissionsList = useSelector(selectAdminPermissionsList);
-  const location: any = useLocation();
   const navigate = useNavigate();
+  const location: any = useLocation();
+  const { rolesList, selectedAdmin } = useSelector(selectAdmin);
+  const { isLoading, startLoading, stopLoading } = useLoading(false);
+  const adminPermissionsList = useSelector(selectAdminPermissionsList);
+  const { getAdminPermissionsList, getAdminRole, createAdmin, getAdminById, updateAdmin } = useAdminActions();
 
   const state = location?.state?._data;
   const [edit] = useState<boolean>(location?.state?.edit);
@@ -49,6 +50,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           .required('Password is required'),
   });
 
+  // edit admin form state set her
   useEffect(() => {
     if (adminPermissionsList.length === 0) {
       getAdminPermissionsList();
@@ -64,14 +66,17 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     }
   }, []);
 
+  // popup handler
   const handleClose = () => {
     setOpen(!open);
   };
 
+  //add or update admin api called here
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
+      startLoading();
       let response: any;
       if (edit) {
         response = await updateAdmin(state._id, values);
@@ -80,14 +85,17 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
       }
 
       if (response.data?.status) {
+        stopLoading();
         successAlert('Admin Added Successfully!');
         return navigate('/admin-setting/admins');
       }
+      stopLoading();
       errorAlert(response.message);
     },
   });
   const { handleChange, handleSubmit, values, errors, touched, setValues } = formik;
 
+  // get roll api call here
   useEffect(() => {
     if (rolesList.length === 0) {
       getAdminRole();
@@ -161,6 +169,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
       </div>
       <div className="px-6 lg:px-8 mx-auto mt-4">
         <Button
+          loading={isLoading}
           disable={!edit}
           className="w-full bg-primary"
           loadingType="circular"

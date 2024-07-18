@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
-// REDUX
-import { useTokenActions } from '../../store/token/tokenAction';
-import { selectToken } from '../../store/token/tokenSlice';
-import { useSelector } from 'react-redux';
-// COMMON
-import { refresh, add } from '../../images/other';
-import TokensTable from '../../components/Token/TokenTable';
-import Button from '../../components/Button';
 import AddToken from './AddToken';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import Button from '../../components/Button';
+import { refresh, add } from '../../images/other';
+
+import { selectToken } from '../../store/token/tokenSlice';
+
+import TokensTable from '../../components/Token/TokenTable';
+import { useTokenActions } from '../../store/token/tokenAction';
 
 const Tokens = () => {
   const { getTokensList } = useTokenActions();
   const { tokensList } = useSelector(selectToken);
-  const [loading, setLoading] = useState(true);
+
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedToken, setSelectedToken] = useState<any>();
 
   useEffect(() => {
@@ -24,8 +25,12 @@ const Tokens = () => {
     })();
   }, []);
 
+  //popup handler
   const onPopupHandler = () => {
     setOpen(!open);
+    if (open) {
+      setSelectedToken(null);
+    }
   };
 
   const data = [
@@ -46,13 +51,22 @@ const Tokens = () => {
   ];
 
   const onEditHanlder = (itm: any) => {
+    console.log('item edit ::', itm);
     setSelectedToken(itm);
     setOpen(true);
-  };
 
-  const onDeleteToken = (itm: any) => {
-    console.log("on delete call ::", itm)
-  }
+    // setSelectedToken({
+    //   name: 'QA token',
+    //   symbol: 'QA',
+    //   type: 'off-chain',
+    //   withdrawType: 'on-chain',
+    //   color: 'YELLOW',
+    //   networks: ['669917284e572339025f2d2f', '66990e97f798f5eb94180022', '6698c64cd0fc293b85ee3bf4'],
+    //   iconUrl: 'http://icon-url.com',
+    //   createdBy: '6693f2f823f11a87d047964f',
+    //   _id: '669942688a0a94d151d5295f',
+    // });
+  };
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">
@@ -67,8 +81,8 @@ const Tokens = () => {
       </div>
 
       {/* TABLE */}
-      <TokensTable data={data} loading={loading} onEditHanlder={onEditHanlder} onDeleteToken ={onDeleteToken} />
-      <AddToken open={open} onClose={onPopupHandler} />
+      <TokensTable data={data} loading={loading} onEditHanlder={onEditHanlder} />
+      <AddToken open={open} onClose={onPopupHandler} editToken={selectedToken} />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import { errorNotify, successAlert } from '../../../utils/alerts';
 import { useAdminActions } from '../../../store/admin/adminActions';
 import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
 import { selectAdminPermissionsList } from '../../../store/admin/adminSlice';
+import useLoading from '../../../utils/hooks/useLoading';
 
 interface Props {
   open: boolean;
@@ -22,6 +23,7 @@ interface Props {
 }
 
 function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
+  const { isLoading, startLoading, stopLoading } = useLoading(false);
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const { createAdminData, getAdminPermissionsList, createAdminRole, updateAdminPermisson } = useAdminActions();
 
@@ -75,10 +77,12 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
     permission: '',
   };
 
+  //add and edit roles here
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      startLoading();
       setIsRoleSubmit(true);
       let response;
 
@@ -97,8 +101,10 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
       if (response.status) {
         successAlert(response.message);
         onClose();
+        stopLoading();
         return resetStates();
       } else {
+        stopLoading();
         return errorNotify(response.message);
       }
     },
@@ -120,12 +126,14 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
     }
   }, [editRole]);
 
+  //get permission here
   useEffect(() => {
     if (adminPermissionsList.length === 0) {
       getAdminPermissionsList();
     }
   }, []);
 
+  // reset form state and other related state here
   const resetStates = () => {
     setSelectedRoles([]);
     setActiveRoles({});
@@ -247,7 +255,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
             </div>
             {!isView && (
               <div className="sm:mx-8">
-                <Button className="w-full bg-primary " loadingType="circular" buttonType="submit">
+                <Button loading={isLoading} className="w-full bg-primary " loadingType="circular" buttonType="submit">
                   Submit
                 </Button>
               </div>

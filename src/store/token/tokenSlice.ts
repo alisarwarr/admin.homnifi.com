@@ -13,6 +13,11 @@ interface TokenSliceState {
 }
 
 export interface Token {
+  networkList?: any;
+  withdrawType?: string;
+  iconUrl?: string;
+  color?: string;
+  type?: string;
   _id: string;
   name: string;
   symbol: string;
@@ -65,7 +70,7 @@ export interface TokenTransactionSettingTypeDetails {
   fee: number;
   feeType: string;
   minAmount: number;
-  maxAmount:number
+  maxAmount: number;
   processType: string;
   token: string;
   trxType: string;
