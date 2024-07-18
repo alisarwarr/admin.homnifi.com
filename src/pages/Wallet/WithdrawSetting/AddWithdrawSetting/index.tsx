@@ -3,13 +3,13 @@ import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../../../../components/Button';
+import { successAlert } from '../../../../utils/alerts';
 import GlobalDialog from '../../../../components/Dialog';
 import { selectToken } from '../../../../store/token/tokenSlice';
 import GlobalInput from '../../../../components/Global/GlobalInput';
 import GlobalSelect from '../../../../components/Global/GlobalSelect';
 import { useTokenActions } from '../../../../store/token/tokenAction';
 import { ReactComponent as CrossIcon } from '../../../../SVGIcons/cancelIcon.svg';
-import { successAlert } from '../../../../utils/alerts';
 
 interface Props {
   open: boolean;
@@ -19,6 +19,7 @@ interface Props {
 
 function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
   const { getTokensList, createWithdrawSetting } = useTokenActions();
+
   const { tokensList } = useSelector(selectToken);
   const [isSubmit, setIsSubmit] = React.useState(false);
   const initialValues = {
@@ -52,7 +53,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     withdrawRate: Yup.string().required('WithdrawRate is required'),
     minWithdrawableAmount: Yup.number().required('Min withdrawable amount is required'),
     withdrawTo: Yup.string().required('Withdraw To name is required'),
-    commissionRate: Yup.string().required('Commission rate is required'),
+    commissionRate: Yup.string().required('Commission value is required'),
     commissionType: Yup.string().required('Commission type is required'),
     withdrawFrom: Yup.string().required('Withdraw From is required'),
   });
@@ -217,7 +218,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     required
                     name="minDisplayAmount"
                     label="Min Display Amount"
-                    placeholder="Enter max amount"
+                    placeholder="Enter min display amount"
                     type="number"
                     value={values.minDisplayAmount}
                     onChange={handleChange}
@@ -231,6 +232,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                 <div className="w-full mx-2">
                   <GlobalInput
                     required
+                    toolTip="Amount exceeding this value will request for admin approval"
                     name="minWithdrawableAmount"
                     label="Max Amount For Automatic Withdraw "
                     placeholder="Enter min with drawableAmount"
@@ -242,14 +244,14 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                   />
                 </div>
               </div>
-              <div className="w-full text-primary mx-2 my-1">Withdrawal Fees (inEurk)</div>
+              <div className="w-full text-primary mx-2 my-1">Withdrawal Fees (NLYK)</div>
 
               <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
                     name="withdrawRate"
-                    label="Rate"
-                    placeholder="Enter rate"
+                    label="Value"
+                    placeholder="Enter fee value"
                     type="number"
                     required
                     value={values.withdrawRate}
@@ -265,7 +267,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     label="Fee Type"
                     labelOptionClass={'text-left'}
                     name={'feeType'}
-                    placeholder={'Selecte Type'}
+                    placeholder={'Selecte Fee Type'}
                     options={[
                       { label: 'fixed', value: 'fixed' },
                       { label: 'percentage', value: 'percentage' },
@@ -287,8 +289,8 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
                     name="commissionRate"
-                    label="Rate"
-                    placeholder="Enter your name"
+                    label="Value"
+                    placeholder="Enter commisson value"
                     type="number"
                     required
                     value={values.commissionRate}
@@ -304,7 +306,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     label="Commission Type"
                     labelOptionClass={'text-left'}
                     name={'commissionType'}
-                    placeholder={'Selecte commission'}
+                    placeholder={'Selecte commission Type'}
                     options={[
                       { label: 'fixed', value: 'fixed' },
                       { label: 'percentage', value: 'percentage' },

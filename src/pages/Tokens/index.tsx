@@ -50,6 +50,10 @@ const Tokens = () => {
     setOpen(true);
   };
 
+  const onDeleteToken = (itm: any) => {
+    console.log("on delete call ::", itm)
+  }
+
   return (
     <div className="w-full px-2 border py-4 rounded-md">
       {/* PAGE TITLE */}
@@ -63,7 +67,7 @@ const Tokens = () => {
       </div>
 
       {/* TABLE */}
-      <TokensTable data={data} loading={loading} onEditHanlder={onEditHanlder} />
+      <TokensTable data={data} loading={loading} onEditHanlder={onEditHanlder} onDeleteToken ={onDeleteToken} />
       <AddToken open={open} onClose={onPopupHandler} />
     </div>
   );

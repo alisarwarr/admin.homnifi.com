@@ -88,11 +88,11 @@ export const allDrawerOptions: DrawerSection[] = [
           },
 
           {
-            name: 'Tokens settings',
+            name: 'All Tokens',
             icon: <Dashboard />,
             icon_dark: setting,
             url: '/tokens',
-            key: 'tokens-settings',
+            key: 'tokens-all',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens'],

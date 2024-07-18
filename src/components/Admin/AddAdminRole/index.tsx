@@ -159,7 +159,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                 <CrossIcon />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4 mt-4 mx-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-4 mt-4 sm:mx-8">
               <div className="flex flex-col items-end">
                 <div className="w-full relative">
                   <GlobalInput
@@ -203,20 +203,20 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                 />
               </div>
             </div>
-            <div className="flex flex-col mx-8 ">
+            <div className="flex flex-col sm:mx-8">
               {selectedRoles.length > 0 && (
-                <div className="flex flex-col justify-end items-start rounded-md z-10 border border-gray-300  text-gray-500 ">
+                <div className="flex flex-col justify-end items-start flex-wrap rounded-md z-10 border border-gray-300  text-gray-500 ">
                   <div className="h-[32vh] w-full overflow-y-auto">
                     {selectedRoles.map((dt) => (
                       <div key={dt} className="px-4 py-3 w-full border-b-2">
                         <div className="flex gap-4 justify-between">
-                          <div className="flex gap-4">
+                          <div className="flex flex-col flex-wrap sm:flex-row gap-4">
                             <div className="font-medium text-sm md:w-36">{dt}</div>
                             {permissionsList.map((rl) => (
                               <div key={rl}>
                                 <GlobalCheckbox
                                   disabled={isView}
-                                  className="font-medium"
+                                  className="font-normal"
                                   checked={activeRoles[dt]?.includes(rl) ?? false}
                                   label={rl}
                                   onChange={() => {
@@ -246,7 +246,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
               )}
             </div>
             {!isView && (
-              <div className="mx-8">
+              <div className="sm:mx-8">
                 <Button className="w-full bg-primary " loadingType="circular" buttonType="submit">
                   Submit
                 </Button>
