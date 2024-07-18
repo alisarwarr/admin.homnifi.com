@@ -163,7 +163,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
               <div className="flex flex-col items-end">
                 <div className="w-full relative">
                   <GlobalInput
-                    disabled={isView}
+                    disabled={isView || editRole ? true : false}
                     name="name"
                     label="Name"
                     placeholder="Enter Role name"

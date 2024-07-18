@@ -117,7 +117,7 @@ const GlobalTable = ({
 
   copyItems,
   colorItems,
-  imageItems
+  imageItems,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -432,15 +432,9 @@ const GlobalTable = ({
 
                           {headCells.map((cell, index) => {
                             let color = '';
-                            if (
-                              row[cell.id] === 'success' ||
-                              row[cell.id] === 'approved'
-                            )
-                              color = 'text-primaryGreen';
-                            else if (row[cell.id] === 'pending')
-                              color = 'text-primary';
-                            else if (row[cell.id] === 'failed')
-                              color = 'text-primaryRed';
+                            if (row[cell.id] === 'success' || row[cell.id] === 'approved') color = 'text-primaryGreen';
+                            else if (row[cell.id] === 'pending') color = 'text-primary';
+                            else if (row[cell.id] === 'failed') color = 'text-primaryRed';
 
                             return (
                               cell.id !== '_id' && (
@@ -448,20 +442,16 @@ const GlobalTable = ({
                                   key={index}
                                   className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={`py-2 flex justify-start items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}>
-                                    {
-                                      imageItems?.includes(headCells[index].id) ? (
-                                        <img
-                                          src={row[cell.id]}
-                                          className="w-7 h-7"
-                                          alt=""
-                                        />
-                                      ) : (
-                                        <>
-                                          {row[cell.id]}
-                                        </>
-                                      )
-                                    }
+                                  <div
+                                    className={`py-2 flex justify-start items-center ${
+                                      !copyItems?.includes(headCells[index].id) && `${color}`
+                                    }`}
+                                  >
+                                    {imageItems?.includes(headCells[index].id) ? (
+                                      <img src={row[cell.id]} className="w-7 h-7" alt="" />
+                                    ) : (
+                                      <>{row[cell.id]}</>
+                                    )}
                                     {copyIconList.find((dt) => dt === cell.id) && (
                                       <Copy
                                         className="ml-3 cursor-pointer"
@@ -488,7 +478,7 @@ const GlobalTable = ({
           </table>
         </div>
 
-        <div className="flex lg:hidden flex-col gap-3">
+        <div className="flex md:hidden flex-col gap-3">
           <div className="flex flex-col gap-4 w-full text-defaultBlack text-xs">
             {isLoading &&
               headCells.map((cell, index) => (

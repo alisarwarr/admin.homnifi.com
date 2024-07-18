@@ -19,22 +19,16 @@ export default function Admins(): JSX.Element {
 
   const [loading, setLoading] = useState(true);
 
-  const fireApi = async () => {
+  const fetchAdminList = async () => {
     const response = await getAdminList();
     setLoading(false);
   };
 
   useEffect(() => {
     if (list?.length === 0) {
-      fireApi();
+      fetchAdminList();
     } else {
       setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (rolesList.length === 0) {
-      getAdminRole();
     }
   }, []);
 
@@ -57,7 +51,7 @@ export default function Admins(): JSX.Element {
         </div>
       </div>
       {/* TABLE */}
-      <AdminTable data={list} loading={loading} fireApi={fireApi} />
+      <AdminTable data={list} loading={loading} fetchAdminList = {fetchAdminList}/>
     </div>
   );
 }

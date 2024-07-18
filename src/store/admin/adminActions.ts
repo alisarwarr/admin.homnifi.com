@@ -122,11 +122,11 @@ export const useAdminActions = () => {
       .catch((err: any) => err.data);
   };
 
-  const getAdminList = async () => {
+  const getAdminList = async (page: number = 1, limit: number = 10) => {
     return await ApiRequest()
       .request({
         method: 'GET',
-        url: ADMIN_LIST,
+        url: `${ADMIN_LIST}?page=${page}&limit=${limit}`,
       })
       .then((response: any) => {
         dispatch(setAdminDetail(response?.data?.data));
