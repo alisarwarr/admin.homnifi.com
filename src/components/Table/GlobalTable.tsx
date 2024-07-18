@@ -379,7 +379,7 @@ const GlobalTable = ({
                   headCells.map((cell, index) => (
                     <th
                       key={index}
-                      className={`hidden md:table-cell text-left font-semibold text-sm p-3 border-b border-borderGray
+                      className={`hidden md:table-cell text-center font-semibold text-sm p-3 border-b border-borderGray
                        ${cell.dataClass}  border-b`}
                     >
                       {cell.label}
@@ -448,7 +448,7 @@ const GlobalTable = ({
                                   key={index}
                                   className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={`py-2 flex justify-start items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}>
+                                  <div className={`py-2  flex justify-center items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}>
                                     {
                                       imageItems?.includes(headCells[index].id) ? (
                                         <img
@@ -458,7 +458,7 @@ const GlobalTable = ({
                                         />
                                       ) : (
                                         <>
-                                          {row[cell.id]}
+                                          {row[cell.id] ?row[cell.id] : <>-</>}
                                         </>
                                       )
                                     }

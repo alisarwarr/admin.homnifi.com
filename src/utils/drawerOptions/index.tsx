@@ -240,7 +240,7 @@ export const allDrawerOptions: DrawerSection[] = [
         name: 'Community',
         icon: <Community />,
         icon_dark: AdminDark,
-        url: '/community',
+        url: '',
         key: 'community',
         active: false,
         options: [
@@ -264,6 +264,31 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'admins'],
           },
+        ],
+        permissions: [`all`, `superadmin`, 'admins'],
+      },
+    ],
+  },
+  {
+    options: [
+      {
+        name: 'Defi 360',
+        icon: <Community />,
+        icon_dark: AdminDark,
+        url: '',
+        key: 'defi-360',
+        active: false,
+        options: [
+          {
+            name: 'Auto Compound Penality',
+            icon: <Admin />,
+            icon_dark: AdminDark,
+            url: '/defi-360/auto-compound-penality',
+            key: 'community-friends',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admins'],
+          }
         ],
         permissions: [`all`, `superadmin`, 'admins'],
       },
