@@ -18,7 +18,7 @@ interface Props {
 }
 
 function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
-  const { getTokensList, createWithdrawSetting } = useTokenActions();
+  const { getTokensList, createWithdrawSetting, updateWithdrawSetting } = useTokenActions();
 
   const { tokensList } = useSelector(selectToken);
   const [isSubmit, setIsSubmit] = React.useState(false);
@@ -76,8 +76,13 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
         commissionType: values.commissionType,
       };
 
-      const response = await createWithdrawSetting(body);
-      console.log('response withdrawa setting ::', response);
+      let response: any;
+      if (selectedSetting) {
+        response = await updateWithdrawSetting(selectedSetting._id, body);
+      } else {
+        response = await createWithdrawSetting(body);
+      }
+
       if (response.status) {
         successAlert(response.message);
         onClose();
@@ -89,10 +94,28 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     },
   });
 
-  const { handleChange, handleSubmit, values, errors, touched, resetForm } = formik;
+  const { handleChange, handleSubmit, values, errors, touched, resetForm, setValues } = formik;
 
   useEffect(() => {
     getTokensList();
+  }, []);
+
+  // edit withdraw setting state set here
+  useEffect(() => {
+    if (selectedSetting) {
+      setValues({
+        type: selectedSetting.type ?? '',
+        withdrawFrom: selectedSetting.fromToken._id ?? '',
+        withdrawTo: selectedSetting.toToken._id ?? '',
+        minAmount: selectedSetting.minAmount ?? 0,
+        minDisplayAmount: selectedSetting.minDisplayAmount ?? 0,
+        minWithdrawableAmount: selectedSetting.minWithdrawableAmount ?? 0,
+        withdrawRate: selectedSetting.fee ?? '',
+        feeType: selectedSetting.feeType ?? '',
+        commissionRate: selectedSetting.commission ?? 0,
+        commissionType: selectedSetting.commissionType ?? '',
+      });
+    }
   }, [selectedSetting]);
 
   return (
@@ -244,7 +267,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                   />
                 </div>
               </div>
-              <div className="w-full text-primary mx-2 my-1">Withdrawal Fees (NLYK)</div>
+              <div className="w-full text-primary mx-2 my-1">Withdrawal Fees (MLYK)</div>
 
               <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
                 <div className="w-full md:w-1/2 mx-2">

@@ -79,6 +79,7 @@ function AddToken({ open, onClose, editToken }: Props) {
 
   //reset state from after form submission
   const onResetStates = () => {
+    setIsSubmit(false);
     onClose();
     resetForm();
   };

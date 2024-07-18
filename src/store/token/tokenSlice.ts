@@ -10,6 +10,7 @@ interface TokenSliceState {
     [key: string]: any;
   };
   tokenPairs: any[];
+  withdrawSettingsList: any[];
 }
 
 export interface Token {
@@ -107,6 +108,7 @@ const initialState: TokenSliceState = {
     'LYK-W': [],
   },
   tokenPairs: [],
+  withdrawSettingsList: [],
 };
 
 const tokenSlice = createSlice({
@@ -122,10 +124,13 @@ const tokenSlice = createSlice({
     setTokenPairs: (state, action: PayloadAction<any>) => {
       return { ...state, tokenPairs: action.payload };
     },
+    setWithdrawSettingsList: (state, action: PayloadAction<any>) => {
+      return { ...state, withdrawSettingsList: action.payload };
+    },
   },
 });
 
-export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs } = tokenSlice.actions;
+export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs, setWithdrawSettingsList } = tokenSlice.actions;
 
 export const selectToken = (state: { token: TokenSliceState }) => state.token;
 export default tokenSlice.reducer;

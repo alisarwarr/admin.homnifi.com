@@ -5,6 +5,7 @@ import {
   setTokenList,
   setTokenPairs,
   setTokenTRansactionSettingList,
+  setWithdrawSettingsList,
 } from './tokenSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -192,6 +193,7 @@ export const useTokenActions = () => {
         return err.data;
       });
   };
+
   const createNewToken = async (data: any) => {
     return await ApiRequest()
       .request({
@@ -225,6 +227,37 @@ export const useTokenActions = () => {
       });
   };
 
+  const getWithdrawSettings = async () => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: ADD_WITH_DRAW_SETTINGS,
+      })
+      .then((response: any) => {
+        dispatch(setWithdrawSettingsList(response.data.data));
+        return response.data.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
+  const updateWithdrawSetting = async (id: string, data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'PUT',
+        url: `${ADD_WITH_DRAW_SETTINGS}/${id}`,
+        data,
+      })
+      .then((response: any) => {
+        getWithdrawSettings();
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
   return {
     createWithdrawSetting,
     getTokensList,
@@ -239,5 +272,7 @@ export const useTokenActions = () => {
     editSingleTokenPairSetting,
     createNewToken,
     onUpdateToken,
+    getWithdrawSettings,
+    updateWithdrawSetting
   };
 };
