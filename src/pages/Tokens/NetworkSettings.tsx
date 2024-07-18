@@ -12,9 +12,8 @@ import { useSelector } from 'react-redux';
 
 
 const headCells = [
-    { id: 'id', label: 'ID', show: true },
     { id: 'name', label: 'Name', show: true },
-    { id: 'blockchainCode', label: 'Blockchain Code', show: true },
+    { id: 'blockchainCode', label: 'Blockchain Code', show: true }
 ];
 
 
@@ -40,7 +39,6 @@ export default function NetworkSettings() {
 
     const rows = networkSettings ? networkSettings?.map((_data: any) => {
         return {
-            id: _data._id,
             name: _data.name,
             blockchainCode: _data.code
         };
@@ -131,7 +129,7 @@ export default function NetworkSettings() {
                         className="flex gap-1 items-center cursor-pointer px-3"
                         onClick={() => fetchData(1)}
                     >
-                        <img src={refresh} alt="" width={24} height={24} />
+                        <img src={refresh} alt="refresh" width={24} height={24} />
                         <span>Refresh</span>
                     </div>
 

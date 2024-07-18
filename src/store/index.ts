@@ -24,6 +24,7 @@ import cloudkSlice from './cloudk/cloudk.slice';
 import generalSlice from './general/generalSlice'
 import { CLOUD_SLICE_NAME } from './cloudk/cloudk.slice';
 import tokensSettingsSlice from './tokensSettings/tokensSettingsSlice';
+import defi360Slice, { DEFI_360_SLICE_NAME } from './defi-360/defi-360-slice';
 
 const persistConfig = {
   key: 'root',
@@ -47,7 +48,8 @@ const rootReducer = combineReducers({
   admin: adminSlice,
   faq:faqSlice,
   [CLOUD_SLICE_NAME]: cloudkSlice,
-  tokensSettings: tokensSettingsSlice
+  tokensSettings: tokensSettingsSlice,
+  [DEFI_360_SLICE_NAME]: defi360Slice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -60,6 +60,7 @@ import NetworkSettings from '../pages/Tokens/NetworkSettings';
 import ProductList from '../pages/Cloud2/ProductList';
 import MachineList from '../pages/Cloud2/MachineList';
 import CronJob from '../pages/Admins/CronJobs';
+import AutoCompoundPenality from '../pages/Defi-360/AutoCompoundPenality';
 
 export const router = createBrowserRouter([
   {
@@ -651,11 +652,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/community',
+        path: '/defi-360/auto-compound-penality',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
-              <Community />
+              <AutoCompoundPenality />
             </ProtectedRoute>
           </React.Suspense>
         ),
