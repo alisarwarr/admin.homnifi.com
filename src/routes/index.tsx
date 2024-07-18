@@ -17,9 +17,7 @@ import Users from '../pages/Users';
 import UserVerificationRequests from '../pages/Users/UserVerifications';
 import WithdrawRequests from '../pages/Wallet/WithdrawRequests';
 import Providers from '../pages/Providers';
-import Products from '../pages/Products';
 import AddProduct from '../pages/Products/AddProduct';
-import AddProvider from '../pages/Providers/AddProvider';
 import UserVerificationDetails from '../pages/Users/UserVerifications/UserVerificationDetails';
 import MigrationRequests from '../pages/Wallet/MigrationRequests';
 import TokenDetails from '../pages/Tokens/TokenDetails';
@@ -381,48 +379,9 @@ export const router = createBrowserRouter([
           </React.Suspense>
         ),
       },
+
       {
-        path: '/providers',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <Providers />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/providers/add',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <AddProvider />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/providers/details/:id',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <AddProvider />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/products',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <Products />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/products/add',
+        path: 'cloudk2/products/add',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
@@ -432,7 +391,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/products/details/:id',
+        path: 'cloudk2/products/details/:id',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>

@@ -59,7 +59,7 @@ export default function FormikInput({
           labelStyle="text-sm font-medium" // Adjust the label style as needed
         />
 
-        {error && isError && touched && <span className="text-xs text-errorColor">{error}</span>}
+        {/* {error && isError && touched && <span className="text-xs text-errorColor">{error}</span>} */}
 
         {/* {error ||  touched && <span className="text-xs text-primary">{error}</span>} */}
       </div>
