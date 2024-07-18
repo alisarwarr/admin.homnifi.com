@@ -47,7 +47,7 @@ const initialState: TemplateState = {
       },
     ],
   },
-  userMachineList: null
+  userMachineList: null,
 };
 
 const slice = createSlice({
@@ -65,6 +65,8 @@ const slice = createSlice({
 
 export const cloudkSliceAction = slice.actions;
 
-export const selectCloudkSlice = (state: { [CLOUD_SLICE_NAME]: TemplateState }) => state[CLOUD_SLICE_NAME];
+export const selectCloudkSlice = (state: {
+  [CLOUD_SLICE_NAME]: TemplateState;
+}) => state[CLOUD_SLICE_NAME];
 
 export default slice.reducer;

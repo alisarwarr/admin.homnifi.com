@@ -27,7 +27,8 @@ const UserVerificationHistory = ({
   currentVerificationRequestId: string | undefined;
 }) => {
   const { getCustomerVerificationRequestsHistory } = useCustomerActions();
-  const [verificationRequestsHistory, setVerificationRequestsHistory] = useState([]);
+  const [verificationRequestsHistory, setVerificationRequestsHistory] =
+    useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -59,7 +60,9 @@ const UserVerificationHistory = ({
     <div className="w-full rounded-md">
       {/* PAGE TITLE */}
       <div className="flex bg-primary items-center text-white bg-[#181717] pt-5 px-3 mt-8">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">User Verification Requests History</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          User Verification Requests History
+        </h1>
 
         <div
           className="flex gap-1 items-center cursor-pointer px-3"

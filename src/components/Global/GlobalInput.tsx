@@ -48,7 +48,9 @@ const GlobalInput = ({
           autoComplete="off"
           disabled={disabled}
           name={name}
-          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+          type={
+            type === 'password' ? (showPassword ? 'text' : 'password') : type
+          }
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -65,13 +67,23 @@ const GlobalInput = ({
           </span>
         ) : (
           type === 'password' && (
-            <button type="button" className="absolute right-4" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <EyeCloseIcon className="w-4" /> : <EyeOpenIcon className="w-4" />}
+            <button
+              type="button"
+              className="absolute right-4"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeCloseIcon className="w-4" />
+              ) : (
+                <EyeOpenIcon className="w-4" />
+              )}
             </button>
           )
         )}
       </div>
-      {error && isError && <span className="text-xs text-redDanger text-right">{error}</span>}
+      {error && isError && (
+        <span className="text-xs text-redDanger text-right">{error}</span>
+      )}
     </div>
   );
 };

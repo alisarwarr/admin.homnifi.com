@@ -23,6 +23,7 @@ type TGlobalSelect = {
   isMulti?: boolean;
   inputClass?: string;
   labelOptionClass?: string;
+  containerClassnames?: string;
   disabled?: boolean;
 };
 
@@ -43,6 +44,7 @@ const GlobalSelect = ({
   inputClass,
   labelOptionClass,
   disabled = false,
+  containerClassnames,
 }: TGlobalSelect) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -79,7 +81,9 @@ const GlobalSelect = ({
   };
 
   const filterOptions = (input: string) => {
-    const filtered = options.filter((option) => option.label.toLowerCase().includes(input.toLowerCase()));
+    const filtered = options.filter((option) =>
+      option.label.toLowerCase().includes(input.toLowerCase())
+    );
     setFilteredOptions(filtered);
   };
 
@@ -90,7 +94,10 @@ const GlobalSelect = ({
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -105,7 +112,7 @@ const GlobalSelect = ({
     setFilteredOptions(options);
   }, [options]);
   return (
-    <div className="flex flex-col gap-2 text-sm py-2">
+    <div className={`flex flex-col gap-2 text-sm py-2 ${containerClassnames}`}>
       <div className="font-medium text-primary">
         {label} {required && <span className="text-redDanger">*</span>}
       </div>
@@ -118,7 +125,8 @@ const GlobalSelect = ({
           } ${inputClass}`}
           onClick={toggleDropdown}
         >
-          {options?.find((option) => option.value === value)?.label || placeholder}
+          {options?.find((option) => option.value === value)?.label ||
+            placeholder}
         </div>
 
         {!disabled && (
@@ -126,7 +134,9 @@ const GlobalSelect = ({
             <div
               ref={dropdownRef}
               className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-1 border border-blueGrey bg-white overflow-auto max-h-52 ${
-                isOpen ? 'translate-y-0 visible opacity-100 ' : '-translate-y-10 invisible opacity-0'
+                isOpen
+                  ? 'translate-y-0 visible opacity-100 '
+                  : '-translate-y-10 invisible opacity-0'
               } transition-all ease-in-out duration-300`}
               style={{ zIndex: 99 }}
             >
@@ -143,7 +153,9 @@ const GlobalSelect = ({
                   type="button"
                   key={index}
                   className={`p-2 border-b px-4 border-blueGrey text-defaultBlack hover:bg-gray-100 transition-all ease-in-out duration-300  ${labelOptionClass} ${
-                    Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''
+                    Array.isArray(value) && value.includes(option.value)
+                      ? 'bg-blue-100'
+                      : ''
                   }`}
                   onClick={() => {
                     if (!disabled) {
@@ -155,7 +167,10 @@ const GlobalSelect = ({
                 </button>
               ))}
             </div>
-            <div className={`absolute ${isOpen ? 'top-3' : 'top-2'} right-3 bg-red`} style={{ zIndex: 100 }}>
+            <div
+              className={`absolute ${isOpen ? 'top-3' : 'top-2'} right-3 bg-red`}
+              style={{ zIndex: 100 }}
+            >
               <ArrowDownIcon
                 className={`w-4 h-4 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
               />
@@ -163,7 +178,9 @@ const GlobalSelect = ({
           </>
         )}
       </div>
-      {isError && <span className="text-xs text-redDanger text-right">{error}</span>}
+      {isError && (
+        <span className="text-xs text-redDanger text-right">{error}</span>
+      )}
     </div>
   );
 };

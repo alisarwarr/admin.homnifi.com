@@ -50,7 +50,8 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     },
   });
 
-  const { handleChange, handleSubmit, values, errors, touched, resetForm } = formik;
+  const { handleChange, handleSubmit, values, errors, touched, resetForm } =
+    formik;
 
   useEffect(() => {
     console.log('selectedSetting ::', selectedSetting);
@@ -71,7 +72,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
             }}
           >
             <div className="flex justify-between items-center py-2">
-              <div className="text-md font-medium  md:mx-6">Add Withdraw Settings</div>
+              <div className="text-md font-medium  md:mx-6">
+                Add Withdraw Settings
+              </div>
               <div
                 className="cursor-pointer -mr-2"
                 onClick={() => {
@@ -98,7 +101,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     ]}
                     setFieldTouched={() => formik.setFieldTouched('type', true)}
                     error={errors.type}
-                    isError={isSubmit && errors.type && touched.type ? true : false}
+                    isError={
+                      isSubmit && errors.type && touched.type ? true : false
+                    }
                     value={values.type}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -121,9 +126,15 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                       { label: 'two', value: 'two' },
                       { label: 'three', value: 'three' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('withdrawFrom', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('withdrawFrom', true)
+                    }
                     error={errors.withdrawFrom}
-                    isError={isSubmit && errors.withdrawFrom && touched.withdrawFrom ? true : false}
+                    isError={
+                      isSubmit && errors.withdrawFrom && touched.withdrawFrom
+                        ? true
+                        : false
+                    }
                     value={values.withdrawFrom}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -145,9 +156,15 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                       { label: 'two', value: 'two' },
                       { label: 'three', value: 'three' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('withdrawTo', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('withdrawTo', true)
+                    }
                     error={errors.withdrawTo}
-                    isError={isSubmit && errors.withdrawTo && touched.withdrawTo ? true : false}
+                    isError={
+                      isSubmit && errors.withdrawTo && touched.withdrawTo
+                        ? true
+                        : false
+                    }
                     value={values.withdrawTo}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -188,7 +205,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                   />
                 </div>
               </div>
-              <div className="w-full text-primary mx-2 my-1">Withdrawal Fees (inEurk)</div>
+              <div className="w-full text-primary mx-2 my-1">
+                Withdrawal Fees (inEurk)
+              </div>
 
               <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
                 <div className="w-full md:w-1/2 mx-2">
@@ -200,7 +219,11 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     required
                     value={values.withdrawRate}
                     onChange={handleChange}
-                    isError={isSubmit && errors.withdrawRate && touched.withdrawRate ? true : false}
+                    isError={
+                      isSubmit && errors.withdrawRate && touched.withdrawRate
+                        ? true
+                        : false
+                    }
                     error={errors.withdrawRate}
                   />
                 </div>
@@ -217,9 +240,15 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                       { label: 'two', value: 'two' },
                       { label: 'three', value: 'three' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('feeType', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('feeType', true)
+                    }
                     error={errors.feeType}
-                    isError={isSubmit && errors.feeType && touched.feeType ? true : false}
+                    isError={
+                      isSubmit && errors.feeType && touched.feeType
+                        ? true
+                        : false
+                    }
                     value={values.feeType}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -230,7 +259,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                   />
                 </div>
               </div>
-              <div className="w-full text-primary mx-2 my-1">Withdrawal Commission</div>
+              <div className="w-full text-primary mx-2 my-1">
+                Withdrawal Commission
+              </div>
               <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
@@ -258,9 +289,17 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                       { label: 'two', value: 'two' },
                       { label: 'three', value: 'three' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('commissionType', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('commissionType', true)
+                    }
                     error={errors.commissionType}
-                    isError={isSubmit && errors.commissionType && touched.commissionType ? true : false}
+                    isError={
+                      isSubmit &&
+                      errors.commissionType &&
+                      touched.commissionType
+                        ? true
+                        : false
+                    }
                     value={values.commissionType}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -273,7 +312,11 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               </div>
               <div className="mx-4 md:mx-2 my-2">
                 <div className="flex flex-col  md:flex-row w-full">
-                  <Button className="bg-primary rounded-full my-4" loadingType="circular" buttonType="submit">
+                  <Button
+                    className="bg-primary rounded-full my-4"
+                    loadingType="circular"
+                    buttonType="submit"
+                  >
                     Add Withdraw Setting
                   </Button>
                 </div>

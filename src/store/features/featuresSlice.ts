@@ -29,5 +29,6 @@ const featuresSlice = createSlice({
 
 export const { setFeaturesList } = featuresSlice.actions;
 
-export const selectFeatures = (state: { features: FeaturesSliceState }) => state.features;
+export const selectFeatures = (state: { features: FeaturesSliceState }) =>
+  state.features;
 export default featuresSlice.reducer;

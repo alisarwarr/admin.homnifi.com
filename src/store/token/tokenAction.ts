@@ -21,7 +21,8 @@ import ApiRequest from '../../utils/network/ApiRequest';
 export const useTokenActions = () => {
   const dispatch = useDispatch();
 
-  const { tokensList, tokenTransactionSettingList, tokenPairs } = useSelector(selectToken);
+  const { tokensList, tokenTransactionSettingList, tokenPairs } =
+    useSelector(selectToken);
 
   // Recent Devices Section Notifications Api
   const getTokensList = async (force: boolean = false) => {
@@ -63,9 +64,11 @@ export const useTokenActions = () => {
   };
 
   const getTokenTransactionSettingList = async (force: boolean = false) => {
-    const existingData = Object.keys(tokenTransactionSettingList).find((token) => {
-      return tokenTransactionSettingList[token].length > 0 && token;
-    });
+    const existingData = Object.keys(tokenTransactionSettingList).find(
+      (token) => {
+        return tokenTransactionSettingList[token].length > 0 && token;
+      }
+    );
 
     if (existingData && !force) return;
 
@@ -74,7 +77,10 @@ export const useTokenActions = () => {
       url: `${TOKEN_TRANSACTION_SETTING}`,
     });
     const _tokenTransactionSettingList = response?.data?.data;
-    console.log('🚀 ~ getTokenTransactionSettingList ~ _tokenTransactionSettingList:', _tokenTransactionSettingList);
+    console.log(
+      '🚀 ~ getTokenTransactionSettingList ~ _tokenTransactionSettingList:',
+      _tokenTransactionSettingList
+    );
 
     const tokensByType: { [key: string]: TokenTransactionSettingType[] } = {};
 
@@ -102,7 +108,10 @@ export const useTokenActions = () => {
     return _tokenTransactionSetting;
   };
 
-  const updateTokenTransactionSettings = async (id: string | undefined, data: any) => {
+  const updateTokenTransactionSettings = async (
+    id: string | undefined,
+    data: any
+  ) => {
     return await ApiRequest()
       .request({
         method: 'PUT',

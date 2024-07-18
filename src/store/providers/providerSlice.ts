@@ -38,6 +38,7 @@ const providerSlice = createSlice({
 });
 
 export const { setProviders } = providerSlice.actions;
-export const selectProviderSlice = (state: { provider: ProviderStateSlice }) => state.provider;
+export const selectProviderSlice = (state: { provider: ProviderStateSlice }) =>
+  state.provider;
 
 export default providerSlice.reducer;

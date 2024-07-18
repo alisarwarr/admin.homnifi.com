@@ -26,7 +26,9 @@ const TotalRewardsTillNow = (props: Props) => {
           </div>
           <div className="flex gap-4 items-center">
             <GASKIcon />
-            <div className="text-primaryDark text-2xl font-medium">8,023,586 LYK</div>
+            <div className="text-primaryDark text-2xl font-medium">
+              8,023,586 LYK
+            </div>
           </div>
         </div>
       </div>
@@ -42,7 +44,9 @@ const TotalRewardsTillNow = (props: Props) => {
           </div>
           <div className="flex gap-4 items-center">
             <GASKIcon />
-            <div className="text-primaryDark text-2xl font-medium">8,023,586 LYK</div>
+            <div className="text-primaryDark text-2xl font-medium">
+              8,023,586 LYK
+            </div>
           </div>
         </div>
       </div>

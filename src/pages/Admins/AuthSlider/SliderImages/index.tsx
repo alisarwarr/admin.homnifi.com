@@ -1,11 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-type Props = {}
+type Props = {};
 
 const SliderImages = (props: Props) => {
-  return (
-    <div>SliderImages</div>
-  )
-}
+  return <div>SliderImages</div>;
+};
 
-export default SliderImages
+export default SliderImages;

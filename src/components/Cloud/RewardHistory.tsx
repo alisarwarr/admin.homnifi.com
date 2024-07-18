@@ -145,8 +145,7 @@ const RewardHistory = () => {
 
   return (
     <div className="w-full overflow-hidden">
-      <>
-      </>
+      <></>
       {/* <GlobalTable
         rows={rows.length ? rows : []}
         headCells={headCells}

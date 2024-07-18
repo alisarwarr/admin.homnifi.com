@@ -6,7 +6,11 @@ type GlobalFormControlLabelProps = {
   className?: string;
 };
 
-const GlobalFormControlLabel: React.FC<GlobalFormControlLabelProps> = ({ control, label, className }) => {
+const GlobalFormControlLabel: React.FC<GlobalFormControlLabelProps> = ({
+  control,
+  label,
+  className,
+}) => {
   return (
     <div className={`flex items-center ${className}`}>
       {control}

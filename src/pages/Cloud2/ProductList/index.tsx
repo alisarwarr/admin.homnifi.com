@@ -39,7 +39,9 @@ const ProductList = () => {
         </div>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
-          onClick={() => navigate('/cloudk2/products/add', { state: { edit: false } })}
+          onClick={() =>
+            navigate('/cloudk2/products/add', { state: { edit: false } })
+          }
         >
           <img src={add} alt="" width={24} height={24} />
           <span>Add Product</span>

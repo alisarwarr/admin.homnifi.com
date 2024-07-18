@@ -47,7 +47,7 @@ const SLYK = (props: Props) => {
 
           <GlobalButton
             text="Rewards Calculator"
-            type='button'
+            type="button"
             classNames="!rounded-lg font-normal tracking-wide !px-6 !w-max"
             onClick={() => navigate('/defi-360/cloudk2/rewards-calculator')}
           />

@@ -44,7 +44,9 @@ const SwapHistory = () => {
         _data?.user?.lastName ? _data?.user?.lastName : '-'
       }`,
       createdAt: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
-      fromToken: <TokenNameWithLogo tokenName={_data?.fromWallet?.token?.name} />,
+      fromToken: (
+        <TokenNameWithLogo tokenName={_data?.fromWallet?.token?.name} />
+      ),
       toToken: <TokenNameWithLogo tokenName={_data?.toWallet?.token?.name} />,
       amount: _data?.amount,
       fee: _data?.fee,

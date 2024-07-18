@@ -41,14 +41,22 @@ const Products = () => {
           <span>Refresh</span>
         </div>
 
-        <Link to={'/products/add'} className="flex gap-1 text-white items-center cursor-pointer px-3">
+        <Link
+          to={'/products/add'}
+          className="flex gap-1 text-white items-center cursor-pointer px-3"
+        >
           <img src={add} alt="" width={24} height={24} />
           <span>Add Product</span>
         </Link>
       </div>
 
       {/* TABLE */}
-      <ProductsTable data={products} loading={loading} page={page} setPage={setPage} />
+      <ProductsTable
+        data={products}
+        loading={loading}
+        page={page}
+        setPage={setPage}
+      />
     </div>
   );
 };

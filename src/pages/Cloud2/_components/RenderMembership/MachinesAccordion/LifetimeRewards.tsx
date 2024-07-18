@@ -1,7 +1,6 @@
 import React from 'react';
 import { TriangleIcon } from '../../../../../images/svg';
 
-
 const LifetimeRewards = () => {
   return (
     <section className="px-2 py-3 border border-borderBlue rounded-lg shadow-tableCardShadow text-primaryGrey font-normal w-full h-full flex gap-2 flex-col justify-center">

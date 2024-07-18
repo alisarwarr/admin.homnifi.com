@@ -1,6 +1,10 @@
 import { setLogin, setLogout, setUpdateUser } from './userSlice';
 import { useDispatch } from 'react-redux';
-import { GET_PROFILE, IMPERSONATE_USER, LOGIN } from '../../utils/network/ApiEndpoints';
+import {
+  GET_PROFILE,
+  IMPERSONATE_USER,
+  LOGIN,
+} from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 //API
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +13,13 @@ export const useUserActions = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userLogin = async ({ email, password }: { email: string; password: string }) => {
+  const userLogin = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
     dispatch(
       setLogin({
         loginLoading: true,

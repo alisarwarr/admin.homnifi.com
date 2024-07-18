@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   rows: any[];
@@ -35,7 +35,14 @@ const AppTable = ({
               return (
                 <tr>
                   {headers.map((head, index) => {
-                    return <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">{colum[head?.id]}</th>;
+                    return (
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"
+                      >
+                        {colum[head?.id]}
+                      </th>
+                    );
                   })}
                 </tr>
               );

@@ -10,7 +10,11 @@ import ConfirmDialog from '../../Dialog/ConfirmDialog';
 import { Token } from '../../../store/token/tokenSlice';
 import { errorAlert, successAlert } from '../../../utils/alerts';
 import { useAdminActions } from '../../../store/admin/adminActions';
-import { selectAdmin, selectAdminPermissionsList, setSelectedAdmin } from '../../../store/admin/adminSlice';
+import {
+  selectAdmin,
+  selectAdminPermissionsList,
+  setSelectedAdmin,
+} from '../../../store/admin/adminSlice';
 
 type Props = {
   data: any;
@@ -101,7 +105,9 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
   return (
     <>
       <ConfirmDialog
-        title={selectedUser?.status === 'ACTIVE' ? 'Block Admin?' : 'Un-Block Admin?'}
+        title={
+          selectedUser?.status === 'ACTIVE' ? 'Block Admin?' : 'Un-Block Admin?'
+        }
         open={openLockUserDialog}
         onClose={() => {
           setOpenLockUserDialog(false);
@@ -113,7 +119,9 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
           );
 
           if (response?.status) {
-            successAlert(`Admin acesss ${selectedUser?.status === 'ACTIVE' ? 'Block' : 'Active'}, Successfully!`);
+            successAlert(
+              `Admin acesss ${selectedUser?.status === 'ACTIVE' ? 'Block' : 'Active'}, Successfully!`
+            );
             fireApi();
           } else {
             errorAlert(response?.message);
@@ -122,9 +130,15 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
           setOpenLockUserDialog(false);
         }}
       >
-        Are you sure you want to {selectedUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this Admin?
+        Are you sure you want to{' '}
+        {selectedUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this Admin?
       </ConfirmDialog>
-      <GlobalTable rows={rows} headCells={headCells} isLoading={false} paginate={false} />
+      <GlobalTable
+        rows={rows}
+        headCells={headCells}
+        isLoading={false}
+        paginate={false}
+      />
     </>
   );
 };

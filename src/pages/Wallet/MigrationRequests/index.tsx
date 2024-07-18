@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 // REDUX
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 // COMMON
-import { refresh } from "../../../images/other";
-import { useWalletActions } from "../../../store/wallet/walletActions";
-import { selectWalletSlice } from "../../../store/wallet/walletSlice";
-import MigrationRequestTable from "../../../components/Wallet/MigrationRequestTable";
+import { refresh } from '../../../images/other';
+import { useWalletActions } from '../../../store/wallet/walletActions';
+import { selectWalletSlice } from '../../../store/wallet/walletSlice';
+import MigrationRequestTable from '../../../components/Wallet/MigrationRequestTable';
 
 const MigrationRequests = () => {
   const { getMigrationRequests } = useWalletActions();

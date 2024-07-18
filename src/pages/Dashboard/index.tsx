@@ -1,54 +1,67 @@
-import { useEffect, useState } from 'react';
-import Card from '../../components/Dashboard/Card';
-import { useDashboardActions } from '../../store/Dashboard/dashboardActions';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectDashboard } from '../../store/Dashboard/dashboardSlice';
-import {
-  dashboardUserOverviewTitles,
-  dashboardOrdersOverviewTitles,
-  dashboardProductsOverviewTitles,
-} from '../../constants';
 import Loader from '../../components/Loader/Loader';
-import TokenNameWithLogo from '../../components/TokenNameWithLogo';
 import { ReactComponent as ClaimableIcon } from '../../SVGIcons/claimable.svg';
-import { ReactComponent as GASKIcon } from '../../SVGIcons/gsk.svg';
 import { ReactComponent as LYKIcon } from '../../SVGIcons/lykIcon.svg';
 import { ResponsivePie } from '@nivo/pie';
 import HostoryTabla from '../../components/Dashboard/HistoryTable';
+import { useMediaQuery } from 'react-responsive';
 
 const Dashboard = () => {
   // const { getDashboardStats } = useDashboardActions();
-  const { allTokensBalance, feeCollected, ordersOverview, productsOverview, usersOverview } =
-    useSelector(selectDashboard);
+  const {
+    allTokensBalance,
+    feeCollected,
+    ordersOverview,
+    productsOverview,
+    usersOverview,
+  } = useSelector(selectDashboard);
   const [loading, setLoading] = useState(true);
+
+  const isDesktop = useMediaQuery({
+    query: '(min-width: 425px)',
+  });
 
   const CloudK2 = () => {
     return (
-      <div className="w-full border py-4 px-6 rounded-md">
+      <div className="w-full border py-4 px-6 rounded-md lg:col-span-1 col-span-2">
         <h3 className="text-lg font-medium py-2">Cloud K 2.0</h3>
-        <div className="flex flex-col justify-between items-start  lg:w-[90%] gap-4">
-          <div className="text-sm font-normal border-b-2 border-gray-100 w-full">Total Rewards Till Now</div>
-          <div className="flex justify-between items-center w-full">
+        <div className="flex flex-col justify-between items-start w-full gap-4">
+          <div className="text-sm font-normal border-b-2 border-gray-100 w-full">
+            Total Rewards Till Now
+          </div>
+          <div className="flex justify-between flex-wrap gap-2 items-center w-full">
             <div className="flex gap-4 items-center">
               <ClaimableIcon />
-              <div className="text-primary text-2xl font-medium">$ 8,023,586</div>
+              <div className="text-primary text-2xl font-medium">
+                $ 8,023,586
+              </div>
             </div>
             <div className="flex gap-4 items-center">
               <LYKIcon />
-              <div className="text-primaryDark text-2xl font-medium">8,023,586 LYK</div>
+              <div className="text-primaryDark text-2xl font-medium">
+                8,023,586 LYK
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col justify-between items-start  w-[90%] gap-4 py-4">
-          <div className="text-sm font-normal border-b-2 border-gray-100 w-full">Claimable Rewards</div>
-          <div className="flex justify-between items-center w-full">
+        <div className="flex flex-col justify-between items-start w-full gap-4 py-4">
+          <div className="text-sm font-normal border-b-2 border-gray-100 w-full">
+            Claimable Rewards
+          </div>
+          <div className="flex justify-between flex-wrap gap-2 items-center w-full">
             <div className="flex gap-4 items-center">
               <ClaimableIcon />
-              <div className="text-primary text-2xl font-medium">$ 8,023,586</div>
+              <div className="text-primary text-2xl font-medium">
+                $ 8,023,586
+              </div>
             </div>
             <div className="flex gap-4 items-center">
               <LYKIcon />
-              <div className="text-primaryDark text-2xl font-medium">8,023,586 LYK</div>
+              <div className="text-primaryDark text-2xl font-medium">
+                8,023,586 LYK
+              </div>
             </div>
           </div>
         </div>
@@ -79,13 +92,13 @@ const Dashboard = () => {
 
   const Users = () => {
     return (
-      <div className="w-full border py-4 px-6 rounded-md">
-        <h3 className="text-lg font-medium pt-2">Users</h3>
-        <div className="flex flex-col justify-between items-start h-[30vh] w-full -mt-12">
+      <div className="w-full border py-4 px-6 rounded-md lg:col-span-1 col-span-2">
+        <h3 className="text-lg font-medium pt-2 w-full">Users</h3>
+        <div className="flex flex-col justify-between items-start w-full max-h-[300px] h-full">
           <ResponsivePie
             colors={['#357EEB', '#EB6535', '#5BAC0A']}
             data={data}
-            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+            margin={{ top: 40, right: 0, bottom: 80, left: 0 }}
             startAngle={2}
             innerRadius={0.7}
             padAngle={1}
@@ -104,16 +117,15 @@ const Dashboard = () => {
               from: 'color',
               modifiers: [['darker', 5]],
             }}
-    
             legends={[
               {
-                anchor: 'bottom',
-                direction: 'row',
+                anchor: 'bottom-left',
+                direction: 'column',
                 justify: false,
                 translateX: 0,
-                translateY: 56,
-                itemsSpacing: 30,
-                itemWidth: 100,
+                translateY: 80,
+                itemsSpacing: 10,
+                itemWidth: 200,
                 itemHeight: 18,
                 itemTextColor: '#99',
                 itemDirection: 'left-to-right',
@@ -144,20 +156,13 @@ const Dashboard = () => {
     );
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     await getDashboardStats();
-  //     setLoading(false);
-  //   })();
-  // }, []);
-
   return (
     <>
       {false ? (
         <Loader />
       ) : (
         <div>
-          <div className="py-2 px-2 grid md:grid-cols-2 gap-6">
+          <div className="py-2 px-2 grid lg:grid-cols-2 gap-6">
             <CloudK2 />
             <Users />
           </div>

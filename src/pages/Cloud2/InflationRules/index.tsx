@@ -20,10 +20,30 @@ import { AccordionItem } from '@nextui-org/react';
 
 const headCells = [
   { id: 'id', label: 'ID', show: true, rowDataClass: '!py-1' },
-  { id: 'dropPercentage', label: '% Fall in the LYK Price', show: true, rowDataClass: '!py-1' },
-  { id: 'productionDecreasePercentage', label: 'Decrease Producation', show: true, rowDataClass: '!py-1' },
-  { id: 'increaseDLPPercentage', label: 'Increase DLP', show: true, rowDataClass: '!py-1' },
-  { id: 'mintingBoost', label: 'Minting Boost', show: true, rowDataClass: '!py-1' },
+  {
+    id: 'dropPercentage',
+    label: '% Fall in the LYK Price',
+    show: true,
+    rowDataClass: '!py-1',
+  },
+  {
+    id: 'productionDecreasePercentage',
+    label: 'Decrease Producation',
+    show: true,
+    rowDataClass: '!py-1',
+  },
+  {
+    id: 'increaseDLPPercentage',
+    label: 'Increase DLP',
+    show: true,
+    rowDataClass: '!py-1',
+  },
+  {
+    id: 'mintingBoost',
+    label: 'Minting Boost',
+    show: true,
+    rowDataClass: '!py-1',
+  },
 ];
 type FILTER = {
   page: number;
@@ -32,8 +52,13 @@ type FILTER = {
 };
 
 const InflationRules = () => {
-  const { getInfalationRules, createInfalationRules, getCurrentInfalationRules } = useCloudActions();
-  const { infalationRules, currentinfalationRules } = useSelector(selectCloudkSlice);
+  const {
+    getInfalationRules,
+    createInfalationRules,
+    getCurrentInfalationRules,
+  } = useCloudActions();
+  const { infalationRules, currentinfalationRules } =
+    useSelector(selectCloudkSlice);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { isLoading, startLoading, stopLoading } = useLoading();
   const [selectValue, setSelectValue] = useState('');
@@ -83,7 +108,14 @@ const InflationRules = () => {
 
   const handledropDown = (value: string) => {
     if (value === 'create_new_rules') {
-      setCloneRows([{ dropPercentage: 0, productionDecreasePercentage: 0, increaseDLPPercentage: 0, mintingBoost: 0 }]);
+      setCloneRows([
+        {
+          dropPercentage: 0,
+          productionDecreasePercentage: 0,
+          increaseDLPPercentage: 0,
+          mintingBoost: 0,
+        },
+      ]);
     } else if (value === 'clone_pervious_rules') {
       console.log(selectValue === 'clone_pervious_rules', selectValue);
       setCloneRows(rows);
@@ -103,7 +135,6 @@ const InflationRules = () => {
 
       <section className="flex  flex-row gap-5 justify-end items-center py-5">
         <div>
-
           <GlobalSelect
             // label="Clone/Create Rules"
             name="clone_create_rules"
@@ -128,7 +159,6 @@ const InflationRules = () => {
           ]}
           /> */}
           {/* <GlobalButton onClick={() => setIsModalOpen(true)} type="button" text="Clone" classNames="!w-52" /> */}
-
         </div>
       </section>
 
@@ -142,11 +172,23 @@ const InflationRules = () => {
         // csvData={getCsvData}
       />
 
-      <GlobalModal size="5xl" isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add Inflation Rules">
-        <CloneModalContent loading={isLoading} rows={cloneRows} setCloneRows={setCloneRows} handleSave={handleSave} />
+      <GlobalModal
+        size="5xl"
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Add Inflation Rules"
+      >
+        <CloneModalContent
+          loading={isLoading}
+          rows={cloneRows}
+          setCloneRows={setCloneRows}
+          handleSave={handleSave}
+        />
       </GlobalModal>
 
-      <h1 className="flex-1 font-semibold text-2xl px-3 py-5">All Inflation Rules</h1>
+      <h1 className="flex-1 font-semibold text-2xl px-3 py-5">
+        All Inflation Rules
+      </h1>
 
       <div className="bg-white rounder-lg p-2">
         {infalationRules.map((e, ind) => {
@@ -164,7 +206,11 @@ const InflationRules = () => {
               selectionMode="single"
               headingClassName="bg-gradient-white rounded-lg text-lg text-defaultBlack font-medium px-4 border-b border-borderBlue"
             >
-              <AccordionItem key={e?.inflation?.name} aria-label={e?.inflation?.name} title={e?.inflation?.name}>
+              <AccordionItem
+                key={e?.inflation?.name}
+                aria-label={e?.inflation?.name}
+                title={e?.inflation?.name}
+              >
                 <GlobalTable
                   rows={rows}
                   headCells={columns?.filter((itm) => itm?.show === true)}

@@ -17,15 +17,15 @@ export const WITHDRAW_FEE_TYPES = {
 export const TRANSACTION_TYPES = {
   DEPOSIT: 'DEPOSIT',
   WITHDRAW: 'WITHDRAW',
-  TRANSFER:'TRANSFER',
-  SWAP:'SWAP'
+  TRANSFER: 'TRANSFER',
+  SWAP: 'SWAP',
 };
 
 export const TRANSACTION_PROCESS = {
   AUTO: 'AUTO',
   MANUAL: 'MANUAL',
-  TRANSFER:'TRANSFER',
-  SWAP:'SWAP'
+  TRANSFER: 'TRANSFER',
+  SWAP: 'SWAP',
 };
 
 export const ProviderStatus = {

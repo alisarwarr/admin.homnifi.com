@@ -4,10 +4,19 @@ import SubHeading from '../SubHeading';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNotificationsActions } from '../../store/notifications/notificationsAction';
 import { useSelector } from 'react-redux';
-import { notification_badge, selectNotifications } from '../../store/notifications/notificationsSlice';
+import {
+  notification_badge,
+  selectNotifications,
+} from '../../store/notifications/notificationsSlice';
 import { RotatingLines } from 'react-loader-spinner';
 
-const NotificationsDrawer = ({ open, toggleDrawer }: { open: any; toggleDrawer: (anchor, open) => void }) => {
+const NotificationsDrawer = ({
+  open,
+  toggleDrawer,
+}: {
+  open: any;
+  toggleDrawer: (anchor, open) => void;
+}) => {
   const screen640 = useMediaQuery('(min-width:640px)');
 
   const { getNotifications, readNotification } = useNotificationsActions();
@@ -45,16 +54,25 @@ const NotificationsDrawer = ({ open, toggleDrawer }: { open: any; toggleDrawer: 
             '.MuiDrawer-paper': {
               width: screen640 ? '30rem' : '100%',
               backgroundColor: '#0A0A0A',
-              backgroundImage: 'linear-gradient(rgba(10, 10, 10, 1), rgba(10, 10, 10, 1))',
+              backgroundImage:
+                'linear-gradient(rgba(10, 10, 10, 1), rgba(10, 10, 10, 1))',
             },
           }}
           // className='overflow-y-auto'
         >
           <div className="w-full relative flex flex-col">
             <div className="w-full bg-bgSecondary sticky top-0 left-0 right-0 flex justify-between items-center px-8 py-4 ">
-              <SubHeading heading={`Notifications ${badge > 0 ? `(${badge})` : ''}`} />
+              <SubHeading
+                heading={`Notifications ${badge > 0 ? `(${badge})` : ''}`}
+              />
               <button onClick={() => toggleDrawer('right', false)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 30 30" fill="none">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 30 30"
+                  fill="none"
+                >
                   <path
                     d="M22.5 7.5L7.5 22.5"
                     stroke="white"
@@ -86,7 +104,11 @@ const NotificationsDrawer = ({ open, toggleDrawer }: { open: any; toggleDrawer: 
                   fetchNotifications();
                   setPage((prev) => prev + 1);
                 }}
-                hasMore={notifications.totalPages - notifications.currentPage > 0 ? true : false}
+                hasMore={
+                  notifications.totalPages - notifications.currentPage > 0
+                    ? true
+                    : false
+                }
                 loader={
                   <div className="flex m-3 justify-center">
                     <RotatingLines
@@ -103,11 +125,21 @@ const NotificationsDrawer = ({ open, toggleDrawer }: { open: any; toggleDrawer: 
                 {notifications.list.map((noti, index) => (
                   <React.Fragment key={index}>
                     <div className={`space-y-2 py-4 px-8`}>
-                      <span className={`py-1 text-sm rounded bg-opacity-5 ${colors[noti.code]}`}>{noti.title}</span>
-                      <span className="flex text-sm font-light">{noti.message}</span>
-                      <span className="flex text-xs text-gray-400">{noti.createdAt}</span>
+                      <span
+                        className={`py-1 text-sm rounded bg-opacity-5 ${colors[noti.code]}`}
+                      >
+                        {noti.title}
+                      </span>
+                      <span className="flex text-sm font-light">
+                        {noti.message}
+                      </span>
+                      <span className="flex text-xs text-gray-400">
+                        {noti.createdAt}
+                      </span>
                     </div>
-                    <div className={`border-t-0 border border-[#222222] text-secondary mx-8`} />
+                    <div
+                      className={`border-t-0 border border-[#222222] text-secondary mx-8`}
+                    />
                   </React.Fragment>
                 ))}
               </InfiniteScroll>

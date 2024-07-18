@@ -63,7 +63,13 @@ const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
 
   return (
     // TABLE
-    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} copyIconList={copyIconList} />
+    <GlobalTable
+      rows={rows}
+      headCells={headCells}
+      isLoading={loading}
+      paginate={false}
+      copyIconList={copyIconList}
+    />
   );
 };
 

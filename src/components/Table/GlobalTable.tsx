@@ -1,7 +1,26 @@
-import { Checkbox, IconButton, InputBase, MenuItem, Pagination, Select, Skeleton, Tooltip } from '@mui/material';
+import {
+  Checkbox,
+  IconButton,
+  InputBase,
+  MenuItem,
+  Pagination,
+  Select,
+  Skeleton,
+  Tooltip,
+} from '@mui/material';
 import NoData from './NoData';
 import { useEffect, useState } from 'react';
-import { arrowDown, arrowUp, copy, exportIcon, filterIcon, lock, mail, print, unlock } from '../../images/other';
+import {
+  arrowDown,
+  arrowUp,
+  copy,
+  exportIcon,
+  filterIcon,
+  lock,
+  mail,
+  print,
+  unlock,
+} from '../../images/other';
 import styled from '@emotion/styled';
 import FormikInput from '../FormikInput';
 import { mkConfig, generateCsv, download } from 'export-to-csv';
@@ -117,7 +136,7 @@ const GlobalTable = ({
 
   copyItems,
   colorItems,
-  imageItems
+  imageItems,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -127,7 +146,9 @@ const GlobalTable = ({
   const { changeBulkUsersStatus } = useCustomerActions();
 
   const handleRowCheckboxChange = (row: any) => {
-    const selectedIndex = selectedRows.findIndex((selectedRow) => selectedRow._id === row._id);
+    const selectedIndex = selectedRows.findIndex(
+      (selectedRow) => selectedRow._id === row._id
+    );
     let newSelectedRows: any[] = [];
 
     if (selectedIndex === -1) {
@@ -137,7 +158,10 @@ const GlobalTable = ({
     } else if (selectedIndex === selectedRows.length - 1) {
       newSelectedRows = [...selectedRows.slice(0, -1)];
     } else if (selectedIndex > 0) {
-      newSelectedRows = [...selectedRows.slice(0, selectedIndex), ...selectedRows.slice(selectedIndex + 1)];
+      newSelectedRows = [
+        ...selectedRows.slice(0, selectedIndex),
+        ...selectedRows.slice(selectedIndex + 1),
+      ];
     }
 
     setSelectedRows(newSelectedRows);
@@ -203,13 +227,20 @@ const GlobalTable = ({
     if (checkBoxes) {
       setSelectedRows([]);
     }
-  }, [outerFilters?.country, outerFilters?.accountType, outerFilters?.twoFA, outerFilters?.verified]);
+  }, [
+    outerFilters?.country,
+    outerFilters?.accountType,
+    outerFilters?.twoFA,
+    outerFilters?.verified,
+  ]);
 
   return (
     <div className=" backdrop-blur-md  w-full col-span-12  relative  ">
       <div className="h-full">
         {showInnerFilters && (
-          <div className={`w-full flex justify-end mb-3 ${innerFiltersClassName}`}>
+          <div
+            className={`w-full flex justify-end mb-3 ${innerFiltersClassName}`}
+          >
             {/* headCells */}
             {showInnerFiltersSearch && (
               <FormikInput
@@ -338,7 +369,9 @@ const GlobalTable = ({
           {/* <div className="hidden lg:flex items-center gap-2 overflow-auto"> */}
           <table className={`table-bordered border-collapse w-full`}>
             <thead>
-              <tr className={`${rows.length > 0 ? 'text-defaultBlack' : 'text-textSecondary'} w-full text-left`}>
+              <tr
+                className={`${rows.length > 0 ? 'text-defaultBlack' : 'text-textSecondary'} w-full text-left`}
+              >
                 {/* Checkbox column */}
                 {/* {true && (
                   <th className={`py-4 hidden md:table-cell font-semibold sm:text-xs xl:text-sm`}>
@@ -374,7 +407,9 @@ const GlobalTable = ({
                   );
                 })} */}
               </tr>
-              <tr className={`${rows.length > 0 ? 'text-black' : 'text-textSecondary'} w-full `}>
+              <tr
+                className={`${rows.length > 0 ? 'text-black' : 'text-textSecondary'} w-full `}
+              >
                 {headCells &&
                   headCells.map((cell, index) => (
                     <th
@@ -401,13 +436,26 @@ const GlobalTable = ({
               <tbody>
                 <tr className="font-medium text-sm w-full border-b border-secondary">
                   {headCells.map((_, index) => (
-                    <td key={index} className="table-cell font-medium text-xs text-textSecondary w-1/5 py-3">
-                      <Skeleton variant="rounded" width={'80%'} height={20} animation={'wave'} />
+                    <td
+                      key={index}
+                      className="table-cell font-medium text-xs text-textSecondary w-1/5 py-3"
+                    >
+                      <Skeleton
+                        variant="rounded"
+                        width={'80%'}
+                        height={20}
+                        animation={'wave'}
+                      />
                     </td>
                   ))}
                   {checkBoxes && (
                     <td className="table-cell font-medium text-xs text-textSecondary w-1/5 py-3">
-                      <Skeleton variant="rounded" width={'80%'} height={20} animation={'wave'} />
+                      <Skeleton
+                        variant="rounded"
+                        width={'80%'}
+                        height={20}
+                        animation={'wave'}
+                      />
                     </td>
                   )}
                 </tr>
@@ -418,12 +466,21 @@ const GlobalTable = ({
                   {rows.map((row, index) => {
                     return (
                       <>
-                        <tr key={index} className="font-medium text-sm w-full border-b border-secondary">
+                        <tr
+                          key={index}
+                          className="font-medium text-sm w-full border-b border-secondary"
+                        >
                           {/* Checkbox column */}
                           {checkBoxes && (
                             <td>
                               <Checkbox
-                                checked={selectedRows.find((selectedRow) => selectedRow._id === row._id) ? true : false}
+                                checked={
+                                  selectedRows.find(
+                                    (selectedRow) => selectedRow._id === row._id
+                                  )
+                                    ? true
+                                    : false
+                                }
                                 onChange={() => handleRowCheckboxChange(row)}
                                 inputProps={{ 'aria-label': 'controlled' }}
                               />
@@ -448,24 +505,32 @@ const GlobalTable = ({
                                   key={index}
                                   className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                                 >
-                                  <div className={`py-2  flex justify-center items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}>
-                                    {
-                                      imageItems?.includes(headCells[index].id) ? (
-                                        <img
-                                          src={row[cell.id]}
-                                          className="w-7 h-7"
-                                          alt=""
-                                        />
-                                      ) : (
-                                        <>
-                                          {row[cell.id] ?row[cell.id] : <>-</>}
-                                        </>
-                                      )
-                                    }
-                                    {copyIconList.find((dt) => dt === cell.id) && (
+                                  <div
+                                    className={`py-2  flex justify-center items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}
+                                  >
+                                    {imageItems?.includes(
+                                      headCells[index].id
+                                    ) ? (
+                                      <img
+                                        src={row[cell.id]}
+                                        className="w-7 h-7"
+                                        alt=""
+                                      />
+                                    ) : (
+                                      <>
+                                        {row[cell.id] ? row[cell.id] : <>-</>}
+                                      </>
+                                    )}
+                                    {copyIconList.find(
+                                      (dt) => dt === cell.id
+                                    ) && (
                                       <Copy
                                         className="ml-3 cursor-pointer"
-                                        onClick={() => navigator.clipboard.writeText(row[cell.id])}
+                                        onClick={() =>
+                                          navigator.clipboard.writeText(
+                                            row[cell.id]
+                                          )
+                                        }
                                       />
                                     )}{' '}
                                   </div>
@@ -495,7 +560,11 @@ const GlobalTable = ({
                 <div key={index} className="w-full flex items-center">
                   <div className="w-1/3">{cell.label}:</div>
                   <div className="w-2/3">
-                    <Skeleton variant="rounded" height={20} animation={'wave'} />
+                    <Skeleton
+                      variant="rounded"
+                      height={20}
+                      animation={'wave'}
+                    />
                   </div>
                 </div>
               ))}
@@ -516,7 +585,9 @@ const GlobalTable = ({
         <NoData visible={rows.length < 1 && !isLoading} />
       </div>
 
-      <div className={`mt-3 flex ${filter ? 'justify-between' : 'justify-center'} items-center`}>
+      <div
+        className={`mt-3 flex ${filter ? 'justify-between' : 'justify-center'} items-center`}
+      >
         {filter && <div></div>}
         <div className="self-center">
           {rows.length > 0 && paginate && (

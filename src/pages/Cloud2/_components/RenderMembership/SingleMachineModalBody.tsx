@@ -75,19 +75,25 @@ const SingleMachineModalBody = ({ id }: Props) => {
           <span className="relative flex h-2 w-2">
             <span
               className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                machine.status === 'active' ? 'bg-primaryGreen' : 'bg-primaryRed'
+                machine.status === 'active'
+                  ? 'bg-primaryGreen'
+                  : 'bg-primaryRed'
               }`}
             ></span>
             <span
               className={`relative inline-flex rounded-full h-2 w-2 ${
-                machine.status === 'active' ? 'bg-primaryGreen' : 'bg-primaryRed'
+                machine.status === 'active'
+                  ? 'bg-primaryGreen'
+                  : 'bg-primaryRed'
               }`}
             ></span>
           </span>
 
           <img src={machine.imageUrl} alt="MachineImage" className="w-32" />
 
-          <span className="text-sm text-defaultBlack font-medium">{machine.name}</span>
+          <span className="text-sm text-defaultBlack font-medium">
+            {machine.name}
+          </span>
         </div>
       </article>
 

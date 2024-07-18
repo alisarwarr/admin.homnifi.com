@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function AuthSlider() {
-  return (
-    <div>AuthSlider</div>
-  )
+  return <div>AuthSlider</div>;
 }

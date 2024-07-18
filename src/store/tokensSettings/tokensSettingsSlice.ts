@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../index';
 
-
 interface tokensSettingsState {
-  depositSettings: any| null;
+  depositSettings: any | null;
   swapSettings: any | null;
   networkSettings: any | null;
 }
@@ -26,11 +25,11 @@ const tokensSettingsSlice = createSlice({
     },
     setNetworkSettings: (state, action: PayloadAction<any>) => {
       return { ...state, networkSettings: action.payload };
-    }
+    },
   },
 });
 
-
-export const { setDepositSettings, setSwapSettings, setNetworkSettings } = tokensSettingsSlice.actions;
+export const { setDepositSettings, setSwapSettings, setNetworkSettings } =
+  tokensSettingsSlice.actions;
 export const selectTokensSettings = (state: RootState) => state.tokensSettings;
 export default tokensSettingsSlice.reducer;

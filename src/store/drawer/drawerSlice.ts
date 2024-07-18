@@ -53,13 +53,25 @@ const drawerSlice = createSlice({
   },
 });
 
-export const { setDrawerWidth, setDrawerOpen, setDrawerOpenItemIndex, setDrawerTab, setActiveMenu, setExpendMenu } =
-  drawerSlice.actions;
-export const selectDrawerWidth = (state: { drawer: DrawerSliceState }) => state.drawer.width;
-export const selectDrawerOpen = (state: { drawer: DrawerSliceState }) => state.drawer.open;
-export const selectDrawerOpenItemKey_ = (state: { drawer: DrawerSliceState }) => state.drawer.openItemKey;
-export const selectDrawerTab = (state: { drawer: DrawerSliceState }) => state.drawer.tab;
-export const selectActiveMenu = (state: { drawer: DrawerSliceState }) => state.drawer.activeMenu;
-export const selectDrawer = (state: { drawer: DrawerSliceState }) => state.drawer;
+export const {
+  setDrawerWidth,
+  setDrawerOpen,
+  setDrawerOpenItemIndex,
+  setDrawerTab,
+  setActiveMenu,
+  setExpendMenu,
+} = drawerSlice.actions;
+export const selectDrawerWidth = (state: { drawer: DrawerSliceState }) =>
+  state.drawer.width;
+export const selectDrawerOpen = (state: { drawer: DrawerSliceState }) =>
+  state.drawer.open;
+export const selectDrawerOpenItemKey_ = (state: { drawer: DrawerSliceState }) =>
+  state.drawer.openItemKey;
+export const selectDrawerTab = (state: { drawer: DrawerSliceState }) =>
+  state.drawer.tab;
+export const selectActiveMenu = (state: { drawer: DrawerSliceState }) =>
+  state.drawer.activeMenu;
+export const selectDrawer = (state: { drawer: DrawerSliceState }) =>
+  state.drawer;
 
 export default drawerSlice.reducer;

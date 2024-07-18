@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 import axios, { AxiosRequestConfig } from 'axios';
-import { setConvertedPrice,  setMaintenance } from './generalSlice';
+import { setConvertedPrice, setMaintenance } from './generalSlice';
 import ApiRequest from '../../utils/network/ApiRequest';
 
 export const useGeneralActions = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const GetConvertedPrice = async () => {
     return await axios
@@ -31,8 +30,6 @@ export const useGeneralActions = () => {
       })
       .catch((error: any) => error);
   };
-
-
 
   return {
     GetConvertedPrice,

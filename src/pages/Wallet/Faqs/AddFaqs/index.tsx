@@ -45,7 +45,10 @@ const PRODUCT_STATUS_LABEL: any = {
 const AddFaqs = () => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
-  const [duplicateVouchers, setDuplicateVouchers] = useState({ open: false, duplicates: [] });
+  const [duplicateVouchers, setDuplicateVouchers] = useState({
+    open: false,
+    duplicates: [],
+  });
 
   const { addFaq, getFaqs } = useFaqActions();
 
@@ -122,7 +125,9 @@ const AddFaqs = () => {
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto ">
       <div className="mx-auto text-start">
-        <h2 className="text-xl font-bold  sm:text-1xl text-primary">{id ? 'Update' : 'Add'} Faq</h2>
+        <h2 className="text-xl font-bold  sm:text-1xl text-primary">
+          {id ? 'Update' : 'Add'} Faq
+        </h2>
       </div>
 
       <form onSubmit={formik.handleSubmit} className="">
@@ -177,7 +182,9 @@ const AddFaqs = () => {
                 error={formik.errors[field.key]}
                 touched={formik.touched[field.key]}
                 value={formik.values[field.key]}
-                onChange={(e: any) => formik.setFieldValue(field.key, e.target.value)}
+                onChange={(e: any) =>
+                  formik.setFieldValue(field.key, e.target.value)
+                }
               />
             </div>
           ))}
@@ -197,11 +204,17 @@ const AddFaqs = () => {
       <Dialog
         className="max-w-4xl"
         open={duplicateVouchers.open}
-        onClose={() => setDuplicateVouchers((prev) => ({ ...prev, open: false }))}
+        onClose={() =>
+          setDuplicateVouchers((prev) => ({ ...prev, open: false }))
+        }
       >
         <h2 className="text-red-500 text-center">Duplicate Vouchers Found!</h2>
-        <p className="font-light text-xs">Please resolve the file and re upload</p>
-        <p className="font-light text-xs italic">Below are the duplicate vouchers</p>
+        <p className="font-light text-xs">
+          Please resolve the file and re upload
+        </p>
+        <p className="font-light text-xs italic">
+          Below are the duplicate vouchers
+        </p>
         <div className="flex gap-2 flex-wrap w-full my-3">
           {duplicateVouchers.duplicates.map((dup: any, i: number) => (
             <span key={i} className="px-4 py-1 rounded-full bg-slate-700">

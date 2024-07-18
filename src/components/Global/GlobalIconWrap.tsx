@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ const GlobalIconWrap = ({ children, notificationCount }: Props) => {
           {notificationCount}
         </span>
       ) : (
-        ""
+        ''
       )}
     </div>
   );

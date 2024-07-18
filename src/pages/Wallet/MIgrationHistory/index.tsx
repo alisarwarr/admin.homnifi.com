@@ -55,7 +55,11 @@ const MigrationHistory = () => {
       token: <TokenNameWithLogo tokenName={_data.token.name} />,
       blockchainId: (
         <Tooltip title={_data.blockchainId}>
-          <Chip label={_data.blockchainId} size="small" sx={{ fontSize: '10px' }}></Chip>
+          <Chip
+            label={_data.blockchainId}
+            size="small"
+            sx={{ fontSize: '10px' }}
+          ></Chip>
         </Tooltip>
       ),
       amount: _data.amount,
@@ -113,7 +117,9 @@ const MigrationHistory = () => {
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center  text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Migration History</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Migration History
+        </h1>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
           onClick={async () => {

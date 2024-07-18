@@ -43,7 +43,8 @@ function AddToken({ open, onClose }: Props) {
     },
   });
 
-  const { handleChange, handleSubmit, values, errors, touched, resetForm } = formik;
+  const { handleChange, handleSubmit, values, errors, touched, resetForm } =
+    formik;
 
   return (
     <div>
@@ -149,7 +150,9 @@ function AddToken({ open, onClose }: Props) {
                       { label: 'two', value: 'two' },
                       { label: 'three', value: 'three' },
                     ]}
-                    isError={errors.tokenType && touched.tokenType ? true : false}
+                    isError={
+                      errors.tokenType && touched.tokenType ? true : false
+                    }
                     onChange={(e) => {
                       formik.setFieldValue('tokenType', e);
                     }}
@@ -172,9 +175,13 @@ function AddToken({ open, onClose }: Props) {
                       { label: 'two', value: 'two' },
                       { label: 'three', value: 'three' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('withdrawType', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('withdrawType', true)
+                    }
                     error={errors.withdrawType}
-                    isError={touched.withdrawType && errors.withdrawType ? true : false}
+                    isError={
+                      touched.withdrawType && errors.withdrawType ? true : false
+                    }
                     value={values.withdrawType}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -201,7 +208,11 @@ function AddToken({ open, onClose }: Props) {
               </div>
               <div className="mx-4 md:mx-2 my-2">
                 <div className="flex flex-col  md:flex-row w-full">
-                  <Button className="bg-primary rounded-full my-4" loadingType="circular" buttonType="submit">
+                  <Button
+                    className="bg-primary rounded-full my-4"
+                    loadingType="circular"
+                    buttonType="submit"
+                  >
                     Add Token
                   </Button>
                 </div>

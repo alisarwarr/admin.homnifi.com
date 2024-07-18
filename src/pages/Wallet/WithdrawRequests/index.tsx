@@ -45,7 +45,9 @@ const WithdrawRequests = () => {
     <div className="w-full px-2">
       {/* PAGE TITLE */}
       <div className="flex bg-primary items-center  text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Withdraw Requests</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Withdraw Requests
+        </h1>
 
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
@@ -61,7 +63,12 @@ const WithdrawRequests = () => {
       </div>
 
       {/* TABLE */}
-      <WithdrawRequestsTable data={withdrawRequests} loading={loading} filter={filter} setFilter={setFilter} />
+      <WithdrawRequestsTable
+        data={withdrawRequests}
+        loading={loading}
+        filter={filter}
+        setFilter={setFilter}
+      />
     </div>
   );
 };

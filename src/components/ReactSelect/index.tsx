@@ -33,7 +33,9 @@ const CustomValueContainer = (props: any) => {
       <Placeholder {...props} isFocused={props.isFocused}>
         {props.selectProps.placeholder}
       </Placeholder>
-      {React.Children.map(props.children, (child) => (child && child.type !== Placeholder ? child : null))}
+      {React.Children.map(props.children, (child) =>
+        child && child.type !== Placeholder ? child : null
+      )}
     </ValueContainer>
   );
 };
@@ -77,7 +79,9 @@ const ReactSelect = ({
 
   return (
     <>
-      <div className={`${selectContainerClassName} flex flex-col w-full z-0  text-primary `}>
+      <div
+        className={`${selectContainerClassName} flex flex-col w-full z-0  text-primary `}
+      >
         <div className="flex items-center w-full">
           <Select
             className={`w-full ${className}`}
@@ -101,13 +105,11 @@ const ReactSelect = ({
                   color: '#1B9FDA',
                   border: state.isFocused
                     ? 'none'
-
                     : (formik?.errors[name] && formik?.touched[name]) || isError
-                    ? '1px solid #f44336'
-                    : '1px solid #D7D7D7',
+                      ? '1px solid #f44336'
+                      : '1px solid #D7D7D7',
                   '&:hover': {
                     border: !state.isFocused && '1px solid #1B9FDA',
-
                   },
                   boxShadow: '0px',
                   outline: state.isFocused && '2px #90CAF9 solid',
@@ -161,9 +163,15 @@ const ReactSelect = ({
                 padding: '0px 4px',
                 position: 'absolute',
                 display: isMulti && state.hasValue ? 'none' : 'block',
-                top: state.hasValue || state.selectProps.inputValue ? '-22px' : isSearchable ? '5px' : '0px',
+                top:
+                  state.hasValue || state.selectProps.inputValue
+                    ? '-22px'
+                    : isSearchable
+                      ? '5px'
+                      : '0px',
                 transition: 'top 0.1s, font-size 0.1s',
-                fontSize: (state.hasValue || state.selectProps.inputValue) && '12px',
+                fontSize:
+                  (state.hasValue || state.selectProps.inputValue) && '12px',
               }),
               valueContainer: (provided) => ({
                 ...provided,
@@ -179,7 +187,9 @@ const ReactSelect = ({
               }
             }}
             placeholder={
-              placeholder ? placeholder : `Select ${name[0].toUpperCase().concat(name.slice(1, name.length))}...`
+              placeholder
+                ? placeholder
+                : `Select ${name[0].toUpperCase().concat(name.slice(1, name.length))}...`
             }
             isDisabled={disabled}
             isClearable={isClearable}
@@ -188,7 +198,9 @@ const ReactSelect = ({
         </div>
 
         {formik?.errors[name] && formik?.touched[name] && (
-          <div className="text-errorColor text-xs mt-1">{formik?.errors[name]}</div>
+          <div className="text-errorColor text-xs mt-1">
+            {formik?.errors[name]}
+          </div>
         )}
       </div>
     </>

@@ -65,7 +65,7 @@ export interface TokenTransactionSettingTypeDetails {
   fee: number;
   feeType: string;
   minAmount: number;
-  maxAmount:number
+  maxAmount: number;
   processType: string;
   token: string;
   trxType: string;
@@ -120,7 +120,8 @@ const tokenSlice = createSlice({
   },
 });
 
-export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs } = tokenSlice.actions;
+export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs } =
+  tokenSlice.actions;
 
 export const selectToken = (state: { token: TokenSliceState }) => state.token;
 export default tokenSlice.reducer;

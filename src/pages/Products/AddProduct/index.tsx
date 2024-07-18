@@ -25,7 +25,9 @@ const validationSchema = Yup.object().shape({
   externalProductId: Yup.string().required('External Product ID is required.'),
   skuId: Yup.string().required('SKU ID is required.'),
   mintingPower: Yup.number().required('Minting Power is required.'),
-  mintingPowerPerc: Yup.number().required('Minting Power Percentage is required.'),
+  mintingPowerPerc: Yup.number().required(
+    'Minting Power Percentage is required.'
+  ),
   airdropPromo: Yup.string(),
   stakeLimit: Yup.number(),
   tokenAirdrop: Yup.number(),
@@ -40,7 +42,10 @@ const validationSchema = Yup.object().shape({
 const AddProduct = () => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
-  const [duplicateVouchers, setDuplicateVouchers] = useState<{ open: boolean; duplicates: string[] }>({
+  const [duplicateVouchers, setDuplicateVouchers] = useState<{
+    open: boolean;
+    duplicates: string[];
+  }>({
     open: false,
     duplicates: [],
   });
@@ -120,7 +125,10 @@ const AddProduct = () => {
           navigate('/products');
         } else {
           if (response.data?.errorVouchers) {
-            setDuplicateVouchers({ open: true, duplicates: response.data?.errorVouchers });
+            setDuplicateVouchers({
+              open: true,
+              duplicates: response.data?.errorVouchers,
+            });
           } else {
             errorAlert(response?.message);
           }
@@ -136,7 +144,9 @@ const AddProduct = () => {
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-primary max-w-[1700px] mx-auto">
       <div className="mx-auto text-start">
-        <h2 className="text-xl font-bold  tracking-tight sm:text-2xl">Add Product</h2>
+        <h2 className="text-xl font-bold  tracking-tight sm:text-2xl">
+          Add Product
+        </h2>
       </div>
 
       <form onSubmit={formik.handleSubmit} className="">
@@ -175,7 +185,9 @@ const AddProduct = () => {
                 key={key}
                 label={key.charAt(0).toUpperCase() + key.slice(1)}
                 name={key}
-                type={typeof initialValues[key] === 'number' ? 'number' : 'text'}
+                type={
+                  typeof initialValues[key] === 'number' ? 'number' : 'text'
+                }
                 placeholder={`Enter ${key}`}
                 error={formik.errors[key]}
                 touched={formik.touched[key]}

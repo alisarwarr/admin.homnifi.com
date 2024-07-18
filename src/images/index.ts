@@ -1,1 +1,1 @@
-export const homnifiLogo = "/img/Logo/homnifiLogo.svg";
+export const homnifiLogo = '/img/Logo/homnifiLogo.svg';

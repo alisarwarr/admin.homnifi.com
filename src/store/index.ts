@@ -21,7 +21,7 @@ import faqSlice from './wallet/faqs/faqSlice';
 
 import notificationsSlice from './notifications/notificationsSlice';
 import cloudkSlice from './cloudk/cloudk.slice';
-import generalSlice from './general/generalSlice'
+import generalSlice from './general/generalSlice';
 import { CLOUD_SLICE_NAME } from './cloudk/cloudk.slice';
 import tokensSettingsSlice from './tokensSettings/tokensSettingsSlice';
 import defi360Slice, { DEFI_360_SLICE_NAME } from './defi-360/defi-360-slice';
@@ -46,7 +46,7 @@ const rootReducer = combineReducers({
   history: historySlice,
   notifications: notificationsSlice,
   admin: adminSlice,
-  faq:faqSlice,
+  faq: faqSlice,
   [CLOUD_SLICE_NAME]: cloudkSlice,
   tokensSettings: tokensSettingsSlice,
   [DEFI_360_SLICE_NAME]: defi360Slice,
@@ -64,4 +64,5 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
-export const handleTabChange = (newTab: string) => store.dispatch(setDrawerTab(newTab));
+export const handleTabChange = (newTab: string) =>
+  store.dispatch(setDrawerTab(newTab));

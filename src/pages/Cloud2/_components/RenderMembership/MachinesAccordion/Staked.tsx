@@ -2,8 +2,6 @@ import { useState } from 'react';
 import CustomSwitch from '../../../../../components/Global/GlobalSwitch';
 import Toottip from '../../../../../components/Global/Toottip';
 
-
-
 const Staked = () => {
   const [autoCompundToggle, setAutoCompundToggle] = useState(false);
 
@@ -28,7 +26,6 @@ const Staked = () => {
             </div>
           }
         >
-
           <button
             type="button"
             className="px-4 py-1 bg-primaryDark text-xs text-white rounded-md hover:bg-primary transition-all shadow-buttonShadow"
@@ -47,7 +44,7 @@ const Staked = () => {
         </span>
         <CustomSwitch
           checked={autoCompundToggle}
-          onChange={(checked : any) => setAutoCompundToggle(checked)}
+          onChange={(checked: any) => setAutoCompundToggle(checked)}
         />
       </article>
 

@@ -7,7 +7,12 @@ import MuiAppBar from '@mui/material/AppBar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 //REDUX-TOOLKIT
 import { useSelector, useDispatch } from 'react-redux';
-import { selectDrawerWidth, selectDrawerOpen, setDrawerWidth, setDrawerOpen } from '../../store/drawer/drawerSlice';
+import {
+  selectDrawerWidth,
+  selectDrawerOpen,
+  setDrawerWidth,
+  setDrawerOpen,
+} from '../../store/drawer/drawerSlice';
 import { selectUser, selectUserSlice } from '../../store/user/userSlice';
 import { handleTabChange } from '../../store';
 //ROUTER-DOM
@@ -27,7 +32,8 @@ export default function Layout(): JSX.Element {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  const handleWidthChange = (newWidth: number) => dispatch(setDrawerWidth(newWidth));
+  const handleWidthChange = (newWidth: number) =>
+    dispatch(setDrawerWidth(newWidth));
   const handleOpenChange = (newOpen: boolean) => {
     dispatch(setDrawerOpen(newOpen));
   };
@@ -77,7 +83,8 @@ export default function Layout(): JSX.Element {
 
   // detect click outside drawer
   const drawerRef = useRef<HTMLDivElement | null>(null);
-  const [isClickedLinesButton, setIsClickedLinesButton] = useState<boolean>(false);
+  const [isClickedLinesButton, setIsClickedLinesButton] =
+    useState<boolean>(false);
 
   useEffect(() => {
     const handleClickOutsideDrawer = (event: any) => {

@@ -36,7 +36,12 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
   const handleAddRow = () => {
     formik.setFieldValue('rules', [
       ...formik.values.rules,
-      { dropPercentage: '', productionDecreasePercentage: '', increaseDLPPercentage: '', mintingBoost: '' },
+      {
+        dropPercentage: '',
+        productionDecreasePercentage: '',
+        increaseDLPPercentage: '',
+        mintingBoost: '',
+      },
     ]);
   };
 
@@ -99,10 +104,13 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
                   type="number"
                   value={row.dropPercentage}
                   className={`rounded-none border-none !px-0 !py-0`}
-                  onChange={(e) => handleInputChange(index, 'dropPercentage', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, 'dropPercentage', e.target.value)
+                  }
                   onBlur={formik.handleBlur}
                   isError={
-                    formik.touched.rules?.[index]?.dropPercentage && formik.errors.rules?.[index]?.dropPercentage
+                    formik.touched.rules?.[index]?.dropPercentage &&
+                    formik.errors.rules?.[index]?.dropPercentage
                   }
                 />
               </td>
@@ -112,10 +120,17 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
                   type="number"
                   value={row.productionDecreasePercentage}
                   className="rounded-none border-none !px-0 !py-0"
-                  onChange={(e) => handleInputChange(index, 'productionDecreasePercentage', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(
+                      index,
+                      'productionDecreasePercentage',
+                      e.target.value
+                    )
+                  }
                   onBlur={formik.handleBlur}
                   isError={
-                    formik.touched.rules?.[index]?.productionDecreasePercentage &&
+                    formik.touched.rules?.[index]
+                      ?.productionDecreasePercentage &&
                     formik.errors.rules?.[index]?.productionDecreasePercentage
                   }
                 />
@@ -126,7 +141,13 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
                   type="number"
                   value={row.increaseDLPPercentage}
                   className="rounded-none border-none !px-0 !py-0"
-                  onChange={(e) => handleInputChange(index, 'increaseDLPPercentage', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(
+                      index,
+                      'increaseDLPPercentage',
+                      e.target.value
+                    )
+                  }
                   onBlur={formik.handleBlur}
                   isError={
                     formik.touched.rules?.[index]?.increaseDLPPercentage &&
@@ -140,20 +161,33 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
                   type="number"
                   value={row.mintingBoost}
                   className="rounded-none border-none !px-0 !py-0 w"
-                  onChange={(e) => handleInputChange(index, 'mintingBoost', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, 'mintingBoost', e.target.value)
+                  }
                   onBlur={formik.handleBlur}
-                  isError={formik.touched.rules?.[index]?.mintingBoost && formik.errors.rules?.[index]?.mintingBoost}
+                  isError={
+                    formik.touched.rules?.[index]?.mintingBoost &&
+                    formik.errors.rules?.[index]?.mintingBoost
+                  }
                 />
               </td>
               <td>
-                <DeleteIcon onClick={() => handleDeleteRow(index)} className="h-6 " />
+                <DeleteIcon
+                  onClick={() => handleDeleteRow(index)}
+                  className="h-6 "
+                />
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       <div className="flex flex-col gap-4 py-5">
-        <GlobalButton type="button" outlined text="Add Row" onClick={handleAddRow} />
+        <GlobalButton
+          type="button"
+          outlined
+          text="Add Row"
+          onClick={handleAddRow}
+        />
         <GlobalButton type="submit" text="Save" loading={loading} />
       </div>
     </form>

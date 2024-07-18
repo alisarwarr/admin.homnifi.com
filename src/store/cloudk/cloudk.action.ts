@@ -1,6 +1,10 @@
 import { useDispatch } from 'react-redux';
 import ApiRequest from '../../utils/network/ApiRequest';
-import { INFLATION_RULES, PRODUCTS, USER_MACHINE_LIST } from '../../utils/network/ApiEndpoints';
+import {
+  INFLATION_RULES,
+  PRODUCTS,
+  USER_MACHINE_LIST,
+} from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
 
 export const useCloudActions = () => {
@@ -14,7 +18,9 @@ export const useCloudActions = () => {
         url: `${INFLATION_RULES}/history`,
       });
       const _infalationRules = response?.data?.data;
-      dispatch(cloudkSliceAction.setCloudkSlice({ infalationRules: _infalationRules }));
+      dispatch(
+        cloudkSliceAction.setCloudkSlice({ infalationRules: _infalationRules })
+      );
       return response;
     } catch (error) {
       console.error('Error fetching inflation rules history:', error);
@@ -31,8 +37,15 @@ export const useCloudActions = () => {
       console.log(response, 'responseresponseresponse');
 
       const _infalationRules = response?.data?.data;
-      console.log('🚀 ~ getCurrentInfalationRules ~ _infalationRules:', _infalationRules);
-      dispatch(cloudkSliceAction.setCloudkSlice({ currentinfalationRules: _infalationRules }));
+      console.log(
+        '🚀 ~ getCurrentInfalationRules ~ _infalationRules:',
+        _infalationRules
+      );
+      dispatch(
+        cloudkSliceAction.setCloudkSlice({
+          currentinfalationRules: _infalationRules,
+        })
+      );
       return response;
     } catch (error) {
       console.error('Error fetching current inflation rules:', error);
@@ -116,8 +129,10 @@ export const useCloudActions = () => {
           cloudkSliceAction.setCloudkSlice({
             userRewards: {
               ...response.data.data,
-              lifetimeReward: response.data.data.lifetimeRewardPrice * convertedPrice,
-              claimableRewards: response.data.data.claimableRewardsPrice * convertedPrice,
+              lifetimeReward:
+                response.data.data.lifetimeRewardPrice * convertedPrice,
+              claimableRewards:
+                response.data.data.claimableRewardsPrice * convertedPrice,
             },
             userRewardsLoading: false,
           })
@@ -138,7 +153,6 @@ export const useCloudActions = () => {
       });
   };
 
-
   const getUserMachineList = async () => {
     return await ApiRequest()
       .request({
@@ -150,14 +164,13 @@ export const useCloudActions = () => {
         return response;
       })
       .catch((error: any) => error);
-  }
-
+  };
 
   return {
     getInfalationRules,
     createInfalationRules,
     getCurrentInfalationRules,
     getUserMachinesList,
-    getUserMachineList
+    getUserMachineList,
   };
 };

@@ -7,11 +7,8 @@ import { selectCloudkSlice } from '../../../../store/cloudk/cloudk.slice';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-
 const RenderMachinesHistory = () => {
   const stakeModalHook = useModalHook();
-
-
 
   const { getUserMachineList } = useCloudActions();
   const { userMachineList } = useSelector(selectCloudkSlice);
@@ -19,82 +16,78 @@ const RenderMachinesHistory = () => {
     getUserMachineList();
   }, []);
 
-
-
   const headCells = [
     {
       id: 'user',
       label: 'User Id',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'name',
       label: 'Name',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'externalMachineId',
       label: 'External Machine Id',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'rewardWallet',
       label: 'Reward Wallet',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'stakeToken',
       label: 'Stake Token',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'stakeLimit',
       label: 'Stake Limit',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'stakeLimit',
       label: 'Stake Limit',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'mintingPower',
       label: 'Minting Power',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'dlp',
       label: 'DLP',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'imageUrl',
       label: 'Image',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'createdAt',
       label: 'Time',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'boost',
       label: 'Boost',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'autoCompound',
       label: 'Auto Compound',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
     {
       id: 'allTimeHigh',
       label: 'All Time High',
-      dataClass: 'w-72'
+      dataClass: 'w-72',
     },
   ];
-
-
 
   const rows = userMachineList?.map((item: any, i: number) => {
     return {
@@ -109,11 +102,10 @@ const RenderMachinesHistory = () => {
       imageUrl: item.imageUrl,
       createdAt: item.createdAt,
       boost: item.boost,
-      autoCompound: item.autoCompound ? "Yes" : "No",
-      allTimeHigh: item.allTimeHigh
-    }
+      autoCompound: item.autoCompound ? 'Yes' : 'No',
+      allTimeHigh: item.allTimeHigh,
+    };
   });
-
 
   return (
     <>
@@ -127,8 +119,7 @@ const RenderMachinesHistory = () => {
         <SingleMachineModalBody id={'1222'} />
       </GlobalModal>
 
-      {
-        userMachineList &&
+      {userMachineList && (
         <GlobalTable
           rows={rows.length ? rows : []}
           headCells={headCells}
@@ -140,7 +131,7 @@ const RenderMachinesHistory = () => {
           imageItems={['imageUrl']}
           totalPages={Math.ceil(rows.length / 10)}
         />
-      }
+      )}
     </>
   );
 };

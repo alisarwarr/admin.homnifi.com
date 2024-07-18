@@ -20,8 +20,12 @@ type Props = {
 const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
-  const { updateWithdrawRequest, getWithdrawRequests, updateMigrationRequest, getMigrationRequests } =
-    useWalletActions();
+  const {
+    updateWithdrawRequest,
+    getWithdrawRequests,
+    updateMigrationRequest,
+    getMigrationRequests,
+  } = useWalletActions();
 
   const initialValues: {
     denialReason?: string;
@@ -36,13 +40,11 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
     initialValues: initialValues,
 
     onSubmit: async (values) => {
-      console.log("🚀 ~ onSubmit: ~ values:", action)
+      console.log('🚀 ~ onSubmit: ~ values:', action);
       setSaveLoading(true);
 
       let _values: any = {
         id: action.id,
-
-
       };
 
       if (action.type === WALLET_ACTIONS.ACCEPT) {
@@ -56,7 +58,7 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
           _values = {
             ..._values,
             hash: values.hash,
-            type:'approve'
+            type: 'approve',
           };
         }
       } else {
@@ -69,14 +71,13 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
         _values = {
           ..._values,
           denialReason: values.reason,
-          type:'reject'
-
+          type: 'reject',
         };
       }
 
       try {
         const response =
-          requestFor === 'WITHDRAW'  && await updateWithdrawRequest(_values) ;
+          requestFor === 'WITHDRAW' && (await updateWithdrawRequest(_values));
         if (response?.data?.status) {
           successAlert(response?.data?.message);
           requestFor === 'WITHDRAW' && getWithdrawRequests(true);
@@ -85,7 +86,10 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
           errorAlert(response?.data?.message);
         }
       } catch (error) {
-        console.error(`Update ${requestFor === 'WITHDRAW' ? 'Withdraw' : 'Migration'} Request Error`, error);
+        console.error(
+          `Update ${requestFor === 'WITHDRAW' ? 'Withdraw' : 'Migration'} Request Error`,
+          error
+        );
       } finally {
         setSaveLoading(false);
       }
@@ -106,24 +110,29 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
                   placeholder={`Enter Reason`}
                   error={formik.errors.denialReason}
                   value={formik.values.denialReason}
-                  onChange={(e: any) => formik.setFieldValue('denialReason', e.target.value)}
+                  onChange={(e: any) =>
+                    formik.setFieldValue('denialReason', e.target.value)
+                  }
                 />
               </div>
             )}
 
-            {action?.type === WALLET_ACTIONS.ACCEPT && requestFor === 'WITHDRAW' && (
-              <div>
-                <FormikInput
-                  label={'Transaction Hash'}
-                  name={'hash'}
-                  type={'text'}
-                  placeholder={`Enter Transaction Hash `}
-                  error={formik.errors.hash}
-                  value={formik.values.hash}
-                  onChange={(e: any) => formik.setFieldValue('hash', e.target.value)}
-                />
-              </div>
-            )}
+            {action?.type === WALLET_ACTIONS.ACCEPT &&
+              requestFor === 'WITHDRAW' && (
+                <div>
+                  <FormikInput
+                    label={'Transaction Hash'}
+                    name={'hash'}
+                    type={'text'}
+                    placeholder={`Enter Transaction Hash `}
+                    error={formik.errors.hash}
+                    value={formik.values.hash}
+                    onChange={(e: any) =>
+                      formik.setFieldValue('hash', e.target.value)
+                    }
+                  />
+                </div>
+              )}
           </>
         </div>
       </form>

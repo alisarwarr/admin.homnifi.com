@@ -10,10 +10,19 @@ import { CapitalizeFirstLetter } from '../../utils/utils';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { useAdminActions } from '../../store/admin/adminActions';
-import { selectAdmin, selectAdminPermissionsList } from '../../store/admin/adminSlice';
+import {
+  selectAdmin,
+  selectAdminPermissionsList,
+} from '../../store/admin/adminSlice';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
-  const { getAdminPermissionsList, getAdminRole, createAdmin, getAdminById, updateAdmin } = useAdminActions();
+  const {
+    getAdminPermissionsList,
+    getAdminRole,
+    createAdmin,
+    getAdminById,
+    updateAdmin,
+  } = useAdminActions();
   const { rolesList, selectedAdmin } = useSelector(selectAdmin);
 
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
@@ -86,7 +95,8 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
       errorAlert(response.message);
     },
   });
-  const { handleChange, handleSubmit, values, errors, touched, setValues } = formik;
+  const { handleChange, handleSubmit, values, errors, touched, setValues } =
+    formik;
 
   useEffect(() => {
     if (rolesList.length === 0) {
@@ -143,7 +153,9 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
             onBlur={formik.handleBlur}
           />
           {touched.roles && errors.roles && isSubmit && (
-            <span className="text-xs text-red-500 self-end ">{errors.roles}</span>
+            <span className="text-xs text-red-500 self-end ">
+              {errors.roles}
+            </span>
           )}
         </div>
 

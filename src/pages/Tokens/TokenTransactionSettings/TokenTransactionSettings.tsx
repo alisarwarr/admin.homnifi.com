@@ -26,7 +26,9 @@ const TokenTransactionSettings = () => {
     <div className="w-full px-2">
       {/* PAGE TITLE */}
       <div className="flex bg-primary items-center  text-white mt-4">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Token Transaction Settings</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Token Transaction Settings
+        </h1>
 
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
@@ -43,8 +45,8 @@ const TokenTransactionSettings = () => {
 
       {/* TABLE */}
       {Object.entries(tokenTransactionSettingList).map(([key, value]) => (
-        <div key={key} className='py-4'>
-          <p className='text-l font-medium py-2'>{key}</p>
+        <div key={key} className="py-4">
+          <p className="text-l font-medium py-2">{key}</p>
           <TokenTransactionSettingsTable data={value} loading={loading} />
         </div>
       ))}

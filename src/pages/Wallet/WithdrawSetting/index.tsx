@@ -24,8 +24,22 @@ function WithdrawSetting() {
   ];
 
   const data = [
-    { id: 1, type: 'internal', withdrawFrom: 10, withdrawTo: 100, fees: 50, commission: '5 %' },
-    { id: 2, type: 'external', withdrawFrom: 100, withdrawTo: 200, fees: 50, commission: '5 %' },
+    {
+      id: 1,
+      type: 'internal',
+      withdrawFrom: 10,
+      withdrawTo: 100,
+      fees: 50,
+      commission: '5 %',
+    },
+    {
+      id: 2,
+      type: 'external',
+      withdrawFrom: 100,
+      withdrawTo: 200,
+      fees: 50,
+      commission: '5 %',
+    },
   ];
 
   const rows = data?.map((_data: any, index: number) => {
@@ -60,7 +74,9 @@ function WithdrawSetting() {
   return (
     <div className="w-full px-2 border py-4 rounded-md">
       <div className="flex bg-primary items-center table-head-bg text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Withdraw Settings</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Withdraw Settings
+        </h1>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
           onClick={() => {
@@ -71,8 +87,17 @@ function WithdrawSetting() {
           <span> Add Withdraw Settings</span>
         </div>
       </div>
-      <AddWithdrawSettings onClose={onPopupHandler} open={open} selectedSetting={selectedSetting} />
-      <GlobalTable rows={rows} headCells={headCells} isLoading={false} paginate={false} />
+      <AddWithdrawSettings
+        onClose={onPopupHandler}
+        open={open}
+        selectedSetting={selectedSetting}
+      />
+      <GlobalTable
+        rows={rows}
+        headCells={headCells}
+        isLoading={false}
+        paginate={false}
+      />
     </div>
   );
 }

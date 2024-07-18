@@ -31,7 +31,12 @@ const headCells = [
   { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
 ];
 
-const UserVeriricationRequestsTable = ({ data, loading, page, setPage }: Props) => {
+const UserVeriricationRequestsTable = ({
+  data,
+  loading,
+  page,
+  setPage,
+}: Props) => {
   const navigate = useNavigate();
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [rejectOpen, setRejectOpen] = useState(false);
@@ -89,7 +94,11 @@ const UserVeriricationRequestsTable = ({ data, loading, page, setPage }: Props) 
               <img
                 src={viewWhite}
                 alt="View Icon"
-                onClick={() => navigate('/users/verifications/' + _data._id, { state: _data })}
+                onClick={() =>
+                  navigate('/users/verifications/' + _data._id, {
+                    state: _data,
+                  })
+                }
                 className="cursor-pointer min-w-[20px] min-h-[20px] object-contain"
               />
             </div>
@@ -114,7 +123,10 @@ const UserVeriricationRequestsTable = ({ data, loading, page, setPage }: Props) 
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         onConfirm={async () => {
-          const res = await verification_action(dataInfo, VERIFICATION_ACTION_STATUS.VERIFIED);
+          const res = await verification_action(
+            dataInfo,
+            VERIFICATION_ACTION_STATUS.VERIFIED
+          );
           if (!res.status) {
             errorAlert(res.message);
             setConfirmOpen(false);
@@ -137,7 +149,11 @@ const UserVeriricationRequestsTable = ({ data, loading, page, setPage }: Props) 
             setRejectionReasonError('Required');
             return;
           }
-          const res = await verification_action(dataInfo, VERIFICATION_ACTION_STATUS.REJECTED, rejectionReason);
+          const res = await verification_action(
+            dataInfo,
+            VERIFICATION_ACTION_STATUS.REJECTED,
+            rejectionReason
+          );
           if (!res.status) {
             errorAlert(res.message);
             setRejectOpen(false);

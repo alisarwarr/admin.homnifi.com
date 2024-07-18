@@ -13,9 +13,17 @@ import { errorAlert, successAlert } from '../../../../utils/alerts';
 import FormikInput from '../../../../components/FormikInput';
 import { TokenTransactionSettingType } from '../../../../store/token/tokenSlice';
 import { useTokenActions } from '../../../../store/token/tokenAction';
-import { CapitalizeAllLetters, CapitalizeFirstLetter, lowerCaseAllLetters } from '../../../../utils/utils';
+import {
+  CapitalizeAllLetters,
+  CapitalizeFirstLetter,
+  lowerCaseAllLetters,
+} from '../../../../utils/utils';
 import ReactSelect from '../../../../components/ReactSelect';
-import { TRANSACTION_PROCESS, TRANSACTION_TYPES, WITHDRAW_FEE_TYPES } from '../../../../constants';
+import {
+  TRANSACTION_PROCESS,
+  TRANSACTION_TYPES,
+  WITHDRAW_FEE_TYPES,
+} from '../../../../constants';
 import GlobalSelect from '../../../../components/Global/GlobalSelect';
 
 const validationSchema = Yup.object().shape({
@@ -52,8 +60,11 @@ const TokenTransactionSettingDetails = () => {
 
   const { state }: { state: TokenTransactionSettingType } = useLocation();
 
-  const { updateTokenTransactionSettings, getTokenTransactionSettingList, getTokenTransactionSettingById } =
-    useTokenActions();
+  const {
+    updateTokenTransactionSettings,
+    getTokenTransactionSettingList,
+    getTokenTransactionSettingById,
+  } = useTokenActions();
 
   const { id } = useParams();
 
@@ -88,7 +99,8 @@ const TokenTransactionSettingDetails = () => {
       setSaveLoading(true);
 
       try {
-        const response = id && (await updateTokenTransactionSettings(id, _values));
+        const response =
+          id && (await updateTokenTransactionSettings(id, _values));
         if (response.status) {
           await getTokenTransactionSettingList(true);
           successAlert(response?.message);
@@ -97,7 +109,10 @@ const TokenTransactionSettingDetails = () => {
           errorAlert(response?.message);
         }
       } catch (error) {
-        console.error(`Token Transaction Setting ${id ? 'update' : 'add'} error`, error);
+        console.error(
+          `Token Transaction Setting ${id ? 'update' : 'add'} error`,
+          error
+        );
       } finally {
         setSaveLoading(false);
       }
@@ -135,8 +150,6 @@ const TokenTransactionSettingDetails = () => {
               value: CapitalizeAllLetters(_state.trxSettings?.processType),
             },
 
-
-
             trxType: {
               label: CapitalizeFirstLetter(_state.trxSettings?.trxType),
               value: CapitalizeAllLetters(_state.trxSettings?.trxType),
@@ -155,7 +168,6 @@ const TokenTransactionSettingDetails = () => {
           id ? 'Update' : 'Add'
         } Token Setting (${CapitalizeFirstLetter(state?.trxSettings?.trxType ?? '')})`}</h2>
         <span className="flex items-center gap-1 text-2xl">
-
           {formik.values.name === 'Tether' ? 'USDT' : formik.values.name}
         </span>
       </div>
@@ -174,7 +186,9 @@ const TokenTransactionSettingDetails = () => {
                   placeholder={`Enter ${field.label}`}
                   error={formik.errors[field.key]}
                   value={formik.values[field.key]}
-                  onChange={(e: any) => formik.setFieldValue(field.key, e.target.value)}
+                  onChange={(e: any) =>
+                    formik.setFieldValue(field.key, e.target.value)
+                  }
                   disabled={field.key === 'name' || field.key === 'symbol'}
                   touched={formik.touched[field.key]}
                   shrink={true}
@@ -258,7 +272,11 @@ const TokenTransactionSettingDetails = () => {
           onSubmit={formik.handleSubmit}
           loading={saveLoading}
           disabled={saveLoading}
-          onCancel={() => navigate(`/tokens/settings/${state?.transactionType?.toLowerCase()}`)}
+          onCancel={() =>
+            navigate(
+              `/tokens/settings/${state?.transactionType?.toLowerCase()}`
+            )
+          }
         />
       </div>
     </div>

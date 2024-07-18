@@ -119,7 +119,10 @@ const SwapPriority = () => {
             options={[
               { label: 'Blank', value: SWAP_PRIORITY_TYPE.BLANK },
               { label: 'Top Balance', value: SWAP_PRIORITY_TYPE.TOP_BALANCE },
-              { label: 'Preferred Token', value: SWAP_PRIORITY_TYPE.PREFERED_TOKEN },
+              {
+                label: 'Preferred Token',
+                value: SWAP_PRIORITY_TYPE.PREFERED_TOKEN,
+              },
             ]}
             className="z-50"
             onChange={(e: any) => {

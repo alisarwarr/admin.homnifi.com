@@ -12,9 +12,28 @@ import {
   HistoryDark,
   AdminDark,
 } from '../../images/drawer/light';
-import { ArrowDown_, emptyWallet_, flash_, Swap_ } from '../../images/drawer/dark';
-import { setting, settingDark, swapIcon, users, usersDark } from '../../images/other';
-import { Dashboard, Wallet, Admin, CloundK2, Token, AdminSetting, Community } from '../../images/drawer';
+import {
+  ArrowDown_,
+  emptyWallet_,
+  flash_,
+  Swap_,
+} from '../../images/drawer/dark';
+import {
+  setting,
+  settingDark,
+  swapIcon,
+  users,
+  usersDark,
+} from '../../images/other';
+import {
+  Dashboard,
+  Wallet,
+  Admin,
+  CloundK2,
+  Token,
+  AdminSetting,
+  Community,
+} from '../../images/drawer';
 
 export interface DrawerOption {
   name: string;
@@ -288,7 +307,7 @@ export const allDrawerOptions: DrawerSection[] = [
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'admins'],
-          }
+          },
         ],
         permissions: [`all`, `superadmin`, 'admins'],
       },

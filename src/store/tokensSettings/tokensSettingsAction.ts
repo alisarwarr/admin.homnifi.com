@@ -6,13 +6,23 @@ import {
   WALLET_ADMIN_NETWORKS_NEW,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
-import { setDepositSettings, setNetworkSettings, setSwapSettings } from './tokensSettingsSlice';
+import {
+  setDepositSettings,
+  setNetworkSettings,
+  setSwapSettings,
+} from './tokensSettingsSlice';
 import { useDispatch } from 'react-redux';
 
 export const useTokensSettingsAction = () => {
   const dispatch = useDispatch();
 
-  const getDepositSettings = async ({ page, limit }: { page: number; limit: number }) => {
+  const getDepositSettings = async ({
+    page,
+    limit,
+  }: {
+    page: number;
+    limit: number;
+  }) => {
     return await ApiRequest()
       .request({
         method: 'GET',
@@ -24,7 +34,13 @@ export const useTokensSettingsAction = () => {
       })
       .catch((error: any) => error);
   };
-  const getSwapSettings = async ({ page, limit }: { page: number; limit: number }) => {
+  const getSwapSettings = async ({
+    page,
+    limit,
+  }: {
+    page: number;
+    limit: number;
+  }) => {
     return await ApiRequest()
       .request({
         method: 'GET',
@@ -36,7 +52,13 @@ export const useTokensSettingsAction = () => {
       })
       .catch((error: any) => error);
   };
-  const getNetworkSettings = async ({ page, limit }: { page: number; limit: number }) => {
+  const getNetworkSettings = async ({
+    page,
+    limit,
+  }: {
+    page: number;
+    limit: number;
+  }) => {
     return await ApiRequest()
       .request({
         method: 'GET',
@@ -54,7 +76,7 @@ export const useTokensSettingsAction = () => {
       .request({
         method: 'POST',
         url: WALLET_ADMIN_NETWORKS_NEW,
-        data
+        data,
       })
       .then((response: any) => response)
       .catch((error: any) => error);

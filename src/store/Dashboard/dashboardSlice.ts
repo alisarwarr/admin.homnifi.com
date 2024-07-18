@@ -38,8 +38,14 @@ const dashboardSlice = createSlice({
   },
 });
 
-export const { setAllTokensBalance, setFeeCollected, setOrdersOverview, setProductsOverview, setUsersOverview } =
-  dashboardSlice.actions;
+export const {
+  setAllTokensBalance,
+  setFeeCollected,
+  setOrdersOverview,
+  setProductsOverview,
+  setUsersOverview,
+} = dashboardSlice.actions;
 
-export const selectDashboard = (state: { dashboard: DashboardSliceState }) => state.dashboard;
+export const selectDashboard = (state: { dashboard: DashboardSliceState }) =>
+  state.dashboard;
 export default dashboardSlice.reducer;
