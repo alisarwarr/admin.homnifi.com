@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import { MachineImage } from '../../../../images/cloud';
-import {
-  ArrowDownSvg,
-  CopyIcon,
-  DeleteIcon,
-  InfoIcon,
-} from '../../../../images/svg';
-import Toottip from '../../../../components/Global/Toottip';
+import { DeleteIcon, InfoIcon } from '../../../../images/svg';
 import Product from './MachinesAccordion/Product';
 import LifetimeRewards from './MachinesAccordion/LifetimeRewards';
 import Staked from './MachinesAccordion/Staked';
@@ -16,7 +9,6 @@ import GlobalTable from '../../../../components/Table/GlobalTable';
 import GlobalModal from '../../../../components/Global/GlobalModal';
 import useModalHook from '../../../../utils/hooks/useModalHook';
 import SingleMachineModalBody from './SingleMachineModalBody';
-import GlobalButton from '../../../../components/Global/GlobalButton';
 import { edit } from '../../../../images/other';
 import { TProduct } from '../../../../store/products/productSlice';
 

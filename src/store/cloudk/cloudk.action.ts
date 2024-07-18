@@ -2,10 +2,12 @@ import { useDispatch } from 'react-redux';
 import ApiRequest from '../../utils/network/ApiRequest';
 import {
   INFLATION_RULES,
-  PRODUCTS,
+  USER_MACHINE_DETAILS,
   USER_MACHINE_LIST,
 } from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
+import { toast } from 'react-toastify';
+import { store } from '..';
 
 export const useCloudActions = () => {
   const dispatch = useDispatch();
@@ -32,7 +34,7 @@ export const useCloudActions = () => {
     try {
       const response = await ApiRequest().request({
         method: 'GET',
-        url: `${INFLATION_RULES}`,
+        url: INFLATION_RULES,
       });
       console.log(response, 'responseresponseresponse');
 
@@ -57,14 +59,12 @@ export const useCloudActions = () => {
     try {
       const response = await ApiRequest().request({
         method: 'POST',
-        url: `${INFLATION_RULES}`,
+        url: INFLATION_RULES,
         data,
       });
 
-      console.log('response', response);
-
       await getCurrentInfalationRules();
-      const _infalationRules = response?.data?.data;
+
       return response;
     } catch (error) {
       console.error('Error creating inflation rules:', error);
@@ -166,11 +166,59 @@ export const useCloudActions = () => {
       .catch((error: any) => error);
   };
 
+  const getMachineDetails = async (id: string) => {
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        getMachineDetailsLoading: true,
+      })
+    );
+
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: USER_MACHINE_DETAILS + id,
+      })
+      .then((response) => {
+        const machine = store
+          .getState()
+          .cloudk.userMachineList?.map((_machine) =>
+            _machine._id === id
+              ? {
+                  ..._machine,
+                  ...response.data.data,
+                }
+              : _machine
+          );
+
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getMachineDetailsLoading: false,
+            userMachineList: machine,
+          })
+        );
+
+        return response;
+      })
+      .catch((error) => {
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getMachineDetailsLoading: false,
+          })
+        );
+
+        toast.error(error.data.message);
+
+        return error;
+      });
+  };
+
   return {
     getInfalationRules,
     createInfalationRules,
     getCurrentInfalationRules,
     getUserMachinesList,
     getUserMachineList,
+    getUserRewardsData,
+    getMachineDetails,
   };
 };

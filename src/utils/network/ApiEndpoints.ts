@@ -146,6 +146,7 @@ export const UPDATE_ADMIN = '/admins';
 
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
+export const USER_MACHINE_DETAILS = '/cloud-k/user-machines/details/';
 
 //Wallet Admin
 export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';

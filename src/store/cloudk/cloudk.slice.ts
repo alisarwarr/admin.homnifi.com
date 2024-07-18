@@ -1,6 +1,6 @@
 //REDUX-TOOLKIT
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TINFLATIONRULES } from '../../interfaces/cloudk';
+import { TINFLATIONRULES, TMACHINE_DATA } from '../../interfaces/cloudk';
 
 export interface TemplateState {
   value: string;
@@ -8,8 +8,11 @@ export interface TemplateState {
   currentinfalationRules: TINFLATIONRULES;
   products: any[];
   userRewards: any[];
-  userMachineList: any[] | null;
+  userMachineList: TMACHINE_DATA[] | null;
+
+  getMachineDetailsLoading: boolean;
 }
+
 export const CLOUD_SLICE_NAME = 'cloudk';
 const initialState: TemplateState = {
   value: '',
@@ -48,6 +51,8 @@ const initialState: TemplateState = {
     ],
   },
   userMachineList: null,
+
+  getMachineDetailsLoading: false,
 };
 
 const slice = createSlice({
@@ -68,5 +73,18 @@ export const cloudkSliceAction = slice.actions;
 export const selectCloudkSlice = (state: {
   [CLOUD_SLICE_NAME]: TemplateState;
 }) => state[CLOUD_SLICE_NAME];
+
+// select single machine
+export const selectCloudMachine = (
+  state: {
+    [CLOUD_SLICE_NAME]: TemplateState;
+  },
+  id: string
+) => {
+  if (state[CLOUD_SLICE_NAME].userMachineList)
+    return state[CLOUD_SLICE_NAME].userMachineList.find(
+      (machine) => machine._id === id
+    );
+};
 
 export default slice.reducer;

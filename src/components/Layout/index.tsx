@@ -156,6 +156,7 @@ export default function Layout(): JSX.Element {
               scrollbarColor: 'transparent transparent',
               '&::-webkit-scrollbar': { width: '0' },
               borderRight: '1px solid #f0f0f0',
+              zIndex: -1,
             },
           }}
         >

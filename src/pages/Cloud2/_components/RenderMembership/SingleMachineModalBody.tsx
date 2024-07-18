@@ -1,51 +1,38 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { useCloudActions } from '../../../../store/Cloudk2/cloudk2Actions';
+import { useSelector } from 'react-redux';
 import { selectConvertedPrice } from '../../../../store/general/generalSlice';
 import { useGeneralActions } from '../../../../store/general/generalActions';
-import { RootState } from '../../../../store';
-// import {
-//   selectCloudMachine,
-//   setClouldk2Slice,
-// } from '../../../../store/Cloudk2/clouldk2Slice';
 import NoData from '../../../../components/Table/NoData';
 import Product from './MachinesAccordion/Product';
 import LifetimeRewards from './MachinesAccordion/LifetimeRewards';
 import Staked from './MachinesAccordion/Staked';
 import Skalable from './MachinesAccordion/Skalable';
 import ExpiresIn from './MachinesAccordion/ExpiresIn';
-import useModalHook from '../../../../utils/hooks/useModalHook';
+import { useCloudActions } from '../../../../store/cloudk/cloudk.action';
+import { RootState } from '../../../../store';
+import { selectCloudMachine } from '../../../../store/cloudk/cloudk.slice';
 
 type Props = {
   id: string;
 };
 
 const SingleMachineModalBody = ({ id }: Props) => {
-  console.log('🚀 ~ SingleMachineModalBody ~ id:', id);
-  // const machine = useSelector((state: RootState) => selectCloudMachine(state, id));
-  const machine: any = {};
-
+  const machine = useSelector((state: RootState) =>
+    selectCloudMachine(state, id)
+  );
   const { GetConvertedPrice } = useGeneralActions();
-
-  const dispatch = useDispatch();
 
   const conversionRate = useSelector(selectConvertedPrice);
 
-  // const { getUserMachineById } = useCloudActions();
+  const { getMachineDetails } = useCloudActions();
 
   const fetchUserMachineById = async () => {
-    // const fetchedMachine = await getUserMachineById({ id });
+    await getMachineDetails(id);
   };
 
   const fetchConversionRate = async () => {
     try {
-      const conversionRateResponse = await GetConvertedPrice();
-
-      // dispatch(
-      //   setClouldk2Slice({
-      //     conversionRate: conversionRateResponse.data.buy,
-      //   })
-      // );
+      await GetConvertedPrice();
     } catch (error) {
       console.log({ error });
     }
@@ -98,19 +85,19 @@ const SingleMachineModalBody = ({ id }: Props) => {
       </article>
 
       <article className="lg:col-span-2 md:col-span-3 col-span-6 p-4 font-medium text-sm">
-        <Product />
+        <Product data={machine} />
       </article>
       <article className="lg:col-span-2 md:col-span-3 col-span-6 p-4 font-medium text-sm">
-        <LifetimeRewards />
+        <LifetimeRewards data={machine} />
       </article>
       <article className="lg:col-span-2 md:col-span-3 col-span-6 p-4 font-medium text-sm">
-        <Staked />
+        <Staked data={machine} />
       </article>
       <article className="lg:col-span-3 md:col-span-3 col-span-6 p-4 font-medium text-sm">
-        <Skalable />
+        <Skalable data={machine} />
       </article>
       <article className="lg:col-span-3 md:col-span-3 col-span-6 p-4 font-medium text-sm">
-        <ExpiresIn />
+        <ExpiresIn data={machine} />
       </article>
     </section>
   );

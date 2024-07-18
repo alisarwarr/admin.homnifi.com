@@ -72,6 +72,7 @@ type Props = {
   refetch?: any;
   showInnerFiltersSearch?: boolean;
   innerFiltersClassName?: string;
+  rowClasNames?: string;
   setClickeddRow?: any;
   copyIconList?: any[];
   showAccordion?: string;
@@ -80,6 +81,7 @@ type Props = {
   imageItems?: any[];
 
   noDataSettings?: string;
+  handleOpen: (id: string) => void;
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -140,6 +142,8 @@ const GlobalTable = ({
   colorItems,
   imageItems,
   noDataSettings,
+  handleOpen,
+  rowClasNames,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -417,7 +421,7 @@ const GlobalTable = ({
                   headCells.map((cell, index) => (
                     <th
                       key={index}
-                      className={`hidden md:table-cell text-center font-semibold text-sm p-3 border-b border-borderGray
+                      className={`hidden md:table-cell text-center font-medium text-sm p-3 border-b border-borderGray
                        ${cell.dataClass}  border-b`}
                     >
                       {cell.label}
@@ -437,11 +441,11 @@ const GlobalTable = ({
             </thead>
             {isLoading ? (
               <tbody>
-                <tr className="font-medium text-sm w-full border-b border-secondary">
+                <tr className="font-normal text-sm w-full border-b border-secondary">
                   {headCells.map((_, index) => (
                     <td
                       key={index}
-                      className="table-cell font-medium text-xs text-textSecondary w-1/5 py-3"
+                      className="table-cell font-normal text-xs text-textSecondary w-1/5 py-3"
                     >
                       <Skeleton
                         variant="rounded"
@@ -452,7 +456,7 @@ const GlobalTable = ({
                     </td>
                   ))}
                   {checkBoxes && (
-                    <td className="table-cell font-medium text-xs text-textSecondary w-1/5 py-3">
+                    <td className="table-cell font-normal text-xs text-textSecondary w-1/5 py-3">
                       <Skeleton
                         variant="rounded"
                         width={'80%'}
@@ -468,86 +472,76 @@ const GlobalTable = ({
                 <tbody>
                   {rows.map((row, index) => {
                     return (
-                      <>
-                        <tr
-                          key={index}
-                          className="font-medium text-sm w-full border-b border-secondary"
-                        >
-                          {/* Checkbox column */}
-                          {checkBoxes && (
-                            <td>
-                              <Checkbox
-                                checked={
-                                  selectedRows.find(
-                                    (selectedRow) => selectedRow._id === row._id
-                                  )
-                                    ? true
-                                    : false
-                                }
-                                onChange={() => handleRowCheckboxChange(row)}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                              />
-                            </td>
-                          )}
+                      <tr
+                        key={index}
+                        className={`font-normal text-xs w-full border-b border-secondary ${rowClasNames}`}
+                        onClick={() => handleOpen(row._id)}
+                      >
+                        {/* Checkbox column */}
+                        {checkBoxes && (
+                          <td>
+                            <Checkbox
+                              checked={
+                                selectedRows.find(
+                                  (selectedRow) => selectedRow._id === row._id
+                                )
+                                  ? true
+                                  : false
+                              }
+                              onChange={() => handleRowCheckboxChange(row)}
+                              inputProps={{ 'aria-label': 'controlled' }}
+                            />
+                          </td>
+                        )}
 
-                          {headCells.map((cell, index) => {
-                            let color = '';
-                            if (
-                              row[cell.id] === 'success' ||
-                              row[cell.id] === 'approved'
-                            )
-                              color = 'text-primaryGreen';
-                            else if (row[cell.id] === 'pending')
-                              color = 'text-primary';
-                            else if (row[cell.id] === 'failed')
-                              color = 'text-primaryRed';
+                        {headCells.map((cell, index) => {
+                          let color = '';
+                          if (
+                            row[cell.id] === 'success' ||
+                            row[cell.id] === 'approved'
+                          )
+                            color = 'text-primaryGreen';
+                          else if (row[cell.id] === 'pending')
+                            color = 'text-primary';
+                          else if (row[cell.id] === 'failed')
+                            color = 'text-primaryRed';
 
-                            return (
-                              cell.id !== '_id' && (
-                                <td
-                                  key={index}
-                                  className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
+                          return (
+                            cell.id !== '_id' && (
+                              <td
+                                key={index}
+                                className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
+                              >
+                                <div
+                                  className={`py-2  flex justify-center items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}
                                 >
-                                  <div
-                                    className={`py-2  flex justify-center items-center ${!copyItems?.includes(headCells[index].id) && `${color}`}`}
-                                  >
-                                    {imageItems?.includes(
-                                      headCells[index].id
-                                    ) ? (
-                                      <img
-                                        src={row[cell.id]}
-                                        className="w-7 h-7"
-                                        alt=""
-                                      />
-                                    ) : (
-                                      <>
-                                        {row[cell.id] ? row[cell.id] : <>-</>}
-                                      </>
-                                    )}
-                                    {copyIconList.find(
-                                      (dt) => dt === cell.id
-                                    ) && (
-                                      <Copy
-                                        className="ml-3 cursor-pointer"
-                                        onClick={() =>
-                                          navigator.clipboard.writeText(
-                                            row[cell.id]
-                                          )
-                                        }
-                                      />
-                                    )}{' '}
-                                  </div>
-                                  {/* <div className={'h-44'}>{accordion[cell.id]}</div> */}
-                                  {/* {showAccordion?.length ? (
-                          showAccordion === rows[index].id ? <>: null;):null)} */}
-                                </td>
-                              )
-                            );
-                          })}
-                        </tr>
-
-                        {/* <MachinesAccordion /> */}
-                      </>
+                                  {imageItems?.includes(headCells[index].id) ? (
+                                    <img
+                                      src={row[cell.id]}
+                                      className="w-7 h-7"
+                                      alt=""
+                                    />
+                                  ) : (
+                                    <>{row[cell.id] ? row[cell.id] : <>-</>}</>
+                                  )}
+                                  {copyIconList.find(
+                                    (dt) => dt === cell.id
+                                  ) && (
+                                    <Copy
+                                      className="ml-3 cursor-pointer"
+                                      onClick={() =>
+                                        navigator.clipboard.writeText(
+                                          row[cell.id]
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </div>
+                              </td>
+                            )
+                          );
+                        })}
+                      </tr>
                     );
                   })}
                 </tbody>

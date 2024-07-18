@@ -1,16 +1,14 @@
 import React from 'react';
 
 import TotalRewardsTillNow from './TotalRewardsTillNow';
-import SLYK from './SLYK';
+import Slyk from './SLYK';
 
-type Props = {};
-
-const RewardsTillNow = (props: Props) => {
+const RewardsTillNow = () => {
   return (
-    <section className="bg-white border border-borderLightGray rounded-lg shadow p-6 w-full flex gap-5 justify-between flex-wrap">
+    <section className="bg-white border border-borderLightGray rounded-lg shadow p-6 w-full flex gap-3 justify-between flex-wrap h-full items-center">
       <TotalRewardsTillNow />
 
-      {/* <SLYK /> */}
+      <Slyk />
     </section>
   );
 };
