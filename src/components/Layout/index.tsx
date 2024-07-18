@@ -194,7 +194,7 @@ export default function Layout(): JSX.Element {
               />
             </div>
           </div>
-          <div className="flex-grow py-8 px-6 bg-pageBackground">
+          <div className="flex-grow py-8 px-6 bg-pageBackground min-h-[calc(100vh-80px)]">
             <Outlet />
           </div>
         </div>

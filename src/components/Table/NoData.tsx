@@ -1,11 +1,15 @@
 type Props = {
   visible: boolean;
+  text?: string;
+  classNames?: string;
 };
 
-const NoData = ({ visible }: Props) => {
+const NoData = ({ visible, text, classNames }: Props) => {
   if (!visible) return <></>;
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div
+      className={`flex flex-col justify-center items-center h-full ${classNames}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="117"
@@ -74,7 +78,7 @@ const NoData = ({ visible }: Props) => {
           fill="black"
         />
       </svg>
-      <span className="text-primaryGrey">No History</span>
+      <span className="text-primaryGrey">{text || 'No History'}</span>
     </div>
   );
 };

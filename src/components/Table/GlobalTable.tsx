@@ -78,6 +78,8 @@ type Props = {
   copyItems?: any[];
   colorItems?: any[];
   imageItems?: any[];
+
+  noDataSettings?: string;
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -137,6 +139,7 @@ const GlobalTable = ({
   copyItems,
   colorItems,
   imageItems,
+  noDataSettings,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -582,7 +585,7 @@ const GlobalTable = ({
             ))}
           </div>
         </div>
-        <NoData visible={rows.length < 1 && !isLoading} />
+        <NoData visible={rows.length < 1 && !isLoading} text={noDataSettings} />
       </div>
 
       <div
