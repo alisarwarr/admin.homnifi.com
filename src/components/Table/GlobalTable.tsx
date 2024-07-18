@@ -82,6 +82,7 @@ type Props = {
 
   noDataSettings?: string;
   handleOpen: (id: string) => void;
+  totalPages?: number;
 };
 
 const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
@@ -371,7 +372,7 @@ const GlobalTable = ({
           </div>
         )}
         <div
-          className={`hidden md:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
+          className={`hidden lg:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
         >
           {/* <div className="hidden lg:flex items-center gap-2 overflow-auto"> */}
           <table className={`table-bordered border-collapse w-full`}>
@@ -421,7 +422,7 @@ const GlobalTable = ({
                   headCells.map((cell, index) => (
                     <th
                       key={index}
-                      className={`hidden md:table-cell text-center font-medium text-sm p-3 border-b border-borderGray
+                      className={`hidden lg:table-cell text-center font-medium text-sm p-3 border-b border-borderGray
                        ${cell.dataClass}  border-b`}
                     >
                       {cell.label}
@@ -587,7 +588,7 @@ const GlobalTable = ({
       >
         {filter && <div></div>}
         <div className="self-center">
-          {rows.length > 0 && paginate && (
+          {totalPages && paginate && (
             <Pagination
               shape="rounded"
               count={totalPages}

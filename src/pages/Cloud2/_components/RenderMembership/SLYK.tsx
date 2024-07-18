@@ -1,7 +1,11 @@
 import React from 'react';
 import { cloudLykLogo } from '../../../../images';
+import { useSelector } from 'react-redux';
+import { selectCloudkSlice } from '../../../../store/cloudk/cloudk.slice';
 
 const Slyk = () => {
+  const { token } = useSelector(selectCloudkSlice);
+
   return (
     <article className="md:w-2/5 w-full h-full flex flex-col gap-6">
       <div className="flex flex-col justify-between gap-6 h-full">
@@ -14,7 +18,8 @@ const Slyk = () => {
             <img src={cloudLykLogo} alt="cloudLykLogo" className="" />
 
             <>
-              0<span className="text-sm"> sLYK</span>
+              {token?.totalStaked?.toLocaleString() || ''}
+              <span className="text-sm"> sLYK</span>
             </>
           </div>
         </div>

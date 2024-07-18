@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-} from '@nextui-org/modal';
+import { Modal, ModalContent, ModalHeader, ModalBody } from '@nextui-org/modal';
 
 interface GlobalModalProps {
   isOpen?: boolean;
@@ -41,12 +35,6 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
   childrenClass,
   scrollBehavior,
 }) => {
-  const { onOpen } = useDisclosure();
-
-  const handleOpen = (size: string) => {
-    onOpen();
-  };
-
   return (
     <>
       <Modal
@@ -55,6 +43,7 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
         size={size}
         isOpen={isOpen}
         onClose={onClose}
+        className="z-[999]"
         scrollBehavior={scrollBehavior || 'inside'}
         motionProps={{
           variants: {

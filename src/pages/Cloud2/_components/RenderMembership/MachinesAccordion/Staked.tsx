@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectConvertedPrice } from '../../../../../store/general/generalSlice';
 import { RootState } from '../../../../../store';
 import { selectCloudMachine } from '../../../../../store/cloudk/cloudk.slice';
+import GlobalSwitch from '../../../../../components/Global/GlobalSwitch';
 
 type TProps = {
   data: TMACHINE_DATA;
@@ -32,6 +33,14 @@ const Staked = ({ data }: TProps) => {
           '25,000'}
         <span className="text-sm">LYK</span>
       </span>
+
+      <article className="flex items-center gap-2">
+        <span className="text-primaryDark text-xs font-medium">
+          AUTO COMPOUND
+        </span>
+
+        <GlobalSwitch checked={data?.autoCompound || false} disabled={true} />
+      </article>
 
       {!machine?.autoCompound ? (
         <span className="bg-cardBg text-primary w-max p-2 rounded-md text-xs">

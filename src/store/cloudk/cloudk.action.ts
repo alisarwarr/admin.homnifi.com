@@ -4,6 +4,7 @@ import {
   INFLATION_RULES,
   USER_MACHINE_DETAILS,
   USER_MACHINE_LIST,
+  USER_MACHINE_REWARDS,
 } from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
 import { toast } from 'react-toastify';
@@ -153,17 +154,78 @@ export const useCloudActions = () => {
       });
   };
 
-  const getUserMachineList = async () => {
+  const getUserMachineRewards = async () => {
+    // userMachinesLoading
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        getUserMachineRewardsLoading: true,
+      })
+    );
     return await ApiRequest()
       .request({
         method: 'GET',
-        url: USER_MACHINE_LIST,
+        url: USER_MACHINE_REWARDS,
       })
-      .then((response: any) => {
-        dispatch(cloudkSliceAction.setUserMachineList(response.data.data));
+      .then((response) => {
+        dispatch(cloudkSliceAction.setCloudkSlice(response.data.data));
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getUserMachineRewardsLoading: false,
+          })
+        );
+
         return response;
       })
-      .catch((error: any) => error);
+      .catch((error) => {
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getUserMachineRewardsLoading: false,
+          })
+        );
+
+        return error;
+      });
+  };
+
+  const getUserMachineList = async ({
+    search,
+    limit,
+  }: {
+    search: string;
+    limit: number;
+  }) => {
+    // userMachinesLoading
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        userMachinesLoading: true,
+      })
+    );
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: `${USER_MACHINE_LIST}?search=${search}&limit=${limit}`,
+      })
+      .then((response: any) => {
+        dispatch(cloudkSliceAction.setUserMachineList(response.data.data.list));
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
+
+        return response;
+      })
+      .catch((error: any) => {
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
+
+        return error;
+      });
   };
 
   const getMachineDetails = async (id: string) => {
@@ -220,5 +282,6 @@ export const useCloudActions = () => {
     getUserMachineList,
     getUserRewardsData,
     getMachineDetails,
+    getUserMachineRewards,
   };
 };

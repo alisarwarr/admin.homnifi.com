@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 //MATERIAL-UI
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import Drawer from '@mui/material/Drawer';
-import MuiAppBar from '@mui/material/AppBar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 //REDUX-TOOLKIT
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,7 +12,6 @@ import {
   setDrawerWidth,
   setDrawerOpen,
 } from '../../store/drawer/drawerSlice';
-import { selectUser, selectUserSlice } from '../../store/user/userSlice';
 import { handleTabChange } from '../../store';
 //ROUTER-DOM
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
@@ -22,14 +20,11 @@ import Header from '../Header';
 //UTILS
 import { DrawerOption, allDrawerOptions } from '../../utils/drawerOptions';
 import Menu from '../Menu';
-import { useNotificationsActions } from '../../store/notifications/notificationsAction';
 import { homnifiLogo } from '../../images';
 
 export default function Layout(): JSX.Element {
   const drawerWidth = useSelector(selectDrawerWidth);
   const drawerOpen = useSelector(selectDrawerOpen);
-  const { accessToken } = useSelector(selectUserSlice);
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
   const handleWidthChange = (newWidth: number) =>
@@ -38,29 +33,9 @@ export default function Layout(): JSX.Element {
     dispatch(setDrawerOpen(newOpen));
   };
 
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-  })<{
-    open?: boolean;
-  }>(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
-
   const DrawerHeader = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    // background: '#000',
   }));
 
   const screen640 = useMediaQuery('(min-width:640px)');
@@ -105,19 +80,9 @@ export default function Layout(): JSX.Element {
     };
   }, [drawerOpen, isClickedLinesButton]);
 
-  // useEffect(() => {
-  //   if (!accessToken) {
-  //     navigate('/auth/signin');
-  //   }
-  // }, [accessToken]);
-
   useEffect(() => {
     handleTabChange(location.pathname);
   }, [location]);
-
-  const { getNotifications } = useNotificationsActions();
-
-  const appBarMargin = drawerWidth + 10;
 
   const darkTheme = createTheme({
     typography: {
@@ -156,7 +121,7 @@ export default function Layout(): JSX.Element {
               scrollbarColor: 'transparent transparent',
               '&::-webkit-scrollbar': { width: '0' },
               borderRight: '1px solid #f0f0f0',
-              zIndex: -1,
+              zIndex: 40,
             },
           }}
         >

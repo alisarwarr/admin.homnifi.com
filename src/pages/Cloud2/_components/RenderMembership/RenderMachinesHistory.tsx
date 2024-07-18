@@ -7,17 +7,57 @@ import { selectCloudkSlice } from '../../../../store/cloudk/cloudk.slice';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { formatToUpperCase } from '../../../../utils/helper';
+import useDebounce from '../../../../utils/hooks/useDebounceHook';
 
 const RenderMachinesHistory = () => {
+  const [machineResponse, setMachineResponse] = useState({
+    totalCount: 0,
+    totalPages: 1,
+    currentPage: 1,
+    list: [],
+  });
   const stakeModalHook = useModalHook();
 
   const { getUserMachineList } = useCloudActions();
-  const { userMachineList } = useSelector(selectCloudkSlice);
+  const { userMachineList, userMachinesLoading } =
+    useSelector(selectCloudkSlice);
   const [selectedIndex, setSelectedIndex] = useState('');
+  const [filters, setFilters] = useState({
+    limit: 10,
+    page: 1,
+    timeperiod: 'alltime',
+    type: 'all',
+    search: '',
+  });
+
+  const [searchValue, setSearchValue] = useState('');
+  const [downloadTransaction, setDownloadTransaction] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  const debouncedSearchValue = useDebounce(filters.search, 1000);
+
+  const fetchMachines = async () => {
+    const userMachineResponse = await getUserMachineList({
+      search: debouncedSearchValue,
+      limit: filters.limit,
+    });
+
+    setMachineResponse({ ...userMachineResponse.data.data });
+  };
 
   useEffect(() => {
-    getUserMachineList();
-  }, []);
+    fetchMachines();
+  }, [filters.limit, filters.page]);
+
+  useEffect(() => {
+    if (initialLoad) {
+      setInitialLoad(false);
+    }
+
+    if ((filters.page || filters.limit) && !initialLoad) {
+      fetchMachines();
+    }
+  }, [filters.page, filters.limit, debouncedSearchValue]);
 
   const headCells = [
     {
@@ -139,18 +179,24 @@ const RenderMachinesHistory = () => {
       <GlobalTable
         rows={rows?.length ? rows : []}
         headCells={headCells}
-        isLoading={false}
+        isLoading={userMachinesLoading}
         showSort={true}
         tableTitle="Product History"
         // searchIsLoading={false}
         showInnerFilters={true}
         imageItems={['imageUrl']}
-        totalPages={rows?.length ? Math.ceil(rows.length / 10) : 1}
+        totalPages={machineResponse.totalPages}
         handleOpen={(id: string) => {
           setSelectedIndex(id);
           stakeModalHook.handleOpen();
         }}
+        filter={filters}
+        setFilter={setFilters}
         rowClasNames="cursor-pointer"
+        handlePageChange={(page) => {
+          setFilters({ ...filters, page });
+        }}
+        paginate={true}
       />
     </>
   );

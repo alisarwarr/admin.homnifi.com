@@ -10,7 +10,15 @@ export interface TemplateState {
   userRewards: any[];
   userMachineList: TMACHINE_DATA[] | null;
 
+  lifetimeRewardPrice: number;
+  claimableRewardsPrice: number;
+  token: {
+    totalStaked: number;
+  };
+
   getMachineDetailsLoading: boolean;
+  userMachinesLoading: boolean;
+  getUserMachineRewardsLoading: boolean;
 }
 
 export const CLOUD_SLICE_NAME = 'cloudk';
@@ -51,8 +59,15 @@ const initialState: TemplateState = {
     ],
   },
   userMachineList: null,
+  lifetimeRewardPrice: 0,
+  claimableRewardsPrice: 0,
+  token: {
+    totalStaked: 0,
+  },
 
   getMachineDetailsLoading: false,
+  userMachinesLoading: false,
+  getUserMachineRewardsLoading: false,
 };
 
 const slice = createSlice({
