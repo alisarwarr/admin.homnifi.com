@@ -36,7 +36,7 @@ const TokenTransactionSettings = () => {
             setLoading(false);
           }}
         >
-          <img src={refresh} alt="" width={24} height={24} />
+          <img src={refresh} alt="refresh" width={24} height={24} />
           <span>Refresh</span>
         </div>
       </div>

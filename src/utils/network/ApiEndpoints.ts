@@ -152,3 +152,7 @@ export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
 export const WALLET_ADMIN_SWAPS = '/wallets/swaps';
 export const WALLET_ADMIN_NETWORKS = '/tokens/networks';
 export const WALLET_ADMIN_NETWORKS_NEW = '/tokens/networks';
+
+
+//Defi 360
+export const DEFI_360_AUTO_COMPOUND_PENALITY = '/cloud-k/ac-penalty';
