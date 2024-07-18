@@ -4,6 +4,8 @@ import {
   WALLET_ADMIN_SWAPS,
   WALLET_ADMIN_NETWORKS,
   WALLET_ADMIN_NETWORKS_NEW,
+  WALLET_ADMIN_SWAPS_NEW,
+  WALLET_ADMIN_DEPOSITS_NEW,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 import { setDepositSettings, setNetworkSettings, setSwapSettings } from './tokensSettingsSlice';
@@ -49,12 +51,32 @@ export const useTokensSettingsAction = () => {
       .catch((error: any) => error);
   };
 
+  const addDespositSettings = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: WALLET_ADMIN_DEPOSITS_NEW,
+        data,
+      })
+      .then((response: any) => response)
+      .catch((error: any) => error);
+  };
+  const addSwapSettings = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: WALLET_ADMIN_SWAPS_NEW,
+        data,
+      })
+      .then((response: any) => response)
+      .catch((error: any) => error);
+  };
   const addNetworkSettings = async (data: any) => {
     return await ApiRequest()
       .request({
         method: 'POST',
         url: WALLET_ADMIN_NETWORKS_NEW,
-        data
+        data,
       })
       .then((response: any) => response)
       .catch((error: any) => error);
@@ -65,6 +87,8 @@ export const useTokensSettingsAction = () => {
     getSwapSettings,
     getNetworkSettings,
     ///////////////////
-    addNetworkSettings,
+    addDespositSettings,
+    addSwapSettings,
+    addNetworkSettings
   };
 };

@@ -116,7 +116,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/token/network-settings',
+        path: '/token/networks',
         element: (
           <ProtectedRoute>
             <NetworkSettings />

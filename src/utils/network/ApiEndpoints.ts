@@ -151,6 +151,8 @@ export const USER_MACHINE_LIST = '/cloud-k/user-machines';
 export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
 export const WALLET_ADMIN_SWAPS = '/wallets/swaps';
 export const WALLET_ADMIN_NETWORKS = '/tokens/networks';
+export const WALLET_ADMIN_DEPOSITS_NEW = '/tokens/deposit/setting';
+export const WALLET_ADMIN_SWAPS_NEW = '/tokens/swap/setting';
 export const WALLET_ADMIN_NETWORKS_NEW = '/tokens/networks';
 
 

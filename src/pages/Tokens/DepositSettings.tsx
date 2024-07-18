@@ -38,14 +38,14 @@ export default function DepositSettings() {
     };
 
 
-    const { getDepositSettings } = useTokensSettingsAction();
+    const { getDepositSettings, addNetworkSettings } = useTokensSettingsAction();
     const { depositSettings } = useSelector(selectTokensSettings);
     useEffect(() => {
         fetchData(1);
     }, []);
 
 
-    const rows = depositSettings?.paginatedResults ? depositSettings?.paginatedResults?.map((_data: any) => {
+    const rows = depositSettings?.list ? depositSettings?.list?.map((_data: any) => {
         return {
             id: _data.requestId,
             userEmail: _data.user.email,
@@ -72,24 +72,26 @@ export default function DepositSettings() {
 
     const formik = useFormik({
         initialValues: {
-            fromToken: '',
-            toToken: '',
-            assertTo: '',
+            fromToken: { label: "", value: "", id: "" },
+            toToken: { label: "", value: "", id: "" },
             minAmount: '',
-            mimDisplayAmount: '',
-            feeType: '',
-            commisionType: ''
+            minDisplayAmount: ''
         },
         validationSchema: Yup.object({
             fromToken: Yup.string().required('Type is required'),
             toToken: Yup.string().required('ID is required'),
             minAmount: Yup.string().required('Minimum Amount is required'),
-            mimDisplayAmount: Yup.string().required('Minimum Display Amount is required'),
-            feeType: Yup.string().required('Fee Type is required'),
-            commisionType: Yup.string().required('Commision Type is required'),
+            minDisplayAmount: Yup.string().required('Minimum Display Amount is required')
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values));
+        onSubmit: async (values) => {
+            const data = {
+                fromToken: values.fromToken.id,
+                toToken: values.toToken,
+                minAmount: values.minAmount,
+                minDisplayAmount: values.minDisplayAmount
+            };
+            await addNetworkSettings(data);
+            fetchData(1);
             onClose();
         }
     });
@@ -104,28 +106,42 @@ export default function DepositSettings() {
                 onClose={onClose}
                 content={
                     <form onSubmit={formik.handleSubmit}>
-                        <GlobalInput
+                        <GlobalSelect
+                            required
+                            label="From Token"
                             name="fromToken"
-                            label="Type"
-                            placeholder="Enter From Token"
-                            type="text"
-                            value={formik.values.fromToken}
+                            placeholder="select a From Token"
+                            options={
+                                depositSettings?.list
+                                    ? depositSettings?.list.map((item: any) => item.toWallet.token).map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                    : []
+                            }
+                            value={formik.values.fromToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             isError={formik.touched.fromToken && !!formik.errors.fromToken}
                             error={formik.errors.fromToken}
+                            setFieldTouched={formik.setFieldTouched}
+                            setFieldValue={formik.setFieldValue}
                         />
 
-                        <GlobalInput
-                            name="toToken"
-                            label="ID"
-                            placeholder="Enter To Token"
-                            type="text"
-                            value={formik.values.toToken}
+                        <GlobalSelect
+                            required
+                            label="From Token"
+                            name="fromToken"
+                            placeholder="select a From Token"
+                            options={
+                                depositSettings?.list
+                                    ? depositSettings?.list.map((item: any) => item.toWallet.token).map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                    : []
+                            }
+                            value={formik.values.fromToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.toToken && !!formik.errors.toToken}
-                            error={formik.errors.toToken}
+                            isError={formik.touched.fromToken && !!formik.errors.fromToken}
+                            error={formik.errors.fromToken}
+                            setFieldTouched={formik.setFieldTouched}
+                            setFieldValue={formik.setFieldValue}
                         />
 
                         <GlobalInput
@@ -141,45 +157,15 @@ export default function DepositSettings() {
                         />
 
                         <GlobalInput
-                            name="mimDisplayAmount"
+                            name="minDisplayAmount"
                             label="Min. Display Amount"
                             placeholder="Enter Minimum Display Amount"
                             type="number"
-                            value={formik.values.mimDisplayAmount}
+                            value={formik.values.minDisplayAmount}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.mimDisplayAmount && !!formik.errors.mimDisplayAmount}
-                            error={formik.errors.mimDisplayAmount}
-                        />
-
-                        <GlobalInput
-                            name="feeType"
-                            label="Fee Type"
-                            placeholder="Enter Fee Type"
-                            type="number"
-                            value={formik.values.feeType}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            isError={formik.touched.feeType && !!formik.errors.feeType}
-                            error={formik.errors.feeType}
-                        />
-
-                        <GlobalSelect
-                            required
-                            label="Commision Type"
-                            name="commisionType"
-                            placeholder="select a Commision Type"
-                            options={[
-                                { label: 'Token X', value: 'tokenX' },
-                                { label: 'Token Y', value: 'tokenY' },
-                            ]}
-                            value={formik.values.commisionType}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            isError={formik.touched.commisionType && !!formik.errors.commisionType}
-                            error={formik.errors.commisionType}
-                            setFieldTouched={formik.setFieldTouched}
-                            setFieldValue={formik.setFieldValue}
+                            isError={formik.touched.minDisplayAmount && !!formik.errors.minDisplayAmount}
+                            error={formik.errors.minDisplayAmount}
                         />
 
                         <div className="flex justify-end mt-3">
@@ -211,7 +197,7 @@ export default function DepositSettings() {
                         onClick={onOpen}
                     >
                         <img src={add} alt="" width={24} height={24} />
-                        <span>Add Swap</span>
+                        <span>Add Deposit</span>
                     </button>
                 </div>
 
