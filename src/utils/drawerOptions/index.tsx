@@ -57,6 +57,26 @@ export const allDrawerOptions: DrawerSection[] = [
         active: false,
         options: [
           {
+            name: 'Tokens',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/tokens',
+            key: 'tokens-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+          {
+            name: 'Withdraw Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/wallet/withdraw-settings',
+            key: 'wallet-withdraw-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
+          },
+          {
             name: 'Deposit Settings',
             icon: <Dashboard />,
             icon_dark: setting,
@@ -77,22 +97,11 @@ export const allDrawerOptions: DrawerSection[] = [
             permissions: [`all`, `superadmin`, 'tokens'],
           },
           {
-            name: 'Network Settings',
+            name: 'Networks',
             icon: <Dashboard />,
             icon_dark: setting,
-            url: '/token/network-settings',
+            url: '/token/networks',
             key: 'network-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens'],
-          },
-
-          {
-            name: 'Tokens settings',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/tokens',
-            key: 'tokens-settings',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens'],
@@ -142,16 +151,6 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
-          {
-            name: 'Withdraw Settings',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/wallet/withdraw-settings',
-            key: 'wallet-withdraw-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
-          },
 
           {
             name: 'Transfer',
@@ -192,7 +191,7 @@ export const allDrawerOptions: DrawerSection[] = [
   {
     options: [
       {
-        name: 'Cloud k 2.0',
+        name: 'Defi 360',
         icon: <CloundK2 />,
         icon_dark: AdminDark,
         url: '',
@@ -229,6 +228,16 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'tokens_settings'],
           },
+          {
+            name: 'Auto Compound Penality',
+            icon: <Admin />,
+            icon_dark: AdminDark,
+            url: '/defi-360/auto-compound-penality',
+            key: 'community-friends',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'admins'],
+          }
         ],
         permissions: [`all`, `superadmin`, 'admins'],
       },
@@ -264,31 +273,6 @@ export const allDrawerOptions: DrawerSection[] = [
             options: [],
             permissions: [`all`, `superadmin`, 'admins'],
           },
-        ],
-        permissions: [`all`, `superadmin`, 'admins'],
-      },
-    ],
-  },
-  {
-    options: [
-      {
-        name: 'Defi 360',
-        icon: <Community />,
-        icon_dark: AdminDark,
-        url: '',
-        key: 'defi-360',
-        active: false,
-        options: [
-          {
-            name: 'Auto Compound Penality',
-            icon: <Admin />,
-            icon_dark: AdminDark,
-            url: '/defi-360/auto-compound-penality',
-            key: 'community-friends',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'admins'],
-          }
         ],
         permissions: [`all`, `superadmin`, 'admins'],
       },
