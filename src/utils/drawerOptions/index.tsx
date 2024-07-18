@@ -333,4 +333,18 @@ export const allDrawerOptions: DrawerSection[] = [
       },
     ],
   },
+  {
+    options: [
+      {
+        name: 'Marketing',
+        icon: <Dashboard />,
+        icon_dark: HomeDark,
+        url: '/marketing',
+        key: 'marketing',
+        active: false,
+        options: [],
+        permissions: [`all`, `superadmin`, 'dashboard'],
+      },
+    ],
+  },
 ];

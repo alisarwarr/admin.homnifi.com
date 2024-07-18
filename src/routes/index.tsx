@@ -59,6 +59,7 @@ import ProductList from '../pages/Cloud2/ProductList';
 import MachineList from '../pages/Cloud2/MachineList';
 import CronJob from '../pages/Admins/CronJobs';
 import AutoCompoundPenality from '../pages/Defi-360/AutoCompoundPenality';
+import Marketing from '../pages/Marketing';
 
 export const router = createBrowserRouter([
   {
@@ -151,6 +152,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <CommunitySupernode />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/marketing',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Marketing />
             </ProtectedRoute>
           </React.Suspense>
         ),

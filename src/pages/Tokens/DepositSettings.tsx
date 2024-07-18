@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { add, refresh } from '../../images/other';
+import { add, edit, refresh } from '../../images/other';
 import GlobalTable from '../../components/Table/GlobalTable';
 import GlobalDialog from '../../components/Dialog';
 import GlobalInput from '../../components/Global/GlobalInput';
@@ -13,15 +13,11 @@ import { useSelector } from 'react-redux';
 
 
 const headCells = [
-    { id: 'id', label: 'ID', show: true },
-    { id: 'userEmail', label: 'Email', show: true },
-    { id: 'amount', label: 'Amount', show: true },
-    { id: 'time', label: 'Time', show: true },
-    { id: 'toWallet', label: 'To Wallet', show: true },
-    { id: 'toWalletIcon', label: 'To Wallet Icon', show: true },
-    { id: 'onChainWallet', label: 'On Chain Wallet', show: true },
-    { id: 'confirmation', label: 'Confirmation', show: true },
-    { id: 'transactionStatus', label: 'Transaction', show: true },
+    { id: 'fromToken', label: 'From Token', show: true },
+    { id: 'toToken', label: 'To Token', show: true },
+    { id: 'minAmount', label: 'Min Amount', show: true },
+    { id: 'minDisplayAmount', label: 'Min Display Amount', show: true },
+    { id: 'quickActions', label: 'Actions', show: true }
 ];
 
 
@@ -29,33 +25,54 @@ export default function DepositSettings() {
     const [loading, setLoading] = useState(false);
 
 
-    const fetchData = (page: number) => {
+    const fetchData = () => {
         setLoading(true);
         setTimeout(() => {
-            getDepositSettings({ page, limit: 10 });
+            getDepositSettings();
             setLoading(false);
         }, 1000);
     };
 
 
-    const { getDepositSettings, addNetworkSettings } = useTokensSettingsAction();
-    const { depositSettings } = useSelector(selectTokensSettings);
+    const { getDepositSettings, addDespositSettings, getAllTokens, updateDespositSettings } = useTokensSettingsAction();
+    const { depositSettings, allTokens } = useSelector(selectTokensSettings);
     useEffect(() => {
-        fetchData(1);
+        fetchData();
+        getAllTokens();
     }, []);
 
 
-    const rows = depositSettings?.list ? depositSettings?.list?.map((_data: any) => {
+    const [selectedId, setSelectedId] = useState(null);
+
+
+    const rows = depositSettings ? depositSettings?.map((_data: any, index: number) => {
         return {
-            id: _data.requestId,
-            userEmail: _data.user.email,
-            amount: _data.amount,
-            time: _data.createdAt,
-            toWallet: _data.toWallet.token.name,
-            toWalletIcon: _data.toWallet.token.iconUrl,
-            onChainWallet: _data.onChainWallet,
-            confirmation: _data.confirmation,
-            transactionStatus: _data.transactionStatus
+            fromToken: _data.fromToken?.name,
+            toToken: _data.toToken?.name,
+            minAmount: _data.minAmount,
+            minDisplayAmount: _data.minDisplayAmount,
+            quickActions: (
+                <div className="flex justify-start">
+                    <img
+                        src={edit}
+                        width={24}
+                        height={24}
+                        color="red"
+                        alt="View Icon"
+                        className="cursor-pointer"
+                        onClick={() => {
+                            setOpen(true);
+                            setSelectedId(
+                                depositSettings[index]._id
+                            );
+                            formik.setFieldValue("fromToken", { label: depositSettings[index].fromToken.name, value: depositSettings[index].fromToken.name, id: depositSettings[index].fromToken._id });
+                            formik.setFieldValue("toToken", { label: depositSettings[index].toToken.name, value: depositSettings[index].toToken.name, id: depositSettings[index].toToken._id });
+                            formik.setFieldValue("minAmount", depositSettings[index].minAmount);
+                            formik.setFieldValue("minDisplayAmount", depositSettings[index].minDisplayAmount);
+                        }}
+                    />
+                </div>
+            ),
         };
     }) : [];
 
@@ -64,6 +81,7 @@ export default function DepositSettings() {
     const onOpen = () => setOpen(true);
     const onClose = () => {
         setOpen(false);
+        setSelectedId(null);
         setTimeout(() => {
             formik.resetForm();
         }, 1000);
@@ -78,20 +96,25 @@ export default function DepositSettings() {
             minDisplayAmount: ''
         },
         validationSchema: Yup.object({
-            fromToken: Yup.string().required('Type is required'),
-            toToken: Yup.string().required('ID is required'),
+            fromToken: Yup.mixed().required('Type is required'),
+            toToken: Yup.mixed().required('ID is required'),
             minAmount: Yup.string().required('Minimum Amount is required'),
             minDisplayAmount: Yup.string().required('Minimum Display Amount is required')
         }),
         onSubmit: async (values) => {
             const data = {
                 fromToken: values.fromToken.id,
-                toToken: values.toToken,
+                toToken: values.toToken.id,
                 minAmount: values.minAmount,
                 minDisplayAmount: values.minDisplayAmount
             };
-            await addNetworkSettings(data);
-            fetchData(1);
+            if (!selectedId) {
+                await addDespositSettings(data);
+            }
+            else {
+                await updateDespositSettings({ id: selectedId, data });
+            }
+            fetchData();
             onClose();
         }
     });
@@ -108,19 +131,19 @@ export default function DepositSettings() {
                     <form onSubmit={formik.handleSubmit}>
                         <GlobalSelect
                             required
-                            label="From Token"
-                            name="fromToken"
-                            placeholder="select a From Token"
+                            label="To Token"
+                            name="toToken"
+                            placeholder="select a To Token"
                             options={
-                                depositSettings?.list
-                                    ? depositSettings?.list.map((item: any) => item.toWallet.token).map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                allTokens ?
+                                    allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
                                     : []
                             }
-                            value={formik.values.fromToken.value}
+                            value={formik.values.toToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.fromToken && !!formik.errors.fromToken}
-                            error={formik.errors.fromToken}
+                            isError={formik.touched.toToken && !!formik.errors.toToken}
+                            error={formik.errors.toToken}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />
@@ -131,8 +154,8 @@ export default function DepositSettings() {
                             name="fromToken"
                             placeholder="select a From Token"
                             options={
-                                depositSettings?.list
-                                    ? depositSettings?.list.map((item: any) => item.toWallet.token).map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                allTokens ?
+                                    allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
                                     : []
                             }
                             value={formik.values.fromToken.value}
@@ -186,7 +209,7 @@ export default function DepositSettings() {
 
                     <div
                         className="flex gap-1 items-center cursor-pointer px-3"
-                        onClick={() => fetchData(1)}
+                        onClick={fetchData}
                     >
                         <img src={refresh} alt="refresh" width={24} height={24} />
                         <span>Refresh</span>
@@ -207,14 +230,9 @@ export default function DepositSettings() {
                         <GlobalTable
                             rows={rows}
                             headCells={headCells}
-                            copyItems={['']}
-                            colorItems={['transactionStatus']}
-                            imageItems={['toWalletIcon']}
                             isLoading={loading}
-                            totalPages={depositSettings?.totalPages}
-                            handlePageChange={(page: number) => {
-                                fetchData(page);
-                            }}
+                            paginate={false}
+                            imageItems={['iconUrl']}
                         />
                     )
                 }

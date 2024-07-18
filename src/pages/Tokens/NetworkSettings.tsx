@@ -21,10 +21,10 @@ export default function NetworkSettings() {
     const [loading, setLoading] = useState(false);
 
 
-    const fetchData = (page: number) => {
+    const fetchData = () => {
         setLoading(true);
         setTimeout(() => {
-            getNetworkSettings({ page, limit: 10 });
+            getNetworkSettings();
             setLoading(false);
         }, 1000);
     };
@@ -33,7 +33,7 @@ export default function NetworkSettings() {
     const { getNetworkSettings, addNetworkSettings } = useTokensSettingsAction();
     const { networkSettings } = useSelector(selectTokensSettings);
     useEffect(() => {
-        fetchData(1);
+        fetchData();
     }, []);
 
 
@@ -70,7 +70,7 @@ export default function NetworkSettings() {
                 code: values.blockchainCode
             };
             await addNetworkSettings(data);
-            fetchData(1);
+            fetchData();
             onClose();
         }
     });
@@ -127,7 +127,7 @@ export default function NetworkSettings() {
 
                     <div
                         className="flex gap-1 items-center cursor-pointer px-3"
-                        onClick={() => fetchData(1)}
+                        onClick={fetchData}
                     >
                         <img src={refresh} alt="refresh" width={24} height={24} />
                         <span>Refresh</span>
@@ -148,14 +148,8 @@ export default function NetworkSettings() {
                         <GlobalTable
                             rows={rows}
                             headCells={headCells}
-                            copyItems={['']}
-                            colorItems={['']}
-                            imageItems={['']}
                             isLoading={loading}
-                            totalPages={networkSettings?.totalPages}
-                            handlePageChange={(page: number) => {
-                                fetchData(page);
-                            }}
+                            paginate={false}
                         />
                     )
                 }
