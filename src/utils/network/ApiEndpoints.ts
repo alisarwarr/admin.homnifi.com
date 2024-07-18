@@ -141,18 +141,18 @@ export const UPDATE_ADMIN_PERMISSION = '/role';
 export const DELETE_ADMIN = '/admins';
 export const UPDATE_ADMIN = '/admins';
 
+export const MAINTENANCE = '/maintenance';
+
 //cloudk
 
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
-
-
+export const CLOUDK_MACHINE_SIMULATION = '/cloud-k/test-simulation';
 //Wallet Admin
 export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
 export const WALLET_ADMIN_SWAPS = '/wallets/swaps';
 export const WALLET_ADMIN_NETWORKS = '/tokens/networks';
 export const WALLET_ADMIN_NETWORKS_NEW = '/tokens/networks';
-
 
 //Defi 360
 export const DEFI_360_AUTO_COMPOUND_PENALITY = '/cloud-k/ac-penalty';

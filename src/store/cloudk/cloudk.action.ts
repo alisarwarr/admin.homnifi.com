@@ -1,7 +1,14 @@
 import { useDispatch } from 'react-redux';
 import ApiRequest from '../../utils/network/ApiRequest';
-import { INFLATION_RULES, PRODUCTS, USER_MACHINE_LIST } from '../../utils/network/ApiEndpoints';
+import {
+  CLOUDK_MACHINE_SIMULATION,
+  INFLATION_RULES,
+  PRODUCTS,
+  USER_MACHINE_LIST,
+} from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
+import { simulationSliceAction } from './simulation';
+import { machine } from 'os';
 
 export const useCloudActions = () => {
   const dispatch = useDispatch();
@@ -138,7 +145,6 @@ export const useCloudActions = () => {
       });
   };
 
-
   const getUserMachineList = async () => {
     return await ApiRequest()
       .request({
@@ -146,18 +152,45 @@ export const useCloudActions = () => {
         url: USER_MACHINE_LIST,
       })
       .then((response: any) => {
-        dispatch(cloudkSliceAction.setUserMachineList(response.data.data));
+        console.log('🚀 ~ .then ~ response:', response.data.data?.list);
+        dispatch(cloudkSliceAction.setUserMachineList(response.data.data?.list));
+        dispatch(simulationSliceAction.setSimulationSlice({ machines: response.data.data.list }));
+
         return response;
       })
       .catch((error: any) => error);
-  }
+  };
 
+  const startSimulation = async (data: any) => {
+    dispatch(simulationSliceAction.setSimulationSlice({ startSimulationLoading: true }));
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: CLOUDK_MACHINE_SIMULATION,
+        data,
+      })
+      .then((response: any) => {
+        console.log('🚀 ~ .then ~ response:', response);
+        // dispatch(cloudkSliceAction.setUserMachineList(response.data.data));
+        dispatch(simulationSliceAction.setSimulationSlice({ simulationData: response.data.data }));
+        dispatch(simulationSliceAction.setSimulationSlice({ startSimulationLoading: false }));
+        dispatch(simulationSliceAction.selectChart({ startSimulationLoading: false }));
+
+        return response;
+      })
+      .catch((error: any) => {
+        dispatch(simulationSliceAction.setSimulationSlice({ startSimulationLoading: false }));
+
+        return error;
+      });
+  };
 
   return {
     getInfalationRules,
     createInfalationRules,
     getCurrentInfalationRules,
     getUserMachinesList,
-    getUserMachineList
+    getUserMachineList,
+    startSimulation,
   };
 };

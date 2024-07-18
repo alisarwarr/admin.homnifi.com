@@ -16,24 +16,27 @@ import { lowerCaseAllLetters } from '../../../utils/utils';
 
 const validationSchema = Yup.object().shape({
   status: Yup.mixed().required('Status is required.'),
-  url: Yup.string().required('Url is required.'),
+  defiPortal: Yup.mixed().required('Fefi Portal  is required.'),
+  aiTradingNews: Yup.mixed().required('Ai Trading News   is required.'),
   name: Yup.string().required('Name is required.'),
-  description: Yup.string().required('Description is required.'),
-  price: Yup.number().required('Price is required.'),
+  url: Yup.string().required('Url is required.'),
   imageUrl: Yup.string().required('Product Image is required.'),
-  vouchers: Yup.string().required('Vouchers are required.'),
   externalProductId: Yup.string().required('External Product ID is required.'),
   skuId: Yup.string().required('SKU ID is required.'),
+  description: Yup.string().required('Description is required.'),
+  price: Yup.number().required('Price is required.'),
   mintingPower: Yup.number().required('Minting Power is required.'),
+  vouchers: Yup.string().required('Vouchers are required.'),
+  airdropPromo: Yup.number().required('Airdrop Promo are required.'),
+  stakeLimit: Yup.number().required('Stake Limit is required.'),
+  tokenAirdrop: Yup.number().required('Token Air Drop is required.'),
   mintingPowerPerc: Yup.number().required('Minting Power Percentage is required.'),
-  airdropPromo: Yup.string(),
-  stakeLimit: Yup.number(),
-  tokenAirdrop: Yup.number(),
-  licenseName: Yup.string(),
-  profitSplitFee: Yup.number(),
-  aiTradingSoftwareName: Yup.string(),
+  capping: Yup.mixed().required('Capping is required.'),
+  profitSplitFee: Yup.number().required('Super Node Level is required.'),
+  licenseName: Yup.string().required('license Name is required.'),
+  aiTradingSoftwareName: Yup.string().required('aiTrading Software Name is required.'),
   superNodeLevel: Yup.number().required('Super Node Level is required.'),
-  globalPool: Yup.number(),
+  globalPool: Yup.number().required('Global Pool is required.'),
   bonus: Yup.number().required('Bonus is required.'),
 });
 
@@ -55,6 +58,8 @@ const AddProduct = () => {
 
   const initialValues: {
     status: { value: string; label: string };
+    defiPortal: { value: string; label: string };
+    aiTradingNews: { value: string; label: string };
     name: string;
     description: string;
     price: number;
@@ -65,18 +70,22 @@ const AddProduct = () => {
     skuId: string;
     mintingPower: number;
     mintingPowerPerc: number;
-    airdropPromo: string;
+    airdropPromo: number;
     stakeLimit: number;
-    tokenAirdrop: string;
+    tokenAirdrop: number;
     licenseName: string;
-    profitSplitFee: string;
+    profitSplitFee: number;
     aiTradingSoftwareName: string;
-    superNodeLevel: string;
-    globalPool: string;
-    bonus: string;
+    superNodeLevel: number;
+    globalPool: number;
+    bonus: number;
+    capping: number;
     [key: string]: any;
   } = {
     status: { value: '', label: '' },
+    defiPortal: { value: '', label: '' },
+    aiTradingNews: { value: '', label: '' },
+
     name: '',
     description: '',
     price: 0,
@@ -88,15 +97,16 @@ const AddProduct = () => {
     skuId: '',
     mintingPower: 0,
     mintingPowerPerc: 0.0,
-    airdropPromo: '',
-    stakeLimit: '',
-    tokenAirdrop: '',
+    airdropPromo: 0,
+    stakeLimit: 0,
+    tokenAirdrop: 0,
     licenseName: '',
-    profitSplitFee: '',
+    profitSplitFee: 0,
     aiTradingSoftwareName: '',
-    superNodeLevel: '',
-    globalPool: '',
-    bonus: '',
+    superNodeLevel: 0,
+    globalPool: 0,
+    bonus: 0,
+    capping: 0,
   };
 
   const formik = useFormik({
@@ -105,19 +115,21 @@ const AddProduct = () => {
     onSubmit: async (values) => {
       const _value = {
         ...values,
-        status: lowerCaseAllLetters(values.status.value),
+        status: lowerCaseAllLetters(values.status.value) === 'true' ? true : false,
+        defiPortal: lowerCaseAllLetters(values.defiPortal.value) === 'true' ? true : false,
+        aiTradingNews: lowerCaseAllLetters(values.aiTradingNews.value) === 'true' ? true : false,
       };
 
-      console.log('🚀 ~ onSubmit: ~ values:', values);
+      console.log('🚀 ~ onSubmit: ~ values:', _value);
       setSaveLoading(true);
 
       try {
-        const response = await addProduct(values);
+        const response = await addProduct(_value);
 
         if (response?.status) {
           await getProducts(true);
           successAlert(response?.message);
-          navigate('/products');
+          navigate('/cloudk2/products');
         } else {
           if (response.data?.errorVouchers) {
             setDuplicateVouchers({ open: true, duplicates: response.data?.errorVouchers });
@@ -132,6 +144,7 @@ const AddProduct = () => {
       }
     },
   });
+  console.log('formik', formik.errors);
 
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-primary max-w-[1700px] mx-auto">
@@ -147,7 +160,7 @@ const AddProduct = () => {
             required
             label="Status"
             name="status"
-            placeholder="select status"
+            placeholder="Select status"
             options={[
               { label: 'Active', value: 'Active' },
               { label: 'Disable', value: 'In Active' },
@@ -165,9 +178,53 @@ const AddProduct = () => {
               formik.setFieldValue(e, opition);
             }}
           />
+          <GlobalSelect
+            required
+            label="Defi Portal"
+            name="defiPortal"
+            placeholder="Select Defi portal"
+            options={[
+              { label: 'True', value: 'true' },
+              { label: 'False', value: 'false' },
+            ]}
+            value={formik.values.defiPortal?.value}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            isError={formik.touched.defiPortal && !!formik.errors.defiPortal}
+            error={formik.errors.defiPortal}
+            // setFieldTouched={formik.setFieldTouched}
+            // setFieldValue={formik.setFieldValue}
+
+            setFieldTouched={() => formik.setFieldTouched('defiPortal', true)}
+            setFieldValue={(e: any, opition: any) => {
+              formik.setFieldValue(e, opition);
+            }}
+          />
+          <GlobalSelect
+            required
+            label="Status"
+            name="aiTradingNews"
+            placeholder="Select Ai Trading"
+            options={[
+              { label: 'True', value: 'true' },
+              { label: 'False', value: 'false' },
+            ]}
+            value={formik.values.aiTradingNews?.value}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            isError={formik.touched.aiTradingNews && !!formik.errors.aiTradingNews}
+            error={formik.errors.aiTradingNews}
+            // setFieldTouched={formik.setFieldTouched}
+            // setFieldValue={formik.setFieldValue}
+
+            setFieldTouched={() => formik.setFieldTouched('aiTradingNews', true)}
+            setFieldValue={(e: any, opition: any) => {
+              formik.setFieldValue(e, opition);
+            }}
+          />
 
           {Object.keys(initialValues).map((key) => {
-            if (key === 'status') {
+            if (key === 'status' || key === 'defiPortal' || key === 'aiTradingNews') {
               return null;
             }
             return (

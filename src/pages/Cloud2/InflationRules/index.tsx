@@ -103,7 +103,6 @@ const InflationRules = () => {
 
       <section className="flex  flex-row gap-5 justify-end items-center py-5">
         <div>
-
           <GlobalSelect
             // label="Clone/Create Rules"
             name="clone_create_rules"
@@ -117,20 +116,12 @@ const InflationRules = () => {
             inputClass="!w-72 !bg-primary !text-white"
             onChange={(value) => handledropDown(value)}
           />
-
-          {/* <GlobalSelect
-
-          options={[
-            {label:'Clone  Pervious Rules' , value:'clone_pervious_rules'}
-            {label:'Create New Rules' , value:'create_new_rules'}
-
-
-          ]}
-          /> */}
-          {/* <GlobalButton onClick={() => setIsModalOpen(true)} type="button" text="Clone" classNames="!w-52" /> */}
-
         </div>
       </section>
+      <h1 className="flex-1 font-semibold text-2xl px-3 py-5 ">
+        {currentinfalationRules?.inflation.name}{' '}
+        <span className="text-sm px-2">{`(${currentinfalationRules?.inflation.adminNote})`}</span>
+      </h1>
 
       <GlobalTable
         rows={rows}
@@ -164,7 +155,11 @@ const InflationRules = () => {
               selectionMode="single"
               headingClassName="bg-gradient-white rounded-lg text-lg text-defaultBlack font-medium px-4 border-b border-borderBlue"
             >
-              <AccordionItem key={e?.inflation?.name} aria-label={e?.inflation?.name} title={e?.inflation?.name}>
+              <AccordionItem
+                key={e?.inflation?.name}
+                aria-label={e?.inflation?.name}
+                title={`${e?.inflation?.name} ( ${e?.inflation?.adminNote} )`}
+              >
                 <GlobalTable
                   rows={rows}
                   headCells={columns?.filter((itm) => itm?.show === true)}

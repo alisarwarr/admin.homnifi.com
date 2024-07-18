@@ -16,6 +16,7 @@ export interface AdminStateSlice {
   rolesList: any[];
   selectedAdmin: any;
   adminDataDetail: any;
+  maintenanceMode: any;
 }
 
 const initialState: AdminStateSlice = {
@@ -26,6 +27,7 @@ const initialState: AdminStateSlice = {
   rolesList: [],
   selectedAdmin: null,
   adminDataDetail: null,
+  maintenanceMode: null,
 };
 
 const adminSlice = createSlice({
@@ -53,6 +55,9 @@ const adminSlice = createSlice({
     setAdminDetail: (state, action: PayloadAction<any>) => {
       return { ...state, adminDataDetail: action.payload };
     },
+    setMaintenanceMode: (state, action: PayloadAction<any>) => {
+      return { ...state, aintenanceMode: action.payload };
+    },
   },
 });
 
@@ -64,6 +69,7 @@ export const {
   setRoleList,
   setSelectedAdmin,
   setAdminDetail,
+  setMaintenanceMode,
 } = adminSlice.actions;
 
 export const selectAdmin = (state: { admin: AdminStateSlice }) => state.admin;
@@ -71,4 +77,6 @@ export const selectAdminData = (state: { admin: AdminStateSlice }) => state.admi
 export const selectAdminList = (state: { admin: AdminStateSlice }) => state.admin.list;
 export const selectAdminActivity = (state: { admin: AdminStateSlice }) => state.admin.activity;
 export const selectAdminPermissionsList = (state: { admin: AdminStateSlice }) => state.admin.adminPermissionsList;
+export const selectMaintenanceMode = (state: { admin: AdminStateSlice }) => state.admin.maintenanceMode;
+
 export default adminSlice.reducer;

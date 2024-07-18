@@ -16,7 +16,7 @@ import Tokens from '../pages/Tokens';
 import Users from '../pages/Users';
 import UserVerificationRequests from '../pages/Users/UserVerifications';
 import WithdrawRequests from '../pages/Wallet/WithdrawRequests';
-import Providers from '../pages/Providers';
+
 import AddProduct from '../pages/Products/AddProduct';
 import UserVerificationDetails from '../pages/Users/UserVerifications/UserVerificationDetails';
 import MigrationRequests from '../pages/Wallet/MigrationRequests';
@@ -59,6 +59,7 @@ import ProductList from '../pages/Cloud2/ProductList';
 import MachineList from '../pages/Cloud2/MachineList';
 import CronJob from '../pages/Admins/CronJobs';
 import AutoCompoundPenality from '../pages/Defi-360/AutoCompoundPenality';
+import Simulation from '../pages/Cloud2/Simulation';
 
 export const router = createBrowserRouter([
   {
@@ -546,6 +547,16 @@ export const router = createBrowserRouter([
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
               <InflationRules />
+            </ProtectedRoute>
+          </React.Suspense>
+        ),
+      },
+      {
+        path: '/cloudk2/simulation',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <ProtectedRoute>
+              <Simulation />
             </ProtectedRoute>
           </React.Suspense>
         ),
