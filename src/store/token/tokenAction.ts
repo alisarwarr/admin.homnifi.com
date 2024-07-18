@@ -15,6 +15,8 @@ import {
   TOKEN_PAIRS_EDIT,
   TOKEN_PAIRS_SETTING,
   TOKEN_TRANSACTION_SETTING,
+  GET_ALL_TOKENS,
+  ADD_WITH_DRAW_SETTINGS,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 
@@ -29,9 +31,8 @@ export const useTokenActions = () => {
 
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${TOKEN}/all`,
+      url: GET_ALL_TOKENS,
     });
-    console.log('🚀 ~ response ~ response:', response);
 
     const _tokensList = response?.data.data;
     dispatch(setTokenList(_tokensList));
@@ -177,7 +178,23 @@ export const useTokenActions = () => {
       });
   };
 
+  const createWithdrawSetting = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: ADD_WITH_DRAW_SETTINGS,
+        data,
+      })
+      .then((response: any) => {
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
   return {
+    createWithdrawSetting,
     getTokensList,
     getTokenById,
     updateToken,

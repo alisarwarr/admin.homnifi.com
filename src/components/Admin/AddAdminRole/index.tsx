@@ -220,7 +220,9 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                                   checked={activeRoles[dt]?.includes(rl) ?? false}
                                   label={rl}
                                   onChange={() => {
-                                    handleRoleSelection(dt, rl);
+                                    if (!isView) {
+                                      handleRoleSelection(dt, rl);
+                                    }
                                   }}
                                 />
                               </div>
@@ -243,11 +245,13 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                 </div>
               )}
             </div>
-            <div className="mx-8">
-              <Button className="w-full bg-primary " loadingType="circular" buttonType="submit">
-                Submit
-              </Button>
-            </div>
+            {!isView && (
+              <div className="mx-8">
+                <Button className="w-full bg-primary " loadingType="circular" buttonType="submit">
+                  Submit
+                </Button>
+              </div>
+            )}
           </form>
         }
       />
