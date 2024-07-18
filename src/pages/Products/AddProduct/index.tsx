@@ -12,29 +12,28 @@ import { useProvidersActions } from '../../../store/providers/providerActions';
 import { useSelector } from 'react-redux';
 import { selectProviderSlice } from '../../../store/providers/providerSlice';
 import GlobalSelect from '../../../components/Global/GlobalSelect';
+import { lowerCaseAllLetters } from '../../../utils/utils';
 
 const validationSchema = Yup.object().shape({
-  provider: Yup.string().required('Provider is required.'),
-  status: Yup.string().required('Status is required.'),
+  status: Yup.mixed().required('Status is required.'),
+  url: Yup.string().required('Url is required.'),
   name: Yup.string().required('Name is required.'),
   description: Yup.string().required('Description is required.'),
   price: Yup.number().required('Price is required.'),
-  image: Yup.string().required('Product Image is required.'),
+  imageUrl: Yup.string().required('Product Image is required.'),
   vouchers: Yup.string().required('Vouchers are required.'),
   externalProductId: Yup.string().required('External Product ID is required.'),
   skuId: Yup.string().required('SKU ID is required.'),
   mintingPower: Yup.number().required('Minting Power is required.'),
   mintingPowerPerc: Yup.number().required('Minting Power Percentage is required.'),
-  defiPortal: Yup.boolean().required('Defi Portal is required.'),
-  airdropPromo: Yup.number().required('Airdrop Promo is required.'),
-  stakeLimit: Yup.number().required('Stake Limit is required.'),
-  tokenAirdrop: Yup.number().required('Token Airdrop is required.'),
-  licenseName: Yup.string().required('License Name is required.'),
-  profitSplitFee: Yup.number().required('Profit Split Fee is required.'),
-  aiTradingNews: Yup.boolean().required('AI Trading News is required.'),
-  aiTradingSoftwareName: Yup.string().required('AI Trading Software Name is required.'),
+  airdropPromo: Yup.string(),
+  stakeLimit: Yup.number(),
+  tokenAirdrop: Yup.number(),
+  licenseName: Yup.string(),
+  profitSplitFee: Yup.number(),
+  aiTradingSoftwareName: Yup.string(),
   superNodeLevel: Yup.number().required('Super Node Level is required.'),
-  globalPool: Yup.number().required('Global Pool is required.'),
+  globalPool: Yup.number(),
   bonus: Yup.number().required('Bonus is required.'),
 });
 
@@ -47,7 +46,6 @@ const AddProduct = () => {
   });
 
   const { addProduct, getProducts } = useProductActions();
-  const { getProviders } = useProvidersActions();
 
   const navigate = useNavigate();
 
@@ -55,25 +53,46 @@ const AddProduct = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const initialValues = {
-    provider: '',
-    status: 'ACTIVE',
+  const initialValues: {
+    status: { value: string; label: string };
+    name: string;
+    description: string;
+    price: number;
+    url: string;
+    imageUrl: string;
+    vouchers: string;
+    externalProductId: string;
+    skuId: string;
+    mintingPower: number;
+    mintingPowerPerc: number;
+    airdropPromo: string;
+    stakeLimit: number;
+    tokenAirdrop: string;
+    licenseName: string;
+    profitSplitFee: string;
+    aiTradingSoftwareName: string;
+    superNodeLevel: string;
+    globalPool: string;
+    bonus: string;
+    [key: string]: any;
+  } = {
+    status: { value: '', label: '' },
     name: '',
     description: '',
-    price: '',
-    image: '',
+    price: 0,
+    url: 'https://s3-alpha-sig.figma.com/img/7e81/61ad/d52b69a5f11e633605fd221870e6fc43?Expires=1722211200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hPKa4Ho9VT0BN2ERm2guLOaKPe~0ImqnIWO5G5UqxdI9H3kPxCOdXUWGFjerYrN1Cc2yn5j7bdJGLgl2JUPjaNlO6zISB5BQt2Ff6ysaqXrc8qiRzSXFbbUtW5z7KSIS~iJ31~-qpxqB~dnBVm48QmYxk3lOLLJ8kp9Sq0CqesDcDL9pZ1CvY5gmvcVXM2OFg-K5mY3fdTl0O7rY5xeNTsb9QjYG9ShJ5wH3gxReokQUoXeoeGPm1RrVb6kIAZy83WDeUReDgZapAKs-3ysDm320FEwC0nKQpiIzzO3nBYj0S~xYJE1ikNKpDOqm2cLrR6LmubiDN9d9s2EbbP92VQ__',
+    imageUrl:
+      'https://s3-alpha-sig.figma.com/img/7e81/61ad/d52b69a5f11e633605fd221870e6fc43?Expires=1722211200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hPKa4Ho9VT0BN2ERm2guLOaKPe~0ImqnIWO5G5UqxdI9H3kPxCOdXUWGFjerYrN1Cc2yn5j7bdJGLgl2JUPjaNlO6zISB5BQt2Ff6ysaqXrc8qiRzSXFbbUtW5z7KSIS~iJ31~-qpxqB~dnBVm48QmYxk3lOLLJ8kp9Sq0CqesDcDL9pZ1CvY5gmvcVXM2OFg-K5mY3fdTl0O7rY5xeNTsb9QjYG9ShJ5wH3gxReokQUoXeoeGPm1RrVb6kIAZy83WDeUReDgZapAKs-3ysDm320FEwC0nKQpiIzzO3nBYj0S~xYJE1ikNKpDOqm2cLrR6LmubiDN9d9s2EbbP92VQ__',
     vouchers: '',
     externalProductId: '',
     skuId: '',
-    mintingPower: '',
-    mintingPowerPerc: '',
-    defiPortal: false,
+    mintingPower: 0,
+    mintingPowerPerc: 0.0,
     airdropPromo: '',
     stakeLimit: '',
     tokenAirdrop: '',
     licenseName: '',
     profitSplitFee: '',
-    aiTradingNews: false,
     aiTradingSoftwareName: '',
     superNodeLevel: '',
     globalPool: '',
@@ -84,6 +103,12 @@ const AddProduct = () => {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      const _value = {
+        ...values,
+        status: lowerCaseAllLetters(values.status.value),
+      };
+
+      console.log('🚀 ~ onSubmit: ~ values:', values);
       setSaveLoading(true);
 
       try {
@@ -108,30 +133,6 @@ const AddProduct = () => {
     },
   });
 
-  useEffect(() => {
-    if (!providers?.list?.length) {
-      getProviders(true);
-    }
-  }, []);
-
-  const handleProductImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      formik.setFieldValue('image', e.target.files[0]);
-    }
-  };
-
-  const handleProductVouchersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      formik.setFieldValue('vouchers', e.target.files[0]);
-    }
-  };
-
-  const handleSelectProductImageClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-primary max-w-[1700px] mx-auto">
       <div className="mx-auto text-start">
@@ -151,20 +152,24 @@ const AddProduct = () => {
               { label: 'Active', value: 'Active' },
               { label: 'Disable', value: 'In Active' },
             ]}
-            value={formik.values.status}
+            value={formik.values.status?.value}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             isError={formik.touched.status && !!formik.errors.status}
             error={formik.errors.status}
-            setFieldTouched={formik.setFieldTouched}
-            setFieldValue={formik.setFieldValue}
+            // setFieldTouched={formik.setFieldTouched}
+            // setFieldValue={formik.setFieldValue}
+
+            setFieldTouched={() => formik.setFieldTouched('status', true)}
+            setFieldValue={(e: any, opition: any) => {
+              formik.setFieldValue(e, opition);
+            }}
           />
 
           {Object.keys(initialValues).map((key) => {
-            if (key === 'provider' || key === 'status' || key === 'image') {
+            if (key === 'status') {
               return null;
             }
-
             return (
               <FormikInput
                 key={key}
@@ -184,6 +189,13 @@ const AddProduct = () => {
         {/* SAVE BUTTON */}
 
         <div className="h-16" />
+        <SaveBar
+          btnText={'Submit'}
+          onSubmit={formik.handleSubmit}
+          loading={saveLoading}
+          disabled={saveLoading}
+          onCancel={() => navigate('/providers')}
+        />
       </form>
     </div>
   );

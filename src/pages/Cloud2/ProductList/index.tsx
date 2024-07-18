@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import RenderMemberShip from '../_components/RenderMemberShip';
 import RenderProductHistory from '../_components/RenderMembership/RenderProductHistory';
 import useLoading from '../../../utils/hooks/useLoading';
@@ -18,6 +18,7 @@ const ProductList = () => {
   const { isLoading, startLoading, stopLoading } = useLoading();
   const { getProducts } = useProductActions();
   const { products } = useSelector(selectProductSlice);
+  const navigate = useNavigate();
   console.log('🚀 ~ ProductList ~ products:', products);
   useEffect(() => {
     getProducts();
@@ -38,7 +39,7 @@ const ProductList = () => {
         </div>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
-          // onClick={() => navigate('/admin-setting/admins/create', { state: { edit: true } })}
+          onClick={() => navigate('/cloudk2/products/add', { state: { edit: false } })}
         >
           <img src={add} alt="" width={24} height={24} />
           <span>Add Product</span>

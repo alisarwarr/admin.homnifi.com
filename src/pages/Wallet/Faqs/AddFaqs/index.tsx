@@ -3,19 +3,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import SaveBar from '../../../../components/SaveBar';
-// import FileUpload from '@/components/upload/FileUpload';
-import { download, photo } from '../../../../images/other';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // REDUX
-import { useProductActions } from '../../../../store/products/productActions';
-import ReactSelect from '../../../../components/ReactSelect';
 import { errorAlert, successAlert } from '../../../../utils/alerts';
 import FormikInput from '../../../../components/FormikInput';
-import { useProvidersActions } from '../../../../store/providers/providerActions';
-import { useSelector } from 'react-redux';
-import { selectProviderSlice } from '../../../../store/providers/providerSlice';
-import { Product, selectProductSlice } from '../../../../store/products/productSlice';
 import VouchersTable from '../../../../components/VouchersTable';
 import Dialog from '../../../../components/Dialog/BasicDialog';
 import { TRANSACTION_TYPES } from '../../../../constants';
@@ -100,8 +92,7 @@ const AddFaqs = () => {
           successAlert(response?.message);
           await getFaqs(true);
 
-            navigate('/history/faq');
-
+          navigate('/history/faq');
         }
         console.log('response', response);
 
