@@ -6,6 +6,7 @@ type Props = {
   showColorizedText?: boolean;
   showText?: boolean;
   tokenImageClassName?: string;
+  src?: string;
 };
 
 const TokenNameWithLogo = ({
@@ -13,6 +14,7 @@ const TokenNameWithLogo = ({
   showColorizedText = false,
   showText = true,
   tokenImageClassName = '',
+  src = '',
 }: Props) => {
   return (
     <span
@@ -30,7 +32,7 @@ const TokenNameWithLogo = ({
               `}
     >
       <img
-        src={tokenImages[tokenName ?? 'USDT']}
+        src={src || tokenImages[tokenName ?? 'USDT']}
         alt=""
         className={`w-5 h-5 object-contain ${tokenImageClassName}`}
       />

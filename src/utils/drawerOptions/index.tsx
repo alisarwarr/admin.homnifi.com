@@ -171,16 +171,16 @@ export const allDrawerOptions: DrawerSection[] = [
             permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
 
-          {
-            name: 'Transfer',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/wallet/transfer',
-            key: 'wallet-transfer',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-migrate'],
-          },
+          // {
+          //   name: 'Transfer',
+          //   icon: <Dashboard />,
+          //   icon_dark: setting,
+          //   url: '/wallet/transfer',
+          //   key: 'wallet-transfer',
+          //   active: false,
+          //   options: [],
+          //   permissions: [`all`, `superadmin`, 'tokens_settings-migrate'],
+          // },
           {
             name: 'Swap',
             icon: <Dashboard />,
