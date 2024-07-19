@@ -217,7 +217,6 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
         ColumnsList={columns}
         filter={filter}
         setFilter={setFilter}
-        showInnerFilters={true}
         csvData={getCsvData}
       />
 
