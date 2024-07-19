@@ -3,12 +3,12 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import Button from '../../../components/Button';
 import { CancelIcon } from '../../../images/svg';
-import React, { useEffect, useState } from 'react';
 import GlobalInput from '../../Global/GlobalInput';
 import GlobalSelect from '../../Global/GlobalSelect';
 import GlobalDialog from '../../../components/Dialog';
 import { permissionsList } from '../../../utils/data';
 import GlobalCheckbox from '../../Global/GlobalCheckbox';
+import React, { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successAlert } from '../../../utils/alerts';
 import { useAdminActions } from '../../../store/admin/adminActions';
 import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
@@ -161,6 +161,23 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
     setIsRoleSubmit(false);
   };
 
+  const dropdownOption = useMemo(() => {
+    return adminPermissionsList
+      .filter((dt) => {
+        if (selectedRoles.length > 0) {
+          const res = selectedRoles.find(
+            (itm: string) => itm === dt.module || itm === 'all'
+          );
+          return res ? false : true;
+        }
+        return true;
+      })
+      ?.map((dt) => ({
+        label: dt.module,
+        value: dt.module,
+      }));
+  }, [adminPermissionsList, selectedRoles]);
+
   return (
     <div>
       <GlobalDialog
@@ -215,22 +232,34 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                   label="Permission"
                   required={!selectedRoles.length}
                   placeholder="Select Permission"
-                  options={adminPermissionsList?.map((dt) => ({
-                    label: dt.module,
-                    value: dt.module,
-                  }))}
+                  options={
+                    dropdownOption && [
+                      { label: 'ALL', value: 'all' },
+                      ...dropdownOption,
+                    ]
+                  }
                   isMulti={true}
                   isError={isRoleSubmit && !selectedRoles.length ? true : false}
                   error={'Permission is required'}
                   onChange={(e: any) => {
-                    setSelectedRoles((prev) => {
-                      if (prev.includes(e)) {
-                        return prev;
-                      } else {
-                        return [...prev, e];
+                    if (
+                      e === 'all' &&
+                      adminPermissionsList.length > selectedRoles.length
+                    ) {
+                      return setSelectedRoles(
+                        adminPermissionsList.map((dt: any) => dt.module)
+                      );
+                    } else {
+                      if (e !== 'all') {
+                        return setSelectedRoles((prev) => {
+                          if (prev.includes(e)) {
+                            return prev;
+                          } else {
+                            return [...prev, e];
+                          }
+                        });
                       }
-                    });
-                    handleChange(e);
+                    }
                   }}
                 />
               </div>
