@@ -39,7 +39,7 @@ export default function Admins(): JSX.Element {
   if (!user?.isSuperAdmin) return <></>;
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full px-2 border py-4 rounded-md">
       <div className="flex bg-primary items-center table-head-bg text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Admins</h1>
         <div

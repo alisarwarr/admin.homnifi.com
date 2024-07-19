@@ -131,7 +131,6 @@ const DepositHistory = () => {
         ColumnsList={columns}
         filter={filter}
         setFilter={setFilter}
-        showInnerFilters={true}
         csvData={getCsvData}
       />
     </div>

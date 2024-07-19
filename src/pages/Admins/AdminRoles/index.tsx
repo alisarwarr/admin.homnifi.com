@@ -32,70 +32,62 @@ function AdminRoles() {
     { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
   ];
 
-  const rows = rolesList?.map((_data: any, index: number) => {
-    return {
-      id: index,
-      name: _data.name,
-      role: `${_data.permissions
-        ?.slice(0, 4)
-        .map((dt: any) => dt.module)
-        .join(', ')} ${_data.permissions?.length > 4 ? '...' : ''}`,
-      actions: (
-        <div className="flex items-center gap-2">
-          <Tooltip title="View Admin Role">
-            <div
-              onClick={() => {
-                onPopupHandler();
-                setSelectedRole(_data);
-                setIsView(true);
-              }}
-            >
-              <img
-                src={view}
-                width={18}
-                height={18}
-                alt="View Icon"
-                className="cursor-pointer"
-              />
-            </div>
-          </Tooltip>
+  const rows =
+    rolesList.length > 0
+      ? rolesList?.map((_data: any, index: number) => {
+          return {
+            id: index,
+            name: _data.name,
+            role: `${_data.permissions
+              ?.slice(0, 4)
+              .map((dt: any) => dt.module)
+              .join(', ')} ${_data.permissions?.length > 4 ? '...' : ''}`,
+            actions: (
+              <div className="flex items-center gap-2">
+                <Tooltip title="View Admin Role">
+                  <div
+                    onClick={() => {
+                      onPopupHandler();
+                      setSelectedRole(_data);
+                      setIsView(true);
+                    }}
+                  >
+                    <img
+                      src={view}
+                      width={18}
+                      height={18}
+                      alt="View Icon"
+                      className="cursor-pointer"
+                    />
+                  </div>
+                </Tooltip>
 
-          <Tooltip title="Edit Admin Role">
-            <img
-              src={edit}
-              width={18}
-              height={18}
-              alt="Edit Icon"
-              onClick={() => {
-                setIsView(false);
-                onPopupHandler();
-                setSelectedRole(_data);
-              }}
-              className="cursor-pointer"
-            />
-          </Tooltip>
-
-          <Tooltip title={'Delete Admin Role'}>
-            <div
-              onClick={() => onDeleteHandler(_data)}
-              className="cursor-pointer"
-            >
-              <DeleteIcon />
-            </div>
-          </Tooltip>
-        </div>
-      ),
-    };
-  });
-
-  const onDeleteHandler = (itm: any) => {
-    console.log('itm ::', itm);
-  };
+                <Tooltip title="Edit Admin Role">
+                  <img
+                    src={edit}
+                    width={18}
+                    height={18}
+                    alt="Edit Icon"
+                    onClick={() => {
+                      setIsView(false);
+                      onPopupHandler();
+                      setSelectedRole(_data);
+                    }}
+                    className="cursor-pointer"
+                  />
+                </Tooltip>
+              </div>
+            ),
+          };
+        })
+      : [];
 
   useEffect(() => {
     if (rolesList.length === 0) {
       getAdminRole();
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
     } else {
       setLoading(false);
     }
@@ -106,7 +98,7 @@ function AdminRoles() {
   }
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full px-2 border py-4 rounded-md">
       <div className="flex bg-primary items-center table-head-bg text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Admin Roles</h1>
         <div

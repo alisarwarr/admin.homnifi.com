@@ -17,6 +17,8 @@ export interface AdminStateSlice {
   selectedAdmin: any;
   adminDataDetail: any;
   maintenanceMode: any;
+  cronJobList: any[];
+  cronJobData: any;
 }
 
 const initialState: AdminStateSlice = {
@@ -28,6 +30,9 @@ const initialState: AdminStateSlice = {
   selectedAdmin: null,
   adminDataDetail: null,
   maintenanceMode: null,
+
+  cronJobList: [],
+  cronJobData: null,
 };
 
 const adminSlice = createSlice({
@@ -58,6 +63,13 @@ const adminSlice = createSlice({
     setMaintenanceMode: (state, action: PayloadAction<any>) => {
       return { ...state, aintenanceMode: action.payload };
     },
+
+    setCronJobsList: (state, action: PayloadAction<any>) => {
+      return { ...state, cronJobList: action.payload };
+    },
+    setCronJobsData: (state, action: PayloadAction<any>) => {
+      return { ...state, cronJobData: action.payload };
+    },
   },
 });
 
@@ -70,6 +82,8 @@ export const {
   setSelectedAdmin,
   setAdminDetail,
   setMaintenanceMode,
+  setCronJobsList,
+  setCronJobsData,
 } = adminSlice.actions;
 
 export const selectAdmin = (state: { admin: AdminStateSlice }) => state.admin;
