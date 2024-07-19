@@ -187,6 +187,7 @@ export const useTokenActions = () => {
         data,
       })
       .then((response: any) => {
+        getWithdrawSettings();
         return response.data;
       })
       .catch((err: any) => {
@@ -273,6 +274,6 @@ export const useTokenActions = () => {
     createNewToken,
     onUpdateToken,
     getWithdrawSettings,
-    updateWithdrawSetting
+    updateWithdrawSetting,
   };
 };

@@ -154,6 +154,7 @@ function AddToken({ open, onClose, editToken }: Props) {
 
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
+                    disabled={editToken ? true : false}
                     name="symbol"
                     label="Symbol"
                     placeholder="Enter your symbol"

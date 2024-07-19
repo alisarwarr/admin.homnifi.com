@@ -25,15 +25,10 @@ function WithdrawSetting() {
     { id: 'type', label: 'type' },
     { id: 'withdrawFrom', label: 'Withdraw From' },
     { id: 'withdrawTo', label: 'Withdraw To' },
-    { id: 'limit', label: 'Limit' },
+    { id: 'minAmount', label: 'Min Amount' },
     { id: 'fees', label: 'Fees' },
     { id: 'commission', label: 'commission' },
     { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
-  ];
-
-  const data = [
-    { id: 1, type: 'internal', withdrawFrom: 10, withdrawTo: 100, fees: 50, commission: '5 %' },
-    { id: 2, type: 'external', withdrawFrom: 100, withdrawTo: 200, fees: 50, commission: '5 %' },
   ];
 
   const rows = withdrawSettingsList?.map((_data: any, index: number) => {
@@ -42,7 +37,7 @@ function WithdrawSetting() {
       type: _data.type,
       withdrawFrom: _data.fromToken.name,
       withdrawTo: _data.toToken.name,
-      limit: ` ${'Min ' + _data.minAmount + '-  Max ' + _data.minWithdrawableAmount}`,
+      minAmount: _data.minAmount,
       fees: _data.fee,
       commission: _data.commission,
       actions: (

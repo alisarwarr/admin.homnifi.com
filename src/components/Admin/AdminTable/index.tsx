@@ -76,6 +76,7 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
                 </Tooltip>
                 <Tooltip title="Delete Admin">
                   <div
+                    className="cursor-pointer"
                     onClick={() => {
                       onDeleteAdmin(_data._id);
                     }}

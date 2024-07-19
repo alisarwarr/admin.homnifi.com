@@ -51,7 +51,7 @@ export default function Admins(): JSX.Element {
         </div>
       </div>
       {/* TABLE */}
-      <AdminTable data={list} loading={loading} fetchAdminList = {fetchAdminList}/>
+      <AdminTable data={list} loading={loading} fetchAdminList={fetchAdminList} />
     </div>
   );
 }

@@ -130,7 +130,7 @@ export const useAdminActions = () => {
       })
       .then((response: any) => {
         dispatch(setAdminDetail(response?.data?.data));
-        dispatch(setAdminList(response?.data?.data.paginatedResults));
+        dispatch(setAdminList(response?.data?.data.list));
         return response;
       })
       .catch((err: any) => err.data);

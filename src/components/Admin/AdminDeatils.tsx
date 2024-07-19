@@ -7,7 +7,7 @@ import AddAdminRole from './AddAdminRole';
 import GlobalSelect from '../Global/GlobalSelect';
 import React, { useEffect, useState } from 'react';
 import { CapitalizeFirstLetter } from '../../utils/utils';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { useAdminActions } from '../../store/admin/adminActions';
 import { selectAdmin, selectAdminPermissionsList } from '../../store/admin/adminSlice';
@@ -16,6 +16,7 @@ import useLoading from '../../utils/hooks/useLoading';
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const navigate = useNavigate();
   const location: any = useLocation();
+  const { id } = useParams<{ id: string }>();
   const { rolesList, selectedAdmin } = useSelector(selectAdmin);
   const { isLoading, startLoading, stopLoading } = useLoading(false);
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
@@ -31,14 +32,14 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     firstName: '',
     lastName: '',
     password: '',
-    roles: '',
+    role: '',
   };
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid Email').required('Email is required'),
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
-    roles: Yup.string().required('Role is required'),
+    role: Yup.string().required('Role is required'),
     password: state
       ? Yup.string()
       : Yup.string()
@@ -61,7 +62,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
         firstName: state.firstName ?? '',
         lastName: state.lastName ?? '',
         password: state.password ?? '',
-        roles: state?.role[0]?._id ?? '',
+        role: state?.role[0]?._id ?? '',
       });
     }
   }, []);
@@ -78,12 +79,11 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
     onSubmit: async (values) => {
       startLoading();
       let response: any;
-      if (edit) {
+      if (state && id) {
         response = await updateAdmin(state._id, values);
       } else {
         response = await createAdmin(values);
       }
-
       if (response.data?.status) {
         stopLoading();
         successAlert('Admin Added Successfully!');
@@ -112,7 +112,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
 
       <div className="grid grid-cols-1 gap-x-6 lg:grid-cols-2 mt-12 mx-12 items-start">
         {Object.keys(initialValues)
-          .filter((dt) => dt !== 'roles')
+          .filter((dt) => dt !== 'role')
           .map((key) => {
             return (
               <>
@@ -136,22 +136,22 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           <GlobalSelect
             disabled={!edit}
             required
-            name="roles"
+            name="role"
             label={'Admin Role'}
             options={rolesList?.map((dt) => ({
               label: dt?.name,
               value: dt?._id,
             }))}
             placeholder="Select Value"
-            isError={formik.touched.roles && !!formik.errors.roles}
-            value={formik.values.roles}
+            isError={formik.touched.role && !!formik.errors.role}
+            value={formik.values.role}
             onChange={(e: any) => {
-              formik.setFieldValue('roles', e);
+              formik.setFieldValue('role', e);
             }}
             onBlur={formik.handleBlur}
           />
-          {touched.roles && errors.roles && isSubmit && (
-            <span className="text-xs text-red-500 self-end ">{errors.roles}</span>
+          {touched.role && errors.role && isSubmit && (
+            <span className="text-xs text-red-500 self-end ">{errors.role}</span>
           )}
         </div>
 
