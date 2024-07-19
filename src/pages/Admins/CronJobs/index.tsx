@@ -4,6 +4,7 @@ import { useAdminActions } from '../../../store/admin/adminActions';
 import { useSelector } from 'react-redux';
 import { selectAdmin } from '../../../store/admin/adminSlice';
 import moment from 'moment';
+import Loader from '../../../components/Loader/Loader';
 
 function CronJob() {
   const { getCronJobs } = useAdminActions();
@@ -28,6 +29,7 @@ function CronJob() {
 
     return `${hours} : ${minutes}`;
   };
+
   const rows =
     cronJobList?.length > 0
       ? cronJobList?.map((_data: any, index: number) => {
@@ -59,7 +61,9 @@ function CronJob() {
     }
   }, []);
 
-  console.log('rows ::', rows);
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">
