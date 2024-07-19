@@ -37,7 +37,7 @@ function AddToken({ open, onClose, editToken }: Props) {
     type: '',
     withdrawType: '',
     color: '',
-    networks: [''],
+    networks: [],
     iconUrl: '',
   };
 
@@ -104,11 +104,14 @@ function AddToken({ open, onClose, editToken }: Props) {
 
   //remove item item from dropdown
   const removeItemHanlder = (id: any) => {
-    if (values?.networks?.includes(id)) {
-      return setFieldValue(
-        'networks',
-        values.networks.filter((dt: string) => dt !== id)
-      );
+    if (values?.networks.length > 0) {
+      const networkList: any = [...values?.networks];
+      if (networkList?.includes(id)) {
+        return setFieldValue(
+          'networks',
+          values.networks.filter((dt: string) => dt !== id)
+        );
+      }
     }
   };
 
@@ -182,7 +185,7 @@ function AddToken({ open, onClose, editToken }: Props) {
                 </div>
               </div>
 
-              <div className="flex flex-col md:items-baseline  md:flex-row w-full">
+              <div className="flex flex-col md:items-baseline mt-1 md:flex-row w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalSelect
                     required
@@ -237,8 +240,8 @@ function AddToken({ open, onClose, editToken }: Props) {
                 </div>
               </div>
 
-              <div className="flex flex-col md:items-baseline  md:flex-row w-full">
-                <div className="w-full mx-2 pt-2">
+              <div className="flex flex-col md:items-baseline md:flex-row w-full">
+                <div className="w-full mx-2">
                   <GlobalSelect
                     label="Networks"
                     labelOptionClass={'text-left'}

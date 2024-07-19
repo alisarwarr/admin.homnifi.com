@@ -312,6 +312,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               <div className="flex flex-col md:items-baseline  md:flex-row w-full">
                 <div className="w-full mx-2">
                   <GlobalInput
+                    toolTip="Amount exceeding this value will request for admin approval"
                     required
                     name="minWithdrawableAmount"
                     label="Max Amount For Automatic Withdraw "

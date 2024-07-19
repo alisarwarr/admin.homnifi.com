@@ -28,7 +28,7 @@ function WithdrawSetting() {
     { id: 'type', label: 'type' },
     { id: 'withdrawFrom', label: 'Withdraw From' },
     { id: 'withdrawTo', label: 'Withdraw To' },
-    { id: 'minAmount', label: 'Min Amount' },
+    { id: 'minDisplayAmount', label: 'Min Display Amount' },
     { id: 'fees', label: 'Fees' },
     { id: 'commission', label: 'commission' },
     { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
@@ -41,7 +41,7 @@ function WithdrawSetting() {
           type: _data.type,
           withdrawFrom: _data.fromToken.name,
           withdrawTo: _data.toToken.name,
-          minAmount: _data.minAmount ?? 0,
+          minDisplayAmount: _data.minDisplayAmount ?? 0,
           fees: _data.fee ?? 0,
           commission: _data.commission ?? 0,
           actions: (
