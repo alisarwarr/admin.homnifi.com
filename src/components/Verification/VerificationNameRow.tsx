@@ -46,7 +46,9 @@ const VerificationNameRow = ({ data, className }: Props) => {
 
   return (
     <div>
-      <div className={`grid grid-cols-1 md:grid-cols-3 w-full gap-5 ${className}`}>
+      <div
+        className={`grid grid-cols-1 md:grid-cols-3 w-full gap-5 ${className}`}
+      >
         {list.map((item) => {
           return (
             <FormikInput

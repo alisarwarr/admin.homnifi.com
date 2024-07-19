@@ -23,7 +23,8 @@ const QuickyPaySettings = () => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
 
-  const { getQuickiPaySettings, updateQuickiPaySettings } = useSettingsActions();
+  const { getQuickiPaySettings, updateQuickiPaySettings } =
+    useSettingsActions();
 
   const initialValues: {
     _id: string;
@@ -93,11 +94,18 @@ const QuickyPaySettings = () => {
                 placeholder={`Enter ${field.label}`}
                 error={formik.errors[field.key]}
                 value={formik.values[field.key]}
-                onChange={(e: any) => formik.setFieldValue(field.key, e.target.value)}
+                onChange={(e: any) =>
+                  formik.setFieldValue(field.key, e.target.value)
+                }
                 touched={formik.touched[field.key]}
                 shrink={true}
                 showAdornment={true}
-                adornment={field.key === 'trxFee' && formik.values.trxFeeType.value === 'PERCENTAGE' ? '%' : '$'}
+                adornment={
+                  field.key === 'trxFee' &&
+                  formik.values.trxFeeType.value === 'PERCENTAGE'
+                    ? '%'
+                    : '$'
+                }
               />
             </div>
           ))}

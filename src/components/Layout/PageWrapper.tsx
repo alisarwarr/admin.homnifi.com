@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   title?: string;
-  children?: React.ReactNode
+  children?: React.ReactNode;
 };
 
 const PageWrapper = ({ title, children }: Props) => {

@@ -13,7 +13,7 @@ export interface WithdrawRequest {
   amount: number;
   fee: number;
   charges: number;
-  total: number
+  total: number;
   requestStatus: 'PENDING' | 'DENIED' | 'COMPLETED';
   withdrawProcess: 'MANUAL' | 'AUTOMATIC';
   network: any;
@@ -83,7 +83,9 @@ const walletSlice = createSlice({
   },
 });
 
-export const { setWithdrawRequests, setMigrationRequests } = walletSlice.actions;
-export const selectWalletSlice = (state: { wallet: WalletStateSlice }) => state.wallet;
+export const { setWithdrawRequests, setMigrationRequests } =
+  walletSlice.actions;
+export const selectWalletSlice = (state: { wallet: WalletStateSlice }) =>
+  state.wallet;
 
 export default walletSlice.reducer;

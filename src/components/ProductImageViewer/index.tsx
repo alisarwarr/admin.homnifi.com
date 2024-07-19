@@ -7,7 +7,11 @@ type Props = {
   deleteImageHandler?: any;
 };
 
-const ProductImageViewer = ({ viewImage, image, deleteImageHandler }: Props) => {
+const ProductImageViewer = ({
+  viewImage,
+  image,
+  deleteImageHandler,
+}: Props) => {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -29,7 +33,11 @@ const ProductImageViewer = ({ viewImage, image, deleteImageHandler }: Props) => 
             />
           )}
 
-          <img src={image && URL.createObjectURL(image)} alt="" className="w-32 h-32 object-cover" />
+          <img
+            src={image && URL.createObjectURL(image)}
+            alt=""
+            className="w-32 h-32 object-cover"
+          />
         </>
       ) : (
         <img src={add} alt="" className="w-32 h-32" />

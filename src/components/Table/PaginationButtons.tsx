@@ -11,7 +11,8 @@ export default function PaginationButtons({
   totalPage,
   paginationPosition = 'center',
 }: PaginationButtonsProps): JSX.Element {
-  const position = paginationPosition === 'center' ? 'justify-center' : 'flex justify-end';
+  const position =
+    paginationPosition === 'center' ? 'justify-center' : 'flex justify-end';
 
   return (
     <div className={`flex ${position}`}>

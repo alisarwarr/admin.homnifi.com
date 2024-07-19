@@ -12,9 +12,28 @@ import {
   HistoryDark,
   AdminDark,
 } from '../../images/drawer/light';
-import { ArrowDown_, emptyWallet_, flash_, Swap_ } from '../../images/drawer/dark';
-import { setting, settingDark, swapIcon, users, usersDark } from '../../images/other';
-import { Dashboard, Wallet, Admin, CloundK2, Token, AdminSetting, Community } from '../../images/drawer';
+import {
+  ArrowDown_,
+  emptyWallet_,
+  flash_,
+  Swap_,
+} from '../../images/drawer/dark';
+import {
+  setting,
+  settingDark,
+  swapIcon,
+  users,
+  usersDark,
+} from '../../images/other';
+import {
+  Dashboard,
+  Wallet,
+  Admin,
+  CloundK2,
+  Token,
+  AdminSetting,
+  Community,
+} from '../../images/drawer';
 
 export interface DrawerOption {
   name: string;
@@ -57,24 +76,14 @@ export const allDrawerOptions: DrawerSection[] = [
         active: false,
         options: [
           {
-            name: 'Tokens',
+            name: 'All Tokens',
             icon: <Dashboard />,
             icon_dark: setting,
             url: '/tokens',
-            key: 'tokens-settings',
+            key: 'tokens-all',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens'],
-          },
-          {
-            name: 'Withdraw Settings',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/wallet/withdraw-settings',
-            key: 'wallet-withdraw-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
           {
             name: 'Deposit Settings',
@@ -105,6 +114,16 @@ export const allDrawerOptions: DrawerSection[] = [
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens'],
+          },
+          {
+            name: 'Withdraw Settings',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/token/withdraw-settings',
+            key: 'token-withdraw-settings',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens_settings-withdraw'],
           },
           // {
           //   name: 'Transition Setting',
@@ -229,6 +248,16 @@ export const allDrawerOptions: DrawerSection[] = [
             permissions: [`all`, `superadmin`, 'tokens_settings'],
           },
           {
+            name: 'Simulation',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/cloudk2/simulation',
+            key: 'simulation',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'simulation'],
+          },
+          {
             name: 'Auto Compound Penality',
             icon: <Admin />,
             icon_dark: AdminDark,
@@ -237,7 +266,7 @@ export const allDrawerOptions: DrawerSection[] = [
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'admins'],
-          }
+          },
         ],
         permissions: [`all`, `superadmin`, 'admins'],
       },
@@ -330,6 +359,20 @@ export const allDrawerOptions: DrawerSection[] = [
           },
         ],
         permissions: [`all`, `superadmin`, 'tokens_settings'],
+      },
+    ],
+  },
+  {
+    options: [
+      {
+        name: 'Marketing',
+        icon: <Dashboard />,
+        icon_dark: HomeDark,
+        url: '/marketing',
+        key: 'marketing',
+        active: false,
+        options: [],
+        permissions: [`all`, `superadmin`, 'dashboard'],
       },
     ],
   },

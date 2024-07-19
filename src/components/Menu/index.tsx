@@ -83,11 +83,17 @@ const Menu = ({ menu }: { menu: any }) => {
         }`}
         sx={{
           color:
-            activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))
+            activeMenu === menu.url ||
+            menu.options.some((subMenu: any) =>
+              location.pathname.startsWith(subMenu.url)
+            )
               ? '#1B9FDA !important'
               : '#7D7D7D !important',
           fontWeight:
-            activeMenu === menu.url || menu.options.some((subMenu: any) => location.pathname.startsWith(subMenu.url))
+            activeMenu === menu.url ||
+            menu.options.some((subMenu: any) =>
+              location.pathname.startsWith(subMenu.url)
+            )
               ? 'bold !important'
               : 'normal !important',
         }}
@@ -101,7 +107,8 @@ const Menu = ({ menu }: { menu: any }) => {
             e.stopPropagation();
             dispatch(
               setExpendMenu({
-                expendMenu: drawer.expendKey === menu.key ? !drawer.expendMenu : true,
+                expendMenu:
+                  drawer.expendKey === menu.key ? !drawer.expendMenu : true,
                 expendKey: menu.key,
               })
             );
@@ -121,7 +128,8 @@ const Menu = ({ menu }: { menu: any }) => {
           } else {
             dispatch(
               setExpendMenu({
-                expendMenu: drawer.expendKey === menu.key ? !drawer.expendMenu : true,
+                expendMenu:
+                  drawer.expendKey === menu.key ? !drawer.expendMenu : true,
                 expendKey: menu.key,
               })
             );
@@ -142,16 +150,30 @@ const Menu = ({ menu }: { menu: any }) => {
         )} */}
       </ListItem>
       {menu?.options?.length > 0 && (
-        <Collapse in={drawer.expendMenu && menu.key === drawer.expendKey} timeout="auto" unmountOnExit>
+        <Collapse
+          in={drawer.expendMenu && menu.key === drawer.expendKey}
+          timeout="auto"
+          unmountOnExit
+        >
           {menu.options.map((subMenu: any, index: number) => {
             const _length = calculateSubmenuCount(menu, user);
 
             count < _length + 1 && count++;
 
             return user?.adminPermissions?.length > 0 ? (
-              <SubMenu key={subMenu.key} subMenu={subMenu} length={_length + 1} index={count} />
+              <SubMenu
+                key={subMenu.key}
+                subMenu={subMenu}
+                length={_length + 1}
+                index={count}
+              />
             ) : (
-              <SubMenu key={subMenu.key} subMenu={subMenu} length={menu.options?.length} index={index + 1} />
+              <SubMenu
+                key={subMenu.key}
+                subMenu={subMenu}
+                length={menu.options?.length}
+                index={index + 1}
+              />
             );
           })}
         </Collapse>

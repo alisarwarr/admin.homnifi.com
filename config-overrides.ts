@@ -15,7 +15,9 @@ module.exports = function override(config, env) {
   };
 
   // Find the existing rule for SVGs and remove it
-  config.module.rules = config.module.rules.filter((rule) => !(rule.test && rule.test.toString().includes('svg')));
+  config.module.rules = config.module.rules.filter(
+    (rule) => !(rule.test && rule.test.toString().includes('svg'))
+  );
 
   // Add the new SVG rule
   config.module.rules.push(svgRule);

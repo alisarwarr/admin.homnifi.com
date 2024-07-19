@@ -5,6 +5,7 @@ import {
   setTokenList,
   setTokenPairs,
   setTokenTRansactionSettingList,
+  setWithdrawSettingsList,
 } from './tokenSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,13 +16,16 @@ import {
   TOKEN_PAIRS_EDIT,
   TOKEN_PAIRS_SETTING,
   TOKEN_TRANSACTION_SETTING,
+  GET_ALL_TOKENS,
+  ADD_WITH_DRAW_SETTINGS,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 
 export const useTokenActions = () => {
   const dispatch = useDispatch();
 
-  const { tokensList, tokenTransactionSettingList, tokenPairs } = useSelector(selectToken);
+  const { tokensList, tokenTransactionSettingList, tokenPairs } =
+    useSelector(selectToken);
 
   // Recent Devices Section Notifications Api
   const getTokensList = async (force: boolean = false) => {
@@ -29,9 +33,8 @@ export const useTokenActions = () => {
 
     const response = await ApiRequest().request({
       method: 'GET',
-      url: `${TOKEN}/all`,
+      url: GET_ALL_TOKENS,
     });
-    console.log('🚀 ~ response ~ response:', response);
 
     const _tokensList = response?.data.data;
     dispatch(setTokenList(_tokensList));
@@ -63,9 +66,11 @@ export const useTokenActions = () => {
   };
 
   const getTokenTransactionSettingList = async (force: boolean = false) => {
-    const existingData = Object.keys(tokenTransactionSettingList).find((token) => {
-      return tokenTransactionSettingList[token].length > 0 && token;
-    });
+    const existingData = Object.keys(tokenTransactionSettingList).find(
+      (token) => {
+        return tokenTransactionSettingList[token].length > 0 && token;
+      }
+    );
 
     if (existingData && !force) return;
 
@@ -74,7 +79,10 @@ export const useTokenActions = () => {
       url: `${TOKEN_TRANSACTION_SETTING}`,
     });
     const _tokenTransactionSettingList = response?.data?.data;
-    console.log('🚀 ~ getTokenTransactionSettingList ~ _tokenTransactionSettingList:', _tokenTransactionSettingList);
+    console.log(
+      '🚀 ~ getTokenTransactionSettingList ~ _tokenTransactionSettingList:',
+      _tokenTransactionSettingList
+    );
 
     const tokensByType: { [key: string]: TokenTransactionSettingType[] } = {};
 
@@ -102,7 +110,10 @@ export const useTokenActions = () => {
     return _tokenTransactionSetting;
   };
 
-  const updateTokenTransactionSettings = async (id: string | undefined, data: any) => {
+  const updateTokenTransactionSettings = async (
+    id: string | undefined,
+    data: any
+  ) => {
     return await ApiRequest()
       .request({
         method: 'PUT',
@@ -177,7 +188,88 @@ export const useTokenActions = () => {
       });
   };
 
+  const createWithdrawSetting = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: ADD_WITH_DRAW_SETTINGS,
+        data,
+      })
+      .then((response: any) => {
+        getWithdrawSettings();
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
+  const createNewToken = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: `${TOKEN}`,
+        data: data,
+      })
+      .then((response: any) => {
+        getTokensList(true);
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
+  const onUpdateToken = async (id: string | undefined, data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'PUT',
+        url: `${TOKEN}/${id}`,
+        data: data,
+      })
+      .then((response: any) => {
+        getTokensList(true);
+        console.log('response update token::', response.data);
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
+  const getWithdrawSettings = async () => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: ADD_WITH_DRAW_SETTINGS,
+      })
+      .then((response: any) => {
+        dispatch(setWithdrawSettingsList(response.data.data));
+        return response.data.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
+  const updateWithdrawSetting = async (id: string, data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'PUT',
+        url: `${ADD_WITH_DRAW_SETTINGS}/${id}`,
+        data,
+      })
+      .then((response: any) => {
+        getWithdrawSettings();
+        return response.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
   return {
+    createWithdrawSetting,
     getTokensList,
     getTokenById,
     updateToken,
@@ -188,5 +280,9 @@ export const useTokenActions = () => {
     getTokenPairById,
     getSingleTokenPairSetting,
     editSingleTokenPairSetting,
+    createNewToken,
+    onUpdateToken,
+    getWithdrawSettings,
+    updateWithdrawSetting,
   };
 };

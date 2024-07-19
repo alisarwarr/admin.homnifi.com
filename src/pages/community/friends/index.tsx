@@ -1,5 +1,3 @@
 export default function CommunityFriends(): JSX.Element {
-    return (
-        <div>CommunityFriends</div>
-    )
+  return <div>CommunityFriends</div>;
 }

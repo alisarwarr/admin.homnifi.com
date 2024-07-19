@@ -1,8 +1,8 @@
-import { Tooltip } from "@mui/material";
+import { Tooltip } from '@mui/material';
 
 type Props = {
   isCheck: boolean;
-  className: string
+  className: string;
 };
 
 const PoliticallyExposedPerson = ({ isCheck, className }: Props) => {
@@ -43,7 +43,7 @@ const PoliticallyExposedPerson = ({ isCheck, className }: Props) => {
           )}
         </div>
         <span>PEP and santioned countries</span>
-        <Tooltip title={"Person is a politically exposed person"}>
+        <Tooltip title={'Person is a politically exposed person'}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

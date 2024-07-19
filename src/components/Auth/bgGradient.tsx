@@ -39,8 +39,16 @@ const BgGradient = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur stdDeviation="193" result="effect1_foregroundBlur_80_2423" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur
+            stdDeviation="193"
+            result="effect1_foregroundBlur_80_2423"
+          />
         </filter>
         <filter
           id="filter1_f_80_2423"
@@ -52,8 +60,16 @@ const BgGradient = () => {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur stdDeviation="193" result="effect1_foregroundBlur_80_2423" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur
+            stdDeviation="193"
+            result="effect1_foregroundBlur_80_2423"
+          />
         </filter>
         <linearGradient
           id="paint0_linear_80_2423"

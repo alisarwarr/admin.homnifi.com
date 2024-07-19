@@ -15,7 +15,6 @@ export default function Profile(): JSX.Element {
 
   const user = useSelector(selectUser);
 
-
   const formikRef = useRef<any>(null);
 
   const initialValues = {
@@ -81,7 +80,13 @@ export default function Profile(): JSX.Element {
     innerRef: formikRef,
   });
 
-  const { handleChange, handleSubmit: handleFormikSubmit, values, errors, touched } = formik;
+  const {
+    handleChange,
+    handleSubmit: handleFormikSubmit,
+    values,
+    errors,
+    touched,
+  } = formik;
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -91,7 +96,10 @@ export default function Profile(): JSX.Element {
         <h2 className="text-2xl font-bold">Profile</h2>
       </div>
 
-      <form className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto" onSubmit={handleFormikSubmit}>
+      <form
+        className="h-full gap-10 space-y-9 w-full md:w-[70%] m-auto"
+        onSubmit={handleFormikSubmit}
+      >
         <div className="grid grid-cols-2 gap-3 w-full">
           {Object.keys(initialValues).map((key) => (
             <div key={key} className="flex flex-col gap-2 items-end">
@@ -106,11 +114,18 @@ export default function Profile(): JSX.Element {
                   onChange={handleChange}
                 />
               </div>
-              {touched[key] && errors[key] && <div className="text-red-500 text-xs">{errors[key]}</div>}{' '}
+              {touched[key] && errors[key] && (
+                <div className="text-red-500 text-xs">{errors[key]}</div>
+              )}{' '}
             </div>
           ))}
         </div>
-        <Button className="w-full" loading={isSubmitting} loadingType="circular" buttonType="submit">
+        <Button
+          className="w-full"
+          loading={isSubmitting}
+          loadingType="circular"
+          buttonType="submit"
+        >
           Edit Admin
         </Button>
       </form>

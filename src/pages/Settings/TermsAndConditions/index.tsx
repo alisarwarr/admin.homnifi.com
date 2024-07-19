@@ -18,13 +18,16 @@ const validationSchema = Yup.object().shape({
   content: Yup.string().required(),
 });
 
-const formFields = [{ key: 'content', label: 'Terms And Conditions', type: 'text' }];
+const formFields = [
+  { key: 'content', label: 'Terms And Conditions', type: 'text' },
+];
 
 const TermsAndConditions = () => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
 
-  const { getTermsAndConditionsSettings, updateTermsAndConditionsSettings } = useSettingsActions();
+  const { getTermsAndConditionsSettings, updateTermsAndConditionsSettings } =
+    useSettingsActions();
 
   const initialValues: {
     type: string;
@@ -102,7 +105,9 @@ const TermsAndConditions = () => {
           onCancel={() => {}}
         />
       </div>
-      {formik.errors.content && <span className="text-xs text-red-500">{'Please Enter Content'}</span>}
+      {formik.errors.content && (
+        <span className="text-xs text-red-500">{'Please Enter Content'}</span>
+      )}
     </div>
   );
 };

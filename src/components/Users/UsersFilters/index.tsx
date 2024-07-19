@@ -33,7 +33,9 @@ const UserFilters = ({ filters, handleFilterChange, clearFilters }) => {
       </div>
 
       <div className="grid grid-cols-1 gap-x-6 gap-y-3">
-        <div className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 rounded-md mt-8`}>
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 rounded-md mt-8`}
+        >
           <TextField
             label={'Name / Email / Username'}
             variant="outlined"

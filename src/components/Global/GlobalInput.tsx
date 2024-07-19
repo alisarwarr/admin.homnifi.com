@@ -2,6 +2,8 @@ import React from 'react';
 import { ReactComponent as EyeOpenIcon } from '../../SVGIcons/eyeIcon.svg';
 import { ReactComponent as EyeCloseIcon } from '../../SVGIcons/eyeCloseIcon.svg';
 import { ReactComponent as WarningIcon } from '../../SVGIcons/warning.svg';
+import { Tooltip } from '@mui/material';
+import { ToolTipSvg } from '../../images/svg';
 
 type TGlobalInput = {
   name: string;
@@ -17,6 +19,7 @@ type TGlobalInput = {
   className?: string;
   disabled?: boolean;
   labelStyle?: string;
+  toolTip?: string;
 };
 
 const GlobalInput = ({
@@ -33,14 +36,22 @@ const GlobalInput = ({
   disabled,
   labelStyle,
   onBlur,
+  toolTip = '',
 }: TGlobalInput) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
     <div className="flex flex-col gap-2 my-2 w-full">
       {label && (
-        <div className={`text-sm font-medium text-primary ${labelStyle}`}>
-          {label} {required && <span className="text-redDanger">*</span>}
+        <div className={`text-sm flex font-medium text-primary ${labelStyle}`}>
+          {label} {required && <span className="text-redDanger px-2">*</span>}{' '}
+          {toolTip && (
+            <Tooltip title={toolTip}>
+              <div className="cursor-pointer">
+                <ToolTipSvg />
+              </div>
+            </Tooltip>
+          )}
         </div>
       )}
       <div className="relative flex items-center justify-center">
@@ -48,7 +59,9 @@ const GlobalInput = ({
           autoComplete="off"
           disabled={disabled}
           name={name}
-          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+          type={
+            type === 'password' ? (showPassword ? 'text' : 'password') : type
+          }
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -65,13 +78,23 @@ const GlobalInput = ({
           </span>
         ) : (
           type === 'password' && (
-            <button type="button" className="absolute right-4" onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <EyeCloseIcon className="w-4" /> : <EyeOpenIcon className="w-4" />}
+            <button
+              type="button"
+              className="absolute right-4"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeCloseIcon className="w-4" />
+              ) : (
+                <EyeOpenIcon className="w-4" />
+              )}
             </button>
           )
         )}
       </div>
-      {error && isError && <span className="text-xs text-redDanger text-right">{error}</span>}
+      {error && isError && (
+        <span className="text-xs text-redDanger text-right">{error}</span>
+      )}
     </div>
   );
 };

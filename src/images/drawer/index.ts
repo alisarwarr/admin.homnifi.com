@@ -10,4 +10,15 @@ import { ReactComponent as ExternalApp } from '../../SVGIcons/Drawer/externalApp
 import { ReactComponent as Up } from '../../SVGIcons/up.svg';
 import { ReactComponent as Down } from '../../SVGIcons/down.svg';
 
-export { Admin, ExternalApp, Dashboard, CloundK2, Wallet, Token, AdminSetting, Community, Up, Down };
+export {
+  Admin,
+  ExternalApp,
+  Dashboard,
+  CloundK2,
+  Wallet,
+  Token,
+  AdminSetting,
+  Community,
+  Up,
+  Down,
+};

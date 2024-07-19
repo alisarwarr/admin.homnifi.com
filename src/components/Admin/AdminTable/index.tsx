@@ -1,5 +1,5 @@
 import { Tooltip } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StatusChip from '../../StatusChip';
 import { Delete } from '../../../images/svg';
 import { useNavigate } from 'react-router-dom';
@@ -10,12 +10,16 @@ import ConfirmDialog from '../../Dialog/ConfirmDialog';
 import { Token } from '../../../store/token/tokenSlice';
 import { errorAlert, successAlert } from '../../../utils/alerts';
 import { useAdminActions } from '../../../store/admin/adminActions';
-import { selectAdmin, selectAdminPermissionsList, setSelectedAdmin } from '../../../store/admin/adminSlice';
+import {
+  selectAdmin,
+  selectAdminPermissionsList,
+  setSelectedAdmin,
+} from '../../../store/admin/adminSlice';
 
 type Props = {
   data: any;
   loading: boolean;
-  fireApi: () => void;
+  fetchAdminList: () => void;
 };
 
 const headCells = [
@@ -26,14 +30,14 @@ const headCells = [
   { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
 ];
 
-const AdminTable = ({ data, loading, fireApi }: Props) => {
+const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { adminDataDetail } = useSelector(selectAdmin);
   const [selectedUser, setSelectedUser] = useState<any>();
-  const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const [openLockUserDialog, setOpenLockUserDialog] = useState(false);
-  const { updateAdminAccess, deleteAdmin } = useAdminActions();
+  const adminPermissionsList = useSelector(selectAdminPermissionsList);
+  const { updateAdminAccess, deleteAdmin, getAdminList } = useAdminActions();
 
   const rows =
     data?.length > 0
@@ -42,7 +46,7 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
             username: _data.username,
             firstName: _data.firstName,
             lastName: _data.lastName,
-            status: <StatusChip status={_data.status} />,
+            status: <StatusChip status={_data.status?.toUpperCase()} />,
             actions: (
               <div className="flex items-center gap-2">
                 <Tooltip title="View User">
@@ -76,6 +80,7 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
                 </Tooltip>
                 <Tooltip title="Delete Admin">
                   <div
+                    className="cursor-pointer"
                     onClick={() => {
                       onDeleteAdmin(_data._id);
                     }}
@@ -101,7 +106,9 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
   return (
     <>
       <ConfirmDialog
-        title={selectedUser?.status === 'ACTIVE' ? 'Block Admin?' : 'Un-Block Admin?'}
+        title={
+          selectedUser?.status === 'ACTIVE' ? 'Block Admin?' : 'Un-Block Admin?'
+        }
         open={openLockUserDialog}
         onClose={() => {
           setOpenLockUserDialog(false);
@@ -111,20 +118,32 @@ const AdminTable = ({ data, loading, fireApi }: Props) => {
             selectedUser?._id,
             selectedUser?.status === 'ACTIVE' ? 'BLOCK' : 'ACTIVE'
           );
-
           if (response?.status) {
-            successAlert(`Admin acesss ${selectedUser?.status === 'ACTIVE' ? 'Block' : 'Active'}, Successfully!`);
-            fireApi();
+            successAlert(
+              `Admin acesss ${selectedUser?.status === 'ACTIVE' ? 'Block' : 'Active'}, Successfully!`
+            );
+            fetchAdminList();
           } else {
             errorAlert(response?.message);
           }
-
           setOpenLockUserDialog(false);
         }}
       >
-        Are you sure you want to {selectedUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this Admin?
+        Are you sure you want to{' '}
+        {selectedUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this Admin?
       </ConfirmDialog>
-      <GlobalTable rows={rows} headCells={headCells} isLoading={false} paginate={false} />
+      <GlobalTable
+        rows={rows}
+        headCells={headCells}
+        isLoading={false}
+        paginate={true}
+        totalPages={adminDataDetail.totalPages}
+        page={adminDataDetail.currentPage}
+        handlePageChange={(page: number) => {
+          getAdminList(page);
+        }}
+        handleOpen={() => {}}
+      />
     </>
   );
 };

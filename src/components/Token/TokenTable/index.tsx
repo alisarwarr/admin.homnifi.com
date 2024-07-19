@@ -1,12 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import { edit } from '../../../images/other';
-import { Token } from '../../../store/token/tokenSlice';
-import GlobalTable from '../../Table/GlobalTable';
 import { Tooltip } from '@mui/material';
-import StatusChip from '../../StatusChip';
-import TokenNameWithLogo from '../../TokenNameWithLogo';
-import { displayName } from 'react-quill';
-import { ReactComponent as DeleteIcon } from '../../../SVGIcons/deleteIcon.svg';
+import { useSelector } from 'react-redux';
+import { edit } from '../../../images/other';
+import { useNavigate } from 'react-router-dom';
+import GlobalTable from '../../Table/GlobalTable';
+import { selectToken, Token } from '../../../store/token/tokenSlice';
 
 type Props = {
   // data: Token[];
@@ -15,27 +12,35 @@ type Props = {
   onEditHanlder: Function;
 };
 
+// table heading
 const headCells = [
   { id: 'id', label: 'Id' },
   { id: 'name', label: 'Name' },
-  { id: 'displayName', label: 'Display Name' },
+  { id: 'symbol', label: 'Symbol' },
   { id: 'type', label: 'Type' },
-  { id: 'rate', label: 'Rate' },
+  { id: 'withdrawType', label: 'Withdraw Type' },
+  { id: 'color', label: 'Color' },
+  { id: 'iconUrl', label: 'Icon Url' },
+  { id: 'networkList', label: 'networkList' },
   { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
 ];
 
-const copyIconList = ['id'];
-
 const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
-  const navigate = useNavigate();
+  const { tokensList } = useSelector(selectToken);
 
-  const rows = data?.map((_data) => {
+  //table rows data format here
+  const rows = tokensList?.map((_data, index: number) => {
     return {
-      id: _data.id,
+      id: index + 1,
       name: _data.name,
-      displayName: _data.displayName,
-      type: _data.type,
-      rate: _data.rate,
+      color: _data?.color ?? '-',
+      symbol: _data?.symbol,
+      type: _data.type ?? '-',
+      iconUrl:
+        `${_data?.iconUrl?.slice(0, 30)} ${_data?.iconUrl && _data?.iconUrl?.length > 30 ? ' ...' : ''}` ??
+        '-',
+      withdrawType: _data?.withdrawType ?? '-',
+      networkList: _data?.networks?.map((dt: any) => dt.name).join(', '),
       actions: (
         <div className="flex justify-start">
           <Tooltip title="Edit Token">
@@ -51,11 +56,6 @@ const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
               className="cursor-pointer"
             />
           </Tooltip>
-          <div className="w-6 h-6 flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
-            <Tooltip title="Delete Token">
-              <DeleteIcon />
-            </Tooltip>
-          </div>
         </div>
       ),
     };
@@ -63,7 +63,12 @@ const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
 
   return (
     // TABLE
-    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} copyIconList={copyIconList} />
+    <GlobalTable
+      rows={rows}
+      headCells={headCells}
+      isLoading={loading}
+      paginate={false}
+    />
   );
 };
 

@@ -1,6 +1,5 @@
-import GlobalTable from "../../Table/GlobalTable";
-import moment from "moment";
-
+import GlobalTable from '../../Table/GlobalTable';
+import moment from 'moment';
 
 type Props = {
   cells: any;
@@ -11,12 +10,10 @@ type Props = {
 };
 
 const HistoryTable = ({ cells, data, loading, page, setPage }: Props) => {
-
-
   const rows = data?.map((_data) => {
     return {
       Id: _data?._id,
-      createdAt: moment(_data?.createdAt).format("MMM, DD YYYY hh:mm"),
+      createdAt: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
       fromToken: _data?.fromWallet?.token?.name,
       amount: _data?.amount,
       toToken: _data?.toWallet?.token?.name,

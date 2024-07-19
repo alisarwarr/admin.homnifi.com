@@ -6,7 +6,9 @@ type Props = { status: string | boolean };
 const StatusChip = ({ status }: Props) => {
   return (
     <Chip
-      label={typeof status === 'boolean' ? (status ? 'ENABLED' : 'DISABLED') : status}
+      label={
+        typeof status === 'boolean' ? (status ? 'ENABLED' : 'DISABLED') : status
+      }
       size="small"
       color={
         status === 'COMPLETED' ||
@@ -16,8 +18,8 @@ const StatusChip = ({ status }: Props) => {
         (typeof status === 'boolean' && status)
           ? 'success'
           : status === 'PENDING'
-          ? 'warning'
-          : 'error'
+            ? 'warning'
+            : 'error'
       }
       sx={{ fontSize: '10px', fontWeight: 700 }}
     />

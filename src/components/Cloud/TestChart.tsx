@@ -66,10 +66,10 @@ const TestChart = () => {
         <svg width="0" height="0">
           <defs>
             <linearGradient id="gradientColor" x1="0" y1="0" x2="1" y2="1">
-              <stop stop-color="#8AD5EC" />
-              <stop offset="0%" stop-color="#8AD5EC" />
-              <stop offset="50%" stop-color="#1D9FDA" />
-              <stop offset="100%" stop-color="#F16364" />
+              <stop stopColor="#8AD5EC" />
+              <stop offset="0%" stopColor="#8AD5EC" />
+              <stop offset="50%" stopColor="#1D9FDA" />
+              <stop offset="100%" stopColor="#F16364" />
             </linearGradient>
           </defs>
         </svg>

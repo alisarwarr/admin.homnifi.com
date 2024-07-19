@@ -8,11 +8,16 @@ export const CapitalizeFirstLetter = (string: any) => {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1).toLowerCase();
 };
 
-export const CapitalizeAllLetters = (s: any) => s?.charAt(0).toUpperCase() + s?.slice(1).toUpperCase() ;
-export const lowerCaseAllLetters = (s: any) => s?.charAt(0).toLowerCase() + s?.slice(1).toLowerCase() ;
+export const CapitalizeAllLetters = (s: any) =>
+  s?.charAt(0).toUpperCase() + s?.slice(1).toUpperCase();
+export const lowerCaseAllLetters = (s: any) =>
+  s?.charAt(0).toLowerCase() + s?.slice(1).toLowerCase();
 
-
-export const getTableIndexNumber = (page: number, index: number, limit: number) => {
+export const getTableIndexNumber = (
+  page: number,
+  index: number,
+  limit: number
+) => {
   return (page - 1) * limit + (index + 1);
 };
 
@@ -36,7 +41,8 @@ export const convertObjectValuesToUpper = (value: any) => {
   const result: any = {};
   for (const key in value) {
     if (value.hasOwnProperty(key)) {
-      result[key] = typeof value[key] === 'string' ? value[key].toUpperCase() : value[key];
+      result[key] =
+        typeof value[key] === 'string' ? value[key].toUpperCase() : value[key];
     }
   }
   return result;
@@ -57,7 +63,9 @@ export const calculateSubmenuCount = (menu, user) => {
 
   if (menu.options.length > 0) {
     menu.options.forEach((submenu) => {
-      const hasPermission = submenu.permissions.some((permission) => user?.adminPermissions?.includes(permission));
+      const hasPermission = submenu.permissions.some((permission) =>
+        user?.adminPermissions?.includes(permission)
+      );
       if (hasPermission) {
         submenuCount++;
       }

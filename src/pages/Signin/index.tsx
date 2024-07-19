@@ -21,7 +21,7 @@ const Signin = ({ setStatus }: { setStatus?: () => void }) => {
   const navigate = useNavigate();
   const Login = async (values) => {
     const { data } = await userLogin(values);
-    console.log("🚀 ~ Login ~ data:", data)
+    console.log('🚀 ~ Login ~ data:', data);
 
     // if (!data.status) {
     //     errorNotify(data.message)
@@ -52,7 +52,10 @@ const Signin = ({ setStatus }: { setStatus?: () => void }) => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit} className="w-full p-4 flex flex-col gap-10 justify-center">
+    <form
+      onSubmit={formik.handleSubmit}
+      className="w-full p-4 flex flex-col gap-10 justify-center"
+    >
       <AuthHeading title="Sign in to Admin Account" />
       <div className="w-full flex flex-col gap-4 pr-10">
         <GlobalInput
@@ -77,7 +80,11 @@ const Signin = ({ setStatus }: { setStatus?: () => void }) => {
           isError={formik.errors.password}
           error={formik.errors.password}
         />
-        <GlobalCheckbox checked={terms} setChecked={setTerms} label="Remember Me" />
+        <GlobalCheckbox
+          checked={terms}
+          setChecked={setTerms}
+          label="Remember Me"
+        />
       </div>
       <Captcha />
       <div className="flex flex-col gap-2">

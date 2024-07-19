@@ -6,9 +6,10 @@ import '../../styles/index.css';
 
 interface CustomSwitchProps {
   checked: boolean;
-  onChange: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
   label?: string;
   labelPasitionLeft?: boolean;
+  disabled?: boolean;
 }
 
 const GlobalSwitch: React.FC<CustomSwitchProps> = ({
@@ -16,13 +17,14 @@ const GlobalSwitch: React.FC<CustomSwitchProps> = ({
   onChange,
   label,
   labelPasitionLeft = true,
+  disabled,
 }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.checked);
+    onChange && onChange(event.target.checked);
   };
 
   const handleLabelClick = () => {
-    onChange(!checked);
+    onChange && onChange(!checked);
   };
 
   return (
@@ -41,6 +43,7 @@ const GlobalSwitch: React.FC<CustomSwitchProps> = ({
         icons={false}
         size={20}
         onChange={handleChange}
+        disabled={disabled}
       />
 
       {!labelPasitionLeft && label && (

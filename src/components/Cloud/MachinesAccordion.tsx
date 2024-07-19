@@ -12,26 +12,24 @@ type Props = {
 };
 
 const MachinesAccordion = ({ data, headCells, row }: Props) => {
-
   return (
-    < >
-      <td >
-        <Product  />
+    <>
+      <td>
+        <Product />
       </td>
-      <td >
+      <td>
         <LifetimeRewards />
       </td>
-      <td >
+      <td>
         <Staked />
       </td>
-      <td >
+      <td>
         <Skalable />
       </td>
-      <td >
+      <td>
         <ExpiresIn />
       </td>
     </>
-
   );
 };
 

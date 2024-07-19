@@ -1,11 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../user/userSlice";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../user/userSlice';
 
 export interface CustomerVerificationRequest {
   _id: string;
   user: User;
-  status: "PENDING" | "VERIFIED" | "REJECTED";
-  type: "KYC" | "KYB";
+  status: 'PENDING' | 'VERIFIED' | 'REJECTED';
+  type: 'KYC' | 'KYB';
   companyName: string | null; // Assuming it could be null
   email: string | null;
   firstName: string;
@@ -93,7 +93,7 @@ const initialState: CustomerSliceState = {
 };
 
 const customerSlice = createSlice({
-  name: "customer",
+  name: 'customer',
   initialState,
   reducers: {
     setCustomersList: (state, action: PayloadAction<any>) => {

@@ -16,8 +16,18 @@ const headCells = [
   { id: 'id', label: 'ID', show: true },
   { id: 'user', label: 'User', show: true },
   { id: 'product', label: 'Product', show: true },
-  { id: 'provider', label: 'Provider', show: true, headCellClass: 'min-w-[120px]' },
-  { id: 'productPrice', label: 'Product Price', show: true, headCellClass: 'min-w-[120px]' },
+  {
+    id: 'provider',
+    label: 'Provider',
+    show: true,
+    headCellClass: 'min-w-[120px]',
+  },
+  {
+    id: 'productPrice',
+    label: 'Product Price',
+    show: true,
+    headCellClass: 'min-w-[120px]',
+  },
   { id: 'boughtAt', label: 'Date', show: true },
   { id: 'transactionFee', label: 'Transaction Fee', show: true },
   { id: 'total', label: 'Total Amount', show: true },
@@ -58,8 +68,14 @@ const ProductPurchaseHistory = () => {
             destroyTooltipOnHide={true}
             trigger={'hover'}
             title={
-              <div className="flex justify-center items-center flex-col w-32 gap-2 p-1" aria-hidden={'true'}>
-                <img src={_data.product?.image?.path} className="w-28 h-28 object-contain" />
+              <div
+                className="flex justify-center items-center flex-col w-32 gap-2 p-1"
+                aria-hidden={'true'}
+              >
+                <img
+                  src={_data.product?.image?.path}
+                  className="w-28 h-28 object-contain"
+                />
               </div>
             }
           >
@@ -123,7 +139,9 @@ const ProductPurchaseHistory = () => {
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center  text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Product Purchase History</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Product Purchase History
+        </h1>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
           onClick={async () => {

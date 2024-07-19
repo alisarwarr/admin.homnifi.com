@@ -1,19 +1,14 @@
-
-import Zoom from "react-medium-image-zoom";
+import Zoom from 'react-medium-image-zoom';
 type Props = {
   path: string;
   alt?: string;
-  className?:string
+  className?: string;
 };
 
-const ZoomImage = ({ path , alt , className}: Props) => {
+const ZoomImage = ({ path, alt, className }: Props) => {
   return (
     <Zoom>
-      <img
-      className={className}
-        alt={alt}
-        src={path}
-      />
+      <img className={className} alt={alt} src={path} />
     </Zoom>
   );
 };

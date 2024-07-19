@@ -23,7 +23,10 @@ export default function ConfirmDialog(props: Props) {
       <div className="py-5 text-white">{children}</div>
       <div className="flex justify-end">
         <div className="p-1">
-          <DialogButton onClick={() => onClose()} className="bg-secondary hover:bg-secondary-light">
+          <DialogButton
+            onClick={() => onClose()}
+            className="bg-secondary hover:bg-secondary-light"
+          >
             No
           </DialogButton>
         </div>

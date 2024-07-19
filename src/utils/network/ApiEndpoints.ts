@@ -7,6 +7,8 @@ export const GET_PROFILE = '/profile';
 // Token
 export const TOKEN = '/tokens';
 export const TOKEN_TRANSACTION_SETTING = '/tokens/trx-settings';
+export const GET_ALL_TOKENS = '/tokens/all';
+export const ADD_WITH_DRAW_SETTINGS = '/tokens/withdraw/setting';
 
 export const TOKEN_PAIRS = '/swap/pairs';
 export const TOKEN_PAIRS_SETTING = '/swap/pairs';
@@ -119,7 +121,8 @@ export const REFERRAL_ANALYTICS = '/user/community/ref-analytics';
 export const TOOLS_BASE_SERVER = 'https://tools.blpro8.club';
 export const CHECK_USER_API: string = TOOLS_BASE_SERVER + '/check-broker-user';
 export const ACTIVE_STRATEGY = TOOLS_BASE_SERVER + '/active-strategy';
-export const BROKER_ACCOUNT_REGISTRATION: string = TOOLS_BASE_SERVER + '/register-broker';
+export const BROKER_ACCOUNT_REGISTRATION: string =
+  TOOLS_BASE_SERVER + '/register-broker';
 
 //ADMIN
 export const ADMIN = '/';
@@ -141,20 +144,25 @@ export const UPDATE_ADMIN_PERMISSION = '/role';
 export const DELETE_ADMIN = '/admins';
 export const UPDATE_ADMIN = '/admins';
 
-//cloudk
+export const MAINTENANCE = '/maintenance';
 
+//cloudk
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
+export const CLOUDK_MACHINE_SIMULATION = '/cloud-k/test-simulation';
 
+//PLATFORM
+export const PLATFORM_AD = '/platform/ads/';
+// export const PLATFORM_AD = '/platform/ads/';
+export const USER_MACHINE_DETAILS = '/cloud-k/user-machines/details/';
+export const USER_MACHINE_REWARDS = '/cloud-k/rewards/';
 
 //Wallet Admin
-export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
-export const WALLET_ADMIN_SWAPS = '/wallets/swaps';
-export const WALLET_ADMIN_NETWORKS = '/tokens/networks';
-export const WALLET_ADMIN_DEPOSITS_NEW = '/tokens/deposit/setting';
-export const WALLET_ADMIN_SWAPS_NEW = '/tokens/swap/setting';
-export const WALLET_ADMIN_NETWORKS_NEW = '/tokens/networks';
-
+//Wallet Admin
+export const WALLET_ADMIN_DEPOSITS = '/tokens/deposit/setting/';
+export const WALLET_ADMIN_SWAPS = '/tokens/swap/setting/';
+export const WALLET_ADMIN_NETWORKS = '/tokens/networks/';
+export const WALLET_ADMIN_ALL_TOKENS = '/tokens/all/';
 
 //Defi 360
 export const DEFI_360_AUTO_COMPOUND_PENALITY = '/cloud-k/ac-penalty';

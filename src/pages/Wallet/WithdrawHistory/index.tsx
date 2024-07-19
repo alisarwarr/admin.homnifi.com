@@ -24,7 +24,12 @@ const headCells = [
   { id: 'address', label: 'Wallet Address', dataClass: 'max-w-32', show: true },
   { id: 'fee', label: 'Withdrawal Fee', dataClass: 'w-36', show: true },
   { id: 'amount', label: 'Withdrawal Amount', dataClass: 'w-44', show: true },
-  { id: 'trxHashUrl', label: 'Transaction Hash', dataClass: 'max-w-32', show: true },
+  {
+    id: 'trxHashUrl',
+    label: 'Transaction Hash',
+    dataClass: 'max-w-32',
+    show: true,
+  },
   { id: 'denialReason', label: 'Rejection Reason', show: true },
   { id: 'status', label: 'Status', dataClass: 'w-32 text-center', show: true },
 ];
@@ -38,7 +43,7 @@ type FILTER = {
 const WithdrawHistory = () => {
   const { getWithdrawHistoryRequests } = useHistoryActions();
   const { withdrawHistory } = useSelector(selectHistorySlice);
-  console.log("🚀 ~ WithdrawHistory ~ withdrawHistory:", withdrawHistory)
+  console.log('🚀 ~ WithdrawHistory ~ withdrawHistory:', withdrawHistory);
   const [columns, setColumns] = useState<any[]>(headCells);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FILTER>({
@@ -68,7 +73,11 @@ const WithdrawHistory = () => {
       trxHashUrl: _data.trxHashUrl ? (
         <Tooltip title={_data.trxHashUrl}>
           <Link to={_data.trxHashUrl}>
-            <Chip label={_data.trxHashUrl} size="small" sx={{ fontSize: '11px' }} />
+            <Chip
+              label={_data.trxHashUrl}
+              size="small"
+              sx={{ fontSize: '11px' }}
+            />
           </Link>
         </Tooltip>
       ) : (
@@ -78,7 +87,13 @@ const WithdrawHistory = () => {
         <Chip
           label={_data.status}
           size="small"
-          color={_data.status === 'COMPLETED' ? 'success' : _data.status === 'PENDING' ? 'default' : 'error'}
+          color={
+            _data.status === 'COMPLETED'
+              ? 'success'
+              : _data.status === 'PENDING'
+                ? 'default'
+                : 'error'
+          }
           sx={{ fontSize: '10px', fontWeight: 700 }}
         />
       ),
@@ -134,7 +149,9 @@ const WithdrawHistory = () => {
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center  text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Withdraw History</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Withdraw History
+        </h1>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
           onClick={async () => {

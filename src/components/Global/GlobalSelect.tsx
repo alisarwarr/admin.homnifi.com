@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactComponent as ArrowDownIcon } from '../../SVGIcons/arrowDown.svg';
 import { lowerCaseAllLetters } from '../../utils/utils';
+import { SmallCross } from '../../images/svg';
 
 interface IOptions {
   label: string;
@@ -14,6 +15,7 @@ type TGlobalSelect = {
   placeholder?: string;
   options: IOptions[];
   onChange?: (value: string | string[] | any) => void;
+  removeItemHanlder?: any;
   onBlur?: (e: React.ChangeEvent<HTMLDivElement>) => void;
   setFieldTouched?: any;
   setFieldValue?: any;
@@ -23,6 +25,7 @@ type TGlobalSelect = {
   isMulti?: boolean;
   inputClass?: string;
   labelOptionClass?: string;
+  containerClassnames?: string;
   disabled?: boolean;
 };
 
@@ -43,6 +46,8 @@ const GlobalSelect = ({
   inputClass,
   labelOptionClass,
   disabled = false,
+  removeItemHanlder,
+  containerClassnames,
 }: TGlobalSelect) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -79,7 +84,9 @@ const GlobalSelect = ({
   };
 
   const filterOptions = (input: string) => {
-    const filtered = options.filter((option) => option.label.toLowerCase().includes(input.toLowerCase()));
+    const filtered = options.filter((option) =>
+      option.label.toLowerCase().includes(input.toLowerCase())
+    );
     setFilteredOptions(filtered);
   };
 
@@ -90,7 +97,10 @@ const GlobalSelect = ({
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -104,8 +114,14 @@ const GlobalSelect = ({
   React.useEffect(() => {
     setFilteredOptions(options);
   }, [options]);
+
+  // this is use for multi select dropdown
+  const resultMultiValues = options?.filter((option) =>
+    value.includes(option.value)
+  );
+
   return (
-    <div className="flex flex-col gap-2 text-sm py-2">
+    <div className={`flex flex-col gap-2 text-sm py-2 ${containerClassnames}`}>
       <div className="font-medium text-primary">
         {label} {required && <span className="text-redDanger">*</span>}
       </div>
@@ -118,15 +134,38 @@ const GlobalSelect = ({
           } ${inputClass}`}
           onClick={toggleDropdown}
         >
-          {options?.find((option) => option.value === value)?.label || placeholder}
+          {isMulti && resultMultiValues.length ? (
+            <>
+              <div className="px-4 rounded-sm flex flex-wrap gap-4">
+                {resultMultiValues.map((dt: any) => {
+                  return (
+                    <span
+                      className="flex items-center justify-center gap-2 bg-gray-100 px-2 py-1"
+                      onClick={() => {
+                        removeItemHanlder(dt.value);
+                      }}
+                    >
+                      {dt.label} <SmallCross />
+                    </span>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <>
+              {options?.find((option) => option.value === value)?.label ||
+                placeholder}
+            </>
+          )}
         </div>
-
         {!disabled && (
           <>
             <div
               ref={dropdownRef}
               className={`text-xs flex flex-col w-full rounded-xl shadow-lg absolute top-10 left-1 border border-blueGrey bg-white overflow-auto max-h-52 ${
-                isOpen ? 'translate-y-0 visible opacity-100 ' : '-translate-y-10 invisible opacity-0'
+                isOpen
+                  ? 'translate-y-0 visible opacity-100 '
+                  : '-translate-y-10 invisible opacity-0'
               } transition-all ease-in-out duration-300`}
               style={{ zIndex: 99 }}
             >
@@ -143,7 +182,9 @@ const GlobalSelect = ({
                   type="button"
                   key={index}
                   className={`p-2 border-b px-4 border-blueGrey text-defaultBlack hover:bg-gray-100 transition-all ease-in-out duration-300  ${labelOptionClass} ${
-                    Array.isArray(value) && value.includes(option.value) ? 'bg-blue-100' : ''
+                    Array.isArray(value) && value.includes(option.value)
+                      ? 'bg-blue-100'
+                      : ''
                   }`}
                   onClick={() => {
                     if (!disabled) {
@@ -155,7 +196,10 @@ const GlobalSelect = ({
                 </button>
               ))}
             </div>
-            <div className={`absolute ${isOpen ? 'top-3' : 'top-2'} right-3 bg-red`} style={{ zIndex: 100 }}>
+            <div
+              className={`absolute ${isOpen ? 'top-3' : 'top-2'} right-3 bg-red`}
+              style={{ zIndex: 100 }}
+            >
               <ArrowDownIcon
                 className={`w-4 h-4 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}
               />
@@ -163,7 +207,9 @@ const GlobalSelect = ({
           </>
         )}
       </div>
-      {isError && <span className="text-xs text-redDanger text-right">{error}</span>}
+      {isError && (
+        <span className="text-xs text-redDanger text-right">{error}</span>
+      )}
     </div>
   );
 };

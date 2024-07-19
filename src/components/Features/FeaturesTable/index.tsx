@@ -55,12 +55,20 @@ const FeaturesTable = ({ data, loading }: Props) => {
   return (
     // TABLE
     <>
-      <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} />
+      <GlobalTable
+        rows={rows}
+        headCells={headCells}
+        isLoading={loading}
+        paginate={false}
+      />
       <GlobalDialog
         open={openUpdateFeature}
         onClose={() => setOpenUpdateFeature(false)}
         content={
-          <FeaturesDetails featureId={currentFeatureId} closeDialogHandler={() => setOpenUpdateFeature(false)} />
+          <FeaturesDetails
+            featureId={currentFeatureId}
+            closeDialogHandler={() => setOpenUpdateFeature(false)}
+          />
         }
         closeButtonShow={false}
       ></GlobalDialog>

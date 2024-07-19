@@ -31,7 +31,8 @@ export const errorAlert = (message: string) => {
 };
 
 export const successNotify = (message: string) => toast.success(message);
-export const errorNotify = (message: string) => toast.error(message ,{
-  toastId: 'error1',
-});
+export const errorNotify = (message: string) =>
+  toast.error(message, {
+    toastId: 'error1',
+  });
 export const infoNotify = (message: string) => toast.info(message);

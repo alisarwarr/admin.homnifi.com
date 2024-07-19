@@ -29,7 +29,11 @@ export const useProductActions = () => {
     return response?.data?.data;
   };
 
-  const getProductVouchers = async (id: string | undefined, status: string, page: number) => {
+  const getProductVouchers = async (
+    id: string | undefined,
+    status: string,
+    page: number
+  ) => {
     const response = await ApiRequest().request({
       method: 'GET',
       url: `${PRODUCTS}/vouchers/${id}?page=${page}`,

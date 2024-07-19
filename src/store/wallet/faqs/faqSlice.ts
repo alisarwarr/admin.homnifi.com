@@ -34,6 +34,7 @@ const faqSlice = createSlice({
 });
 
 export const { setFaqs } = faqSlice.actions;
-export const selectFaqSlice = (state: { product: FAQStateSlice }) => state.product;
+export const selectFaqSlice = (state: { product: FAQStateSlice }) =>
+  state.product;
 
 export default faqSlice.reducer;

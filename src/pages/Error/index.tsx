@@ -29,7 +29,12 @@ const Error = () => {
           Sorry we can’t found the page that you’re looking for
         </p>
 
-        <Button className=" !py-2 !px-10" loadingType="circular" buttonType="submit" onClick={homeNavigate}>
+        <Button
+          className=" !py-2 !px-10"
+          loadingType="circular"
+          buttonType="submit"
+          onClick={homeNavigate}
+        >
           Go to Dashboard
         </Button>
       </div>

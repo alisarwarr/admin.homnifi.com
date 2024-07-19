@@ -43,14 +43,13 @@ export interface User {
 export interface UserSliceState {
   accessToken: string;
   user: any;
-  loginLoading:boolean
-
+  loginLoading: boolean;
 }
 
 const initialState: UserSliceState = {
   accessToken: '',
   user: null,
-  loginLoading:false
+  loginLoading: false,
 };
 
 const userSlice = createSlice({
@@ -61,7 +60,6 @@ const userSlice = createSlice({
       return { ...state, ...action.payload };
     },
     setLogout: (state) => {
-
       return {
         ...state,
         accessToken: '',
@@ -79,6 +77,6 @@ const userSlice = createSlice({
 export const { setLogin, setLogout, setUpdateUser } = userSlice.actions;
 
 export const selectUserSlice = (state: { user: UserSliceState }) => state.user;
-export const selectUser = (state: { user: UserSliceState }) => state.user.user         ;
+export const selectUser = (state: { user: UserSliceState }) => state.user.user;
 
 export default userSlice.reducer;

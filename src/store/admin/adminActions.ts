@@ -15,6 +15,7 @@ import {
   UPDATE_ADMIN_PERMISSION,
   DELETE_ADMIN,
   UPDATE_ADMIN,
+  MAINTENANCE,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 import {
@@ -24,6 +25,7 @@ import {
   setAdminPermissionsList,
   setRoleList,
   setAdminDetail,
+  setMaintenanceMode,
 } from './adminSlice';
 
 export const useAdminActions = () => {
@@ -122,15 +124,15 @@ export const useAdminActions = () => {
       .catch((err: any) => err.data);
   };
 
-  const getAdminList = async () => {
+  const getAdminList = async (page: number = 1, limit: number = 10) => {
     return await ApiRequest()
       .request({
         method: 'GET',
-        url: ADMIN_LIST,
+        url: `${ADMIN_LIST}?page=${page}&limit=${limit}`,
       })
       .then((response: any) => {
         dispatch(setAdminDetail(response?.data?.data));
-        dispatch(setAdminList(response?.data?.data.paginatedResults));
+        dispatch(setAdminList(response?.data?.data.list));
         return response;
       })
       .catch((err: any) => err.data);
@@ -236,6 +238,34 @@ export const useAdminActions = () => {
       })
       .catch((err: any) => err.data);
   };
+  const checkMaintenanceMode = async () => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: `${MAINTENANCE}`,
+      })
+      .then((response: any) => {
+        dispatch(setMaintenanceMode(response.data));
+        // console.log('create Admin role response :::', response.data);
+        return response.data;
+      })
+      .catch((err: any) => err.data);
+  };
+  const updateMaintenanceMode = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: `${MAINTENANCE}`,
+        data,
+      })
+      .then((response: any) => {
+        dispatch(setMaintenanceMode(response.data));
+        // console.log('create Admin role response :::', response.data);
+        return response.data;
+      })
+      .catch((err: any) => err.data);
+  };
+
   return {
     getAdminData,
     createAdminData,
@@ -253,5 +283,7 @@ export const useAdminActions = () => {
     updateAdminPermisson,
     deleteAdmin,
     updateAdmin,
+    checkMaintenanceMode,
+    updateMaintenanceMode,
   };
 };
