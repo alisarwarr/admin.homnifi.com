@@ -14,6 +14,7 @@ interface TokenSliceState {
 }
 
 export interface Token {
+  networks: any;
   networkList?: any;
   withdrawType?: string;
   iconUrl?: string;

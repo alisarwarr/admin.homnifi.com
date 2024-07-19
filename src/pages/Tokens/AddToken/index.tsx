@@ -115,7 +115,7 @@ function AddToken({ open, onClose, editToken }: Props) {
         withdrawType: withdrawType?.value ?? '',
         color: editToken.color ?? '',
         // networks: editToken.networks,
-        networks: editToken.networkList?.map((dt) => dt._id),
+        networks: editToken.networks?.map((dt) => dt._id),
         iconUrl: editToken?.iconUrl ?? '',
       });
     }
