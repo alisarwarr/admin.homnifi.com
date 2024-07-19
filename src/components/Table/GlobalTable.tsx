@@ -27,9 +27,9 @@ import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { Theme } from '@mui/material/styles';
-
-import { Copy } from '../../images/svg';
 import { formatDate, isIsoDateString } from '../../utils/helper';
+
+import { Copy, ToolTipSvg } from '../../images/svg';
 
 type Props = {
   rows?: any[];
@@ -400,7 +400,6 @@ const GlobalTable = ({
                             color = 'text-primary';
                           else if (row[cell.id] === 'failed')
                             color = 'text-primaryRed';
-
                           return (
                             cell.id !== '_id' && (
                               <td
@@ -425,20 +424,31 @@ const GlobalTable = ({
                                       ) : (
                                         <>-</>
                                       )}
+                                      {row[cell.id] ? row[cell.id] : <>-</>}
+                                      {cell.id === 'status' &&
+                                        row?.errorTooltip && (
+                                          <Tooltip
+                                            title={row.error ?? 'Failed'}
+                                          >
+                                            <div className="cursor-pointer px-2">
+                                              <ToolTipSvg />
+                                            </div>
+                                          </Tooltip>
+                                        )}
                                     </>
                                   )}
                                   {copyIconList.find(
                                     (dt) => dt === cell.id
                                   ) && (
-                                    <Copy
-                                      className="ml-3 cursor-pointer"
-                                      onClick={() =>
-                                        navigator.clipboard.writeText(
-                                          row[cell.id]
-                                        )
-                                      }
-                                    />
-                                  )}
+                                      <Copy
+                                        className="ml-3 cursor-pointer"
+                                        onClick={() =>
+                                          navigator.clipboard.writeText(
+                                            row[cell.id]
+                                          )
+                                        }
+                                      />
+                                    )}
                                 </div>
                               </td>
                             )
