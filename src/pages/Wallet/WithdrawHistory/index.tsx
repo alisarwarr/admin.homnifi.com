@@ -59,7 +59,12 @@ const WithdrawHistory = () => {
       }`,
       requestId: _data.requestId,
       requestDate: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
-      token: <TokenNameWithLogo tokenName={_data?.token?.name} />,
+      token: (
+        <TokenNameWithLogo
+          tokenName={_data?.token?.name}
+          src={_data?.token?.iconUrl}
+        />
+      ),
       amount: _data.amount,
       network: '_data.network?.name',
       address: _data.address ? (

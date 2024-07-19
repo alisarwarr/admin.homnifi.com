@@ -27,7 +27,7 @@ export default function AuthLayout(): JSX.Element {
   let sliderRef: any = React.useRef<any>(null);
 
   return (
-    <div className="flex flex-col gap-4 max-w-[1200px] items-center m-auto">
+    <div className="flex py-8 px-6 flex-col gap-4 max-w-[1200px] items-center m-auto">
       <AuthHeader />
       <div className="flex w-full gap-10 p-8">
         <Outlet />
