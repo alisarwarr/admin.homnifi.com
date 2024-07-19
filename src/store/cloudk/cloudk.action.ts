@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux';
 import ApiRequest from '../../utils/network/ApiRequest';
 import {
   CLOUDK_MACHINE_SIMULATION,
-  PRODUCTS,
   USER_MACHINE_LIST,
   USER_MACHINE_REWARDS,
   USER_MACHINE_DETAILS,
@@ -170,20 +169,27 @@ export const useCloudActions = () => {
         method: 'GET',
         url: USER_MACHINE_REWARDS,
       })
-      .then((response: any) => {
-        console.log('🚀 ~ .then ~ response:', response.data.data?.list);
+      .then((response) => {
+        console.log({ response });
+        dispatch(cloudkSliceAction.setCloudkSlice(response.data.data));
         dispatch(
-          cloudkSliceAction.setUserMachineList(response.data.data?.list)
-        );
-        dispatch(
-          simulationSliceAction.setSimulationSlice({
-            machines: response.data.data.list,
+          cloudkSliceAction.setCloudkSlice({
+            getUserMachineRewardsLoading: false,
           })
         );
 
         return response;
       })
-      .catch((error: any) => error);
+      .catch((error) => {
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getUserMachineRewardsLoading: false,
+          })
+        );
+
+        return error;
+      });
   };
 
   const startSimulation = async (data: any) => {

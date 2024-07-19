@@ -56,7 +56,9 @@ import CronJob from '../pages/Admins/CronJobs';
 import AutoCompoundPenality from '../pages/Defi-360/AutoCompoundPenality';
 import Simulation from '../pages/Cloud2/Simulation';
 import Marketing from '../pages/Marketing';
+
 import CommunityFriends from '../pages/Community/friends';
+
 import CommunitySupernode from '../pages/Community/SuperNode';
 
 export const router = createBrowserRouter([
