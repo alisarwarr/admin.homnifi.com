@@ -9,10 +9,9 @@ import { selectHistorySlice } from '../../../store/wallet/historySlice';
 import GlobalTable from '../../../components/Table/GlobalTable';
 import moment from 'moment';
 import TokenNameWithLogo from '../../../components/TokenNameWithLogo';
-import { getTableIndexNumber } from '../../../utils/utils';
 
 const headCells = [
-  { id: 'id', label: 'ID', show: true },
+  { id: 'id', label: 'Hash Id', show: true },
   { id: 'user', label: 'User', show: true },
   { id: 'createdAt', label: 'Date', show: true },
   { id: 'fromToken', label: 'From Token', show: true },
@@ -37,17 +36,23 @@ const SwapHistory = () => {
     search: null,
   });
 
-  const rows = swapHistory?.list?.map((_data: any, index) => {
+  const rows = swapHistory?.list?.map((_data: any) => {
     return {
-      id: getTableIndexNumber(filter.page, index, filter.limit),
-      user: `${_data?.user?.firstName ? _data?.user?.firstName : ''} ${
-        _data?.user?.lastName ? _data?.user?.lastName : '-'
-      }`,
+      id: _data.requestId,
+      user: _data?.user.email,
       createdAt: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
       fromToken: (
-        <TokenNameWithLogo tokenName={_data?.fromWallet?.token?.name} />
+        <TokenNameWithLogo
+          tokenName={_data?.fromWallet?.token?.name}
+          src={_data?.fromWallet?.token?.iconUrl}
+        />
       ),
-      toToken: <TokenNameWithLogo tokenName={_data?.toWallet?.token?.name} />,
+      toToken: (
+        <TokenNameWithLogo
+          tokenName={_data?.toWallet?.token?.name}
+          src={_data?.toWallet?.token?.iconUrl}
+        />
+      ),
       amount: _data?.amount,
       fee: _data?.fee,
     };

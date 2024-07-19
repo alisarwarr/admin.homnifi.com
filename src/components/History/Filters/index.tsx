@@ -82,7 +82,7 @@ const Filters = ({ filters, handleFilterChange, clearFilters, options }) => {
           >
             <button
               onClick={() => setIsDropdown(!isDropdown)}
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
               type="button"
             >
               Manage Column
@@ -90,24 +90,24 @@ const Filters = ({ filters, handleFilterChange, clearFilters, options }) => {
             {isDropdown && (
               <div
                 id="dropdownDefaultCheckbox"
-                className="w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute top-[44px] left-0 z-50"
+                className="w-48 bg-white divide-y divide-gray-100 rounded-lg shadow absolute top-[44px] left-0 z-50"
               >
                 <ul
-                  className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                  className="p-3 space-y-3 text-sm text-gray-700"
                   aria-labelledby="dropdownCheckboxButton"
                 >
                   <li>
                     {options?.map((itm) => {
                       return (
-                        <div className="flex items-center border-b border-gray-200 rounded-t-lg dark:border-gray-600 px-2 py-2">
+                        <div className="flex items-center border-b border-gray-200 rounded-t-lg px-2 py-2">
                           <input
                             id="checkbox-item-1"
                             type="checkbox"
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                           />
                           <label
                             htmlFor="checkbox-item-1"
-                            className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            className="ms-2 text-sm font-medium text-gray-900"
                           >
                             {itm?.label}
                           </label>
