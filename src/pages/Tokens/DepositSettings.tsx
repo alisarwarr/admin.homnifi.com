@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { add, refresh } from '../../images/other';
+import { add, edit, refresh } from '../../images/other';
 import GlobalTable from '../../components/Table/GlobalTable';
 import GlobalDialog from '../../components/Dialog';
 import GlobalInput from '../../components/Global/GlobalInput';
@@ -13,15 +13,11 @@ import { useSelector } from 'react-redux';
 
 
 const headCells = [
-    { id: 'id', label: 'ID', show: true },
-    { id: 'userEmail', label: 'Email', show: true },
-    { id: 'amount', label: 'Amount', show: true },
-    { id: 'time', label: 'Time', show: true },
-    { id: 'toWallet', label: 'To Wallet', show: true },
-    { id: 'toWalletIcon', label: 'To Wallet Icon', show: true },
-    { id: 'onChainWallet', label: 'On Chain Wallet', show: true },
-    { id: 'confirmation', label: 'Confirmation', show: true },
-    { id: 'transactionStatus', label: 'Transaction', show: true },
+    { id: 'fromToken', label: 'From Token', show: true },
+    { id: 'toToken', label: 'To Token', show: true },
+    { id: 'minAmount', label: 'Min Amount', show: true },
+    { id: 'minDisplayAmount', label: 'Min Display Amount', show: true },
+    { id: 'quickActions', label: 'Actions', show: true }
 ];
 
 
@@ -29,33 +25,54 @@ export default function DepositSettings() {
     const [loading, setLoading] = useState(false);
 
 
-    const fetchData = (page: number) => {
+    const fetchData = () => {
         setLoading(true);
         setTimeout(() => {
-            getDepositSettings({ page, limit: 10 });
+            getDepositSettings();
             setLoading(false);
         }, 1000);
     };
 
 
-    const { getDepositSettings } = useTokensSettingsAction();
-    const { depositSettings } = useSelector(selectTokensSettings);
+    const { getDepositSettings, addDespositSettings, getAllTokens, updateDespositSettings } = useTokensSettingsAction();
+    const { depositSettings, allTokens } = useSelector(selectTokensSettings);
     useEffect(() => {
-        fetchData(1);
+        fetchData();
+        getAllTokens();
     }, []);
 
 
-    const rows = depositSettings?.paginatedResults ? depositSettings?.paginatedResults?.map((_data: any) => {
+    const [selectedId, setSelectedId] = useState(null);
+
+
+    const rows = depositSettings ? depositSettings?.map((_data: any, index: number) => {
         return {
-            id: _data.requestId,
-            userEmail: _data.user.email,
-            amount: _data.amount,
-            time: _data.createdAt,
-            toWallet: _data.toWallet.token.name,
-            toWalletIcon: _data.toWallet.token.iconUrl,
-            onChainWallet: _data.onChainWallet,
-            confirmation: _data.confirmation,
-            transactionStatus: _data.transactionStatus
+            fromToken: _data.fromToken?.name,
+            toToken: _data.toToken?.name,
+            minAmount: _data.minAmount,
+            minDisplayAmount: _data.minDisplayAmount,
+            quickActions: (
+                <div className="flex justify-start">
+                    <img
+                        src={edit}
+                        width={24}
+                        height={24}
+                        color="red"
+                        alt="View Icon"
+                        className="cursor-pointer"
+                        onClick={() => {
+                            setOpen(true);
+                            setSelectedId(
+                                depositSettings[index]._id
+                            );
+                            formik.setFieldValue("fromToken", { label: depositSettings[index].fromToken.name, value: depositSettings[index].fromToken.name, id: depositSettings[index].fromToken._id });
+                            formik.setFieldValue("toToken", { label: depositSettings[index].toToken.name, value: depositSettings[index].toToken.name, id: depositSettings[index].toToken._id });
+                            formik.setFieldValue("minAmount", depositSettings[index].minAmount);
+                            formik.setFieldValue("minDisplayAmount", depositSettings[index].minDisplayAmount);
+                        }}
+                    />
+                </div>
+            ),
         };
     }) : [];
 
@@ -64,6 +81,7 @@ export default function DepositSettings() {
     const onOpen = () => setOpen(true);
     const onClose = () => {
         setOpen(false);
+        setSelectedId(null);
         setTimeout(() => {
             formik.resetForm();
         }, 1000);
@@ -72,24 +90,47 @@ export default function DepositSettings() {
 
     const formik = useFormik({
         initialValues: {
-            fromToken: '',
-            toToken: '',
-            assertTo: '',
+            fromToken: { label: "", value: "", id: "" },
+            toToken: { label: "", value: "", id: "" },
             minAmount: '',
-            mimDisplayAmount: '',
-            feeType: '',
-            commisionType: ''
+            minDisplayAmount: ''
         },
         validationSchema: Yup.object({
-            fromToken: Yup.string().required('Type is required'),
-            toToken: Yup.string().required('ID is required'),
+            fromToken: Yup.object({
+                label: Yup.string().required(),
+                value: Yup.string().required(),
+                id: Yup.string().required()
+            }).required('From Token is required'),
+            toToken: Yup.object({
+                label: Yup.string().required(),
+                value: Yup.string().required(),
+                id: Yup.string().required()
+            }).required('To Token is required'),
             minAmount: Yup.string().required('Minimum Amount is required'),
-            mimDisplayAmount: Yup.string().required('Minimum Display Amount is required'),
-            feeType: Yup.string().required('Fee Type is required'),
-            commisionType: Yup.string().required('Commision Type is required'),
+            minDisplayAmount: Yup.string().required('Minimum Display Amount is required')
+            .test(
+                'is-greater-than-minAmount',
+                'Min Display Amount must be greater than Min Amount',
+                function (value) {
+                    const { minAmount } = this.parent;
+                    return Number(value) > Number(minAmount);
+                }
+            )
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values));
+        onSubmit: async (values) => {
+            const data = {
+                fromToken: values.fromToken.id,
+                toToken: values.toToken.id,
+                minAmount: values.minAmount,
+                minDisplayAmount: values.minDisplayAmount
+            };
+            if (!selectedId) {
+                await addDespositSettings(data);
+            }
+            else {
+                await updateDespositSettings({ id: selectedId, data });
+            }
+            fetchData();
             onClose();
         }
     });
@@ -104,28 +145,42 @@ export default function DepositSettings() {
                 onClose={onClose}
                 content={
                     <form onSubmit={formik.handleSubmit}>
-                        <GlobalInput
-                            name="fromToken"
-                            label="Type"
-                            placeholder="Enter From Token"
-                            type="text"
-                            value={formik.values.fromToken}
+                        <GlobalSelect
+                            required
+                            label="To Token"
+                            name="toToken"
+                            placeholder="select a To Token"
+                            options={
+                                allTokens ?
+                                    allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                    : []
+                            }
+                            value={formik.values.toToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.fromToken && !!formik.errors.fromToken}
-                            error={formik.errors.fromToken}
+                            isError={formik.touched.toToken?.value && !!formik.errors.toToken?.value}
+                            error={formik.errors.toToken?.value}
+                            setFieldTouched={formik.setFieldTouched}
+                            setFieldValue={formik.setFieldValue}
                         />
 
-                        <GlobalInput
-                            name="toToken"
-                            label="ID"
-                            placeholder="Enter To Token"
-                            type="text"
-                            value={formik.values.toToken}
+                        <GlobalSelect
+                            required
+                            label="From Token"
+                            name="fromToken"
+                            placeholder="select a From Token"
+                            options={
+                                allTokens ?
+                                    allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                    : []
+                            }
+                            value={formik.values.fromToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.toToken && !!formik.errors.toToken}
-                            error={formik.errors.toToken}
+                            isError={formik.touched.fromToken?.value && !!formik.errors.fromToken?.value}
+                            error={formik.errors.fromToken?.value}
+                            setFieldTouched={formik.setFieldTouched}
+                            setFieldValue={formik.setFieldValue}
                         />
 
                         <GlobalInput
@@ -141,45 +196,15 @@ export default function DepositSettings() {
                         />
 
                         <GlobalInput
-                            name="mimDisplayAmount"
+                            name="minDisplayAmount"
                             label="Min. Display Amount"
                             placeholder="Enter Minimum Display Amount"
                             type="number"
-                            value={formik.values.mimDisplayAmount}
+                            value={formik.values.minDisplayAmount}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.mimDisplayAmount && !!formik.errors.mimDisplayAmount}
-                            error={formik.errors.mimDisplayAmount}
-                        />
-
-                        <GlobalInput
-                            name="feeType"
-                            label="Fee Type"
-                            placeholder="Enter Fee Type"
-                            type="number"
-                            value={formik.values.feeType}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            isError={formik.touched.feeType && !!formik.errors.feeType}
-                            error={formik.errors.feeType}
-                        />
-
-                        <GlobalSelect
-                            required
-                            label="Commision Type"
-                            name="commisionType"
-                            placeholder="select a Commision Type"
-                            options={[
-                                { label: 'Token X', value: 'tokenX' },
-                                { label: 'Token Y', value: 'tokenY' },
-                            ]}
-                            value={formik.values.commisionType}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            isError={formik.touched.commisionType && !!formik.errors.commisionType}
-                            error={formik.errors.commisionType}
-                            setFieldTouched={formik.setFieldTouched}
-                            setFieldValue={formik.setFieldValue}
+                            isError={formik.touched.minDisplayAmount && !!formik.errors.minDisplayAmount}
+                            error={formik.errors.minDisplayAmount}
                         />
 
                         <div className="flex justify-end mt-3">
@@ -200,7 +225,7 @@ export default function DepositSettings() {
 
                     <div
                         className="flex gap-1 items-center cursor-pointer px-3"
-                        onClick={() => fetchData(1)}
+                        onClick={fetchData}
                     >
                         <img src={refresh} alt="refresh" width={24} height={24} />
                         <span>Refresh</span>
@@ -211,7 +236,7 @@ export default function DepositSettings() {
                         onClick={onOpen}
                     >
                         <img src={add} alt="" width={24} height={24} />
-                        <span>Add Swap</span>
+                        <span>Add Deposit</span>
                     </button>
                 </div>
 
@@ -221,14 +246,9 @@ export default function DepositSettings() {
                         <GlobalTable
                             rows={rows}
                             headCells={headCells}
-                            copyItems={['']}
-                            colorItems={['transactionStatus']}
-                            imageItems={['toWalletIcon']}
                             isLoading={loading}
-                            totalPages={depositSettings?.totalPages}
-                            handlePageChange={(page: number) => {
-                                fetchData(page);
-                            }}
+                            paginate={false}
+                            imageItems={['iconUrl']}
                         />
                     )
                 }

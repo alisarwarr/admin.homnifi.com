@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { add, refresh } from '../../images/other';
+import { add, edit, refresh } from '../../images/other';
 import GlobalTable from '../../components/Table/GlobalTable';
 import GlobalDialog from '../../components/Dialog';
 import GlobalInput from '../../components/Global/GlobalInput';
@@ -15,15 +15,15 @@ import { useSelector } from 'react-redux';
 
 
 const headCells = [
-    { id: 'id', label: 'ID', show: true },
-    { id: 'userEmail', label: 'Email', show: true },
-    { id: 'amount', label: 'Amount', show: true },
-    { id: 'time', label: 'Time', show: true },
-    { id: 'toWallet', label: 'To Wallet', show: true },
-    { id: 'fromWallet', label: 'From Wallet', show: true },
-    { id: 'serialNumber', label: 'Serial Number', show: true },
-    { id: 'fee', label: 'Fee', show: true },
-    { id: 'total', label: 'Total', show: true }
+    { id: 'fromToken', label: 'From Token', show: true },
+    { id: 'toToken', label: 'To Token', show: true },
+    { id: 'minAmount', label: 'Min Amount', show: true },
+    { id: 'maxAmount', label: 'Max Amount', show: true },
+    { id: 'createdAt', label: 'Time', show: true },
+    { id: 'rate', label: 'Rate', show: true },
+    { id: 'commission', label: 'Commission', show: true },
+    { id: 'commissionType', label: 'Commission Type', show: true },
+    { id: 'quickActions', label: 'Actions', show: true }
 ];
 
 
@@ -31,33 +31,61 @@ export default function SwapSettings() {
     const [loading, setLoading] = useState(false);
 
 
-    const fetchData = (page: number) => {
+    const fetchData = () => {
         setLoading(true);
         setTimeout(() => {
-            getSwapSettings({ page, limit: 10 });
+            getSwapSettings();
             setLoading(false);
         }, 1000);
     };
 
 
-    const { getSwapSettings } = useTokensSettingsAction();
-    const { swapSettings } = useSelector(selectTokensSettings);
+    const { getSwapSettings, addSwapSettings, getAllTokens, updateSwapSettings } = useTokensSettingsAction();
+    const { swapSettings, allTokens } = useSelector(selectTokensSettings);
     useEffect(() => {
-        fetchData(1);
+        fetchData();
+        getAllTokens();
     }, []);
 
 
-    const rows = swapSettings?.paginatedResults ? swapSettings?.paginatedResults?.map((_data: any) => {
+    const [selectedId, setSelectedId] = useState(null);
+
+
+    const rows = swapSettings ? swapSettings?.map((_data: any, index: number) => {
         return {
-            id: _data.requestId,
-            userEmail: _data.user.email,
-            amount: _data.amount,
-            time: _data.createdAt,
-            toWallet: _data.toWallet.token.name,
-            fromWallet: _data.fromWallet.token.name,
-            serialNumber: _data.serialNumber,
-            fee: _data.fee,
-            total: _data.total
+            fromToken: _data.fromToken?.name,
+            toToken: _data.toToken?.name,
+            minAmount: _data.minAmount,
+            maxAmount: _data.maxAmount,
+            createdAt: _data.createdAt,
+            rate: _data.maxAmount,
+            commission: _data.commission,
+            commissionType: _data.commissionType,
+            quickActions: (
+                <div className="flex justify-start">
+                    <img
+                        src={edit}
+                        width={24}
+                        height={24}
+                        color="red"
+                        alt="View Icon"
+                        className="cursor-pointer"
+                        onClick={() => {
+                            setOpen(true);
+                            setSelectedId(
+                                swapSettings[index]._id
+                            );
+                            formik.setFieldValue("fromToken", { label: swapSettings[index].fromToken.name, value: swapSettings[index].fromToken.name, id: swapSettings[index].fromToken._id });
+                            formik.setFieldValue("toToken", { label: swapSettings[index].toToken.name, value: swapSettings[index].toToken.name, id: swapSettings[index].toToken._id });
+                            formik.setFieldValue("minAmount", swapSettings[index].minAmount);
+                            formik.setFieldValue("maxAmount", swapSettings[index].maxAmount);
+                            formik.setFieldValue("rate", swapSettings[index].rate);
+                            formik.setFieldValue("commission", swapSettings[index].commission);
+                            formik.setFieldValue("commissionType", { label: swapSettings[index].commissionType, value: swapSettings[index].commissionType });
+                        }}
+                    />
+                </div>
+            ),
         };
     }) : [];
 
@@ -66,6 +94,7 @@ export default function SwapSettings() {
     const onOpen = () => setOpen(true);
     const onClose = () => {
         setOpen(false);
+        setSelectedId(null);
         setTimeout(() => {
             formik.resetForm();
         }, 1000);
@@ -74,28 +103,59 @@ export default function SwapSettings() {
 
     const formik = useFormik({
         initialValues: {
-            fromToken: '',
-            toToken: '',
-            assertTo: '',
+            fromToken: { label: "", value: "", id: "" },
+            toToken: { label: "", value: "", id: "" },
             minAmount: '',
             maxAmount: '',
-            feeType: '',
-            customRate: '',
-            commisionType: ''
+            isCurtomRate: false,
+            rate: '',
+            commission: '',
+            commissionType: { label: "", value: "" }
         },
         validationSchema: Yup.object({
-            fromToken: Yup.string().required('From Token is required'),
-            toToken: Yup.string().required('To Token is required'),
+            fromToken: Yup.object({
+                label: Yup.string().required("From Token is required"),
+                value: Yup.string().required("From Token is required"),
+                id: Yup.string().required("From Token is required")
+            }),
+            toToken: Yup.object({
+                label: Yup.string().required("To Token is required"),
+                value: Yup.string().required("To Token is required"),
+                id: Yup.string().required("To Token is required")
+            }),
             minAmount: Yup.number().required('Minimum Amount is required').min(0, 'Amount must be greater than or equal to 0'),
             maxAmount: Yup.number().required('Maximum Amount is required').min(0, 'Amount must be greater than or equal to 0'),
-            customRate: Yup.number(),
-            commisionType: Yup.string().required('Commission Type is required'),
+            isCurtomRate: Yup.boolean(),
+            rate: Yup.number().min(0, 'Rate must be greater than or equal to 0'),
+            commission: Yup.number().required('Commission is required').min(0, 'Amount must be greater than or equal to 0'),
+            commissionType: Yup.object({
+                label: Yup.string().required("Commission Type is required"),
+                value: Yup.string().required("Commission Type is required")
+            })
         }),
-        onSubmit: (values) => {
-            alert(JSON.stringify(values));
+        onSubmit: async (values) => {
+            const data = {
+                fromToken: values.fromToken.id,
+                toToken: values.toToken.id,
+                minAmount: values.minAmount,
+                maxAmount: values.maxAmount,
+                rate: values.isCurtomRate ? values.rate : null,
+                commission: values.commission,
+                commissionType: values.commissionType.value
+            };
+            if (!selectedId) {
+                await addSwapSettings(data);
+            }
+            else {
+                await updateSwapSettings({ id: selectedId, data });
+            }
+            fetchData();
             onClose();
         }
     });
+
+
+    console.log({formik});
 
 
     return (
@@ -112,15 +172,16 @@ export default function SwapSettings() {
                             label="From Token"
                             name="fromToken"
                             placeholder="select a From Token"
-                            options={[
-                                { label: 'Token A', value: 'tokenA' },
-                                { label: 'Token B', value: 'tokenB' },
-                            ]}
-                            value={formik.values.fromToken}
+                            options={
+                                allTokens ?
+                                    allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                    : []
+                            }
+                            value={formik.values.fromToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.fromToken && !!formik.errors.fromToken}
-                            error={formik.errors.fromToken}
+                            isError={formik.touched.fromToken?.value && !!formik.errors.fromToken?.value}
+                            error={formik.errors.fromToken?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />
@@ -130,19 +191,32 @@ export default function SwapSettings() {
                             label="To Token"
                             name="toToken"
                             placeholder="select a To Token"
-                            options={[
-                                { label: 'Token X', value: 'tokenX' },
-                                { label: 'Token Y', value: 'tokenY' },
-                            ]}
-                            value={formik.values.toToken}
+                            options={
+                                allTokens ?
+                                    allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id }))
+                                    : []
+                            }
+                            value={formik.values.toToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.toToken && !!formik.errors.toToken}
-                            error={formik.errors.toToken}
+                            isError={formik.touched.toToken?.value && !!formik.errors.toToken?.value}
+                            error={formik.errors.toToken?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />
 
+                        <GlobalInput
+                            name="minAmount"
+                            label="Min. Amount"
+                            placeholder="Enter Min. Amount"
+                            type="number"
+                            required
+                            value={formik.values.minAmount}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            isError={formik.touched.minAmount && !!formik.errors.minAmount}
+                            error={formik.errors.minAmount}
+                        />
 
                         <GlobalInput
                             name="maxAmount"
@@ -157,55 +231,64 @@ export default function SwapSettings() {
                             error={formik.errors.maxAmount}
                         />
 
+                        <GlobalFormControlLabel
+                            control={
+                                <GlobalSwitch
+                                    checked={formik.values.isCurtomRate}
+                                    onChange={(e) => {
+                                        formik.setFieldValue("isCurtomRate", e);
+                                    }}
+                                />
+                            }
+                            label="Custom Rate"
+                            className="text-primary"
+                        />
+
+                        {
+                            formik.values.isCurtomRate && (
+                                <GlobalInput
+                                    name="rate"
+                                    label="Rate"
+                                    placeholder="Enter rate"
+                                    type="number"
+                                    value={formik.values.rate}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    isError={formik.touched.rate && !!formik.errors.rate}
+                                    error={formik.errors.rate}
+                                />
+                            )
+                        }
+
                         <GlobalSelect
                             required
                             label="Commision Type"
-                            name="commisionType"
+                            name="commissionType"
                             placeholder="select a Commision Type"
                             options={[
-                                { label: 'Token X', value: 'tokenX' },
-                                { label: 'Token Y', value: 'tokenY' },
+                                { label: 'Fixed', value: 'fixed' },
+                                { label: 'Percentage', value: 'percentage' },
                             ]}
-                            value={formik.values.commisionType}
+                            value={formik.values.commissionType.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.commisionType && !!formik.errors.commisionType}
-                            error={formik.errors.commisionType}
+                            isError={formik.touched.commissionType?.value && !!formik.errors.commissionType?.value}
+                            error={formik.errors.commissionType?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />
 
-                        <div className="flex items-center justify-between">
-                            <GlobalFormControlLabel
-                                control={
-                                    <GlobalSwitch
-                                        checked={formik.values.customRate}
-                                        onChange={(e: any) => {
-                                            formik.setFieldValue('customRate', e.target.checked);
-                                            // Reset customRate value when switching off
-                                            if (!e.target.checked) {
-                                                formik.setFieldValue('customRate', 0);
-                                            }
-                                        }}
-                                    />
-                                }
-                                label="Custom Rate"
-                                className="text-primary"
-                            />
-
-                            <GlobalInput
-                                name="customRate"
-                                label="Custom Rate"
-                                type="number"
-                                required
-                                value={formik.values.customRate}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                isError={formik.touched.customRate && !!formik.errors.customRate}
-                                error={formik.errors.customRate}
-                                disabled={!formik.values.customRate}
-                            />
-                        </div>
+                        <GlobalInput
+                            name="commission"
+                            label="Commission"
+                            type="number"
+                            required
+                            value={formik.values.commission}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            isError={formik.touched.commission && !!formik.errors.commission}
+                            error={formik.errors.commission}
+                        />
 
                         <div className="flex justify-end mt-3">
                             <GlobalButton
@@ -225,7 +308,7 @@ export default function SwapSettings() {
 
                     <div
                         className="flex gap-1 items-center cursor-pointer px-3"
-                        onClick={() => fetchData(1)}
+                        onClick={fetchData}
                     >
                         <img src={refresh} alt="refresh" width={24} height={24} />
                         <span>Refresh</span>
@@ -246,14 +329,9 @@ export default function SwapSettings() {
                         <GlobalTable
                             rows={rows}
                             headCells={headCells}
-                            copyItems={['']}
-                            colorItems={['']}
-                            imageItems={['']}
                             isLoading={loading}
-                            totalPages={swapSettings?.totalPages}
-                            handlePageChange={(page: number) => {
-                                fetchData(page);
-                            }}
+                            paginate={false}
+                            imageItems={['iconUrl']}
                         />
                     )
                 }
