@@ -39,7 +39,10 @@ function CronJob() {
               : '-',
             tokenPrice: _data.tokenPrice,
             status: _data.status,
+            errorTooltip:
+              _data.error || _data.status === 'failed' ? true : false,
             totalMachines: _data.totalMachines,
+            error: _data.error,
             // timeTaken: calculateDurations(_data.startTime, _data.endTime),
           };
         })
@@ -55,6 +58,8 @@ function CronJob() {
       setLoading(false);
     }
   }, []);
+
+  console.log('rows ::', rows);
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">
