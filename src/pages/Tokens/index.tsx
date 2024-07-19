@@ -8,6 +8,7 @@ import { selectToken } from '../../store/token/tokenSlice';
 
 import TokensTable from '../../components/Token/TokenTable';
 import { useTokenActions } from '../../store/token/tokenAction';
+import Loader from '../../components/Loader/Loader';
 
 const Tokens = () => {
   const { getTokensList } = useTokenActions();
@@ -18,11 +19,18 @@ const Tokens = () => {
   const [selectedToken, setSelectedToken] = useState<any>();
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      await getTokensList();
+    //   (async () => {
+    //     setLoading(true);
+    //     await getTokensList();
+    //     setLoading(false);
+    //   })();
+
+    if (tokensList.length === 0) {
+      getTokensList();
       setLoading(false);
-    })();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   //popup handler
@@ -56,10 +64,13 @@ const Tokens = () => {
     setOpen(true);
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full px-2 border py-4 rounded-md">
-      {/* PAGE TITLE */}
-      <div className="flex bg-primary items-center  text-white">
+      <div className="flex bg-primary items-center table-head-bg text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Tokens</h1>
 
         <div

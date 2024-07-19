@@ -134,7 +134,7 @@ const GlobalSelect = ({
           } ${inputClass}`}
           onClick={toggleDropdown}
         >
-          {isMulti && resultMultiValues.length ? (
+          {isMulti && resultMultiValues?.length ? (
             <>
               <div className="px-4 rounded-sm flex flex-wrap gap-4">
                 {resultMultiValues.map((dt: any) => {

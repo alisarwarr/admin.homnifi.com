@@ -7,12 +7,15 @@ import { Tooltip } from 'antd';
 import { useTokenActions } from '../../../store/token/tokenAction';
 import { useSelector } from 'react-redux';
 import { selectToken } from '../../../store/token/tokenSlice';
+import Loader from '../../../components/Loader/Loader';
 
 function WithdrawSetting() {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { withdrawSettingsList } = useSelector(selectToken);
   const { getWithdrawSettings } = useTokenActions();
   const [selectedSetting, setSelectedSetting] = useState<null>(null);
+
   const onPopupHandler = () => {
     setOpen(!open);
     if (open) {
@@ -61,8 +64,17 @@ function WithdrawSetting() {
   });
 
   useEffect(() => {
-    getWithdrawSettings();
+    if (withdrawSettingsList.length === 0) {
+      getWithdrawSettings();
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">

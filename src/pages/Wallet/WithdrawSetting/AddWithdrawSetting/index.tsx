@@ -10,6 +10,7 @@ import GlobalInput from '../../../../components/Global/GlobalInput';
 import GlobalSelect from '../../../../components/Global/GlobalSelect';
 import { useTokenActions } from '../../../../store/token/tokenAction';
 import { ReactComponent as CrossIcon } from '../../../../SVGIcons/cancelIcon.svg';
+import useLoading from '../../../../utils/hooks/useLoading';
 
 interface Props {
   open: boolean;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
+  const { startLoading, stopLoading, isLoading } = useLoading();
   const { getTokensList, createWithdrawSetting, updateWithdrawSetting } =
     useTokenActions();
 
@@ -74,6 +76,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     validationSchema,
     onSubmit: async (values) => {
       setIsSubmit(true);
+      startLoading();
       const body = {
         type: values.type,
         fromToken: values.withdrawFrom,
@@ -98,6 +101,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
         successAlert(response.message);
         return onResetStates();
       }
+      stopLoading();
 
       successAlert(
         response.message
@@ -145,6 +149,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
   const onResetStates = () => {
     setIsSubmit(false);
     onClose();
+    stopLoading();
     resetForm();
   };
 
@@ -416,6 +421,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               <div className="mx-4 md:mx-2 my-2">
                 <div className="flex flex-col  md:flex-row w-full">
                   <Button
+                    loading={isLoading}
                     className="bg-primary rounded-full my-4"
                     loadingType="circular"
                     buttonType="submit"
