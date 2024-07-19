@@ -57,6 +57,16 @@ export const allDrawerOptions: DrawerSection[] = [
         active: false,
         options: [
           {
+            name: 'All Tokens',
+            icon: <Dashboard />,
+            icon_dark: setting,
+            url: '/tokens',
+            key: 'tokens-all',
+            active: false,
+            options: [],
+            permissions: [`all`, `superadmin`, 'tokens'],
+          },
+          {
             name: 'Deposit Settings',
             icon: <Dashboard />,
             icon_dark: setting,
@@ -82,17 +92,6 @@ export const allDrawerOptions: DrawerSection[] = [
             icon_dark: setting,
             url: '/token/network-settings',
             key: 'network-settings',
-            active: false,
-            options: [],
-            permissions: [`all`, `superadmin`, 'tokens'],
-          },
-
-          {
-            name: 'All Tokens',
-            icon: <Dashboard />,
-            icon_dark: setting,
-            url: '/tokens',
-            key: 'tokens-all',
             active: false,
             options: [],
             permissions: [`all`, `superadmin`, 'tokens'],
