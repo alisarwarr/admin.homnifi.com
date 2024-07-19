@@ -68,7 +68,7 @@ const GlobalInput = ({
           onBlur={onBlur}
           className={`${
             disabled && 'cursor-not-allowed'
-          } outline-none text-defaultBlack border py-2 px-8 text-xs rounded-full w-full ${
+          } outline-none text-defaultBlack border py-2 px-4 text-xs rounded-full w-full ${
             isError ? 'border-redDanger' : 'border-blueGrey'
           } ${className}`}
         />

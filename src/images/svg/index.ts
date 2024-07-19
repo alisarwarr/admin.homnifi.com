@@ -15,6 +15,7 @@ import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
 import { ReactComponent as Spinner } from '../../SVGIcons/spinner.svg';
 import { ReactComponent as ToolTipSvg } from '../../SVGIcons/tooltip.svg';
 import { ReactComponent as SmallCross } from '../../SVGIcons/smallCrossIcon.svg';
+import { ReactComponent as Empty } from '../../SVGIcons/empty.svg';
 
 export {
   EyeOpenIcon,
@@ -33,4 +34,5 @@ export {
   Delete,
   Spinner,
   ToolTipSvg,
+  Empty,
 };
