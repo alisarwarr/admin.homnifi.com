@@ -51,6 +51,7 @@ const GlobalInput = ({
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
+    
     <div className={`flex flex-col my-2 gap-2 ${containerStyles}`}>
       <div className={`text-sm font-medium ${labelStyle}`}>
         {label && (
@@ -89,7 +90,7 @@ const GlobalInput = ({
         {isError && type === 'password' ? (
           <div className="flex items-center gap-2 absolute right-4">
             <span>
-              <WarningIcon className="w-4" />
+              <WarningIcon className="w-6" />
             </span>
 
             <button
@@ -105,7 +106,7 @@ const GlobalInput = ({
           </div>
         ) : isError ? (
           <span className="absolute right-4">
-            <WarningIcon className="w-4" />
+            <WarningIcon className="w-6" />
           </span>
         ) : (
           type === 'password' && (

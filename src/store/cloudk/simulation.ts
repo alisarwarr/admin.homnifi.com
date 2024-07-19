@@ -36,7 +36,7 @@ interface Machine {
   lockedPrice: number;
   allTimeHigh: number;
   dlp: number;
-  mintingPower: number;
+  mintingPowerPerc: number;
   boost: number;
 }
 
@@ -240,7 +240,7 @@ const initialState: SimulationState = {
     lockedPrice: 1,
     allTimeHigh: 1,
     dlp: 1,
-    mintingPower: 65,
+    mintingPowerPerc: 1,
     boost: 0.06,
   },
   startSimulationLoading: false,

@@ -26,6 +26,7 @@ const headCells = [
 ];
 
 const FaqTable = ({ data, loading, page, setPage }: Props) => {
+  console.log('🚀 ~ FaqTable ~ data:', data);
   const navigate = useNavigate();
 
   const rows = data?.list?.map((_data) => {

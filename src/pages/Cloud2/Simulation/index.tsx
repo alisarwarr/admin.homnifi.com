@@ -340,7 +340,7 @@ const Simulation = () => {
           </div>
 
           <a
-            href="../../../../public/files/Prices_Sample.csv" // Adjust the file path as needed
+            href="/files/Prices_Sample.csv" // Adjust the file path as needed
             download
           >
             <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
@@ -405,10 +405,10 @@ const Simulation = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 ">
-                      Mintng Power
+                      Mintng Power %
                     </label>
                     <p className="text-sm text-gray-600">
-                      {selectedMachine.mintingPower}
+                      {selectedMachine.mintingPowerPerc} %
                     </p>
                   </div>
                   <div>
