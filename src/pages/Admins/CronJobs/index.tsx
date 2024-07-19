@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import GlobalTable from '../../../components/Table/GlobalTable';
 import { Tooltip } from 'antd';
 import { edit, view } from '../../../images/other';
+import { useAdminActions } from '../../../store/admin/adminActions';
 
 function CronJob() {
+  const { getCronJobs } = useAdminActions();
+  const [loading, setLoading] = useState(true);
+
   const headCells = [
     { id: 'id', label: 'Id' },
     { id: 'startTime', label: 'Start Time' },
@@ -36,22 +40,20 @@ function CronJob() {
             status: _data.status,
             tatalMachine: _data.tatalMachine,
             timeTaken: _data.timeTaken,
-            // actions: (
-            //   <div className="flex items-center gap-2">
-            //     <Tooltip title="View Cron Job">
-            //       <div>
-            //         <img src={view} width={18} height={18} alt="View Icon" className="cursor-pointer" />
-            //       </div>
-            //     </Tooltip>
-
-            //     <Tooltip title="Edit Cron Job">
-            //       <img src={edit} width={18} height={18} alt="Edit Icon" className="cursor-pointer" />
-            //     </Tooltip>
-            //   </div>
-            // ),
           };
         })
       : [];
+
+  useEffect(() => {
+    // if (tokensList.length === 0) {
+    getCronJobs();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+    // } else {
+    // setLoading(false);
+    // }
+  }, []);
 
   return (
     <div className="w-full px-2">
