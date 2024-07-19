@@ -443,7 +443,7 @@ const GlobalTable = ({
                                     <>
                                       {isIsoDateString(row[cell.id]) ? (
                                         formatDate(row[cell.id])
-                                      ) : row[cell.id] ? (
+                                      ) : row[cell.id] || row[cell.id] === 0 ? (
                                         row[cell.id]
                                       ) : (
                                         <>-</>
@@ -511,8 +511,7 @@ const GlobalTable = ({
       <div
         className={`mt-3 flex ${filter ? 'justify-between' : 'justify-center'} items-center`}
       >
-        {filter && <div></div>}
-        <div className="self-center">
+        <div className="self-center w-full flex justify-center ">
           {totalPages && paginate ? (
             <Pagination
               shape="rounded"
@@ -528,7 +527,7 @@ const GlobalTable = ({
         </div>
 
         {/* LIMIT */}
-        {filter && (
+        {/* {filter && (
           <Select
             value={filter.limit}
             label={filter.limit}
@@ -540,7 +539,7 @@ const GlobalTable = ({
               return <MenuItem value={dt}>{dt}</MenuItem>;
             })}
           </Select>
-        )}
+        )} */}
       </div>
 
       <GlobalDialog

@@ -41,6 +41,8 @@ const WithdrawRequests = () => {
     }
   }, [filter.search]);
 
+  console.log({ withdrawRequests });
+
   return (
     <div className="w-full px-2">
       {/* PAGE TITLE */}

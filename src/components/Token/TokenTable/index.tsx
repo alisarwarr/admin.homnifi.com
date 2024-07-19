@@ -68,6 +68,7 @@ const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
       headCells={headCells}
       isLoading={loading}
       paginate={false}
+      imageItems={['iconUrl']}
     />
   );
 };
