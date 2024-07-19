@@ -424,7 +424,6 @@ const GlobalTable = ({
                                       ) : (
                                         <>-</>
                                       )}
-                                      {row[cell.id] ? row[cell.id] : <>-</>}
                                       {cell.id === 'status' &&
                                         row?.errorTooltip && (
                                           <Tooltip
@@ -440,15 +439,15 @@ const GlobalTable = ({
                                   {copyIconList.find(
                                     (dt) => dt === cell.id
                                   ) && (
-                                      <Copy
-                                        className="ml-3 cursor-pointer"
-                                        onClick={() =>
-                                          navigator.clipboard.writeText(
-                                            row[cell.id]
-                                          )
-                                        }
-                                      />
-                                    )}
+                                    <Copy
+                                      className="ml-3 cursor-pointer"
+                                      onClick={() =>
+                                        navigator.clipboard.writeText(
+                                          row[cell.id]
+                                        )
+                                      }
+                                    />
+                                  )}
                                 </div>
                               </td>
                             )
@@ -512,7 +511,6 @@ const GlobalTable = ({
             ''
           )}
         </div>
-
       </div>
 
       <GlobalDialog
