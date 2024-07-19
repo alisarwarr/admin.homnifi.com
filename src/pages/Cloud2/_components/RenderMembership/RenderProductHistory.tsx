@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { MachineImage } from '../../../../images/cloud';
-import { ArrowDownSvg, CopyIcon, DeleteIcon, InfoIcon } from '../../../../images/svg';
-import Toottip from '../../../../components/Global/Toottip';
+import { DeleteIcon, InfoIcon } from '../../../../images/svg';
 import Product from './MachinesAccordion/Product';
 import LifetimeRewards from './MachinesAccordion/LifetimeRewards';
 import Staked from './MachinesAccordion/Staked';
@@ -11,7 +9,6 @@ import GlobalTable from '../../../../components/Table/GlobalTable';
 import GlobalModal from '../../../../components/Global/GlobalModal';
 import useModalHook from '../../../../utils/hooks/useModalHook';
 import SingleMachineModalBody from './SingleMachineModalBody';
-import GlobalButton from '../../../../components/Global/GlobalButton';
 import { edit } from '../../../../images/other';
 import { TProduct } from '../../../../store/products/productSlice';
 
@@ -24,7 +21,9 @@ interface RenderProductHistoryProps {
   products: TProduct[];
 }
 
-const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({ products }) => {
+const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({
+  products,
+}) => {
   const [productID, setProductID] = useState('');
   const stakeModalHook = useModalHook();
   const machineDetailHook = useModalHook();
@@ -107,16 +106,27 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({ products })
         <span className="w-24">{product.name}</span>
       </div>
     ),
-    externalProductId: <span className="font-medium ">{product.externalProductId}</span>,
-    mintingPowerPerc: <span className="font-medium "> {product.mintingPowerPerc}%</span>,
+    externalProductId: (
+      <span className="font-medium ">{product.externalProductId}</span>
+    ),
+    mintingPowerPerc: (
+      <span className="font-medium "> {product.mintingPowerPerc}%</span>
+    ),
     stakeLimit: <span className="font-medium "> {product.stakeLimit}</span>,
     licenseName: <span className="font-medium "> {product.licenseName}</span>,
-    capping: <span className="font-medium "> {product.capping !== null ? product.capping : 'Unlimited'}</span>,
+    capping: (
+      <span className="font-medium ">
+        {' '}
+        {product.capping !== null ? product.capping : 'Unlimited'}
+      </span>
+    ),
     bonus: <span className="font-medium "> {product.bonus}</span>,
     tokenAirdrop: <span className="font-medium "> {product.tokenAirdrop}</span>,
 
     airdropPromo: <span className="font-medium "> {product.airdropPromo}</span>,
-    superNodeLevel: <span className="font-medium "> {product.superNodeLevel || 0}</span>,
+    superNodeLevel: (
+      <span className="font-medium "> {product.superNodeLevel || 0}</span>
+    ),
 
     // claimableRewards: <span className=" font-medium">$ {trx.claimableRewards.toLocaleString()}</span>,
     quickActions: (
@@ -136,7 +146,12 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({ products })
         <div className="w-6 h-6 flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
           <DeleteIcon />
         </div>
-        <InfoIcon onClick={() => (setProductID(product._id), stakeModalHook.handleOpen())} className="cursor-pointer" />
+        <InfoIcon
+          onClick={() => (
+            setProductID(product._id), stakeModalHook.handleOpen()
+          )}
+          className="cursor-pointer"
+        />
       </div>
     ),
   }));

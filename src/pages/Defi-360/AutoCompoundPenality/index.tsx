@@ -26,7 +26,8 @@ export default function AutoCompoundPenality() {
     }, 1000);
   };
 
-  const { getAutoCompoundPenality, postAutoCompoundPenality } = useDefi360Action();
+  const { getAutoCompoundPenality, postAutoCompoundPenality } =
+    useDefi360Action();
   const { autoCompoundPenality } = useSelector(selectDefi360);
   useEffect(() => {
     fetchData();
@@ -106,7 +107,9 @@ export default function AutoCompoundPenality() {
       <div className="w-full px-2">
         {/* PAGE TITLE */}
         <div className="flex bg-primary items-center  text-white">
-          <h1 className="flex-1 font-bold text-2xl px-3 py-1">Auto Compound Penality</h1>
+          <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+            Auto Compound Penality
+          </h1>
 
           <div
             className="flex gap-1 items-center cursor-pointer px-3"
@@ -116,7 +119,10 @@ export default function AutoCompoundPenality() {
             <span>Refresh</span>
           </div>
 
-          <button className="flex gap-1 text-white items-center cursor-pointer px-3" onClick={onOpen}>
+          <button
+            className="flex gap-1 text-white items-center cursor-pointer px-3"
+            onClick={onOpen}
+          >
             <img src={add} alt="" width={24} height={24} />
             <span>New Penality</span>
           </button>

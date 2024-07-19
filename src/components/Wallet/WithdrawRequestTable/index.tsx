@@ -11,7 +11,11 @@ import WithdrawActionButton from '../WithdrawActionButton';
 import StatusChip from '../../StatusChip';
 import TokenNameWithLogo from '../../TokenNameWithLogo';
 import { copy } from '../../../images/other';
-import { CapitalizeAllLetters, copyToClipboard, getTableIndexNumber } from '../../../utils/utils';
+import {
+  CapitalizeAllLetters,
+  copyToClipboard,
+  getTableIndexNumber,
+} from '../../../utils/utils';
 
 type Props = {
   data: {
@@ -29,16 +33,51 @@ const headCells = [
   { id: 'id', label: 'ID', dataClass: '', show: true },
   { id: 'user', label: 'User Name', dataClass: 'min-w-24', show: true },
   { id: 'requestId', label: 'Request ID', dataClass: 'min-w-32', show: true },
-  { id: 'requestDate', label: 'Request Date', dataClass: 'min-w-36', show: true },
+  {
+    id: 'requestDate',
+    label: 'Request Date',
+    dataClass: 'min-w-36',
+    show: true,
+  },
   { id: 'token', label: 'Token', dataClass: 'min-w-24', show: true },
   { id: 'network', label: 'Network', dataClass: 'min-w-24', show: true },
   { id: 'address', label: 'Wallet Address', dataClass: 'max-w-32', show: true },
-  { id: 'fee', label: 'Withdrawal Fee', dataClass: 'min-w-28 text-center', show: true },
-  { id: 'amount', label: 'Withdrawal Amount', dataClass: 'min-w-32 text-center', show: true },
-  { id: 'total', label: 'Total Amount', dataClass: 'min-w-32 text-center', show: true },
-  { id: 'trxHashUrl', label: 'Transaction Hash', dataClass: 'max-w-32 text-center', show: true },
-  { id: 'status', label: 'Status', dataClass: 'min-w-32 text-start ', show: true },
-  { id: 'actions', label: 'Actions', headCellClass: 'text-center min-w-[100px]', show: true },
+  {
+    id: 'fee',
+    label: 'Withdrawal Fee',
+    dataClass: 'min-w-28 text-center',
+    show: true,
+  },
+  {
+    id: 'amount',
+    label: 'Withdrawal Amount',
+    dataClass: 'min-w-32 text-center',
+    show: true,
+  },
+  {
+    id: 'total',
+    label: 'Total Amount',
+    dataClass: 'min-w-32 text-center',
+    show: true,
+  },
+  {
+    id: 'trxHashUrl',
+    label: 'Transaction Hash',
+    dataClass: 'max-w-32 text-center',
+    show: true,
+  },
+  {
+    id: 'status',
+    label: 'Status',
+    dataClass: 'min-w-32 text-start ',
+    show: true,
+  },
+  {
+    id: 'actions',
+    label: 'Actions',
+    headCellClass: 'text-center min-w-[100px]',
+    show: true,
+  },
 ];
 
 const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
@@ -63,7 +102,9 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
             <Chip
               label={
                 <div className="flex items-center relative w-[140px] py-1">
-                  <span className="pr-10 w-[75%] overflow-hidden">{_data?.address}</span>
+                  <span className="pr-10 w-[75%] overflow-hidden">
+                    {_data?.address}
+                  </span>
                   <Tooltip title={copied ? 'Copied' : 'Copy'} placement="top">
                     <img
                       src={copy}
@@ -88,7 +129,11 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
       trxHashUrl: _data.trxHashUrl ? (
         <Tooltip title={_data.trxHashUrl}>
           <Link to={_data.trxHashUrl}>
-            <Chip label={_data.trxHashUrl} size="small" sx={{ fontSize: '11px' }} />
+            <Chip
+              label={_data.trxHashUrl}
+              size="small"
+              sx={{ fontSize: '11px' }}
+            />
           </Link>
         </Tooltip>
       ) : (

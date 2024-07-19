@@ -148,6 +148,7 @@ export const {
   setFeaturePurchaseHistory,
   setProductPurchaseHistory,
 } = historySlice.actions;
-export const selectHistorySlice = (state: { history: historyStateSlice }) => state.history;
+export const selectHistorySlice = (state: { history: historyStateSlice }) =>
+  state.history;
 
 export default historySlice.reducer;

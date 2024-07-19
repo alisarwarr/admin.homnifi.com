@@ -52,7 +52,10 @@ const Maintenance: React.FC = () => {
 
   useEffect(() => {
     checkMaintenanceMode();
-    formik.setFieldValue('maintenance', maintenanceMode !== null ? true : false);
+    formik.setFieldValue(
+      'maintenance',
+      maintenanceMode !== null ? true : false
+    );
   }, []);
 
   // Array of checkboxes with labels
@@ -68,7 +71,9 @@ const Maintenance: React.FC = () => {
       <div className="w-full px-2">
         {/* PAGE TITLE */}
         <div className="flex bg-primary items-center text-white">
-          <h1 className="flex-1 font-bold text-2xl px-3 py-1">Maintenance Mode</h1>
+          <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+            Maintenance Mode
+          </h1>
         </div>
         <div className="p-5">
           <GlobalSwitch
@@ -98,7 +103,9 @@ const Maintenance: React.FC = () => {
                 name="reason"
                 type="text"
                 placeholder="Enter reason"
-                isError={formik.errors.reason && formik.touched.reason ? true : false}
+                isError={
+                  formik.errors.reason && formik.touched.reason ? true : false
+                }
                 error={formik.errors.reason}
                 touched={formik.touched.reason}
                 value={formik.values.reason}
@@ -113,7 +120,9 @@ const Maintenance: React.FC = () => {
                 type="text"
                 placeholder="Enter note"
                 error={formik.errors.note}
-                isError={formik.errors.note && formik.touched.note ? true : false}
+                isError={
+                  formik.errors.note && formik.touched.note ? true : false
+                }
                 touched={formik.touched.note}
                 value={formik.values.note}
                 className="!w-52 !m-0"
@@ -121,8 +130,17 @@ const Maintenance: React.FC = () => {
               />
             </div>
             <div className="flex flex-col gap-10 justify-center py-5  ">
-              <GlobalButton outlined text="Reset" classNames="!w-52" onClick={formik.resetForm} />
-              <GlobalButton text="Save" classNames="!w-52" onClick={formik.handleSubmit} />
+              <GlobalButton
+                outlined
+                text="Reset"
+                classNames="!w-52"
+                onClick={formik.resetForm}
+              />
+              <GlobalButton
+                text="Save"
+                classNames="!w-52"
+                onClick={formik.handleSubmit}
+              />
             </div>
           </form>
         )}

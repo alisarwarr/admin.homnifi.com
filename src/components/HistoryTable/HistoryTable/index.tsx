@@ -22,7 +22,13 @@ const HistoryTable = ({ cells, data, loading, page, setPage }: Props) => {
 
   return (
     <>
-      <GlobalTable rows={rows} headCells={cells} isLoading={loading} page={page} handlePageChange={setPage} />
+      <GlobalTable
+        rows={rows}
+        headCells={cells}
+        isLoading={loading}
+        page={page}
+        handlePageChange={setPage}
+      />
     </>
   );
 };

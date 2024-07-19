@@ -34,7 +34,13 @@ const Button = ({
           {loadingType === 'text' ? (
             <span>Loading...</span>
           ) : (
-            <RotatingLines visible={true} width="20" strokeWidth="3" animationDuration="0.75" strokeColor="white" />
+            <RotatingLines
+              visible={true}
+              width="20"
+              strokeWidth="3"
+              animationDuration="0.75"
+              strokeColor="white"
+            />
           )}
         </>
       ) : (

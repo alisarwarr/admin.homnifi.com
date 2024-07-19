@@ -36,7 +36,9 @@ const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
       color: _data?.color ?? '-',
       symbol: _data?.symbol,
       type: _data.type ?? '-',
-      iconUrl: `${_data?.iconUrl?.slice(0, 30)} ${_data?.iconUrl && _data?.iconUrl?.length > 30 ? ' ...' : ''}` ?? '-',
+      iconUrl:
+        `${_data?.iconUrl?.slice(0, 30)} ${_data?.iconUrl && _data?.iconUrl?.length > 30 ? ' ...' : ''}` ??
+        '-',
       withdrawType: _data?.withdrawType ?? '-',
       networkList: _data?.networks?.map((dt: any) => dt.name).join(', '),
       actions: (
@@ -61,7 +63,12 @@ const TokensTable = ({ data, loading, onEditHanlder }: Props) => {
 
   return (
     // TABLE
-    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} />
+    <GlobalTable
+      rows={rows}
+      headCells={headCells}
+      isLoading={loading}
+      paginate={false}
+    />
   );
 };
 

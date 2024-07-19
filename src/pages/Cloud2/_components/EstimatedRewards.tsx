@@ -14,15 +14,21 @@ const EstimatedRewards = (props: Props) => {
   const TableData = [
     {
       key: '5 Years',
-      value: activeMachines.map((machine) => `$ ${machine.estimatedRewards.fiveYearRewards.toFixed(2)}`),
+      value: activeMachines.map(
+        (machine) => `$ ${machine.estimatedRewards.fiveYearRewards.toFixed(2)}`
+      ),
     },
     {
       key: 'Added Collateral',
-      value: activeMachines.map((machine) => `$ ${machine.estimatedRewards.adedCollateral.toFixed(2)}`),
+      value: activeMachines.map(
+        (machine) => `$ ${machine.estimatedRewards.adedCollateral.toFixed(2)}`
+      ),
     },
     {
       key: 'Total Receivable',
-      value: activeMachines.map((machine) => `$ ${machine.estimatedRewards.totalReceivable.toFixed(2)}`),
+      value: activeMachines.map(
+        (machine) => `$ ${machine.estimatedRewards.totalReceivable.toFixed(2)}`
+      ),
     },
   ];
 

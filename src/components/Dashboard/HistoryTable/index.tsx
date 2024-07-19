@@ -48,8 +48,12 @@ function HostoryTabla() {
       status: 'Complete',
       actions: (
         <div className="flex">
-          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">Accept</button>
-          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
+          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">
+            Accept
+          </button>
+          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">
+            Reject
+          </button>
         </div>
       ),
     },
@@ -65,8 +69,12 @@ function HostoryTabla() {
       status: 'Pending',
       actions: (
         <div className="flex">
-          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">Accept</button>
-          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
+          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">
+            Accept
+          </button>
+          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">
+            Reject
+          </button>
         </div>
       ),
     },
@@ -82,8 +90,12 @@ function HostoryTabla() {
       status: 'Failed',
       actions: (
         <div className="flex">
-          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">Accept</button>
-          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">Reject</button>
+          <button className="text-xs px-2 py-1 rounded-md text-white bg-primaryGreen cursor-pointer">
+            Accept
+          </button>
+          <button className="text-xs px-2 py-1  rounded-md text-white bg-primaryRed cursor-pointer ml-2">
+            Reject
+          </button>
         </div>
       ),
     },
@@ -172,22 +184,29 @@ function HostoryTabla() {
         </div>
 
         <div className="flex items-center justify-start gap-2 my-4 w-full">
-          <div className="flex gap-2 items-center relative">
-            <FormikInput
-              type="string"
-              name="id"
-              shrink={true}
-              placeholder="Enter ID"
-              className="w-[10vw]"
-              value={filterState['id']}
-              onChange={(e) => {
-                onFilterStateHandler('id', e.target.value);
-              }}
-              isError={false}
-            />
+          <div className="flex gap-x-2 items-center flex-wrap w-full">
+            <div className="relative xs:max-w-44 w-full">
+              <FormikInput
+                type="string"
+                name="id"
+                shrink={true}
+                placeholder="Enter ID"
+                className="w-full"
+                value={filterState['id']}
+                onChange={(e) => {
+                  onFilterStateHandler('id', e.target.value);
+                }}
+                isError={false}
+              />
+              <div className="absolute top-[18px] left-3 cursor-pointer">
+                <SeachIcon />
+              </div>
+            </div>
+
             {filterData.map((dt: any, index) => {
               return (
                 <GlobalSelect
+                  key={index}
                   labelOptionClass={'text-left'}
                   name={dt.name}
                   placeholder={dt.placeholder}
@@ -203,15 +222,18 @@ function HostoryTabla() {
                     console.log('event ::', e);
                     onFilterStateHandler(dt.name, e.value);
                   }}
-                  inputClass="mb-2 w-[20vw] md:w-[10vw]"
+                  containerClassnames="xs:max-w-44 w-full !gap-0"
                 />
               );
             })}
-            <p onClick={onResetFilter} className="text-primary px-4 font-normal cursor-pointer">
-              Reset
-            </p>
-            <div className="absolute left-3 cursor-pointer">
-              <SeachIcon />
+
+            <div className="flex items-center justify-end">
+              <p
+                onClick={onResetFilter}
+                className="text-primary px-4 font-normal cursor-pointer"
+              >
+                Reset
+              </p>
             </div>
           </div>
         </div>
@@ -226,7 +248,10 @@ function HostoryTabla() {
           copyIconList={copyIconList}
         />
       </div>
-      <HistoryPopup open={clickeddRow ? true : false} onClose={onPopupHandler} />
+      <HistoryPopup
+        open={clickeddRow ? true : false}
+        onClose={onPopupHandler}
+      />
     </>
   );
 }

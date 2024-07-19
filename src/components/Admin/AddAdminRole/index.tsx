@@ -25,7 +25,12 @@ interface Props {
 function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
   const { isLoading, startLoading, stopLoading } = useLoading(false);
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
-  const { createAdminData, getAdminPermissionsList, createAdminRole, updateAdminPermisson } = useAdminActions();
+  const {
+    createAdminData,
+    getAdminPermissionsList,
+    createAdminRole,
+    updateAdminPermisson,
+  } = useAdminActions();
 
   const [activeRoles, setActiveRoles] = useState<any>({});
   const [selectedRoles, setSelectedRoles] = useState<any[]>([]);
@@ -43,7 +48,9 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
 
     setActiveRoles((prev: any) => {
       const userRoles = prev[name] || [];
-      const updatedRoles = userRoles.includes(role) ? userRoles.filter((r) => r !== role) : [...userRoles, role];
+      const updatedRoles = userRoles.includes(role)
+        ? userRoles.filter((r) => r !== role)
+        : [...userRoles, role];
       if (updatedRoles.length === 0) {
         const { [name]: _, ...rest } = prev;
         return rest;
@@ -94,9 +101,14 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
       });
 
       if (editRole) {
-        response = await updateAdminPermisson(editRole._id, { permissions: body });
+        response = await updateAdminPermisson(editRole._id, {
+          permissions: body,
+        });
       } else {
-        response = await createAdminRole({ name: values.name, permissions: body });
+        response = await createAdminRole({
+          name: values.name,
+          permissions: body,
+        });
       }
       if (response.status) {
         successAlert(response.message);
@@ -110,7 +122,15 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
     },
   });
 
-  const { handleChange, handleSubmit, values, errors, touched, setFieldValue, resetForm } = formik;
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    resetForm,
+  } = formik;
 
   //edit data set state
   useEffect(() => {
@@ -152,10 +172,14 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
           resetStates();
         }}
         content={
-          <form onSubmit={handleSubmit} className="h-full gap-10 space-y-9 w-full ">
+          <form
+            onSubmit={handleSubmit}
+            className="h-full gap-10 space-y-9 w-full "
+          >
             <div className="flex justify-between items-center py-2">
               <div className=" text-md font-medium">
-                {editRole && !isView ? 'Edit' : isView ? 'View' : 'Create'} Admin Role
+                {editRole && !isView ? 'Edit' : isView ? 'View' : 'Create'}{' '}
+                Admin Role
               </div>
               <div
                 className="cursor-pointer"
@@ -180,7 +204,7 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                     value={values.name}
                     onChange={handleChange}
                     isError={errors.name}
-                    error={errors.name}
+                    // error={errors.name}
                   />
                 </div>
               </div>
@@ -219,13 +243,17 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
                       <div key={dt} className="px-4 py-3 w-full border-b-2">
                         <div className="flex gap-4 justify-between">
                           <div className="flex flex-col flex-wrap sm:flex-row gap-4">
-                            <div className="font-medium text-sm md:w-36">{dt}</div>
+                            <div className="font-medium text-sm md:w-36">
+                              {dt}
+                            </div>
                             {permissionsList.map((rl) => (
                               <div key={rl}>
                                 <GlobalCheckbox
                                   disabled={isView}
                                   className="font-normal"
-                                  checked={activeRoles[dt]?.includes(rl) ?? false}
+                                  checked={
+                                    activeRoles[dt]?.includes(rl) ?? false
+                                  }
                                   label={rl}
                                   onChange={() => {
                                     if (!isView) {
@@ -255,7 +283,12 @@ function AddAdminRole({ open, onClose, editRole, isView = false }: Props) {
             </div>
             {!isView && (
               <div className="sm:mx-8">
-                <Button loading={isLoading} className="w-full bg-primary " loadingType="circular" buttonType="submit">
+                <Button
+                  loading={isLoading}
+                  className="w-full bg-primary "
+                  loadingType="circular"
+                  buttonType="submit"
+                >
                   Submit
                 </Button>
               </div>

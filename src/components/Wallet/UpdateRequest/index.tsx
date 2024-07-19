@@ -20,8 +20,12 @@ type Props = {
 const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
-  const { updateWithdrawRequest, getWithdrawRequests, updateMigrationRequest, getMigrationRequests } =
-    useWalletActions();
+  const {
+    updateWithdrawRequest,
+    getWithdrawRequests,
+    updateMigrationRequest,
+    getMigrationRequests,
+  } = useWalletActions();
 
   const initialValues: {
     denialReason?: string;
@@ -72,7 +76,8 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
       }
 
       try {
-        const response = requestFor === 'WITHDRAW' && (await updateWithdrawRequest(_values));
+        const response =
+          requestFor === 'WITHDRAW' && (await updateWithdrawRequest(_values));
         if (response?.data?.status) {
           successAlert(response?.data?.message);
           requestFor === 'WITHDRAW' && getWithdrawRequests(true);
@@ -81,7 +86,10 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
           errorAlert(response?.data?.message);
         }
       } catch (error) {
-        console.error(`Update ${requestFor === 'WITHDRAW' ? 'Withdraw' : 'Migration'} Request Error`, error);
+        console.error(
+          `Update ${requestFor === 'WITHDRAW' ? 'Withdraw' : 'Migration'} Request Error`,
+          error
+        );
       } finally {
         setSaveLoading(false);
       }
@@ -102,24 +110,29 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
                   placeholder={`Enter Reason`}
                   error={formik.errors.denialReason}
                   value={formik.values.denialReason}
-                  onChange={(e: any) => formik.setFieldValue('denialReason', e.target.value)}
+                  onChange={(e: any) =>
+                    formik.setFieldValue('denialReason', e.target.value)
+                  }
                 />
               </div>
             )}
 
-            {action?.type === WALLET_ACTIONS.ACCEPT && requestFor === 'WITHDRAW' && (
-              <div>
-                <FormikInput
-                  label={'Transaction Hash'}
-                  name={'hash'}
-                  type={'text'}
-                  placeholder={`Enter Transaction Hash `}
-                  error={formik.errors.hash}
-                  value={formik.values.hash}
-                  onChange={(e: any) => formik.setFieldValue('hash', e.target.value)}
-                />
-              </div>
-            )}
+            {action?.type === WALLET_ACTIONS.ACCEPT &&
+              requestFor === 'WITHDRAW' && (
+                <div>
+                  <FormikInput
+                    label={'Transaction Hash'}
+                    name={'hash'}
+                    type={'text'}
+                    placeholder={`Enter Transaction Hash `}
+                    error={formik.errors.hash}
+                    value={formik.values.hash}
+                    onChange={(e: any) =>
+                      formik.setFieldValue('hash', e.target.value)
+                    }
+                  />
+                </div>
+              )}
           </>
         </div>
       </form>

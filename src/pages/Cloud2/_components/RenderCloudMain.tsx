@@ -37,7 +37,8 @@ const RenderCloudMain = (props: Props) => {
       >
         <div className="w-full flex items-center justify-between flex-col md:flex-row space-y-2 md:space-y-0">
           <div className="md:flex md:items-center md:space-x-2.5 text-alertBrown">
-            The rewards you receive depend on the LYK price and whether the auto-compound feature is turned on.
+            The rewards you receive depend on the LYK price and whether the
+            auto-compound feature is turned on.
           </div>
         </div>
       </Alert>

@@ -1,25 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { useLocation, useNavigate } from 'react-router-dom';
-import RenderMemberShip from '../_components/RenderMemberShip';
+import { useNavigate } from 'react-router-dom';
 import RenderProductHistory from '../_components/RenderMembership/RenderProductHistory';
-import useLoading from '../../../utils/hooks/useLoading';
-import { useCloudActions } from '../../../store/cloudk/cloudk.action';
-import { selectCloudkSlice } from '../../../store/cloudk/cloudk.slice';
 import { useSelector } from 'react-redux';
 import { useProductActions } from '../../../store/products/productActions';
 import { selectProductSlice } from '../../../store/products/productSlice';
 import { add, refresh } from '../../../images/other';
 
 const ProductList = () => {
-  const location = useLocation();
-  const [loading, setLoading] = useState(true);
-
-  const { isLoading, startLoading, stopLoading } = useLoading();
   const { getProducts } = useProductActions();
   const { products } = useSelector(selectProductSlice);
   const navigate = useNavigate();
-  console.log('🚀 ~ ProductList ~ products:', products);
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -39,7 +31,9 @@ const ProductList = () => {
         </div>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
-          onClick={() => navigate('/cloudk2/products/add', { state: { edit: false } })}
+          onClick={() =>
+            navigate('/cloudk2/products/add', { state: { edit: false } })
+          }
         >
           <img src={add} alt="" width={24} height={24} />
           <span>Add Product</span>

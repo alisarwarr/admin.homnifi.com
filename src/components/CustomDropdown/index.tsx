@@ -12,7 +12,9 @@ interface RoleAndPermission {
 const CustomDropdown: React.FC = () => {
   const [isClick, setIsClick] = useState(false);
   const [term, setTerms] = useState<boolean>(false);
-  const [selectedRoles, setSelectedRoles] = useState<{ [key: string]: string[] }>({});
+  const [selectedRoles, setSelectedRoles] = useState<{
+    [key: string]: string[];
+  }>({});
   const [activedRoles, setActiveRoles] = useState<RoleAndPermission[]>([]);
   const [searchText, setSearchText] = useState<string>('');
 
@@ -42,7 +44,9 @@ const CustomDropdown: React.FC = () => {
 
     setSelectedRoles((prev) => {
       const userRoles = prev[name] || [];
-      const updatedRoles = userRoles.includes(role) ? userRoles.filter((r) => r !== role) : [...userRoles, role];
+      const updatedRoles = userRoles.includes(role)
+        ? userRoles.filter((r) => r !== role)
+        : [...userRoles, role];
 
       if (updatedRoles.length === 0) {
         const { [name]: _, ...rest } = prev;
@@ -66,7 +70,9 @@ const CustomDropdown: React.FC = () => {
 
   const filterResult = useMemo(() => {
     if (!searchText) return roleAndPermission;
-    return roleAndPermission.filter((itm) => itm.name.toLowerCase().includes(searchText.toLowerCase()));
+    return roleAndPermission.filter((itm) =>
+      itm.name.toLowerCase().includes(searchText.toLowerCase())
+    );
   }, [searchText, roleAndPermission]);
 
   return (
@@ -92,7 +98,10 @@ const CustomDropdown: React.FC = () => {
                 setSearchText(e.target.value);
               }}
             />
-            <div className="absolute top-3 right-4 flex justify-center items-center  border-l-2" style={{ zIndex: 99 }}>
+            <div
+              className="absolute top-3 right-4 flex justify-center items-center  border-l-2"
+              style={{ zIndex: 99 }}
+            >
               <div
                 className="px-2"
                 onClick={() => {
@@ -112,11 +121,17 @@ const CustomDropdown: React.FC = () => {
                         <div key={rl}>
                           <GlobalCheckbox
                             className="font-medium"
-                            checked={selectedRoles[dt.name]?.includes(rl) ?? false}
+                            checked={
+                              selectedRoles[dt.name]?.includes(rl) ?? false
+                            }
                             setChecked={setTerms}
                             label={rl}
                             onChange={() => {
-                              if (!activedRoles.some((role) => role.name === dt.name)) {
+                              if (
+                                !activedRoles.some(
+                                  (role) => role.name === dt.name
+                                )
+                              ) {
                                 setActiveRoles((prev) => [...prev, dt]);
                               }
                               handleRoleSelection(dt.name, rl);
@@ -146,7 +161,9 @@ const CustomDropdown: React.FC = () => {
                         <div key={rl}>
                           <GlobalCheckbox
                             className="font-medium"
-                            checked={selectedRoles[dt.name]?.includes(rl) ?? false}
+                            checked={
+                              selectedRoles[dt.name]?.includes(rl) ?? false
+                            }
                             setChecked={setTerms}
                             label={rl}
                             onChange={() => {

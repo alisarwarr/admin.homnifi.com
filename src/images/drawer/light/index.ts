@@ -19,7 +19,8 @@ export const flash = '/img/drawer/light/flash.svg';
 export const Play = '/img/drawer/light/Play.svg';
 export const HandShake = '/img/drawer/light/handShake.svg';
 export const Profile = '/img/drawer/light/Profile.svg';
-export const QuestionCircleOutlined = '/img/drawer/light/question-circle-outlined.svg';
+export const QuestionCircleOutlined =
+  '/img/drawer/light/question-circle-outlined.svg';
 export const SecuritySafe = '/img/drawer/light/security-safe.svg';
 export const Setting = '/img/drawer/light/Setting.svg';
 export const Settings = '/img/drawer/light/Settings.svg';

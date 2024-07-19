@@ -30,7 +30,15 @@ const ProvidersTable = ({ data, loading, page, setPage }: Props) => {
     return {
       name: _data.name,
       description: _data.description,
-      logo: _data.logo ? <img src={_data.logo?.path} className="object-contain w-14 h-14" alt="Provider Logo" /> : '-',
+      logo: _data.logo ? (
+        <img
+          src={_data.logo?.path}
+          className="object-contain w-14 h-14"
+          alt="Provider Logo"
+        />
+      ) : (
+        '-'
+      ),
       status: <StatusChip status={_data.status} />,
       actions: (
         <div className="flex justify-center">
@@ -51,7 +59,13 @@ const ProvidersTable = ({ data, loading, page, setPage }: Props) => {
 
   return (
     // TABLE
-    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} page={page} handlePageChange={setPage} />
+    <GlobalTable
+      rows={rows}
+      headCells={headCells}
+      isLoading={loading}
+      page={page}
+      handlePageChange={setPage}
+    />
   );
 };
 

@@ -6,7 +6,9 @@ type Props = { status: string | boolean };
 const StatusChip = ({ status }: Props) => {
   return (
     <Chip
-      label={typeof status === 'boolean' ? (status ? 'ENABLED' : 'DISABLED') : status}
+      label={
+        typeof status === 'boolean' ? (status ? 'ENABLED' : 'DISABLED') : status
+      }
       size="small"
       color={
         status === 'COMPLETED' ||

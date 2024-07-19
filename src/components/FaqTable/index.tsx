@@ -53,7 +53,13 @@ const FaqTable = ({ data, loading, page, setPage }: Props) => {
 
   return (
     // TABLE
-    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} page={page} handlePageChange={setPage} />
+    <GlobalTable
+      rows={rows}
+      headCells={headCells}
+      isLoading={loading}
+      page={page}
+      handlePageChange={setPage}
+    />
   );
 };
 

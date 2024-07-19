@@ -68,4 +68,5 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
-export const handleTabChange = (newTab: string) => store.dispatch(setDrawerTab(newTab));
+export const handleTabChange = (newTab: string) =>
+  store.dispatch(setDrawerTab(newTab));

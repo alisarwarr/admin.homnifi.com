@@ -13,21 +13,28 @@ const VerifyEmail = ({ setStatus }: { setStatus: () => void }) => {
         <div className="font-baumans text-2xl">Email Sent</div>
         <span className="text-sm text-primaryGrey">
           Thank you. <br />
-          Please check your inbox for verification code sent to example@email.com
+          Please check your inbox for verification code sent to
+          example@email.com
         </span>
       </div>
       <div className="w-full">
         <OTPInput />
       </div>
       <div className="flex flex-col gap-2">
-        <GlobalButton text="Verify" setStatus={setStatus} status="accountType" />
+        <GlobalButton
+          text="Verify"
+          setStatus={setStatus}
+          status="accountType"
+        />
         <HelperText
           text={
             <div>
               Didn't receive the code?{' '}
-              <button className="text-primary" onClick={() => navigate('/auth/forget-password')}>
+              <button
+                className="text-primary"
+                onClick={() => navigate('/auth/forget-password')}
+              >
                 Send again
-                {/* Send again */}
               </button>
             </div>
           }

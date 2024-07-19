@@ -111,9 +111,14 @@ const customerSlice = createSlice({
   },
 });
 
-export const { setCustomerVerificationRequests, setCustomersList, setCountries, setverificationHistory } =
-  customerSlice.actions;
+export const {
+  setCustomerVerificationRequests,
+  setCustomersList,
+  setCountries,
+  setverificationHistory,
+} = customerSlice.actions;
 
-export const selectCustomerSlice = (state: { customer: CustomerSliceState }) => state.customer;
+export const selectCustomerSlice = (state: { customer: CustomerSliceState }) =>
+  state.customer;
 
 export default customerSlice.reducer;

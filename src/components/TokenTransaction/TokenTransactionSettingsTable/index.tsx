@@ -4,7 +4,10 @@ import { TokenTransactionSettingType } from '../../../store/token/tokenSlice';
 import GlobalTable from '../../Table/GlobalTable';
 import { Chip, Tooltip } from '@mui/material';
 import TokenNameWithLogo from '../../TokenNameWithLogo';
-import { CapitalizeAllLetters, CapitalizeFirstLetter } from '../../../utils/utils';
+import {
+  CapitalizeAllLetters,
+  CapitalizeFirstLetter,
+} from '../../../utils/utils';
 
 type Props = {
   data: TokenTransactionSettingType[];
@@ -68,9 +71,12 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
               height={24}
               alt="Edit Icon"
               onClick={() =>
-                navigate(`/tokens/settings/${_data?.trxSettings?.trxType?.toLowerCase()}/details/${_data._id}`, {
-                  state: _data,
-                })
+                navigate(
+                  `/tokens/settings/${_data?.trxSettings?.trxType?.toLowerCase()}/details/${_data._id}`,
+                  {
+                    state: _data,
+                  }
+                )
               }
               className="cursor-pointer"
             />
@@ -83,7 +89,12 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
   return (
     // TABLE
     <>
-      <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} />
+      <GlobalTable
+        rows={rows}
+        headCells={headCells}
+        isLoading={loading}
+        paginate={false}
+      />
     </>
   );
 };

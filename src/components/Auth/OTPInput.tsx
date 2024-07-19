@@ -4,7 +4,10 @@ const OTPInput = () => {
   const inputRefs = React.useRef<HTMLInputElement[]>(Array(6).fill(null));
   const [vCode, setVCode] = React.useState(Array.from({ length: 6 }, () => ''));
 
-  const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    index: number,
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { value } = event.target;
     if (isNaN(Number(value))) return;
     const updatedOtp = [...vCode];
@@ -24,7 +27,10 @@ const OTPInput = () => {
     setVCode(otpArray);
   };
 
-  const handleInputKeyDown = (index: number, event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleInputKeyDown = (
+    index: number,
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (event.key === 'Backspace' && !event.currentTarget.value && index > 0) {
       event.preventDefault();
       inputRefs.current[index - 1]?.focus();

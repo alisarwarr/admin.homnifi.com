@@ -10,7 +10,10 @@ import { CapitalizeFirstLetter } from '../../utils/utils';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { useAdminActions } from '../../store/admin/adminActions';
-import { selectAdmin, selectAdminPermissionsList } from '../../store/admin/adminSlice';
+import {
+  selectAdmin,
+  selectAdminPermissionsList,
+} from '../../store/admin/adminSlice';
 import useLoading from '../../utils/hooks/useLoading';
 
 export default function AdminDeatils({ create = false }: { create?: boolean }) {
@@ -20,7 +23,13 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   const { rolesList, selectedAdmin } = useSelector(selectAdmin);
   const { isLoading, startLoading, stopLoading } = useLoading(false);
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
-  const { getAdminPermissionsList, getAdminRole, createAdmin, getAdminById, updateAdmin } = useAdminActions();
+  const {
+    getAdminPermissionsList,
+    getAdminRole,
+    createAdmin,
+    getAdminById,
+    updateAdmin,
+  } = useAdminActions();
 
   const state = location?.state?._data;
   const [edit] = useState<boolean>(location?.state?.edit);
@@ -93,7 +102,8 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
       errorAlert(response.message);
     },
   });
-  const { handleChange, handleSubmit, values, errors, touched, setValues } = formik;
+  const { handleChange, handleSubmit, values, errors, touched, setValues } =
+    formik;
 
   // get roll api call here
   useEffect(() => {
@@ -151,7 +161,9 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
             onBlur={formik.handleBlur}
           />
           {touched.role && errors.role && isSubmit && (
-            <span className="text-xs text-red-500 self-end ">{errors.role}</span>
+            <span className="text-xs text-red-500 self-end ">
+              {errors.role}
+            </span>
           )}
         </div>
 

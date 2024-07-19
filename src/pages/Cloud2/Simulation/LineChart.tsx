@@ -1,7 +1,11 @@
 import React from 'react';
 
 import { ResponsiveLine } from '@nivo/line';
-import { TChartDataType, TChartDataDefs, TChartDataFill } from '../../../interfaces/lineChart.types';
+import {
+  TChartDataType,
+  TChartDataDefs,
+  TChartDataFill,
+} from '../../../interfaces/lineChart.types';
 
 type TLineChart = {
   enableCustomtooltip?: boolean;
@@ -47,7 +51,10 @@ const LineChart = ({
           }}
         ></div>
         <div>
-          {point.serieId}: <span className="font-medium text-secondaryBlack">{point.data.xFormatted}</span>
+          {point.serieId}:{' '}
+          <span className="font-medium text-secondaryBlack">
+            {point.data.xFormatted}
+          </span>
         </div>
       </div>
       <br />
@@ -129,7 +136,16 @@ const LineChart = ({
           enableCrosshair={false}
           crosshairType="top-left"
           useMesh={true}
-          layers={['grid', 'markers', 'areas', DashedLine, 'slices', 'points', 'axes', 'legends']}
+          layers={[
+            'grid',
+            'markers',
+            'areas',
+            DashedLine,
+            'slices',
+            'points',
+            'axes',
+            'legends',
+          ]}
           legends={[
             {
               anchor: 'top-right',

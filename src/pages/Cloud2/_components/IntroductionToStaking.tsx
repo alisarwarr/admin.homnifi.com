@@ -10,7 +10,9 @@ const IntroductionToStaking = (props: Props) => {
   return (
     <CardLayout className="md:col-span-1 col-span-2 p-5 flex flex-col gap-3">
       <article className="flex items-center gap-3">
-        <h1 className="text-secondaryBlack font-medium text-lg">Introduction to Staking</h1>
+        <h1 className="text-secondaryBlack font-medium text-lg">
+          Introduction to Staking
+        </h1>
 
         <GlobalSimpleButton
           text="How it works"
@@ -19,9 +21,11 @@ const IntroductionToStaking = (props: Props) => {
         />
       </article>
       <span className="text-cardSecondaryText text-sm font-normal">
-        Lorem ipsum dolor sit amet consectetur. Cras egestas et placerat aliquet id tristique. Ac cursus varius vitae
-        dictumst lacus eu vel sed. Blandit nunc vel nunc tincidunt amet lacus. Magna pellentesque lacus sit enim lacus
-        adipiscing ac.Lorem ipsum dolor sit amet consectetur. Cras egestas et placerat aliquet id tristique.
+        Lorem ipsum dolor sit amet consectetur. Cras egestas et placerat aliquet
+        id tristique. Ac cursus varius vitae dictumst lacus eu vel sed. Blandit
+        nunc vel nunc tincidunt amet lacus. Magna pellentesque lacus sit enim
+        lacus adipiscing ac.Lorem ipsum dolor sit amet consectetur. Cras egestas
+        et placerat aliquet id tristique.
       </span>
 
       <GlobalSimpleButton

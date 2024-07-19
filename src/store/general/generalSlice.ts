@@ -1,5 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { TCountry, TMaintenance, TSupport } from '../../components/types/general/general.types';
+import {
+  TCountry,
+  TMaintenance,
+  TSupport,
+} from '../../components/types/general/general.types';
 
 interface UserSliceState {
   countries: TCountry[] | null;
@@ -56,12 +60,22 @@ const generalSlice = createSlice({
   },
 });
 
-export const { setCountry, setConvertedPrice, setMaintenance, setSupportList, setSupportLoader } = generalSlice.actions;
+export const {
+  setCountry,
+  setConvertedPrice,
+  setMaintenance,
+  setSupportList,
+  setSupportLoader,
+} = generalSlice.actions;
 
-export const selectCountry = (state: { general: UserSliceState }) => state.general.countries;
-export const selectConvertedPrice = (state: { general: UserSliceState }) => state.general.convertedPrice;
-export const selectMaintenance = (state: { general: UserSliceState }) => state.general.maintenance;
+export const selectCountry = (state: { general: UserSliceState }) =>
+  state.general.countries;
+export const selectConvertedPrice = (state: { general: UserSliceState }) =>
+  state.general.convertedPrice;
+export const selectMaintenance = (state: { general: UserSliceState }) =>
+  state.general.maintenance;
 
-export const selectSupport = (state: { general: UserSliceState }) => state.general;
+export const selectSupport = (state: { general: UserSliceState }) =>
+  state.general;
 
 export default generalSlice.reducer;

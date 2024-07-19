@@ -47,7 +47,11 @@ const MigrationRequestTable = ({ data, loading, page, setPage }: Props) => {
       user: _data.user.username,
       blockchainId: (
         <Tooltip title={_data.blockchainId}>
-          <Chip label={_data.blockchainId} size="small" sx={{ fontSize: '11px' }} />
+          <Chip
+            label={_data.blockchainId}
+            size="small"
+            sx={{ fontSize: '11px' }}
+          />
         </Tooltip>
       ),
       fee: _data.fee,
@@ -89,7 +93,13 @@ const MigrationRequestTable = ({ data, loading, page, setPage }: Props) => {
 
   return (
     <>
-      <GlobalTable rows={rows} headCells={headCells} isLoading={loading} page={page} handlePageChange={setPage} />
+      <GlobalTable
+        rows={rows}
+        headCells={headCells}
+        isLoading={loading}
+        page={page}
+        handlePageChange={setPage}
+      />
 
       {/* ACTIONS DIALOG */}
       <GlobalDialog

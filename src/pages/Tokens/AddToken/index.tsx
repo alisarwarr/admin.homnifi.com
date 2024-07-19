@@ -84,7 +84,16 @@ function AddToken({ open, onClose, editToken }: Props) {
     resetForm();
   };
 
-  const { handleChange, handleSubmit, values, errors, touched, resetForm, setFieldValue, setValues } = formik;
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+    resetForm,
+    setFieldValue,
+    setValues,
+  } = formik;
 
   // get token api call
   useEffect(() => {
@@ -106,8 +115,12 @@ function AddToken({ open, onClose, editToken }: Props) {
   // set form states of editable tokens
   useEffect(() => {
     if (editToken) {
-      const type: any = TYPES_DATA.find((dt: any) => dt.value === editToken.type);
-      const withdrawType: any = TYPES_DATA.find((dt: any) => dt.value === editToken.withdrawType);
+      const type: any = TYPES_DATA.find(
+        (dt: any) => dt.value === editToken.type
+      );
+      const withdrawType: any = TYPES_DATA.find(
+        (dt: any) => dt.value === editToken.withdrawType
+      );
       setValues({
         name: editToken.name ?? '',
         symbol: editToken.symbol ?? '',
@@ -181,9 +194,15 @@ function AddToken({ open, onClose, editToken }: Props) {
                       { label: 'ON CHAIN', value: 'on-chain' },
                       { label: 'OFF CHAIN ', value: 'off-chain' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('withdrawType', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('withdrawType', true)
+                    }
                     error={errors.withdrawType}
-                    isError={touched.withdrawType && errors.withdrawType && isSubmit ? true : false}
+                    isError={
+                      touched.withdrawType && errors.withdrawType && isSubmit
+                        ? true
+                        : false
+                    }
                     value={values.withdrawType}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -205,7 +224,9 @@ function AddToken({ open, onClose, editToken }: Props) {
                       { label: 'ON CHAIN', value: 'on-chain' },
                       { label: 'OFF CHAIN ', value: 'off-chain' },
                     ]}
-                    isError={isSubmit && errors.type && touched.type ? true : false}
+                    isError={
+                      isSubmit && errors.type && touched.type ? true : false
+                    }
                     onChange={(e) => {
                       formik.setFieldValue('type', e);
                     }}
@@ -234,7 +255,11 @@ function AddToken({ open, onClose, editToken }: Props) {
                     }}
                     inputClass="mb-2 w-full"
                     value={values.networks}
-                    isError={isSubmit && errors.networks && touched.networks ? true : false}
+                    isError={
+                      isSubmit && errors.networks && touched.networks
+                        ? true
+                        : false
+                    }
                     error={errors.networks}
                   />
                 </div>

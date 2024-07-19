@@ -133,8 +133,12 @@ const tokenSlice = createSlice({
   },
 });
 
-export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs, setWithdrawSettingsList } =
-  tokenSlice.actions;
+export const {
+  setTokenList,
+  setTokenTRansactionSettingList,
+  setTokenPairs,
+  setWithdrawSettingsList,
+} = tokenSlice.actions;
 
 export const selectToken = (state: { token: TokenSliceState }) => state.token;
 export default tokenSlice.reducer;

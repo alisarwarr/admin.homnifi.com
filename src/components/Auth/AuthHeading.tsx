@@ -1,7 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const AuthHeading = ({ title, subtitle }: { title: string; subtitle?: JSX.Element }) => {
+const AuthHeading = ({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle?: JSX.Element;
+}) => {
   const navigate = useNavigate();
 
   return (

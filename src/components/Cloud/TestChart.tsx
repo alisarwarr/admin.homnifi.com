@@ -1,4 +1,7 @@
-import { RadialBarCustomLayerProps, ResponsiveRadialBar } from '@nivo/radial-bar';
+import {
+  RadialBarCustomLayerProps,
+  ResponsiveRadialBar,
+} from '@nivo/radial-bar';
 import React from 'react';
 import { bgData, data } from '../../constants/cloud';
 
@@ -19,7 +22,15 @@ function GaugePointer() {
   return (
     <g>
       {/* <circle cx={130} cy={78} r={5} fill="white" strokeWidth={3} stroke='white' className='shadow' /> */}
-      <circle cx={target.x} cy={target.y} r={5} fill="black" strokeWidth={3} stroke="black" className="shadow" />
+      <circle
+        cx={target.x}
+        cy={target.y}
+        r={5}
+        fill="black"
+        strokeWidth={3}
+        stroke="black"
+        className="shadow"
+      />
       {/* <path
           d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
           stroke="red"
@@ -55,10 +66,10 @@ const TestChart = () => {
         <svg width="0" height="0">
           <defs>
             <linearGradient id="gradientColor" x1="0" y1="0" x2="1" y2="1">
-              <stop stop-color="#8AD5EC" />
-              <stop offset="0%" stop-color="#8AD5EC" />
-              <stop offset="50%" stop-color="#1D9FDA" />
-              <stop offset="100%" stop-color="#F16364" />
+              <stop stopColor="#8AD5EC" />
+              <stop offset="0%" stopColor="#8AD5EC" />
+              <stop offset="50%" stopColor="#1D9FDA" />
+              <stop offset="100%" stopColor="#F16364" />
             </linearGradient>
           </defs>
         </svg>

@@ -18,7 +18,8 @@ interface Props {
 }
 
 function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
-  const { getTokensList, createWithdrawSetting, updateWithdrawSetting } = useTokenActions();
+  const { getTokensList, createWithdrawSetting, updateWithdrawSetting } =
+    useTokenActions();
 
   const { tokensList } = useSelector(selectToken);
   const [isSubmit, setIsSubmit] = React.useState(false);
@@ -40,18 +41,28 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     feeType: Yup.string().required('Fee type is required'),
     minAmount: Yup.number()
       .required('Min amount is required')
-      .test('is-less', 'Min amount must be less than Min display amount', function (value) {
-        const { minDisplayAmount } = this.parent;
-        return value < minDisplayAmount;
-      }),
+      .test(
+        'is-less',
+        'Min amount must be less than Min display amount',
+        function (value) {
+          const { minDisplayAmount } = this.parent;
+          return value < minDisplayAmount;
+        }
+      ),
     minDisplayAmount: Yup.number()
       .required('Min display amount is required')
-      .test('is-greater', 'Min display amount must be greater than Min amount', function (value) {
-        const { minAmount } = this.parent;
-        return value > minAmount;
-      }),
+      .test(
+        'is-greater',
+        'Min display amount must be greater than Min amount',
+        function (value) {
+          const { minAmount } = this.parent;
+          return value > minAmount;
+        }
+      ),
     withdrawRate: Yup.string().required('WithdrawRate is required'),
-    minWithdrawableAmount: Yup.number().required('Min withdrawable amount is required'),
+    minWithdrawableAmount: Yup.number().required(
+      'Min withdrawable amount is required'
+    ),
     withdrawTo: Yup.string().required('Withdraw To name is required'),
     commissionRate: Yup.string().required('Commission value is required'),
     commissionType: Yup.string().required('Commission type is required'),
@@ -90,11 +101,25 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
         return setIsSubmit(false);
       }
 
-      successAlert(response.message ? response.message : response.error ? response.error : 'Something went worng');
+      successAlert(
+        response.message
+          ? response.message
+          : response.error
+            ? response.error
+            : 'Something went worng'
+      );
     },
   });
 
-  const { handleChange, handleSubmit, values, errors, touched, resetForm, setValues } = formik;
+  const {
+    handleChange,
+    handleSubmit,
+    values,
+    errors,
+    touched,
+    resetForm,
+    setValues,
+  } = formik;
 
   useEffect(() => {
     getTokensList();
@@ -133,7 +158,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
             }}
           >
             <div className="flex justify-between items-center py-2">
-              <div className="text-md font-medium  md:mx-6">Add Withdraw Settings</div>
+              <div className="text-md font-medium  md:mx-6">
+                Add Withdraw Settings
+              </div>
               <div
                 className="cursor-pointer -mr-2"
                 onClick={() => {
@@ -159,7 +186,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     ]}
                     setFieldTouched={() => formik.setFieldTouched('type', true)}
                     error={errors.type}
-                    isError={isSubmit && errors.type && touched.type ? true : false}
+                    isError={
+                      isSubmit && errors.type && touched.type ? true : false
+                    }
                     value={values.type}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -183,9 +212,15 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                         value: tkn._id,
                       };
                     })}
-                    setFieldTouched={() => formik.setFieldTouched('withdrawFrom', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('withdrawFrom', true)
+                    }
                     error={errors.withdrawFrom}
-                    isError={isSubmit && errors.withdrawFrom && touched.withdrawFrom ? true : false}
+                    isError={
+                      isSubmit && errors.withdrawFrom && touched.withdrawFrom
+                        ? true
+                        : false
+                    }
                     value={values.withdrawFrom}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -208,9 +243,15 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                         value: tkn._id,
                       };
                     })}
-                    setFieldTouched={() => formik.setFieldTouched('withdrawTo', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('withdrawTo', true)
+                    }
                     error={errors.withdrawTo}
-                    isError={isSubmit && errors.withdrawTo && touched.withdrawTo ? true : false}
+                    isError={
+                      isSubmit && errors.withdrawTo && touched.withdrawTo
+                        ? true
+                        : false
+                    }
                     value={values.withdrawTo}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -267,7 +308,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                   />
                 </div>
               </div>
-              <div className="w-full text-primary mx-2 my-1">Withdrawal Fees (MLYK)</div>
+              <div className="w-full text-primary mx-2 my-1">
+                Withdrawal Fees (MLYK)
+              </div>
 
               <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
                 <div className="w-full md:w-1/2 mx-2">
@@ -279,7 +322,11 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     required
                     value={values.withdrawRate}
                     onChange={handleChange}
-                    isError={isSubmit && errors.withdrawRate && touched.withdrawRate ? true : false}
+                    isError={
+                      isSubmit && errors.withdrawRate && touched.withdrawRate
+                        ? true
+                        : false
+                    }
                     error={errors.withdrawRate}
                   />
                 </div>
@@ -295,9 +342,15 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                       { label: 'fixed', value: 'fixed' },
                       { label: 'percentage', value: 'percentage' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('feeType', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('feeType', true)
+                    }
                     error={errors.feeType}
-                    isError={isSubmit && errors.feeType && touched.feeType ? true : false}
+                    isError={
+                      isSubmit && errors.feeType && touched.feeType
+                        ? true
+                        : false
+                    }
                     value={values.feeType}
                     onChange={(e: any) => {
                       formik.setFieldValue('feeType', e);
@@ -307,7 +360,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                   />
                 </div>
               </div>
-              <div className="w-full text-primary mx-2 my-1">Withdrawal Commission</div>
+              <div className="w-full text-primary mx-2 my-1">
+                Withdrawal Commission
+              </div>
               <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
@@ -334,9 +389,17 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                       { label: 'fixed', value: 'fixed' },
                       { label: 'percentage', value: 'percentage' },
                     ]}
-                    setFieldTouched={() => formik.setFieldTouched('commissionType', true)}
+                    setFieldTouched={() =>
+                      formik.setFieldTouched('commissionType', true)
+                    }
                     error={errors.commissionType}
-                    isError={isSubmit && errors.commissionType && touched.commissionType ? true : false}
+                    isError={
+                      isSubmit &&
+                      errors.commissionType &&
+                      touched.commissionType
+                        ? true
+                        : false
+                    }
                     value={values.commissionType}
                     onChange={(e: any) => {
                       formik.setFieldValue('commissionType', e);
@@ -348,7 +411,11 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               </div>
               <div className="mx-4 md:mx-2 my-2">
                 <div className="flex flex-col  md:flex-row w-full">
-                  <Button className="bg-primary rounded-full my-4" loadingType="circular" buttonType="submit">
+                  <Button
+                    className="bg-primary rounded-full my-4"
+                    loadingType="circular"
+                    buttonType="submit"
+                  >
                     Add Withdraw Setting
                   </Button>
                 </div>

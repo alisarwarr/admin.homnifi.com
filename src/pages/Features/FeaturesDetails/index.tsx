@@ -22,7 +22,13 @@ const formFields = [
   { key: 'price', label: 'Price', type: 'number' },
 ];
 
-const FeaturesDetails = ({ featureId, closeDialogHandler }: { featureId: string; closeDialogHandler: any }) => {
+const FeaturesDetails = ({
+  featureId,
+  closeDialogHandler,
+}: {
+  featureId: string;
+  closeDialogHandler: any;
+}) => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
 
@@ -68,16 +74,21 @@ const FeaturesDetails = ({ featureId, closeDialogHandler }: { featureId: string;
     (async () => {
       if (featureId) {
         // GET FEATURE
-        const feature: Feature | undefined = featuresList.find((feature: Feature) => {
-          return feature._id === featureId;
-        });
+        const feature: Feature | undefined = featuresList.find(
+          (feature: Feature) => {
+            return feature._id === featureId;
+          }
+        );
 
         // SET VALUES
         if (feature) {
           formik.setValues({
             price: feature.price ? feature.price : 0,
             description: feature.description ? feature.description : '',
-            status: feature.status && { label: CapitalizeFirstLetter(feature.status), value: feature.status },
+            status: feature.status && {
+              label: CapitalizeFirstLetter(feature.status),
+              value: feature.status,
+            },
           });
         }
       }
@@ -101,7 +112,9 @@ const FeaturesDetails = ({ featureId, closeDialogHandler }: { featureId: string;
                 placeholder={`Enter ${field.label}`}
                 error={formik.errors[field.key]}
                 value={formik.values[field.key]}
-                onChange={(e: any) => formik.setFieldValue(field.key, e.target.value)}
+                onChange={(e: any) =>
+                  formik.setFieldValue(field.key, e.target.value)
+                }
                 touched={formik.touched[field.key]}
                 shrink={true}
               />

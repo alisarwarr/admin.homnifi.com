@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import GlobalButton from '../../../../components/Global/GlobalButton';
-import { ClaimableIcon, GASKIcon, InfoIcon } from '../../../../images/svg';
-import CustomSwitch from '../../../../components/Global/GlobalSwitch';
-// import Toottip from '../../../../components/Global/Toottip';
-import { useNavigate } from 'react-router-dom';
-import Toottip from '../../../../components/Global/Toottip';
+import React from 'react';
+import { ClaimableIcon, GASKIcon } from '../../../../images/svg';
+import { selectCloudkSlice } from '../../../../store/cloudk/cloudk.slice';
+import { useSelector } from 'react-redux';
+import GlobalSkeleton from '../../../../components/Global/GlobalSkeleton';
+import { selectSupport } from '../../../../store/general/generalSlice';
 
-type Props = {};
+const TotalRewardsTillNow = () => {
+  const {
+    lifetimeRewardPrice,
+    claimableRewardsPrice,
+    getUserMachineRewardsLoading,
+  } = useSelector(selectCloudkSlice);
 
-const TotalRewardsTillNow = (props: Props) => {
-  const [autoCompounding, setAutoCompounding] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const { convertedPrice } = useSelector(selectSupport);
 
   return (
-    <article className="md:w-2/5 w-full flex flex-col gap-6">
+    <article className="md:w-1/2 w-full flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2 font-medium">
           Total Rewards Till Now
@@ -22,11 +24,34 @@ const TotalRewardsTillNow = (props: Props) => {
         <div className="flex justify-between gap-2 flex-wrap">
           <div className="flex gap-4 items-center">
             <ClaimableIcon />
-            <div className="text-primary text-2xl font-medium">8,023,586</div>
+            <div className="text-primary text-2xl font-medium">
+              {getUserMachineRewardsLoading ? (
+                <GlobalSkeleton
+                  animationValue="pulse"
+                  width={100}
+                  height={40}
+                />
+              ) : (
+                `$ ${lifetimeRewardPrice?.toLocaleString() || 0}`
+              )}
+            </div>
           </div>
           <div className="flex gap-4 items-center">
             <GASKIcon />
-            <div className="text-primaryDark text-2xl font-medium">8,023,586 LYK</div>
+            <div className="text-primaryDark text-2xl font-medium">
+              <div className="flex items-center gap-2">
+                {getUserMachineRewardsLoading ? (
+                  <GlobalSkeleton
+                    animationValue="pulse"
+                    width={100}
+                    height={40}
+                  />
+                ) : (
+                  `${(lifetimeRewardPrice * convertedPrice)?.toLocaleString() || 0}`
+                )}
+                <span className="text-sm"> sLYK</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -38,11 +63,34 @@ const TotalRewardsTillNow = (props: Props) => {
         <div className="flex justify-between gap-2 flex-wrap">
           <div className="flex gap-4 items-center">
             <ClaimableIcon />
-            <div className="text-primary text-2xl font-medium">8,023,586</div>
+            <div className="text-primary text-2xl font-medium">
+              {getUserMachineRewardsLoading ? (
+                <GlobalSkeleton
+                  animationValue="pulse"
+                  width={100}
+                  height={40}
+                />
+              ) : (
+                `$ ${claimableRewardsPrice?.toLocaleString() || '0'}`
+              )}
+            </div>
           </div>
           <div className="flex gap-4 items-center">
             <GASKIcon />
-            <div className="text-primaryDark text-2xl font-medium">8,023,586 LYK</div>
+            <div className="text-primaryDark text-2xl font-medium">
+              <div className="flex items-center gap-2">
+                {getUserMachineRewardsLoading ? (
+                  <GlobalSkeleton
+                    animationValue="pulse"
+                    width={100}
+                    height={40}
+                  />
+                ) : (
+                  `${(claimableRewardsPrice * convertedPrice)?.toLocaleString() || 0} `
+                )}
+                <span className="text-sm"> sLYK</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

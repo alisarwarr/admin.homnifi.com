@@ -31,7 +31,9 @@ const Users = () => {
   const [loading, setLoading] = useState(true);
   const [reFetch, setReFetch] = useState<string>('');
 
-  const [filters, setFilters] = useState<FITLERS_TYPE>(USERS_TABLE_DEFAULT_FILTERS);
+  const [filters, setFilters] = useState<FITLERS_TYPE>(
+    USERS_TABLE_DEFAULT_FILTERS
+  );
   const [sort, setSort] = useState<SORT_TYPE>({
     sortKey: null,
     direction: null,
@@ -56,7 +58,13 @@ const Users = () => {
       await getCustomersList({ ...filters, page: filters.page === -1 ? 1 : 1 });
       setLoading(false);
     })();
-  }, [filters.country, filters.accountType, filters.twoFA, filters.verified, filters.status]);
+  }, [
+    filters.country,
+    filters.accountType,
+    filters.twoFA,
+    filters.verified,
+    filters.status,
+  ]);
 
   useEffect(() => {
     if (filters.page !== -1) {
@@ -131,7 +139,11 @@ const Users = () => {
       </div>
 
       {/* Filter & Actions */}
-      <UserFilters filters={filters} handleFilterChange={handleFilterChange} clearFilters={clearFilters} />
+      <UserFilters
+        filters={filters}
+        handleFilterChange={handleFilterChange}
+        clearFilters={clearFilters}
+      />
 
       {/* TABLE */}
       <UsersTable

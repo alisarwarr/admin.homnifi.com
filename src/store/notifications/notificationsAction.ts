@@ -1,5 +1,10 @@
 //REDUX-TOOLKIT
-import { setNotifications, setBadge, removeNotification, setBadgeUpdated } from './notificationsSlice';
+import {
+  setNotifications,
+  setBadge,
+  removeNotification,
+  setBadgeUpdated,
+} from './notificationsSlice';
 import { useDispatch } from 'react-redux';
 //UTILS
 import {
@@ -23,7 +28,13 @@ export const useNotificationsActions = () => {
         url: url,
       })
       .then((response: any) => {
-        dispatch(setNotifications({ notificationData: response.data.data, page, force }));
+        dispatch(
+          setNotifications({
+            notificationData: response.data.data,
+            page,
+            force,
+          })
+        );
         return response.data.data;
       })
       .catch((error: any) => error);

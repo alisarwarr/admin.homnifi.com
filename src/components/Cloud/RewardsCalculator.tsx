@@ -37,14 +37,18 @@ const RewardsCalculator = (props: Props) => {
       </article>
 
       <article className="col-span-12 flex flex-col gap-3">
-        <span className="text-base text-primaryDark font-medium">Select a Minter</span>
+        <span className="text-base text-primaryDark font-medium">
+          Select a Minter
+        </span>
 
         <div className="flex items-center gap-3">
           {selectedTab.map((tab, index) => (
             <button
               type="button"
               className={`text-base font-normal px-5 py-2 rounded-md w-max ${
-                tab.selected ? 'bg-primary/10 text-primary' : 'text-primaryGrey border border-blueGrey'
+                tab.selected
+                  ? 'bg-primary/10 text-primary'
+                  : 'text-primaryGrey border border-blueGrey'
               }`}
               key={index}
               onClick={() => {
@@ -101,7 +105,9 @@ const RewardsCalculator = (props: Props) => {
                   <button
                     type="button"
                     className={`text-xs flex flex-col items-center gap-1 font-normal px-5 py-2 rounded-full w-max ${
-                      tab.selected ? 'bg-primary text-white' : 'text-primaryGrey border border-blueGrey'
+                      tab.selected
+                        ? 'bg-primary text-white'
+                        : 'text-primaryGrey border border-blueGrey'
                     }`}
                     key={index}
                     onClick={() => {

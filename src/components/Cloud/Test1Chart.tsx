@@ -1,32 +1,82 @@
 import * as React from 'react';
-import { GaugeContainer, GaugeValueArc, GaugeReferenceArc, useGaugeState } from '@mui/x-charts/Gauge';
+import { useGaugeState, Gauge, gaugeClasses } from '@mui/x-charts/Gauge';
 
-function GaugePointer({ strokeWidth }: { strokeWidth?: number }) {
-  const { valueAngle, outerRadius, cx, cy } = useGaugeState();
-
+const StartText = ({ startText }: { startText?: string }) => {
+  const { valueAngle } = useGaugeState();
   if (valueAngle === null) {
     // No value to display
     return null;
   }
 
-  const target = {
-    x: cx + outerRadius * Math.sin(valueAngle),
-    y: cy - outerRadius * Math.cos(valueAngle) + 11,
-  };
+  return (
+    <text x={5} y={170}>
+      {startText || '0.00'}
+    </text>
+  );
+};
+
+const EndText = ({ limit, endText }: { limit?: number; endText?: string }) => {
+  const { valueAngle } = useGaugeState();
+  if (valueAngle === null) {
+    // No value to display
+    return null;
+  }
+
+  return (
+    <text x={170} y={170}>
+      {endText || limit}
+    </text>
+  );
+};
+
+const DotElement = () => {
+  const { valueAngle, outerRadius, cx, cy } = useGaugeState();
+  if (valueAngle === null) {
+    // No value to display
+    return null;
+  }
   return (
     <g>
-      <circle cx={target.x} cy={target.y} r={5} rx="9.5" fill="white" strokeWidth={strokeWidth || 8} stroke="white" />
+      <circle
+        cx={cx + (outerRadius - 8) * Math.sin(valueAngle)}
+        cy={cy - (outerRadius - 10) * Math.cos(valueAngle)}
+        r={8}
+        fill="white"
+        strokeWidth={2}
+        stroke="gray"
+      />
     </g>
   );
-}
+};
 
 type TGaugeChart = {
   containerHeight?: number;
   containerWidth?: number;
   strokeWidth?: number;
+  value?: number;
+  limit?: number;
+  startText?: string;
+  endText?: string;
 };
 
-export default function GaugeChart({ containerHeight, containerWidth, strokeWidth }: TGaugeChart) {
+export default function GaugeChart({
+  value,
+  limit,
+  startText,
+  endText,
+}: TGaugeChart) {
+  const normalizedValue = limit
+    ? Math.min(((value || 0) / limit) * 100, 100)
+    : 0;
+
+  const settings = {
+    width: 200,
+    height: 200,
+    value: normalizedValue,
+    startAngle: -90,
+    endAngle: 90,
+  };
+
   return (
     <>
       <svg width="0" height="0">
@@ -39,27 +89,26 @@ export default function GaugeChart({ containerHeight, containerWidth, strokeWidt
           </linearGradient>
         </defs>
       </svg>
-      <GaugeContainer
-        width={containerWidth || 200}
-        height={containerHeight || 200}
-        startAngle={-90}
-        endAngle={90}
-        value={30}
+
+      <Gauge
+        {...settings}
         cornerRadius="50%"
-        //   outerRadius='50%'
-        margin={{ top: 10, bottom: 10, left: 10, right: 10 }}
-        // outerRadius={10}
-        sx={{
-          stroke: '#EEEEEE',
-          strokeWidth: 6,
-          veExclude: 'outside',
-          background: 'url(#gradientColor)',
-        }}
+        sx={() => ({
+          [`& .${gaugeClasses.valueArc}`]: {
+            fill: 'url(#gradientColor)',
+            stroke: '#EEEEEE',
+            strokeWidth: 6,
+          },
+          [`& .${gaugeClasses.referenceArc}`]: {
+            fill: '#EEEEEE',
+          },
+        })}
+        text={''}
       >
-        <GaugeReferenceArc />
-        <GaugeValueArc />
-        <GaugePointer strokeWidth={strokeWidth} />
-      </GaugeContainer>
+        <DotElement />
+        <StartText startText={startText} />
+        <EndText limit={limit || 10000} endText={endText} />
+      </Gauge>
     </>
   );
 }

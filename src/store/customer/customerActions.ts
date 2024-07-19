@@ -21,7 +21,8 @@ import ApiRequest from '../../utils/network/ApiRequest';
 export const useCustomerActions = () => {
   const dispatch = useDispatch();
 
-  const { customerVerificationRequests, countries } = useSelector(selectCustomerSlice);
+  const { customerVerificationRequests, countries } =
+    useSelector(selectCustomerSlice);
 
   const getCustomersList = async (params: any) => {
     // if (customersList?.list?.length && !force) return;
@@ -56,7 +57,10 @@ export const useCustomerActions = () => {
     dispatch(setCountries(_countries));
   };
 
-  const getCustomerVerificationRequests = async (force: boolean = false, page: any = 1) => {
+  const getCustomerVerificationRequests = async (
+    force: boolean = false,
+    page: any = 1
+  ) => {
     if (customerVerificationRequests?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
@@ -79,7 +83,9 @@ export const useCustomerActions = () => {
 
   const getSingleCustomerVerificationInfo = async (id?: string) => {
     if (customerVerificationRequests?.list?.length) {
-      const find = customerVerificationRequests?.list.find((item) => item._id.toString() === id);
+      const find = customerVerificationRequests?.list.find(
+        (item) => item._id.toString() === id
+      );
 
       if (find) {
         return find;
@@ -96,7 +102,11 @@ export const useCustomerActions = () => {
     // dispatch(setCustomerVerificationRequests(_customerVerificationRequests));
   };
 
-  const verification_action = async (id: string | undefined, status: string, rejectionReason?: string) => {
+  const verification_action = async (
+    id: string | undefined,
+    status: string,
+    rejectionReason?: string
+  ) => {
     // VERIFIED
     try {
       const { data } = await ApiRequest().request({
@@ -127,7 +137,10 @@ export const useCustomerActions = () => {
     });
   };
 
-  const changeBulkUsersStatus = async (userIds: Array<string> | undefined, data: any) => {
+  const changeBulkUsersStatus = async (
+    userIds: Array<string> | undefined,
+    data: any
+  ) => {
     // VERIFIED
     try {
       return await ApiRequest().request({
@@ -153,7 +166,10 @@ export const useCustomerActions = () => {
     }
   };
 
-  const sendBulkMailToUsers = async (userIds: Array<string> | undefined, data: any) => {
+  const sendBulkMailToUsers = async (
+    userIds: Array<string> | undefined,
+    data: any
+  ) => {
     // VERIFIED
     try {
       return await ApiRequest().request({

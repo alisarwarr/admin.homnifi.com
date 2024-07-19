@@ -51,7 +51,13 @@ const FeaturePurchaseHistory = () => {
         <div className="flex gap-1">
           <span>{_data?.feature?.price}</span>
           {_data.currency ? (
-            <span>{_data.currency === 'EUR' ? '€' : _data.currency === 'USD' ? '$' : _data.currency}</span>
+            <span>
+              {_data.currency === 'EUR'
+                ? '€'
+                : _data.currency === 'USD'
+                  ? '$'
+                  : _data.currency}
+            </span>
           ) : (
             ' -'
           )}
@@ -61,7 +67,13 @@ const FeaturePurchaseHistory = () => {
         <div className="flex gap-1">
           <span>{_data?.transactionFee}</span>
           {_data.currency ? (
-            <span>{_data.currency === 'EUR' ? '€' : _data.currency === 'USD' ? '$' : _data.currency}</span>
+            <span>
+              {_data.currency === 'EUR'
+                ? '€'
+                : _data.currency === 'USD'
+                  ? '$'
+                  : _data.currency}
+            </span>
           ) : (
             ' -'
           )}
@@ -71,7 +83,13 @@ const FeaturePurchaseHistory = () => {
         <div className="flex gap-1">
           <span>{_data?.total}</span>
           {_data.currency ? (
-            <span>{_data.currency === 'EUR' ? '€' : _data.currency === 'USD' ? '$' : _data.currency}</span>
+            <span>
+              {_data.currency === 'EUR'
+                ? '€'
+                : _data.currency === 'USD'
+                  ? '$'
+                  : _data.currency}
+            </span>
           ) : (
             ' -'
           )}
@@ -129,7 +147,9 @@ const FeaturePurchaseHistory = () => {
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center  text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Feature Purchase History</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Feature Purchase History
+        </h1>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
           onClick={async () => {

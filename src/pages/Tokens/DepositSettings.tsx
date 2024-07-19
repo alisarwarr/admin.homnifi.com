@@ -30,7 +30,12 @@ export default function DepositSettings() {
     }, 1000);
   };
 
-  const { getDepositSettings, addDespositSettings, getAllTokens, updateDespositSettings } = useTokensSettingsAction();
+  const {
+    getDepositSettings,
+    addDespositSettings,
+    getAllTokens,
+    updateDespositSettings,
+  } = useTokensSettingsAction();
   const { depositSettings, allTokens } = useSelector(selectTokensSettings);
   useEffect(() => {
     fetchData();
@@ -68,8 +73,14 @@ export default function DepositSettings() {
                     value: depositSettings[index].toToken.name,
                     id: depositSettings[index].toToken._id,
                   });
-                  formik.setFieldValue('minAmount', depositSettings[index].minAmount);
-                  formik.setFieldValue('minDisplayAmount', depositSettings[index].minDisplayAmount);
+                  formik.setFieldValue(
+                    'minAmount',
+                    depositSettings[index].minAmount
+                  );
+                  formik.setFieldValue(
+                    'minDisplayAmount',
+                    depositSettings[index].minDisplayAmount
+                  );
                 }}
               />
             </div>
@@ -109,10 +120,14 @@ export default function DepositSettings() {
       minAmount: Yup.string().required('Minimum Amount is required'),
       minDisplayAmount: Yup.string()
         .required('Minimum Display Amount is required')
-        .test('is-greater-than-minAmount', 'Min Display Amount must be greater than Min Amount', function (value) {
-          const { minAmount } = this.parent;
-          return Number(value) > Number(minAmount);
-        }),
+        .test(
+          'is-greater-than-minAmount',
+          'Min Display Amount must be greater than Min Amount',
+          function (value) {
+            const { minAmount } = this.parent;
+            return Number(value) > Number(minAmount);
+          }
+        ),
     }),
     onSubmit: async (values) => {
       const data = {
@@ -146,12 +161,20 @@ export default function DepositSettings() {
               name="toToken"
               placeholder="select a To Token"
               options={
-                allTokens ? allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id })) : []
+                allTokens
+                  ? allTokens.map((item: any) => ({
+                      label: item.name,
+                      value: item.name,
+                      id: item._id,
+                    }))
+                  : []
               }
               value={formik.values.toToken.value}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isError={formik.touched.toToken?.value && !!formik.errors.toToken?.value}
+              isError={
+                formik.touched.toToken?.value && !!formik.errors.toToken?.value
+              }
               error={formik.errors.toToken?.value}
               setFieldTouched={formik.setFieldTouched}
               setFieldValue={formik.setFieldValue}
@@ -163,12 +186,21 @@ export default function DepositSettings() {
               name="fromToken"
               placeholder="select a From Token"
               options={
-                allTokens ? allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id })) : []
+                allTokens
+                  ? allTokens.map((item: any) => ({
+                      label: item.name,
+                      value: item.name,
+                      id: item._id,
+                    }))
+                  : []
               }
               value={formik.values.fromToken.value}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isError={formik.touched.fromToken?.value && !!formik.errors.fromToken?.value}
+              isError={
+                formik.touched.fromToken?.value &&
+                !!formik.errors.fromToken?.value
+              }
               error={formik.errors.fromToken?.value}
               setFieldTouched={formik.setFieldTouched}
               setFieldValue={formik.setFieldValue}
@@ -194,7 +226,10 @@ export default function DepositSettings() {
               value={formik.values.minDisplayAmount}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isError={formik.touched.minDisplayAmount && !!formik.errors.minDisplayAmount}
+              isError={
+                formik.touched.minDisplayAmount &&
+                !!formik.errors.minDisplayAmount
+              }
               error={formik.errors.minDisplayAmount}
             />
 
@@ -212,14 +247,22 @@ export default function DepositSettings() {
       <div className="w-full px-2">
         {/* PAGE TITLE */}
         <div className="flex bg-primary items-center  text-white">
-          <h1 className="flex-1 font-bold text-2xl px-3 py-1">Deposit Settings</h1>
+          <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+            Deposit Settings
+          </h1>
 
-          <div className="flex gap-1 items-center cursor-pointer px-3" onClick={fetchData}>
+          <div
+            className="flex gap-1 items-center cursor-pointer px-3"
+            onClick={fetchData}
+          >
             <img src={refresh} alt="refresh" width={24} height={24} />
             <span>Refresh</span>
           </div>
 
-          <button className="flex gap-1 text-white items-center cursor-pointer px-3" onClick={onOpen}>
+          <button
+            className="flex gap-1 text-white items-center cursor-pointer px-3"
+            onClick={onOpen}
+          >
             <img src={add} alt="" width={24} height={24} />
             <span>Add Deposit</span>
           </button>

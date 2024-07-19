@@ -2,13 +2,17 @@ import { useDispatch } from 'react-redux';
 import ApiRequest from '../../utils/network/ApiRequest';
 import {
   CLOUDK_MACHINE_SIMULATION,
-  INFLATION_RULES,
   PRODUCTS,
   USER_MACHINE_LIST,
+  USER_MACHINE_REWARDS,
+  USER_MACHINE_DETAILS,
+  INFLATION_RULES,
 } from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
 import { simulationSliceAction } from './simulation';
-import { machine } from 'os';
+
+import { toast } from 'react-toastify';
+import { store } from '..';
 
 export const useCloudActions = () => {
   const dispatch = useDispatch();
@@ -21,7 +25,9 @@ export const useCloudActions = () => {
         url: `${INFLATION_RULES}/history`,
       });
       const _infalationRules = response?.data?.data;
-      dispatch(cloudkSliceAction.setCloudkSlice({ infalationRules: _infalationRules }));
+      dispatch(
+        cloudkSliceAction.setCloudkSlice({ infalationRules: _infalationRules })
+      );
       return response;
     } catch (error) {
       console.error('Error fetching inflation rules history:', error);
@@ -33,13 +39,20 @@ export const useCloudActions = () => {
     try {
       const response = await ApiRequest().request({
         method: 'GET',
-        url: `${INFLATION_RULES}`,
+        url: INFLATION_RULES,
       });
       console.log(response, 'responseresponseresponse');
 
       const _infalationRules = response?.data?.data;
-      console.log('🚀 ~ getCurrentInfalationRules ~ _infalationRules:', _infalationRules);
-      dispatch(cloudkSliceAction.setCloudkSlice({ currentinfalationRules: _infalationRules }));
+      console.log(
+        '🚀 ~ getCurrentInfalationRules ~ _infalationRules:',
+        _infalationRules
+      );
+      dispatch(
+        cloudkSliceAction.setCloudkSlice({
+          currentinfalationRules: _infalationRules,
+        })
+      );
       return response;
     } catch (error) {
       console.error('Error fetching current inflation rules:', error);
@@ -51,14 +64,12 @@ export const useCloudActions = () => {
     try {
       const response = await ApiRequest().request({
         method: 'POST',
-        url: `${INFLATION_RULES}`,
+        url: INFLATION_RULES,
         data,
       });
 
-      console.log('response', response);
-
       await getCurrentInfalationRules();
-      const _infalationRules = response?.data?.data;
+
       return response;
     } catch (error) {
       console.error('Error creating inflation rules:', error);
@@ -123,8 +134,10 @@ export const useCloudActions = () => {
           cloudkSliceAction.setCloudkSlice({
             userRewards: {
               ...response.data.data,
-              lifetimeReward: response.data.data.lifetimeRewardPrice * convertedPrice,
-              claimableRewards: response.data.data.claimableRewardsPrice * convertedPrice,
+              lifetimeReward:
+                response.data.data.lifetimeRewardPrice * convertedPrice,
+              claimableRewards:
+                response.data.data.claimableRewardsPrice * convertedPrice,
             },
             userRewardsLoading: false,
           })
@@ -145,16 +158,27 @@ export const useCloudActions = () => {
       });
   };
 
-  const getUserMachineList = async () => {
+  const getUserMachineRewards = async () => {
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        getUserMachineRewardsLoading: true,
+      })
+    );
     return await ApiRequest()
       .request({
         method: 'GET',
-        url: USER_MACHINE_LIST,
+        url: USER_MACHINE_REWARDS,
       })
       .then((response: any) => {
         console.log('🚀 ~ .then ~ response:', response.data.data?.list);
-        dispatch(cloudkSliceAction.setUserMachineList(response.data.data?.list));
-        dispatch(simulationSliceAction.setSimulationSlice({ machines: response.data.data.list }));
+        dispatch(
+          cloudkSliceAction.setUserMachineList(response.data.data?.list)
+        );
+        dispatch(
+          simulationSliceAction.setSimulationSlice({
+            machines: response.data.data.list,
+          })
+        );
 
         return response;
       })
@@ -162,7 +186,9 @@ export const useCloudActions = () => {
   };
 
   const startSimulation = async (data: any) => {
-    dispatch(simulationSliceAction.setSimulationSlice({ startSimulationLoading: true }));
+    dispatch(
+      simulationSliceAction.setSimulationSlice({ startSimulationLoading: true })
+    );
     return await ApiRequest()
       .request({
         method: 'POST',
@@ -172,14 +198,122 @@ export const useCloudActions = () => {
       .then((response: any) => {
         console.log('🚀 ~ .then ~ response:', response);
         // dispatch(cloudkSliceAction.setUserMachineList(response.data.data));
-        dispatch(simulationSliceAction.setSimulationSlice({ simulationData: response.data.data }));
-        dispatch(simulationSliceAction.setSimulationSlice({ startSimulationLoading: false }));
-        dispatch(simulationSliceAction.selectChart({ startSimulationLoading: false }));
+        dispatch(
+          simulationSliceAction.setSimulationSlice({
+            simulationData: response.data.data,
+          })
+        );
+        dispatch(
+          simulationSliceAction.setSimulationSlice({
+            startSimulationLoading: false,
+          })
+        );
+        dispatch(
+          simulationSliceAction.selectChart({ startSimulationLoading: false })
+        );
 
         return response;
       })
       .catch((error: any) => {
-        dispatch(simulationSliceAction.setSimulationSlice({ startSimulationLoading: false }));
+        dispatch(
+          simulationSliceAction.setSimulationSlice({
+            startSimulationLoading: false,
+          })
+        );
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
+
+        return error;
+      });
+  };
+
+  const getMachineDetails = async (id: string) => {
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        getMachineDetailsLoading: true,
+      })
+    );
+
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: USER_MACHINE_DETAILS + id,
+      })
+      .then((response) => {
+        const machine = store
+          .getState()
+          .cloudk.userMachineList?.map((_machine) =>
+            _machine._id === id
+              ? {
+                  ..._machine,
+                  ...response.data.data,
+                }
+              : _machine
+          );
+
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getMachineDetailsLoading: false,
+            userMachineList: machine,
+          })
+        );
+
+        return response;
+      })
+      .catch((error) => {
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getMachineDetailsLoading: false,
+          })
+        );
+
+        toast.error(error.data.message);
+
+        return error;
+      });
+  };
+
+  const getUserMachineList = async ({
+    search,
+    limit,
+    page,
+  }: {
+    search: string;
+    limit: number;
+    page: number;
+  }) => {
+    // userMachinesLoading
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        userMachinesLoading: true,
+      })
+    );
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: `${USER_MACHINE_LIST}?search=${search}&limit=${limit}&page=${page}`,
+      })
+      .then((response: any) => {
+        dispatch(cloudkSliceAction.setUserMachineList(response.data.data.list));
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
+
+        return response;
+      })
+      .catch((error: any) => {
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
 
         return error;
       });
@@ -192,5 +326,8 @@ export const useCloudActions = () => {
     getUserMachinesList,
     getUserMachineList,
     startSimulation,
+    getUserRewardsData,
+    getMachineDetails,
+    getUserMachineRewards,
   };
 };

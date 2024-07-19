@@ -30,11 +30,15 @@ const validationSchema = Yup.object().shape({
   airdropPromo: Yup.number().required('Airdrop Promo are required.'),
   stakeLimit: Yup.number().required('Stake Limit is required.'),
   tokenAirdrop: Yup.number().required('Token Air Drop is required.'),
-  mintingPowerPerc: Yup.number().required('Minting Power Percentage is required.'),
+  mintingPowerPerc: Yup.number().required(
+    'Minting Power Percentage is required.'
+  ),
   capping: Yup.mixed().required('Capping is required.'),
   profitSplitFee: Yup.number().required('Super Node Level is required.'),
   licenseName: Yup.string().required('license Name is required.'),
-  aiTradingSoftwareName: Yup.string().required('aiTrading Software Name is required.'),
+  aiTradingSoftwareName: Yup.string().required(
+    'aiTrading Software Name is required.'
+  ),
   superNodeLevel: Yup.number().required('Super Node Level is required.'),
   globalPool: Yup.number().required('Global Pool is required.'),
   bonus: Yup.number().required('Bonus is required.'),
@@ -43,7 +47,10 @@ const validationSchema = Yup.object().shape({
 const AddProduct = () => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
-  const [duplicateVouchers, setDuplicateVouchers] = useState<{ open: boolean; duplicates: string[] }>({
+  const [duplicateVouchers, setDuplicateVouchers] = useState<{
+    open: boolean;
+    duplicates: string[];
+  }>({
     open: false,
     duplicates: [],
   });
@@ -115,9 +122,16 @@ const AddProduct = () => {
     onSubmit: async (values) => {
       const _value = {
         ...values,
-        status: lowerCaseAllLetters(values.status.value) === 'true' ? true : false,
-        defiPortal: lowerCaseAllLetters(values.defiPortal.value) === 'true' ? true : false,
-        aiTradingNews: lowerCaseAllLetters(values.aiTradingNews.value) === 'true' ? true : false,
+        status:
+          lowerCaseAllLetters(values.status.value) === 'true' ? true : false,
+        defiPortal:
+          lowerCaseAllLetters(values.defiPortal.value) === 'true'
+            ? true
+            : false,
+        aiTradingNews:
+          lowerCaseAllLetters(values.aiTradingNews.value) === 'true'
+            ? true
+            : false,
       };
 
       console.log('🚀 ~ onSubmit: ~ values:', _value);
@@ -132,7 +146,10 @@ const AddProduct = () => {
           navigate('/cloudk2/products');
         } else {
           if (response.data?.errorVouchers) {
-            setDuplicateVouchers({ open: true, duplicates: response.data?.errorVouchers });
+            setDuplicateVouchers({
+              open: true,
+              duplicates: response.data?.errorVouchers,
+            });
           } else {
             errorAlert(response?.message);
           }
@@ -149,7 +166,9 @@ const AddProduct = () => {
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-primary max-w-[1700px] mx-auto">
       <div className="mx-auto text-start">
-        <h2 className="text-xl font-bold  tracking-tight sm:text-2xl">Add Product</h2>
+        <h2 className="text-xl font-bold  tracking-tight sm:text-2xl">
+          Add Product
+        </h2>
       </div>
 
       <form onSubmit={formik.handleSubmit} className="">
@@ -212,19 +231,27 @@ const AddProduct = () => {
             value={formik.values.aiTradingNews?.value}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            isError={formik.touched.aiTradingNews && !!formik.errors.aiTradingNews}
+            isError={
+              formik.touched.aiTradingNews && !!formik.errors.aiTradingNews
+            }
             error={formik.errors.aiTradingNews}
             // setFieldTouched={formik.setFieldTouched}
             // setFieldValue={formik.setFieldValue}
 
-            setFieldTouched={() => formik.setFieldTouched('aiTradingNews', true)}
+            setFieldTouched={() =>
+              formik.setFieldTouched('aiTradingNews', true)
+            }
             setFieldValue={(e: any, opition: any) => {
               formik.setFieldValue(e, opition);
             }}
           />
 
           {Object.keys(initialValues).map((key) => {
-            if (key === 'status' || key === 'defiPortal' || key === 'aiTradingNews') {
+            if (
+              key === 'status' ||
+              key === 'defiPortal' ||
+              key === 'aiTradingNews'
+            ) {
               return null;
             }
             return (
@@ -232,7 +259,9 @@ const AddProduct = () => {
                 key={key}
                 label={key.charAt(0).toUpperCase() + key.slice(1)}
                 name={key}
-                type={typeof initialValues[key] === 'number' ? 'number' : 'text'}
+                type={
+                  typeof initialValues[key] === 'number' ? 'number' : 'text'
+                }
                 placeholder={`Enter ${key}`}
                 error={formik.errors[key]}
                 touched={formik.touched[key]}

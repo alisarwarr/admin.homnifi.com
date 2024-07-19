@@ -153,7 +153,9 @@ const TokenDetails = () => {
                 placeholder={`Enter ${field.label}`}
                 error={formik.errors[field.key]}
                 value={formik.values[field.key]}
-                onChange={(e: any) => formik.setFieldValue(field.key, e.target.value)}
+                onChange={(e: any) =>
+                  formik.setFieldValue(field.key, e.target.value)
+                }
                 touched={formik.touched[field.key]}
                 shrink={true}
               />

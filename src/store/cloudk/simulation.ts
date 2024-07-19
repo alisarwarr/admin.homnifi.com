@@ -356,7 +356,10 @@ const slice = createSlice({
   name: SIMULATION_SLICE_NAME,
   initialState,
   reducers: {
-    setSimulationSlice: (state: SimulationState, action: PayloadAction<any>) => {
+    setSimulationSlice: (
+      state: SimulationState,
+      action: PayloadAction<any>
+    ) => {
       return { ...state, ...action.payload };
     },
     rewardPerDayaCalculator: (state, action: PayloadAction<any>) => {
@@ -382,7 +385,8 @@ const slice = createSlice({
 });
 
 export const simulationSliceAction = slice.actions;
-export const selectSimulationSlice = (state: { [SIMULATION_SLICE_NAME]: SimulationState }) =>
-  state[SIMULATION_SLICE_NAME];
+export const selectSimulationSlice = (state: {
+  [SIMULATION_SLICE_NAME]: SimulationState;
+}) => state[SIMULATION_SLICE_NAME];
 
 export default slice.reducer;

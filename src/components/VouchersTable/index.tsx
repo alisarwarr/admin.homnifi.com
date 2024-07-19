@@ -34,7 +34,14 @@ const VouchersTable = ({ id, status }: Props) => {
   const rows = vouchers?.list?.map((_data) => {
     return {
       code: _data?.code,
-      status: <Chip label={_data?.status} size="small" sx={{ fontSize: '11px' }} color="success" />,
+      status: (
+        <Chip
+          label={_data?.status}
+          size="small"
+          sx={{ fontSize: '11px' }}
+          color="success"
+        />
+      ),
       createdAt: _data?.createdAt,
     };
   });

@@ -1,11 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-//API
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import { toast } from 'react-toastify';
 import axios, { AxiosRequestConfig } from 'axios';
 import { setConvertedPrice, setMaintenance } from './generalSlice';
 import ApiRequest from '../../utils/network/ApiRequest';
+import { useNavigate } from 'react-router-dom';
 
 export const useGeneralActions = () => {
   const dispatch = useDispatch();
@@ -19,12 +18,6 @@ export const useGeneralActions = () => {
       })
       .then((response: any) => {
         dispatch(setConvertedPrice(response.data.buy));
-        // dispatch(
-        //   rewardsSliceAction.setRewardSlice({
-        //     LYK: response.data.buy,
-        //   })
-        // );
-        // dispatch(rewardsSliceAction.initRewardCalculator());
 
         return response;
       })

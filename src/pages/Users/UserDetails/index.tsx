@@ -13,7 +13,10 @@ import { errorAlert, successAlert } from '../../../utils/alerts';
 import FormikInput from '../../../components/FormikInput';
 import ReactSelect from '../../../components/ReactSelect';
 import { USER_STATUS } from '../../../constants';
-import { Customer, selectCustomerSlice } from '../../../store/customer/customerSlice';
+import {
+  Customer,
+  selectCustomerSlice,
+} from '../../../store/customer/customerSlice';
 import { CapitalizeFirstLetter } from '../../../utils/utils';
 import { tokenImages } from '../../Tokens/TokenTransactionSettings/TokenTransactionSettingDetails';
 import { useCustomerActions } from '../../../store/customer/customerActions';
@@ -54,7 +57,8 @@ const UserDetails = () => {
   const [edit] = useState<boolean>(location?.state?.edit);
   const state = location?.state?._data;
 
-  const { updateCustomer, getCountries, getCustomerById } = useCustomerActions();
+  const { updateCustomer, getCountries, getCustomerById } =
+    useCustomerActions();
   const { countries } = useSelector(selectCustomerSlice);
 
   const { id } = useParams();
@@ -135,22 +139,40 @@ const UserDetails = () => {
         // SET VALUES
         if (_state) {
           formik.setValues({
-            account: { label: CapitalizeFirstLetter(_state.accountType), value: _state.accountType },
+            account: {
+              label: CapitalizeFirstLetter(_state.accountType),
+              value: _state.accountType,
+            },
             totalBalance: _state.balance.totalBalance,
             tokensBalance: _state.balance.tokens,
             companyName: _state.companyName,
             phoneNumber: _state?.phoneNumber,
-            country: { label: _state?.country?.name ?? '', value: _state?.country?._id ?? '' },
+            country: {
+              label: _state?.country?.name ?? '',
+              value: _state?.country?._id ?? '',
+            },
             email: _state.email,
             firstName: _state.firstName,
             lastName: _state.lastName,
             refCode: _state.refCode,
             sponsor: _state.refParent,
-            status: { label: CapitalizeFirstLetter(_state.status), value: _state.status },
-            twoFA: { label: _state.twoFA ? 'Enabled' : 'Disabled', value: _state.twoFA },
+            status: {
+              label: CapitalizeFirstLetter(_state.status),
+              value: _state.status,
+            },
+            twoFA: {
+              label: _state.twoFA ? 'Enabled' : 'Disabled',
+              value: _state.twoFA,
+            },
             username: _state.username,
-            verified: { label: _state.verified ? 'Verfied' : 'Not Verified', value: _state.verified },
-            canPurchase: { label: _state?.canPurchase ? 'Allow' : 'Disallow', value: _state?.canPurchase },
+            verified: {
+              label: _state.verified ? 'Verfied' : 'Not Verified',
+              value: _state.verified,
+            },
+            canPurchase: {
+              label: _state?.canPurchase ? 'Allow' : 'Disallow',
+              value: _state?.canPurchase,
+            },
           });
         }
       }
@@ -167,7 +189,9 @@ const UserDetails = () => {
         <div className="grid grid-cols-1 gap-x-6 gap-y-6 lg:grid-cols-2 mt-12">
           {/* BALANCE */}
           {!edit && (
-            <div className={`flex flex-col gap-4 border rounded-md p-8 gradient-bg`}>
+            <div
+              className={`flex flex-col gap-4 border rounded-md p-8 gradient-bg`}
+            >
               {/* HEADING */}
               <div className="flex items-center gap-2">
                 <span className="text-2xl">User Balance - </span>
@@ -182,7 +206,10 @@ const UserDetails = () => {
                 {Object.keys(formik.values.tokensBalance).map((token) => {
                   return (
                     <div className="flex gap-3 py-2 px-4 bg-slate-900 rounded-2xl">
-                      <img src={tokenImages[token === 'USDT' ? 'Tether' : token]} className="w-6 h-6 object-contain" />
+                      <img
+                        src={tokenImages[token === 'USDT' ? 'Tether' : token]}
+                        className="w-6 h-6 object-contain"
+                      />
                       {`${formik.values.tokensBalance[token].balance}
                        ${token}`}
                     </div>
@@ -217,7 +244,10 @@ const UserDetails = () => {
             className={`grid sm:grid-cols-2 gap-6 border rounded-md p-8 ${edit ? 'gradient-bg' : 'border-white/40'}`}
           >
             {formFields.map((field) => {
-              if (formik.values.account.value === 'INDIVIDUAL' && field.key === 'companyName') {
+              if (
+                formik.values.account.value === 'INDIVIDUAL' &&
+                field.key === 'companyName'
+              ) {
                 return <></>;
               }
               if (
@@ -242,7 +272,9 @@ const UserDetails = () => {
                       onChange={(e: any) => {
                         formik.setFieldValue('twoFA', e);
                       }}
-                      disabled={edit && formik.values[field.key].value ? false : true}
+                      disabled={
+                        edit && formik.values[field.key].value ? false : true
+                      }
                       placeholder="Two Factor Authentication"
                     />
                   </div>
@@ -260,7 +292,9 @@ const UserDetails = () => {
                     placeholder={`Enter ${field.label}`}
                     error={formik.errors[field.key]}
                     value={formik.values[field.key]}
-                    onChange={(e: any) => formik.setFieldValue(field.key, e.target.value)}
+                    onChange={(e: any) =>
+                      formik.setFieldValue(field.key, e.target.value)
+                    }
                     touched={formik.touched[field.key]}
                     shrink={true}
                     disabled={!edit}
@@ -270,7 +304,9 @@ const UserDetails = () => {
             })}
           </div>
           {/* account, sponsor, status, verified */}
-          <div className={`flex flex-col gap-6 border rounded-md p-8 ${edit ? 'gradient-bg' : 'border-white/40'}`}>
+          <div
+            className={`flex flex-col gap-6 border rounded-md p-8 ${edit ? 'gradient-bg' : 'border-white/40'}`}
+          >
             <div className="flex flex-col gap-6">
               {!edit && (
                 <ReactSelect

@@ -21,8 +21,13 @@ import {
 
 export const useDashboardActions = () => {
   const dispatch = useDispatch();
-  const { allTokensBalance, feeCollected, ordersOverview, productsOverview, usersOverview } =
-    useSelector(selectDashboard);
+  const {
+    allTokensBalance,
+    feeCollected,
+    ordersOverview,
+    productsOverview,
+    usersOverview,
+  } = useSelector(selectDashboard);
 
   // Recent Devices Section Notifications Api
   const getDashboardStats = async () => {

@@ -20,8 +20,6 @@ import WithdrawRequests from '../pages/Wallet/WithdrawRequests';
 import AddProduct from '../pages/Products/AddProduct';
 import UserVerificationDetails from '../pages/Users/UserVerifications/UserVerificationDetails';
 import MigrationRequests from '../pages/Wallet/MigrationRequests';
-import TokenDetails from '../pages/Tokens/TokenDetails';
-import TokenTransactionSettingDetails from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettingDetails';
 import Features from '../pages/Features';
 import QuickyPaySettings from '../pages/Settings/QucikyPaySettings';
 import Dashboard from '../pages/Dashboard';
@@ -34,10 +32,8 @@ import Admins from '../pages/Admins';
 import SwapPriority from '../pages/Settings/SwapPriority';
 import ShowPages from '../pages/Settings/ShowPages';
 import AdminDeatils from '../components/Admin/AdminDeatils';
-import TokenTransactionSettings from '../pages/Tokens/TokenTransactionSettings/TokenTransactionSettings';
 import Maintenance from '../pages/Admins/Maintenance';
 import SliderImages from '../pages/Admins/AuthSlider/SliderImages';
-import { Community } from '../images/drawer';
 import DepositHistory from '../pages/Wallet/DepositHistory';
 import Faqs from '../pages/Wallet/Faqs';
 import AddFaqs from '../pages/Wallet/Faqs/AddFaqs';
@@ -46,8 +42,7 @@ import FeaturePurchaseHistory from '../pages/Wallet/FeaturePurchaseHistory';
 import ProductPurchaseHistory from '../pages/Wallet/ProductPurchaseHistory';
 import SwapHistory from '../pages/Wallet/SwapHistory';
 import Cloud2 from '../pages/Cloud2';
-import CommunityFriends from '../pages/community/friends';
-import CommunitySupernode from '../pages/community/super-node';
+
 import AuthSlider from '../pages/Admins/AuthSlider';
 import InflationRules from '../pages/Cloud2/InflationRules';
 import AdminRoles from '../pages/Admins/AdminRoles';
@@ -61,6 +56,8 @@ import CronJob from '../pages/Admins/CronJobs';
 import AutoCompoundPenality from '../pages/Defi-360/AutoCompoundPenality';
 import Simulation from '../pages/Cloud2/Simulation';
 import Marketing from '../pages/Marketing';
+import CommunityFriends from '../pages/community/friends';
+import CommunitySupernode from '../pages/community/SuperNode';
 
 export const router = createBrowserRouter([
   {

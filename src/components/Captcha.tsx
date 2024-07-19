@@ -10,7 +10,10 @@ const Captcha = () => {
 
   return (
     <div className="flex justify-center">
-      <HCaptcha sitekey={`17fe97cc-9c34-4be0-91d2-19a41f442228`} onVerify={handleVerificationSuccess} />
+      <HCaptcha
+        sitekey={`17fe97cc-9c34-4be0-91d2-19a41f442228`}
+        onVerify={handleVerificationSuccess}
+      />
     </div>
   );
 };

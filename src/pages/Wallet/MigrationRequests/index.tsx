@@ -26,7 +26,9 @@ const MigrationRequests = () => {
     <div className="w-full px-2">
       {/* PAGE TITLE */}
       <div className="flex bg-primary items-center  text-white">
-        <h1 className="flex-1 font-bold text-2xl px-3 py-1">Migration Requests</h1>
+        <h1 className="flex-1 font-bold text-2xl px-3 py-1">
+          Migration Requests
+        </h1>
 
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
@@ -42,7 +44,12 @@ const MigrationRequests = () => {
       </div>
 
       {/* TABLE */}
-      <MigrationRequestTable data={migrationRequests} loading={loading} page={page} setPage={setPage} />
+      <MigrationRequestTable
+        data={migrationRequests}
+        loading={loading}
+        page={page}
+        setPage={setPage}
+      />
     </div>
   );
 };

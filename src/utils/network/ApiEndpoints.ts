@@ -121,7 +121,8 @@ export const REFERRAL_ANALYTICS = '/user/community/ref-analytics';
 export const TOOLS_BASE_SERVER = 'https://tools.blpro8.club';
 export const CHECK_USER_API: string = TOOLS_BASE_SERVER + '/check-broker-user';
 export const ACTIVE_STRATEGY = TOOLS_BASE_SERVER + '/active-strategy';
-export const BROKER_ACCOUNT_REGISTRATION: string = TOOLS_BASE_SERVER + '/register-broker';
+export const BROKER_ACCOUNT_REGISTRATION: string =
+  TOOLS_BASE_SERVER + '/register-broker';
 
 //ADMIN
 export const ADMIN = '/';
@@ -150,6 +151,13 @@ export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
 export const CLOUDK_MACHINE_SIMULATION = '/cloud-k/test-simulation';
 
+//PLATFORM
+export const PLATFORM_AD = '/platform/ads/';
+// export const PLATFORM_AD = '/platform/ads/';
+export const USER_MACHINE_DETAILS = '/cloud-k/user-machines/details/';
+export const USER_MACHINE_REWARDS = '/cloud-k/rewards/';
+
+//Wallet Admin
 //Wallet Admin
 export const WALLET_ADMIN_DEPOSITS = '/tokens/deposit/setting/';
 export const WALLET_ADMIN_SWAPS = '/tokens/swap/setting/';
@@ -158,7 +166,3 @@ export const WALLET_ADMIN_ALL_TOKENS = '/tokens/all/';
 
 //Defi 360
 export const DEFI_360_AUTO_COMPOUND_PENALITY = '/cloud-k/ac-penalty';
-
-//PLATFORM
-export const PLATFORM_AD = '/platform/ads/';
-// export const PLATFORM_AD = '/platform/ads/';

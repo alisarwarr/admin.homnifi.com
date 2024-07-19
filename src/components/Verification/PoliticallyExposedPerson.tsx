@@ -44,7 +44,13 @@ const PoliticallyExposedPerson = ({ isCheck, className }: Props) => {
         </div>
         <span>PEP and santioned countries</span>
         <Tooltip title={'Person is a politically exposed person'}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+          >
             <g clipPath="url(#clip0_143_3742)">
               <path
                 d="M7.9987 14.6654C11.6806 14.6654 14.6654 11.6806 14.6654 7.9987C14.6654 4.3168 11.6806 1.33203 7.9987 1.33203C4.3168 1.33203 1.33203 4.3168 1.33203 7.9987C1.33203 11.6806 4.3168 14.6654 7.9987 14.6654Z"

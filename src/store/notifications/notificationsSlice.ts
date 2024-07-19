@@ -49,13 +49,19 @@ const slice = createSlice({
         return {
           ...state,
           notifications: {
-            list: [...state.notifications.list, ...action.payload.notificationData.list],
+            list: [
+              ...state.notifications.list,
+              ...action.payload.notificationData.list,
+            ],
             totalCount: action.payload.notificationData.totalCount,
             totalPages: action.payload.notificationData.totalPages,
             currentPage: action.payload.notificationData.currentPage,
             pageLoaded: action.payload.page,
           },
-          badge: action.payload.page === 1 ? action.payload.notificationData.badgeCount : 0,
+          badge:
+            action.payload.page === 1
+              ? action.payload.notificationData.badgeCount
+              : 0,
         };
     },
     setBadge: (state, action: PayloadAction<any>) => {
@@ -65,14 +71,23 @@ const slice = createSlice({
       return { ...state, badge: 0, badgeUpdated: true };
     },
     removeNotification: (state, action: PayloadAction<any>) => {
-      const newArray: any = state.list.filter((item: any) => item.id !== action.payload);
+      const newArray: any = state.list.filter(
+        (item: any) => item.id !== action.payload
+      );
 
       return { ...state, list: newArray };
     },
   },
 });
 
-export const { setBadge, removeNotification, setNotifications, setBadgeUpdated } = slice.actions;
-export const notification_badge = (state: { notifications: Notification }) => state.notifications.badge;
-export const selectNotifications = (state: { notifications: Notification }) => state.notifications.notifications;
+export const {
+  setBadge,
+  removeNotification,
+  setNotifications,
+  setBadgeUpdated,
+} = slice.actions;
+export const notification_badge = (state: { notifications: Notification }) =>
+  state.notifications.badge;
+export const selectNotifications = (state: { notifications: Notification }) =>
+  state.notifications.notifications;
 export default slice.reducer;

@@ -1,6 +1,16 @@
 import GlobalTable from '../../Table/GlobalTable';
 import { User } from '../../../store/user/userSlice';
-import { check, close, edit, down_arrow, lock, mail, viewWhite, unlock, impersonateIcon } from '../../../images/other';
+import {
+  check,
+  close,
+  edit,
+  down_arrow,
+  lock,
+  mail,
+  viewWhite,
+  unlock,
+  impersonateIcon,
+} from '../../../images/other';
 import { Tooltip } from 'antd';
 import { tokenImages } from '../../../pages/Tokens/TokenTransactionSettings/TokenTransactionSettingDetails';
 import { useNavigate } from 'react-router-dom';
@@ -61,7 +71,16 @@ const headCells = [
   { id: 'actions', label: 'Actions', headCellClass: 'text-center', show: true },
 ];
 
-const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, filters }: Props) => {
+const UsersTable = ({
+  data,
+  loading,
+  page,
+  setPage,
+  setReFetch,
+  sort,
+  setSort,
+  filters,
+}: Props) => {
   const navigate = useNavigate();
   const { changeUserStatus } = useCustomerActions();
   const { impersonateUser } = useUserActions();
@@ -70,7 +89,9 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
   const [twoFaDisable, setTwoFaDisable] = useState(false);
   const [selectedUser, setSelectedUser] = useState('');
   const [currentUser, setCurrentUser] = useState<any>('');
-  const [columns, setColumns] = useState<any[]>(headCells.filter((cell) => cell.id !== '_id'));
+  const [columns, setColumns] = useState<any[]>(
+    headCells.filter((cell) => cell.id !== '_id')
+  );
 
   const rows = data?.list?.map((_data, index) => {
     return {
@@ -93,7 +114,9 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
       phoneNumber: _data.phoneNumber ? _data.phoneNumber : '-',
       refCode: _data.refCode,
       twoFA: (
-        <Tooltip title={_data.twoFA ? 'User Actived 2FA' : 'User not Active 2FA'}>
+        <Tooltip
+          title={_data.twoFA ? 'User Actived 2FA' : 'User not Active 2FA'}
+        >
           <div
             className={_data.twoFA ? `cursor-pointer` : ''}
             onClick={() => {
@@ -125,16 +148,30 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
             destroyTooltipOnHide={true}
             trigger={'click'}
             title={
-              <div className="flex flex-col w-32 gap-2 p-1" aria-hidden={'true'}>
+              <div
+                className="flex flex-col w-32 gap-2 p-1"
+                aria-hidden={'true'}
+              >
                 {Object.keys(_data.balance.tokens).map((token) => {
                   return (
                     <>
                       <div className="flex items-center w-full gap-2">
                         <img
-                          src={token === 'USDT' ? tokenImages['Tether'] : tokenImages[token]}
+                          src={
+                            token === 'USDT'
+                              ? tokenImages['Tether']
+                              : tokenImages[token]
+                          }
                           className="w-6 h-6 object-contain"
                         />
-                        <span>Balance: {Number(Number(_data.balance.tokens[token].balance).toFixed(2))}</span>
+                        <span>
+                          Balance:{' '}
+                          {Number(
+                            Number(_data.balance.tokens[token].balance).toFixed(
+                              2
+                            )
+                          )}
+                        </span>
                       </div>
                     </>
                   );
@@ -197,7 +234,9 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
             />
           </Tooltip>
 
-          <Tooltip title={_data.status === 'ACTIVE' ? 'Block User' : 'Un-Block User'}>
+          <Tooltip
+            title={_data.status === 'ACTIVE' ? 'Block User' : 'Un-Block User'}
+          >
             <img
               src={_data.status === 'ACTIVE' ? unlock : lock}
               width={18}
@@ -237,7 +276,13 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
     // GET THE SELECTED COLUMNS
     const showKeys: any = [];
     columns.forEach((cell: any) => {
-      if (cell.show && cell.id !== 'id' && cell.id !== '_id' && cell.id !== 'actions') showKeys.push(cell.id);
+      if (
+        cell.show &&
+        cell.id !== 'id' &&
+        cell.id !== '_id' &&
+        cell.id !== 'actions'
+      )
+        showKeys.push(cell.id);
     });
 
     const csvData: any[] = [];
@@ -323,14 +368,18 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
 
       {/* USER STATUS DIALOG */}
       <ConfirmDialog
-        title={currentUser?.status === 'ACTIVE' ? 'Block User?' : 'Un-Block User?'}
+        title={
+          currentUser?.status === 'ACTIVE' ? 'Block User?' : 'Un-Block User?'
+        }
         open={openLockUserDialog}
         onClose={() => {
           setCurrentUser(null);
           setOpenLockUserDialog(false);
         }}
         onConfirm={async () => {
-          const res: any = await handleUserStatusChange(currentUser?.status === 'ACTIVE' ? 'BLOCK' : 'ACTIVE');
+          const res: any = await handleUserStatusChange(
+            currentUser?.status === 'ACTIVE' ? 'BLOCK' : 'ACTIVE'
+          );
 
           if (res.data.status) {
             setOpenLockUserDialog(false);
@@ -343,7 +392,8 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
           return res;
         }}
       >
-        Are you sure you want to {currentUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this user?
+        Are you sure you want to{' '}
+        {currentUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this user?
       </ConfirmDialog>
 
       {/* SEND USER MAIL DIALOG */}
@@ -352,7 +402,10 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
         content={
           <div className="flex flex-col">
             <span className="text-2xl">Mail User</span>
-            <MailUser onClose={() => setOpenSendMailDialog(false)} user={currentUser} />
+            <MailUser
+              onClose={() => setOpenSendMailDialog(false)}
+              user={currentUser}
+            />
           </div>
         }
         closeButtonShow={false}

@@ -50,7 +50,13 @@ function AdminRoles() {
                 setIsView(true);
               }}
             >
-              <img src={view} width={18} height={18} alt="View Icon" className="cursor-pointer" />
+              <img
+                src={view}
+                width={18}
+                height={18}
+                alt="View Icon"
+                className="cursor-pointer"
+              />
             </div>
           </Tooltip>
 
@@ -70,7 +76,10 @@ function AdminRoles() {
           </Tooltip>
 
           <Tooltip title={'Delete Admin Role'}>
-            <div onClick={() => onDeleteHandler(_data)} className="cursor-pointer">
+            <div
+              onClick={() => onDeleteHandler(_data)}
+              className="cursor-pointer"
+            >
               <DeleteIcon />
             </div>
           </Tooltip>
@@ -113,8 +122,18 @@ function AdminRoles() {
         </div>
       </div>
 
-      <AddAdminRole open={open} onClose={onPopupHandler} editRole={selectedRole} isView={isView} />
-      <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} />
+      <AddAdminRole
+        open={open}
+        onClose={onPopupHandler}
+        editRole={selectedRole}
+        isView={isView}
+      />
+      <GlobalTable
+        rows={rows}
+        headCells={headCells}
+        isLoading={loading}
+        paginate={false}
+      />
     </div>
   );
 }

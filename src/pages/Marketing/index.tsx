@@ -61,7 +61,10 @@ export default function NetworkSettings() {
                 formik.setFieldValue('name', ads[index].title);
                 formik.setFieldValue('imageUrl', ads[index].imageUrl);
                 formik.setFieldValue('description', ads[index].description);
-                formik.setFieldValue('status', { label: ads[index].status, value: ads[index].status });
+                formik.setFieldValue('status', {
+                  label: ads[index].status,
+                  value: ads[index].status,
+                });
               }}
             />
           </div>
@@ -186,12 +189,18 @@ export default function NetworkSettings() {
         <div className="flex bg-primary items-center text-white">
           <h1 className="flex-1 font-bold text-2xl px-3 py-1">Marketing</h1>
 
-          <div className="flex gap-1 items-center cursor-pointer px-3" onClick={fetchData}>
+          <div
+            className="flex gap-1 items-center cursor-pointer px-3"
+            onClick={fetchData}
+          >
             <img src={refresh} alt="refresh" width={24} height={24} />
             <span>Refresh</span>
           </div>
 
-          <button className="flex gap-1 text-white items-center cursor-pointer px-3" onClick={onOpen}>
+          <button
+            className="flex gap-1 text-white items-center cursor-pointer px-3"
+            onClick={onOpen}
+          >
             <img src={add} alt="add" width={24} height={24} />
             <span>Add Marketing</span>
           </button>

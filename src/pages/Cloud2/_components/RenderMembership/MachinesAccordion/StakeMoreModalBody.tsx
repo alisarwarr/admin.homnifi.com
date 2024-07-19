@@ -6,7 +6,10 @@ import GlobalSelect from '../../../../../components/Global/GlobalSelect';
 import GlobalButton from '../../../../../components/Global/GlobalButton';
 import { ArrowDownCircleOutlined } from '../../../../../images/svgs';
 import ReviewModeStakeMoreModal from './ReviewModeStakeMoreModal';
-import { EditModeFieldStakeMoreModal, EditModeGaugeStakeMoreModal } from './EditModeStakeMoreModal';
+import {
+  EditModeFieldStakeMoreModal,
+  EditModeGaugeStakeMoreModal,
+} from './EditModeStakeMoreModal';
 
 type Props = {};
 
@@ -30,7 +33,11 @@ const StakeMoreModalBody = (props: Props) => {
       <span className="text-primaryDark text-lg font-medium">XK 5000</span>
 
       <section className="flex items-center justify-between gap-4 w-full">
-        {mode === 'review' ? <ReviewModeStakeMoreModal /> : <EditModeGaugeStakeMoreModal />}
+        {mode === 'review' ? (
+          <ReviewModeStakeMoreModal />
+        ) : (
+          <EditModeGaugeStakeMoreModal />
+        )}
       </section>
 
       <section className="flex flex-col gap-4">
@@ -42,7 +49,9 @@ const StakeMoreModalBody = (props: Props) => {
           />
         ) : (
           <article className="flex flex-col gap-2">
-            <span className="text-cardSecondaryText text-xs font-medium">Token</span>
+            <span className="text-cardSecondaryText text-xs font-medium">
+              Token
+            </span>
             <span className="bg-primary px-3 py-1 rounded-full text-white font-normal text-xs w-max">
               {selectedToken}
             </span>
@@ -50,9 +59,17 @@ const StakeMoreModalBody = (props: Props) => {
         )}
 
         {mode === 'review' ? (
-          <GlobalButton text="Stake" classNames="font-normal" onClick={() => setMode('edit')} />
+          <GlobalButton
+            text="Stake"
+            classNames="font-normal"
+            onClick={() => setMode('edit')}
+          />
         ) : (
-          <GlobalButton text="Review" classNames="font-normal" onClick={() => setMode('review')} />
+          <GlobalButton
+            text="Review"
+            classNames="font-normal"
+            onClick={() => setMode('review')}
+          />
         )}
       </section>
     </article>

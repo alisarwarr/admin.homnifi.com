@@ -39,7 +39,9 @@ const GlobalButton = ({
       disabled={disabled}
     >
       {StartIcon && <span>{StartIcon}</span>}
-      <span className="relative !z-10">{loading ? <Spinner className="animate-spin h-6" /> : text}</span>
+      <span className="relative !z-10">
+        {loading ? <Spinner className="animate-spin h-6" /> : text}
+      </span>
     </button>
   );
 };

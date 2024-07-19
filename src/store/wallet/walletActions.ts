@@ -1,4 +1,8 @@
-import { selectWalletSlice, setMigrationRequests, setWithdrawRequests } from './walletSlice';
+import {
+  selectWalletSlice,
+  setMigrationRequests,
+  setWithdrawRequests,
+} from './walletSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   WALLET_MIGRATIONS,
@@ -14,7 +18,8 @@ import ApiRequest from '../../utils/network/ApiRequest';
 export const useWalletActions = () => {
   const dispatch = useDispatch();
 
-  const { withdrawRequests, migrationRequests } = useSelector(selectWalletSlice);
+  const { withdrawRequests, migrationRequests } =
+    useSelector(selectWalletSlice);
   console.log('🚀 ~ useWalletActions ~ withdrawRequests:', withdrawRequests);
 
   const getWithdrawRequests = async (force: boolean = false, filter?: any) => {
@@ -32,7 +37,11 @@ export const useWalletActions = () => {
     });
 
     const _withdrawRequests = response?.data?.data;
-    console.log('🚀 ~ getWithdrawRequests ~ _withdrawRequests:', _withdrawRequests, response?.data?.data);
+    console.log(
+      '🚀 ~ getWithdrawRequests ~ _withdrawRequests:',
+      _withdrawRequests,
+      response?.data?.data
+    );
     dispatch(setWithdrawRequests(_withdrawRequests));
   };
 
@@ -48,7 +57,10 @@ export const useWalletActions = () => {
       .catch((error: any) => error);
   };
 
-  const getMigrationRequests = async (force: boolean = false, page: any = 1) => {
+  const getMigrationRequests = async (
+    force: boolean = false,
+    page: any = 1
+  ) => {
     if (migrationRequests?.list?.length && !force) return;
 
     const response = await ApiRequest().request({

@@ -18,15 +18,15 @@ const headCells = [
 export default function NetworkSettings() {
   const [loading, setLoading] = useState(false);
 
+  const { getNetworkSettings, addNetworkSettings } = useTokensSettingsAction();
+
   const fetchData = () => {
     setLoading(true);
     setTimeout(() => {
-      getNetworkSettings();
+      getNetworkSettings({});
       setLoading(false);
     }, 1000);
   };
-
-  const { getNetworkSettings, addNetworkSettings } = useTokensSettingsAction();
   const { networkSettings } = useSelector(selectTokensSettings);
   useEffect(() => {
     fetchData();
@@ -99,7 +99,9 @@ export default function NetworkSettings() {
               required
               value={formik.values.blockchainCode}
               onChange={formik.handleChange}
-              isError={formik.errors.blockchainCode && formik.touched.blockchainCode}
+              isError={
+                formik.errors.blockchainCode && formik.touched.blockchainCode
+              }
               error={formik.errors.blockchainCode}
             />
 
@@ -119,19 +121,32 @@ export default function NetworkSettings() {
         <div className="flex bg-primary items-center  text-white">
           <h1 className="flex-1 font-bold text-2xl px-3 py-1">Network</h1>
 
-          <div className="flex gap-1 items-center cursor-pointer px-3" onClick={fetchData}>
+          <div
+            className="flex gap-1 items-center cursor-pointer px-3"
+            onClick={fetchData}
+          >
             <img src={refresh} alt="refresh" width={24} height={24} />
             <span>Refresh</span>
           </div>
 
-          <button className="flex gap-1 text-white items-center cursor-pointer px-3" onClick={onOpen}>
+          <button
+            className="flex gap-1 text-white items-center cursor-pointer px-3"
+            onClick={onOpen}
+          >
             <img src={add} alt="" width={24} height={24} />
             <span>Add Network</span>
           </button>
         </div>
 
         {/* TABLE */}
-        {networkSettings && <GlobalTable rows={rows} headCells={headCells} isLoading={loading} paginate={false} />}
+        {networkSettings && (
+          <GlobalTable
+            rows={rows}
+            headCells={headCells}
+            isLoading={loading}
+            paginate={false}
+          />
+        )}
       </div>
     </>
   );

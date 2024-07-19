@@ -40,7 +40,15 @@ const RadialChart = () => {
         innerRadius={0.5}
         padding={0.5}
         cornerRadius={26}
-        colors={['#1B9FDA', '#89D5ED', '#1B9FDA', '#1B9FDA', '#EEEEEE', '#FF6363', '#1B9FDA']} // Customize the colors as needed
+        colors={[
+          '#1B9FDA',
+          '#89D5ED',
+          '#1B9FDA',
+          '#1B9FDA',
+          '#EEEEEE',
+          '#FF6363',
+          '#1B9FDA',
+        ]} // Customize the colors as needed
         margin={{ top: 40, right: 120, bottom: 40, left: 40 }}
         enableRadialGrid={false}
         enableCircularGrid={false}
@@ -59,7 +67,9 @@ const RadialChart = () => {
         <span className="text-sm">LYK - D</span>
       </div>
       <div className="absolute left-0 bottom-0 ml-4 mb-4 text-xs">$0</div>
-      <div className="absolute right-0 bottom-0 mr-4 mb-4 text-xs">$45,000.00</div>
+      <div className="absolute right-0 bottom-0 mr-4 mb-4 text-xs">
+        $45,000.00
+      </div>
     </div>
   );
 };

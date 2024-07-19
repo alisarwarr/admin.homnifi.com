@@ -5,7 +5,10 @@ import { useCustomerActions } from '../../../store/customer/customerActions';
 import FormikInput from '../../../components/FormikInput';
 import Loader from '../../../components/Loader/Loader';
 import ZoomImage from '../../../components/ZoomImage';
-import { VERIFICATION_ACTION_STATUS, VERIFICATION_DOCUMENT_FIELD_TITLE } from '../../../utils/constance';
+import {
+  VERIFICATION_ACTION_STATUS,
+  VERIFICATION_DOCUMENT_FIELD_TITLE,
+} from '../../../utils/constance';
 import { verificationFile } from '../../../interfaces/verificationFile';
 import VerificationNameRow from '../../../components/Verification/VerificationNameRow';
 import PoliticallyExposedPerson from '../../../components/Verification/PoliticallyExposedPerson';
@@ -24,7 +27,8 @@ const UserVerificationDetails = () => {
     [x: string]: any;
   }>();
 
-  const { getSingleCustomerVerificationInfo, verification_action } = useCustomerActions();
+  const { getSingleCustomerVerificationInfo, verification_action } =
+    useCustomerActions();
 
   const fetchData = async () => {
     const info = await getSingleCustomerVerificationInfo(params.id);
@@ -55,7 +59,10 @@ const UserVerificationDetails = () => {
               onClose={() => setConfirmOpen(false)}
               onConfirm={async () => {
                 setAcceptedLoading(true);
-                const res = await verification_action(params.id, VERIFICATION_ACTION_STATUS.VERIFIED);
+                const res = await verification_action(
+                  params.id,
+                  VERIFICATION_ACTION_STATUS.VERIFIED
+                );
                 if (!res.status) {
                   errorAlert(res.message);
                   setAcceptedLoading(false);
@@ -82,7 +89,11 @@ const UserVerificationDetails = () => {
                   return;
                 }
                 setRejectedLoading(true);
-                const res = await verification_action(params.id, VERIFICATION_ACTION_STATUS.REJECTED, rejectionReason);
+                const res = await verification_action(
+                  params.id,
+                  VERIFICATION_ACTION_STATUS.REJECTED,
+                  rejectionReason
+                );
                 if (!res.status) {
                   errorAlert(res.message);
                   setRejectedLoading(false);
@@ -116,7 +127,10 @@ const UserVerificationDetails = () => {
 
             <VerificationNameRow data={data} className="pt-3 pb-5" />
 
-            <PoliticallyExposedPerson isCheck={data?.isPoliticalyExposed || false} className="pb-5" />
+            <PoliticallyExposedPerson
+              isCheck={data?.isPoliticalyExposed || false}
+              className="pb-5"
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pb-5">
               <FormikInput
@@ -152,20 +166,22 @@ const UserVerificationDetails = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-5 pb-5">
-              {Object.values(data?.verificationFiles).map((item: verificationFile) => {
-                return (
-                  <div className="border border-[#222222] border-dashed flex justify-center items-center flex-col py-6 bg-[#0f0f0f] rounded-md">
-                    <p className="text-sm text-white font-semibold pb-5">
-                      {VERIFICATION_DOCUMENT_FIELD_TITLE[item?.documentType]}
-                    </p>
-                    <ZoomImage
-                      path={item?.path}
-                      alt="Govement Photo"
-                      className="w-full md:w-72 border-solid border-2 border-gray-400 rounded-md"
-                    />
-                  </div>
-                );
-              })}
+              {Object.values(data?.verificationFiles).map(
+                (item: verificationFile) => {
+                  return (
+                    <div className="border border-[#222222] border-dashed flex justify-center items-center flex-col py-6 bg-[#0f0f0f] rounded-md">
+                      <p className="text-sm text-white font-semibold pb-5">
+                        {VERIFICATION_DOCUMENT_FIELD_TITLE[item?.documentType]}
+                      </p>
+                      <ZoomImage
+                        path={item?.path}
+                        alt="Govement Photo"
+                        className="w-full md:w-72 border-solid border-2 border-gray-400 rounded-md"
+                      />
+                    </div>
+                  );
+                }
+              )}
             </div>
 
             <div className="flex justify-center gap-2">
@@ -190,7 +206,10 @@ const UserVerificationDetails = () => {
           </div>
 
           {/* VERIFICATION HISTORY */}
-          <UserVerificationHistory currentVerificationRequestId={params.id} userId={data?.user?._id} />
+          <UserVerificationHistory
+            currentVerificationRequestId={params.id}
+            userId={data?.user?._id}
+          />
         </div>
       ) : (
         <Loader />

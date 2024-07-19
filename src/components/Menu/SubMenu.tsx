@@ -2,14 +2,26 @@
 import ListItem from '@mui/material/ListItem';
 //REDUX-TOOLKIT
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveMenu, selectDrawer, setDrawerOpen } from '../../store/drawer/drawerSlice';
+import {
+  setActiveMenu,
+  selectDrawer,
+  setDrawerOpen,
+} from '../../store/drawer/drawerSlice';
 //ROUTER-DOM
 import { useLocation, useNavigate } from 'react-router-dom';
 //COMPONENTS
 import MenuIcon from './MenuIcon';
 import { selectUser } from '../../store/user/userSlice';
 
-const SubMenu = ({ subMenu, length, index }: { subMenu: any; length: number; index: number }) => {
+const SubMenu = ({
+  subMenu,
+  length,
+  index,
+}: {
+  subMenu: any;
+  length: number;
+  index: number;
+}) => {
   const drawer = useSelector(selectDrawer);
   const user = useSelector(selectUser);
 
@@ -46,7 +58,9 @@ const SubMenu = ({ subMenu, length, index }: { subMenu: any; length: number; ind
       disabled={subMenu.disable}
       sx={{
         color:
-          isMenuActive(subMenu) && drawer.openItemKey === subMenu.key ? '#1B9FDA !important' : '#7D7D7D !important',
+          isMenuActive(subMenu) && drawer.openItemKey === subMenu.key
+            ? '#1B9FDA !important'
+            : '#7D7D7D !important',
       }}
       onClick={() => {
         if (subMenu.disable) {
@@ -66,12 +80,22 @@ const SubMenu = ({ subMenu, length, index }: { subMenu: any; length: number; ind
         subMenu?.permissions?.some((per) => {
           return user?.permission?.includes(per);
         }) ? (
-          <MenuIcon menu={subMenu} type={'submenu'} length={length} index={index} />
+          <MenuIcon
+            menu={subMenu}
+            type={'submenu'}
+            length={length}
+            index={index}
+          />
         ) : (
           <></>
         )
       ) : (
-        <MenuIcon menu={subMenu} type={'submenu'} length={length} index={index} />
+        <MenuIcon
+          menu={subMenu}
+          type={'submenu'}
+          length={length}
+          index={index}
+        />
       )}
       {/* <MenuIcon menu={subMenu} type={'submenu'} length={length} index={index} /> */}
     </ListItem>

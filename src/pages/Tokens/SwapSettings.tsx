@@ -36,7 +36,8 @@ export default function SwapSettings() {
     }, 1000);
   };
 
-  const { getSwapSettings, addSwapSettings, getAllTokens, updateSwapSettings } = useTokensSettingsAction();
+  const { getSwapSettings, addSwapSettings, getAllTokens, updateSwapSettings } =
+    useTokensSettingsAction();
   const { swapSettings, allTokens } = useSelector(selectTokensSettings);
   useEffect(() => {
     fetchData();
@@ -78,10 +79,19 @@ export default function SwapSettings() {
                     value: swapSettings[index].toToken.name,
                     id: swapSettings[index].toToken._id,
                   });
-                  formik.setFieldValue('minAmount', swapSettings[index].minAmount);
-                  formik.setFieldValue('maxAmount', swapSettings[index].maxAmount);
+                  formik.setFieldValue(
+                    'minAmount',
+                    swapSettings[index].minAmount
+                  );
+                  formik.setFieldValue(
+                    'maxAmount',
+                    swapSettings[index].maxAmount
+                  );
                   formik.setFieldValue('rate', swapSettings[index].rate);
-                  formik.setFieldValue('commission', swapSettings[index].commission);
+                  formik.setFieldValue(
+                    'commission',
+                    swapSettings[index].commission
+                  );
                   formik.setFieldValue('commissionType', {
                     label: swapSettings[index].commissionType,
                     value: swapSettings[index].commissionType,
@@ -134,7 +144,9 @@ export default function SwapSettings() {
         .min(0, 'Amount must be greater than or equal to 0'),
       isCurtomRate: Yup.boolean(),
       rate: Yup.number().min(0, 'Rate must be greater than or equal to 0'),
-      commission: Yup.number().required('Commission is required').min(0, 'Amount must be greater than or equal to 0'),
+      commission: Yup.number()
+        .required('Commission is required')
+        .min(0, 'Amount must be greater than or equal to 0'),
       commissionType: Yup.object({
         label: Yup.string().required('Commission Type is required'),
         value: Yup.string().required('Commission Type is required'),
@@ -177,12 +189,21 @@ export default function SwapSettings() {
               name="fromToken"
               placeholder="select a From Token"
               options={
-                allTokens ? allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id })) : []
+                allTokens
+                  ? allTokens.map((item: any) => ({
+                      label: item.name,
+                      value: item.name,
+                      id: item._id,
+                    }))
+                  : []
               }
               value={formik.values.fromToken.value}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isError={formik.touched.fromToken?.value && !!formik.errors.fromToken?.value}
+              isError={
+                formik.touched.fromToken?.value &&
+                !!formik.errors.fromToken?.value
+              }
               error={formik.errors.fromToken?.value}
               setFieldTouched={formik.setFieldTouched}
               setFieldValue={formik.setFieldValue}
@@ -194,12 +215,20 @@ export default function SwapSettings() {
               name="toToken"
               placeholder="select a To Token"
               options={
-                allTokens ? allTokens.map((item: any) => ({ label: item.name, value: item.name, id: item._id })) : []
+                allTokens
+                  ? allTokens.map((item: any) => ({
+                      label: item.name,
+                      value: item.name,
+                      id: item._id,
+                    }))
+                  : []
               }
               value={formik.values.toToken.value}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isError={formik.touched.toToken?.value && !!formik.errors.toToken?.value}
+              isError={
+                formik.touched.toToken?.value && !!formik.errors.toToken?.value
+              }
               error={formik.errors.toToken?.value}
               setFieldTouched={formik.setFieldTouched}
               setFieldValue={formik.setFieldValue}
@@ -270,7 +299,10 @@ export default function SwapSettings() {
               value={formik.values.commissionType.value}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              isError={formik.touched.commissionType?.value && !!formik.errors.commissionType?.value}
+              isError={
+                formik.touched.commissionType?.value &&
+                !!formik.errors.commissionType?.value
+              }
               error={formik.errors.commissionType?.value}
               setFieldTouched={formik.setFieldTouched}
               setFieldValue={formik.setFieldValue}
@@ -304,12 +336,18 @@ export default function SwapSettings() {
         <div className="flex bg-primary items-center  text-white">
           <h1 className="flex-1 font-bold text-2xl px-3 py-1">Swap Settings</h1>
 
-          <div className="flex gap-1 items-center cursor-pointer px-3" onClick={fetchData}>
+          <div
+            className="flex gap-1 items-center cursor-pointer px-3"
+            onClick={fetchData}
+          >
             <img src={refresh} alt="refresh" width={24} height={24} />
             <span>Refresh</span>
           </div>
 
-          <button className="flex gap-1 text-white items-center cursor-pointer px-3" onClick={onOpen}>
+          <button
+            className="flex gap-1 text-white items-center cursor-pointer px-3"
+            onClick={onOpen}
+          >
             <img src={add} alt="" width={24} height={24} />
             <span>Add Swap</span>
           </button>

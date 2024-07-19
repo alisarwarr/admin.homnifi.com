@@ -43,9 +43,16 @@ export default function GlobalDialog({
   };
 
   return (
-    <Dialog open={open} fullWidth={true} maxWidth={getSizeMaxWidth(size ? size : 'md')} onClose={onClose}>
+    <Dialog
+      open={open}
+      fullWidth={true}
+      maxWidth={getSizeMaxWidth(size ? size : 'md')}
+      onClose={onClose}
+    >
       <div className="flex flex-col gap-4 pb-0 lg:pb-4 pt-4 lg:pt-8 px-4 lg:px-6">
-        {title && <div className="text-md text-Heading font-medium">{title}</div>}
+        {title && (
+          <div className="text-md text-Heading font-medium">{title}</div>
+        )}
         <div className={`${contentClass}`}>{content}</div>
         <div className="flex items-center gap-4 justify-end">
           {closeButtonShow && (

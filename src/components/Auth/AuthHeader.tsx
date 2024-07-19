@@ -8,7 +8,11 @@ const AuthHeader = () => {
 
   return (
     <div className="w-full flex justify-between text-sm py-4 px-0">
-      <img src={homnifiLogo} alt="Homnifi Logo" className="w-32 cursor-pointer" />
+      <img
+        src={homnifiLogo}
+        alt="Homnifi Logo"
+        className="w-32 cursor-pointer"
+      />
     </div>
   );
 };

@@ -1,12 +1,22 @@
 type Props = {
   visible: boolean;
+  text?: string;
+  classNames?: string;
 };
 
-const NoData = ({ visible }: Props) => {
+const NoData = ({ visible, text, classNames }: Props) => {
   if (!visible) return <></>;
   return (
-    <div className="flex flex-col justify-center items-center h-full">
-      <svg xmlns="http://www.w3.org/2000/svg" width="117" height="117" viewBox="0 0 117 117" fill="none">
+    <div
+      className={`flex flex-col justify-center items-center h-full ${classNames}`}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="117"
+        height="117"
+        viewBox="0 0 117 117"
+        fill="none"
+      >
         <path
           d="M100.136 98.0867C102.56 94.7452 104.32 90.8405 105.181 86.5271C108.379 70.5157 97.9911 54.9438 81.98 51.7461C65.9686 48.5485 50.3967 58.9362 47.1991 74.9472C46.3375 79.2606 46.4627 83.5417 47.4175 87.5579L100.136 98.0863V98.0867Z"
           fill="#E2E2E2"
@@ -68,7 +78,7 @@ const NoData = ({ visible }: Props) => {
           fill="black"
         />
       </svg>
-      <span className="text-primaryGrey">No History</span>
+      <span className="text-primaryGrey">{text || 'No History'}</span>
     </div>
   );
 };

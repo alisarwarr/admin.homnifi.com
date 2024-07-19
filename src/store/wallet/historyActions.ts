@@ -33,7 +33,10 @@ export const useHistoryActions = () => {
     productPurchaseHistory,
   } = useSelector(selectHistorySlice);
 
-  const getSwapHistoryRequests = async (force: boolean = false, filter?: any) => {
+  const getSwapHistoryRequests = async (
+    force: boolean = false,
+    filter?: any
+  ) => {
     if (swapHistory?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
@@ -50,7 +53,10 @@ export const useHistoryActions = () => {
     dispatch(setSwapHistory(_migrationReuests));
   };
 
-  const getDepositHistoryRequests = async (force: boolean = false, filter?: any) => {
+  const getDepositHistoryRequests = async (
+    force: boolean = false,
+    filter?: any
+  ) => {
     if (depositHistory?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
@@ -67,7 +73,10 @@ export const useHistoryActions = () => {
     dispatch(setDepositHistory(_migrationReuests));
   };
 
-  const getWithdrawHistoryRequests = async (force: boolean = false, filter?: any) => {
+  const getWithdrawHistoryRequests = async (
+    force: boolean = false,
+    filter?: any
+  ) => {
     if (withdrawHistory?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
@@ -84,7 +93,10 @@ export const useHistoryActions = () => {
     dispatch(setWithdrawHistory(_migrationReuests));
   };
 
-  const getMigrateHistoryRequests = async (force: boolean = false, filter?: any) => {
+  const getMigrateHistoryRequests = async (
+    force: boolean = false,
+    filter?: any
+  ) => {
     if (migrateHistory?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
@@ -101,7 +113,10 @@ export const useHistoryActions = () => {
     dispatch(setMigrateHistory(_migrationReuests));
   };
 
-  const getFeaturePurchaseHistory = async (force: boolean = false, filter?: any) => {
+  const getFeaturePurchaseHistory = async (
+    force: boolean = false,
+    filter?: any
+  ) => {
     if (featurePurchaseHistory?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
@@ -117,7 +132,10 @@ export const useHistoryActions = () => {
     dispatch(setFeaturePurchaseHistory(response?.data?.data));
   };
 
-  const getProductPurchaseHistory = async (force: boolean = false, filter?: any) => {
+  const getProductPurchaseHistory = async (
+    force: boolean = false,
+    filter?: any
+  ) => {
     if (productPurchaseHistory?.list?.length && !force) return;
 
     const response = await ApiRequest().request({

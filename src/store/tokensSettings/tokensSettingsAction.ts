@@ -7,7 +7,12 @@ import {
   WALLET_ADMIN_ALL_TOKENS,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
-import { setAllTokens, setDepositSettings, setNetworkSettings, setSwapSettings } from './tokensSettingsSlice';
+import {
+  setAllTokens,
+  setDepositSettings,
+  setNetworkSettings,
+  setSwapSettings,
+} from './tokensSettingsSlice';
 import { useDispatch } from 'react-redux';
 
 export const useTokensSettingsAction = () => {
@@ -38,7 +43,13 @@ export const useTokensSettingsAction = () => {
       .catch((error: any) => error);
   };
 
-  const getNetworkSettings = async ({ page = 1, limit = 10 }: { page?: number; limit?: number }) => {
+  const getNetworkSettings = async ({
+    page = 1,
+    limit = 10,
+  }: {
+    page?: number;
+    limit?: number;
+  }) => {
     return await ApiRequest()
       .request({
         method: 'GET',
@@ -94,7 +105,13 @@ export const useTokensSettingsAction = () => {
       });
   };
 
-  const updateDespositSettings = async ({ id, data }: { id: string; data: any }) => {
+  const updateDespositSettings = async ({
+    id,
+    data,
+  }: {
+    id: string;
+    data: any;
+  }) => {
     return await ApiRequest()
       .request({
         method: 'PUT',
@@ -108,7 +125,13 @@ export const useTokensSettingsAction = () => {
         errorAlert(error.data.message || 'Something went wrong');
       });
   };
-  const updateSwapSettings = async ({ id, data }: { id: string; data: any }) => {
+  const updateSwapSettings = async ({
+    id,
+    data,
+  }: {
+    id: string;
+    data: any;
+  }) => {
     return await ApiRequest()
       .request({
         method: 'PUT',
@@ -122,7 +145,13 @@ export const useTokensSettingsAction = () => {
         errorAlert(error.data.message || 'Something went wrong');
       });
   };
-  const updateNetworkSettings = async ({ id, data }: { id: string; data: any }) => {
+  const updateNetworkSettings = async ({
+    id,
+    data,
+  }: {
+    id: string;
+    data: any;
+  }) => {
     return await ApiRequest()
       .request({
         method: 'PUT',

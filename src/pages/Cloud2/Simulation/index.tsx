@@ -10,27 +10,44 @@ import { selectCloudkSlice } from '../../../store/cloudk/cloudk.slice';
 import { useCloudActions } from '../../../store/cloudk/cloudk.action';
 import { refresh } from '../../../images/other';
 import GlobalSelect from '../../../components/Global/GlobalSelect';
-import { selectSimulationSlice, simulationSliceAction } from '../../../store/cloudk/simulation';
+import {
+  selectSimulationSlice,
+  simulationSliceAction,
+} from '../../../store/cloudk/simulation';
 
 import Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 import { Spinner } from '../../../images/svg';
 import LineChart from './LineChart';
-import { TChartDataDefs, TChartDataFill, TChartDataType } from '../../../interfaces/lineChart.types';
+import {
+  TChartDataDefs,
+  TChartDataFill,
+  TChartDataType,
+} from '../../../interfaces/lineChart.types';
 import GlobalInput from '../../../components/Global/GlobalInput';
 
 const Simulation = () => {
   const { getUserMachineList, startSimulation } = useCloudActions();
   const dispatch = useDispatch();
   const { userMachineList } = useSelector(selectCloudkSlice);
-  const { machines, selectedMachine, startSimulationLoading, prices, collateral, simulationData } =
-    useSelector(selectSimulationSlice);
+  const {
+    machines,
+    selectedMachine,
+    startSimulationLoading,
+    prices,
+    collateral,
+    simulationData,
+  } = useSelector(selectSimulationSlice);
   useEffect(() => {
     getUserMachineList();
     // handleSelectFirstProduct();
   }, []);
   const handleSelectFirstProduct = () => {
-    dispatch(simulationSliceAction.setSimulationSlice({ selectedMachine: machines?.[0] }));
+    dispatch(
+      simulationSliceAction.setSimulationSlice({
+        selectedMachine: machines?.[0],
+      })
+    );
   };
 
   const machinesDropdown =
@@ -41,10 +58,18 @@ const Simulation = () => {
 
   const handleChange = (selectedOption: any | null) => {
     if (selectedOption) {
-      const selectedMachineDetails = userMachineList?.find((machine) => machine.name === selectedOption) || null;
-      dispatch(simulationSliceAction.setSimulationSlice({ selectedMachine: selectedMachineDetails }));
+      const selectedMachineDetails =
+        userMachineList?.find((machine) => machine.name === selectedOption) ||
+        null;
+      dispatch(
+        simulationSliceAction.setSimulationSlice({
+          selectedMachine: selectedMachineDetails,
+        })
+      );
     } else {
-      dispatch(simulationSliceAction.setSimulationSlice({ selectedMachine: null }));
+      dispatch(
+        simulationSliceAction.setSimulationSlice({ selectedMachine: null })
+      );
     }
   };
 
@@ -56,7 +81,8 @@ const Simulation = () => {
     if (
       fileType === 'text/csv' ||
       fileType === 'application/vnd.ms-excel' ||
-      fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      fileType ===
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -67,8 +93,12 @@ const Simulation = () => {
             header: true,
             complete: (results) => {
               console.log('🚀 ~ handleFileUpload ~ results:', results);
-              const prices = results.data.map((row: any) => parseFloat(row.prices));
-              dispatch(simulationSliceAction.setSimulationSlice({ prices: prices }));
+              const prices = results.data.map((row: any) =>
+                parseFloat(row.prices)
+              );
+              dispatch(
+                simulationSliceAction.setSimulationSlice({ prices: prices })
+              );
 
               console.log(prices);
             },
@@ -80,9 +110,13 @@ const Simulation = () => {
           const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
           console.log('🚀 ~ handleFileUpload ~ jsonData:', jsonData);
 
-          const prices = jsonData.slice(1).map((row: any) => parseFloat(row[0]));
+          const prices = jsonData
+            .slice(1)
+            .map((row: any) => parseFloat(row[0]));
           console.log('🚀 ~ handleFileUpload ~ prices:', prices);
-          dispatch(simulationSliceAction.setSimulationSlice({ prices: prices }));
+          dispatch(
+            simulationSliceAction.setSimulationSlice({ prices: prices })
+          );
         }
       };
       if (fileType === 'text/csv') {
@@ -195,12 +229,20 @@ const Simulation = () => {
               label="Collateral"
               type="number"
               value={collateral}
-              onChange={(e) => dispatch(simulationSliceAction.setSimulationSlice({ collateral: e.target.value }))}
+              onChange={(e) =>
+                dispatch(
+                  simulationSliceAction.setSimulationSlice({
+                    collateral: e.target.value,
+                  })
+                )
+              }
               isError={false}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-primary">Upload CSV or Excel File</label>
+            <label className="block text-sm font-medium text-primary">
+              Upload CSV or Excel File
+            </label>
             {/* <input
               type="file"
               className="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -222,7 +264,11 @@ const Simulation = () => {
               onClick={handleStartSmiulation}
               className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
             >
-              {startSimulationLoading ? <Spinner className="animate-spin h-6" /> : '  Start Simulator'}
+              {startSimulationLoading ? (
+                <Spinner className="animate-spin h-6" />
+              ) : (
+                '  Start Simulator'
+              )}
             </button>
           </div>
         </div>
@@ -231,7 +277,9 @@ const Simulation = () => {
         <div className="w-2/3 flex flex-row py-5 gap-16">
           <div>
             <div>
-              <p className="text-2xl font-semibold text-gray-600">{selectedMachine.name}</p>
+              <p className="text-2xl font-semibold text-gray-600">
+                {selectedMachine.name}
+              </p>
             </div>
             <div className=" flex flex-row gap-16 py-5  ">
               <div>
@@ -243,24 +291,42 @@ const Simulation = () => {
               </div>
               <div className=" flex flex-col gap-3  ">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 ">Auto Compound</label>
-                  <p className="text-sm text-gray-600">{selectedMachine.autoCompound ? 'True' : 'False'}</p>
+                  <label className="block text-sm font-medium text-gray-700 ">
+                    Auto Compound
+                  </label>
+                  <p className="text-sm text-gray-600">
+                    {selectedMachine.autoCompound ? 'True' : 'False'}
+                  </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 ">DLP</label>
+                  <label className="block text-sm font-medium text-gray-700 ">
+                    DLP
+                  </label>
                   <p className="text-sm text-gray-600">{selectedMachine.dlp}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 ">ATH</label>
-                  <p className="text-sm text-gray-600">{selectedMachine.allTimeHigh}</p>
+                  <label className="block text-sm font-medium text-gray-700 ">
+                    ATH
+                  </label>
+                  <p className="text-sm text-gray-600">
+                    {selectedMachine.allTimeHigh}
+                  </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 ">Minitng Power</label>
-                  <p className="text-sm text-gray-600">{selectedMachine.mintingPower}</p>
+                  <label className="block text-sm font-medium text-gray-700 ">
+                    Minitng Power
+                  </label>
+                  <p className="text-sm text-gray-600">
+                    {selectedMachine.mintingPower}
+                  </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 ">Boost</label>
-                  <p className="text-sm text-gray-600">{selectedMachine.boost}</p>
+                  <label className="block text-sm font-medium text-gray-700 ">
+                    Boost
+                  </label>
+                  <p className="text-sm text-gray-600">
+                    {selectedMachine.boost}
+                  </p>
                 </div>
                 {/* Add more machine details as needed */}
               </div>

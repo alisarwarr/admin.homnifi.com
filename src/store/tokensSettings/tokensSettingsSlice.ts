@@ -34,6 +34,11 @@ const tokensSettingsSlice = createSlice({
   },
 });
 
-export const { setDepositSettings, setSwapSettings, setNetworkSettings, setAllTokens } = tokensSettingsSlice.actions;
+export const {
+  setDepositSettings,
+  setSwapSettings,
+  setNetworkSettings,
+  setAllTokens,
+} = tokensSettingsSlice.actions;
 export const selectTokensSettings = (state: RootState) => state.tokensSettings;
 export default tokensSettingsSlice.reducer;

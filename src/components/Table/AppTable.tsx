@@ -8,7 +8,13 @@ type Props = {
   handlePageChange: Function;
 };
 
-const AppTable = ({ rows, headers, isLoading, page, handlePageChange }: Props) => {
+const AppTable = ({
+  rows,
+  headers,
+  isLoading,
+  page,
+  handlePageChange,
+}: Props) => {
   return (
     <div>
       <div className="relative overflow-x-auto">
@@ -30,7 +36,10 @@ const AppTable = ({ rows, headers, isLoading, page, handlePageChange }: Props) =
                 <tr>
                   {headers.map((head, index) => {
                     return (
-                      <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white">
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"
+                      >
                         {colum[head?.id]}
                       </th>
                     );

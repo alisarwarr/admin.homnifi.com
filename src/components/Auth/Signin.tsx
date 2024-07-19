@@ -19,21 +19,51 @@ const Signin = ({ setStatus }: { setStatus: () => void }) => {
         subtitle={
           <div>
             Don't have an account?{' '}
-            <button onClick={() => navigate('/auth/signup')} className="text-primary">
+            <button
+              onClick={() => navigate('/auth/signup')}
+              className="text-primary"
+            >
               Signup
             </button>
           </div>
         }
       />
       <div className="w-full flex flex-col gap-4 pr-10">
-        <GlobalInput name="email" label="Email Address" placeholder="Enter your email address" type="email" required />
-        <GlobalInput name="password" label="Password" placeholder="Enter your password" type="password" required />
-        <GlobalCheckbox checked={terms} setChecked={setTerms} label="Remember Me" />
+        <GlobalInput
+          name="email"
+          label="Email Address"
+          placeholder="Enter your email address"
+          type="email"
+          required
+        />
+        <GlobalInput
+          name="password"
+          label="Password"
+          placeholder="Enter your password"
+          type="password"
+          required
+        />
+        <GlobalCheckbox
+          checked={terms}
+          setChecked={setTerms}
+          label="Remember Me"
+        />
       </div>
       <Captcha />
       <div className="flex flex-col gap-2">
-        <GlobalButton text="Sign in" setStatus={() => setStatus} status={'verifyEmail'} loading={false} />
-        <HelperText text={<button onClick={() => navigate('/auth/forget-password')}>Forget Password?</button>} />
+        <GlobalButton
+          text="Sign in"
+          setStatus={() => setStatus}
+          status={'verifyEmail'}
+          loading={false}
+        />
+        <HelperText
+          text={
+            <button onClick={() => navigate('/auth/forget-password')}>
+              Forget Password?
+            </button>
+          }
+        />
       </div>
     </div>
   );

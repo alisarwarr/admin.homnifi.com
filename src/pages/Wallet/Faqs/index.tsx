@@ -41,7 +41,10 @@ const Faqs = () => {
           <span>FAQs</span>
         </div>
 
-        <Link to={'/history/faq/add'} className="flex gap-1 text-white items-center cursor-pointer px-3">
+        <Link
+          to={'/history/faq/add'}
+          className="flex gap-1 text-white items-center cursor-pointer px-3"
+        >
           <img src={add} alt="" width={24} height={24} />
           <span>Add Faq</span>
         </Link>

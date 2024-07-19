@@ -31,7 +31,11 @@
 
 .bg-gradient {
   background: rgb(40, 144, 221);
-  background: linear-gradient(135deg, rgba(40, 144, 221, 0.2) 70%, rgba(236, 0, 140, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(40, 144, 221, 0.2) 70%,
+    rgba(236, 0, 140, 0.2) 100%
+  );
 }
 
 .table-head-bg {
@@ -246,7 +250,11 @@ svg g g line {
 
 .carousel-wrapper .rec-arrow {
   background-color: transparent;
-  background: linear-gradient(90deg, rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(10, 10, 10, 1) 0%,
+    rgba(10, 10, 10, 1) 100%
+  );
   box-shadow: none;
   height: 100%;
   border-radius: 0;
@@ -265,24 +273,40 @@ svg g g line {
 }
 
 .home-border-right {
-  border-image: linear-gradient(210deg, rgba(10, 10, 10, 0), rgba(34, 34, 34, 1)) 1;
+  border-image: linear-gradient(
+      210deg,
+      rgba(10, 10, 10, 0),
+      rgba(34, 34, 34, 1)
+    )
+    1;
   border-right: 1px solid transparent;
   margin-right: -0.5px;
 }
 
 .home-border-top {
-  border-image: linear-gradient(160deg, rgba(10, 10, 10, 0), rgba(34, 34, 34, 1)) 1;
+  border-image: linear-gradient(
+      160deg,
+      rgba(10, 10, 10, 0),
+      rgba(34, 34, 34, 1)
+    )
+    1;
   border-top: 1px solid transparent;
   margin-top: -1.5px;
 }
 
 .home-border-bottom {
-  border-image: linear-gradient(340deg, rgba(10, 10, 10, 0), rgba(34, 34, 34, 1)) 1;
+  border-image: linear-gradient(
+      340deg,
+      rgba(10, 10, 10, 0),
+      rgba(34, 34, 34, 1)
+    )
+    1;
   border-bottom: 1px solid transparent;
 }
 
 .home-border-left {
-  border-image: linear-gradient(20deg, rgba(10, 10, 10, 0), rgba(34, 34, 34, 1)) 1;
+  border-image: linear-gradient(20deg, rgba(10, 10, 10, 0), rgba(34, 34, 34, 1))
+    1;
   border-left: 1px solid transparent;
 }
 
@@ -296,7 +320,8 @@ svg g g line {
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background:
     linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
-    linear-gradient(-20deg, rgba(242, 107, 212, 0.7), rgba(242, 107, 212, 0.1)) border-box;
+    linear-gradient(-20deg, rgba(242, 107, 212, 0.7), rgba(242, 107, 212, 0.1))
+      border-box;
   border: 1px solid transparent;
   transition: ease-in-out 0.2s;
 }
@@ -311,7 +336,8 @@ svg g g line {
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background:
     linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
-    linear-gradient(-20deg, rgba(98, 137, 238, 0.7), rgba(242, 107, 212, 0.1)) border-box;
+    linear-gradient(-20deg, rgba(98, 137, 238, 0.7), rgba(242, 107, 212, 0.1))
+      border-box;
   border: 1px solid transparent;
   transition: ease-in 0.2s;
 }
@@ -326,7 +352,8 @@ svg g g line {
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background:
     linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
-    linear-gradient(-20deg, rgba(238, 182, 98, 0.7), rgba(242, 107, 212, 0.1)) border-box;
+    linear-gradient(-20deg, rgba(238, 182, 98, 0.7), rgba(242, 107, 212, 0.1))
+      border-box;
   border: 1px solid transparent;
   transition: ease-in 0.2s;
 }
@@ -341,7 +368,8 @@ svg g g line {
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background:
     linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
-    linear-gradient(-20deg, rgba(83, 174, 148, 0.7), rgba(242, 107, 212, 0.1)) border-box;
+    linear-gradient(-20deg, rgba(83, 174, 148, 0.7), rgba(242, 107, 212, 0.1))
+      border-box;
   border: 1px solid transparent;
   transition: ease-in 0.2s;
 }

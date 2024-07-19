@@ -9,7 +9,13 @@ type Props = {
   setPage: (_: any) => void;
 };
 
-const VerificationHistoryTable = ({ cells, data, loading, page, setPage }: Props) => {
+const VerificationHistoryTable = ({
+  cells,
+  data,
+  loading,
+  page,
+  setPage,
+}: Props) => {
   const rows = data?.map((_data) => {
     return {
       Id: _data?._id,
@@ -36,7 +42,13 @@ const VerificationHistoryTable = ({ cells, data, loading, page, setPage }: Props
 
   return (
     <>
-      <GlobalTable rows={rows} headCells={cells} isLoading={loading} page={page} handlePageChange={setPage} />
+      <GlobalTable
+        rows={rows}
+        headCells={cells}
+        isLoading={loading}
+        page={page}
+        handlePageChange={setPage}
+      />
     </>
   );
 };

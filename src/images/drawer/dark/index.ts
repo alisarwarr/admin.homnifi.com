@@ -15,7 +15,8 @@ export const Play_ = '/img/drawer/dark/Play.svg';
 export const HandShake_ = '/img/drawer/dark/handShake.svg';
 
 export const Profile_ = '/img/drawer/dark/Profile.svg';
-export const QuestionCircleOutlined_ = '/img/drawer/dark/question-circle-outlined.svg';
+export const QuestionCircleOutlined_ =
+  '/img/drawer/dark/question-circle-outlined.svg';
 export const SecuritySafe_ = '/img/drawer/dark/security-safe.svg';
 export const Setting_ = '/img/drawer/dark/Setting.svg';
 export const Settings_ = '/img/drawer/dark/Settings.svg';

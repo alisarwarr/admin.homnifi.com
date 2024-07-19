@@ -35,12 +35,20 @@ const ProductsTable = ({ data, loading, page, setPage }: Props) => {
       description: _data?.description,
       provider: (
         <div className="flex gap-2 items-center">
-          <img src={_data?.image?.path} className="object-contain w-14 h-14" alt="Product Image" />
+          <img
+            src={_data?.image?.path}
+            className="object-contain w-14 h-14"
+            alt="Product Image"
+          />
           <span>{_data?.provider?.name}</span>
         </div>
       ),
       image: _data?.image ? (
-        <img src={_data?.image?.path} className="object-contain w-14 h-14" alt="Product Image" />
+        <img
+          src={_data?.image?.path}
+          className="object-contain w-14 h-14"
+          alt="Product Image"
+        />
       ) : (
         '-'
       ),
@@ -64,7 +72,13 @@ const ProductsTable = ({ data, loading, page, setPage }: Props) => {
 
   return (
     // TABLE
-    <GlobalTable rows={rows} headCells={headCells} isLoading={loading} page={page} handlePageChange={setPage} />
+    <GlobalTable
+      rows={rows}
+      headCells={headCells}
+      isLoading={loading}
+      page={page}
+      handlePageChange={setPage}
+    />
   );
 };
 
