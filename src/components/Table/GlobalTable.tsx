@@ -311,7 +311,7 @@ const GlobalTable = ({
           </div>
         )}
         <div
-          className={`hidden lg:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
+          className={`hidden md:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
         >
           {/* <div className="hidden lg:flex items-center gap-2 overflow-auto"> */}
           <table className={`table-bordered border-collapse w-full`}>
@@ -424,7 +424,6 @@ const GlobalTable = ({
                                       ) : (
                                         <>-</>
                                       )}
-                                      {row[cell.id] ? row[cell.id] : <>-</>}
                                       {cell.id === 'status' &&
                                         row?.errorTooltip && (
                                           <Tooltip
@@ -440,15 +439,15 @@ const GlobalTable = ({
                                   {copyIconList.find(
                                     (dt) => dt === cell.id
                                   ) && (
-                                      <Copy
-                                        className="ml-3 cursor-pointer"
-                                        onClick={() =>
-                                          navigator.clipboard.writeText(
-                                            row[cell.id]
-                                          )
-                                        }
-                                      />
-                                    )}
+                                    <Copy
+                                      className="ml-3 cursor-pointer"
+                                      onClick={() =>
+                                        navigator.clipboard.writeText(
+                                          row[cell.id]
+                                        )
+                                      }
+                                    />
+                                  )}
                                 </div>
                               </td>
                             )
@@ -512,7 +511,6 @@ const GlobalTable = ({
             ''
           )}
         </div>
-
       </div>
 
       <GlobalDialog
