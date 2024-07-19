@@ -289,9 +289,9 @@ export const useCloudActions = () => {
     limit,
     page,
   }: {
-    search: string;
-    limit: number;
-    page: number;
+    search?: string;
+    limit?: number;
+    page?: number;
   }) => {
     // userMachinesLoading
     dispatch(

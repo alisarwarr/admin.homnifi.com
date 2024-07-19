@@ -1,3 +1,5 @@
+import { Empty } from '../../images/svg';
+
 type Props = {
   visible: boolean;
   text?: string;
@@ -10,7 +12,8 @@ const NoData = ({ visible, text, classNames }: Props) => {
     <div
       className={`flex flex-col justify-center items-center h-full ${classNames}`}
     >
-      <svg
+      <Empty />
+      {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         width="117"
         height="117"
@@ -77,7 +80,7 @@ const NoData = ({ visible, text, classNames }: Props) => {
           d="M99.5912 95.7424C99.5842 95.7424 99.5772 95.7424 99.5698 95.7413C99.5156 95.7354 94.0751 95.1208 88.0765 92.4579C86.3468 91.6899 83.822 90.4552 81.6161 88.9342C80.2893 88.0193 79.7133 87.4401 79.6895 87.4159C79.6139 87.3391 79.6146 87.2159 79.6915 87.1402C79.7683 87.0645 79.8915 87.0653 79.9672 87.1421C79.9898 87.1652 82.308 89.4705 88.2348 92.1018C94.1753 94.739 99.5585 95.3481 99.6119 95.354C99.7187 95.3657 99.7964 95.462 99.7847 95.5689C99.7737 95.6687 99.6891 95.7428 99.5912 95.7428V95.7424Z"
           fill="black"
         />
-      </svg>
+      </svg> */}
       <span className="text-primaryGrey">{text || 'No History'}</span>
     </div>
   );

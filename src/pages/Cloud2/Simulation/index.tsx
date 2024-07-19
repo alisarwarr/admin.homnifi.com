@@ -1,11 +1,5 @@
-// import GlobalTable from '../../../../components/Table/GlobalTable';
-// import GlobalModal from '../../../../components/Global/GlobalModal';
-// import useModalHook from '../../../../utils/hooks/useModalHook';
-// import SingleMachineModalBody from './SingleMachineModalBody';
-// import { useCloudActions } from '../../../../store/cloudk/cloudk.action';
-// import { selectCloudkSlice } from '../../../../store/cloudk/cloudk.slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { selectCloudkSlice } from '../../../store/cloudk/cloudk.slice';
 import { useCloudActions } from '../../../store/cloudk/cloudk.action';
 import { refresh } from '../../../images/other';
@@ -25,11 +19,28 @@ import {
   TChartDataType,
 } from '../../../interfaces/lineChart.types';
 import GlobalInput from '../../../components/Global/GlobalInput';
+import useDebounce from '../../../utils/hooks/useDebounceHook';
+import GlobalTable from '../../../components/Table/GlobalTable';
 
 const Simulation = () => {
   const { getUserMachineList, startSimulation } = useCloudActions();
   const dispatch = useDispatch();
   const { userMachineList } = useSelector(selectCloudkSlice);
+  const [erroMessage, setErrorMessage] = useState({
+    fileError: '',
+    collateralError: '',
+    selectedMachineError: '',
+  });
+  const [filters, setFilters] = useState({
+    limit: 10,
+    page: 1,
+    timeperiod: 'alltime',
+    type: 'all',
+    search: '',
+    totalPages: 1,
+  });
+  const debouncedSearchValue = useDebounce(filters.search, 1000);
+
   const {
     machines,
     selectedMachine,
@@ -38,14 +49,25 @@ const Simulation = () => {
     collateral,
     simulationData,
   } = useSelector(selectSimulationSlice);
+  console.log('prices', prices);
   useEffect(() => {
-    getUserMachineList();
-    // handleSelectFirstProduct();
+    getUserMachineList({
+      search: debouncedSearchValue,
+      limit: filters.limit,
+      page: filters.page,
+    });
   }, []);
+
   const handleSelectFirstProduct = () => {
+    console.log(
+      'userMachineList?.[0]',
+      userMachineList?.[0],
+      userMachineList,
+      machines
+    );
     dispatch(
       simulationSliceAction.setSimulationSlice({
-        selectedMachine: machines?.[0],
+        selectedMachine: userMachineList && userMachineList?.[0],
       })
     );
   };
@@ -57,6 +79,7 @@ const Simulation = () => {
     })) || [];
 
   const handleChange = (selectedOption: any | null) => {
+    console.log('🚀 ~ handleChange ~ selectedOption:', selectedOption);
     if (selectedOption) {
       const selectedMachineDetails =
         userMachineList?.find((machine) => machine.name === selectedOption) ||
@@ -75,6 +98,7 @@ const Simulation = () => {
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    setErrorMessage({ ...erroMessage, fileError: '' });
     if (!file) return;
 
     const fileType = file.type;
@@ -93,9 +117,9 @@ const Simulation = () => {
             header: true,
             complete: (results) => {
               console.log('🚀 ~ handleFileUpload ~ results:', results);
-              const prices = results.data.map((row: any) =>
-                parseFloat(row.prices)
-              );
+              const prices = results.data
+                .map((row: any) => parseFloat(row.prices))
+                .filter((price) => !isNaN(price) && price !== null);
               dispatch(
                 simulationSliceAction.setSimulationSlice({ prices: prices })
               );
@@ -130,13 +154,40 @@ const Simulation = () => {
   };
 
   const handleStartSmiulation = async () => {
-    const payload = {
-      machine: selectedMachine._id,
-      prices: prices,
-      collatoral: Number(collateral),
-    };
-    const resp = await startSimulation(payload);
-    console.log('🚀 ~ handleStartSmiulation ~ resp:', resp);
+    if (!collateral) {
+      setErrorMessage({
+        ...erroMessage,
+        collateralError: 'collateral is required',
+        selectedMachineError: '',
+        fileError: '',
+      });
+      return;
+    }
+    if (!prices.length) {
+      setErrorMessage({
+        ...erroMessage,
+        fileError: 'File  is required',
+        selectedMachineError: '',
+        collateralError: '',
+      });
+    }
+    if (!selectedMachine) {
+      setErrorMessage({
+        ...erroMessage,
+        selectedMachineError: 'Machine  is required',
+        collateralError: '',
+        fileError: '',
+      });
+    }
+    if (selectedMachine && prices.length > 0 && collateral) {
+      const payload = {
+        machine: selectedMachine._id,
+        prices: prices,
+        collatoral: Number(collateral),
+      };
+      const resp = await startSimulation(payload);
+      console.log('🚀 ~ handleStartSmiulation ~ resp:', resp);
+    }
   };
 
   const ath = (simulationData || []).map((reward, index) => ({
@@ -193,12 +244,27 @@ const Simulation = () => {
       ],
     },
   ];
+  const row = (simulationData || []).map((reward, index) => ({
+    day: `${'Day '}${index + 1}`,
+    totalPrice: reward.totalPrice,
+    dlp: reward.dlp,
+    tokenPrice: reward.tokenPrice,
+    allTimeHigh: reward.allTimeHigh,
+  }));
 
   const RewardsCalculatorChartFill: TChartDataFill = [
     { match: { id: 'ATH' }, id: 'gradient1' },
     { match: { id: 'DLP' }, id: 'gradient1' },
     { match: { id: 'Price' }, id: 'gradient1' },
     { match: { id: 'Reward' }, id: 'gradient1' },
+  ];
+  const headCells = [
+    { id: 'day', label: 'Day' },
+
+    { id: 'tokenPrice', label: 'Token Price' },
+    { id: 'dlp', label: 'DLP' },
+    { id: 'allTimeHigh', label: 'ATH' },
+    { id: 'totalPrice', label: 'Total Price' },
   ];
 
   return (
@@ -211,9 +277,9 @@ const Simulation = () => {
         </div>
       </div>
 
-      <div className="flex flex-row gap-16">
+      <div className="flex md:flex-row flex-col gap-16">
         {/* Left column (div 1/3) */}
-        <div className="w-1/3 p-4 flex flex-col gap-3">
+        <div className="md:w-1/3 w-full p-4 flex flex-col gap-3">
           <div className="">
             <GlobalSelect
               label="Select Machine"
@@ -224,20 +290,31 @@ const Simulation = () => {
               value={selectedMachine?.name}
               isError={false}
             />
+            {erroMessage?.selectedMachineError && (
+              <div className="text-red-500 text-sm">
+                {erroMessage?.selectedMachineError}
+              </div>
+            )}
             <GlobalInput
               name="collateral"
               label="Collateral"
               type="number"
               value={collateral}
-              onChange={(e) =>
+              onChange={(e) => {
                 dispatch(
                   simulationSliceAction.setSimulationSlice({
                     collateral: e.target.value,
                   })
-                )
-              }
+                );
+                setErrorMessage({ ...erroMessage, collateralError: '' });
+              }}
               isError={false}
             />
+            {erroMessage?.collateralError && (
+              <div className="text-red-500 text-sm">
+                {erroMessage?.collateralError}
+              </div>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-primary">
@@ -255,10 +332,21 @@ const Simulation = () => {
             />
           </div>
           <div>
+            {erroMessage?.fileError && (
+              <div className="text-red-500 text-sm">
+                {erroMessage?.fileError}
+              </div>
+            )}
+          </div>
+
+          <a
+            href="../../../../public/files/Prices_Sample.csv" // Adjust the file path as needed
+            download
+          >
             <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
               Download Sample CSV
             </button>
-          </div>
+          </a>
           <div>
             <button
               onClick={handleStartSmiulation}
@@ -274,84 +362,100 @@ const Simulation = () => {
         </div>
 
         {/* Right column (div 2/3) */}
-        <div className="w-2/3 flex flex-row py-5 gap-16">
-          <div>
+        {selectedMachine && (
+          <div className="md:w-2/3  w-full flex flex-row py-5 gap-16">
             <div>
-              <p className="text-2xl font-semibold text-gray-600">
-                {selectedMachine.name}
-              </p>
-            </div>
-            <div className=" flex flex-row gap-16 py-5  ">
               <div>
-                <img
-                  src={selectedMachine.imageUrl}
-                  alt="Machine Image"
-                  className="w-60 h-60 rounded-lg object-cover "
-                />
+                <p className="text-2xl font-semibold text-gray-600">
+                  {selectedMachine.name}
+                </p>
               </div>
-              <div className=" flex flex-col gap-3  ">
+              <div className=" flex flex-row gap-16 py-5  ">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 ">
-                    Auto Compound
-                  </label>
-                  <p className="text-sm text-gray-600">
-                    {selectedMachine.autoCompound ? 'True' : 'False'}
-                  </p>
+                  <img
+                    src={selectedMachine.imageUrl}
+                    alt="Machine Image"
+                    className="w-60 h-60 rounded-lg object-cover "
+                  />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 ">
-                    DLP
-                  </label>
-                  <p className="text-sm text-gray-600">{selectedMachine.dlp}</p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 ">
-                    ATH
-                  </label>
-                  <p className="text-sm text-gray-600">
-                    {selectedMachine.allTimeHigh}
-                  </p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 ">
-                    Minitng Power
-                  </label>
-                  <p className="text-sm text-gray-600">
-                    {selectedMachine.mintingPower}
-                  </p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 ">
-                    Boost
-                  </label>
-                  <p className="text-sm text-gray-600">
-                    {selectedMachine.boost}
-                  </p>
+                <div className=" flex flex-col gap-3  ">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 ">
+                      Auto Compound
+                    </label>
+                    <p className="text-sm text-gray-600">
+                      {selectedMachine.autoCompound ? 'True' : 'False'}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 ">
+                      DLP
+                    </label>
+                    <p className="text-sm text-gray-600">
+                      {selectedMachine.dlp}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 ">
+                      ATH
+                    </label>
+                    <p className="text-sm text-gray-600">
+                      {selectedMachine.allTimeHigh}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 ">
+                      Mintng Power
+                    </label>
+                    <p className="text-sm text-gray-600">
+                      {selectedMachine.mintingPower}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 ">
+                      Boost
+                    </label>
+                    <p className="text-sm text-gray-600">
+                      {selectedMachine.boost}
+                    </p>
+                  </div>
+                  {/* Add more machine details as needed */}
                 </div>
                 {/* Add more machine details as needed */}
               </div>
-              {/* Add more machine details as needed */}
             </div>
           </div>
-        </div>
+        )}
       </div>
       {simulationData.length > 0 && (
-        <article className=" ">
-          <LineChart
-            data={RewardsCalculatorChartData}
-            defs={RewardsCalculatorChartDefs}
-            fill={RewardsCalculatorChartFill}
-            margin={{
-              top: 50,
-              right: 50,
-              bottom: 50,
-              left: 60,
-            }}
-            enableCustomtooltip={true}
-            colors={['#F23838', '#3B89FF', '#FFD16C', '#12B76A']}
-            containerClassName="w-full h-[30rem]"
+        <div className="flex flex-col gap-5">
+          <article className=" bg-white m rounded-lg p-5  ">
+            <LineChart
+              data={RewardsCalculatorChartData}
+              defs={RewardsCalculatorChartDefs}
+              fill={RewardsCalculatorChartFill}
+              margin={{
+                top: 50,
+                right: 50,
+                bottom: 50,
+                left: 60,
+              }}
+              enableCustomtooltip={true}
+              colors={['#F23838', '#3B89FF', '#FFD16C', '#12B76A']}
+              containerClassName="w-full h-[30rem]"
+            />
+          </article>
+          <GlobalTable
+            rows={row}
+            headCells={headCells}
+            isLoading={false}
+            paginate={true}
+            // handlePageChange={(page: number) => {
+            //   getAdminList(page);
+            // }}
+            handleOpen={() => {}}
           />
-        </article>
+        </div>
       )}
     </div>
   );
