@@ -106,7 +106,7 @@ const Simulation = () => {
       fileType === 'text/csv' ||
       fileType === 'application/vnd.ms-excel' ||
       fileType ===
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -340,7 +340,7 @@ const Simulation = () => {
           </div>
 
           <a
-            href="../../../../public/files/Prices_Sample.csv" // Adjust the file path as needed
+            href="/files/Prices_Sample.csv" // Adjust the file path as needed
             download
           >
             <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
@@ -453,7 +453,7 @@ const Simulation = () => {
             // handlePageChange={(page: number) => {
             //   getAdminList(page);
             // }}
-            handleOpen={() => {}}
+            handleOpen={() => { }}
           />
         </div>
       )}
