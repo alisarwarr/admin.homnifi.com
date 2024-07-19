@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { WithdrawSettingsList } from '../../utils/interfaces';
 
 interface TokenSliceState {
   tokensList: Token[];
@@ -10,9 +11,16 @@ interface TokenSliceState {
     [key: string]: any;
   };
   tokenPairs: any[];
+  withdrawSettingsList: WithdrawSettingsList[];
 }
 
 export interface Token {
+  networks: any;
+  networkList?: any;
+  withdrawType?: string;
+  iconUrl?: string;
+  color?: string;
+  type?: string;
   _id: string;
   name: string;
   symbol: string;
@@ -65,7 +73,7 @@ export interface TokenTransactionSettingTypeDetails {
   fee: number;
   feeType: string;
   minAmount: number;
-  maxAmount:number
+  maxAmount: number;
   processType: string;
   token: string;
   trxType: string;
@@ -78,6 +86,7 @@ export interface TokenTransactionSettingType {
   name?: string;
   symbol?: string;
   token?: string;
+
   // transactionType?: string;
   // feeType: string | any;
   // fee: number;
@@ -102,6 +111,7 @@ const initialState: TokenSliceState = {
     'LYK-W': [],
   },
   tokenPairs: [],
+  withdrawSettingsList: [],
 };
 
 const tokenSlice = createSlice({
@@ -117,10 +127,14 @@ const tokenSlice = createSlice({
     setTokenPairs: (state, action: PayloadAction<any>) => {
       return { ...state, tokenPairs: action.payload };
     },
+    setWithdrawSettingsList: (state, action: PayloadAction<any>) => {
+      return { ...state, withdrawSettingsList: action.payload };
+    },
   },
 });
 
-export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs } = tokenSlice.actions;
+export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs, setWithdrawSettingsList } =
+  tokenSlice.actions;
 
 export const selectToken = (state: { token: TokenSliceState }) => state.token;
 export default tokenSlice.reducer;

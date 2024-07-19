@@ -11,10 +11,14 @@ import { ReactComponent as TriangleIcon } from '../../SVGIcons/triangle.svg';
 import { ReactComponent as DeleteIcon } from '../../SVGIcons/delete.svg';
 import { ReactComponent as Delete } from '../../SVGIcons/deleteIcon.svg';
 import { ReactComponent as Copy } from '../../SVGIcons/copy.svg';
+
 import { ReactComponent as Spinner } from '../../SVGIcons/spinner.svg';
+import { ReactComponent as ToolTipSvg } from '../../SVGIcons/tooltip.svg';
+import { ReactComponent as SmallCross } from '../../SVGIcons/smallCrossIcon.svg';
 
 export {
   EyeOpenIcon,
+  SmallCross,
   EyeCloseIcon,
   WarningIcon,
   CancelIcon,
@@ -28,4 +32,5 @@ export {
   Copy,
   Delete,
   Spinner,
+  ToolTipSvg,
 };

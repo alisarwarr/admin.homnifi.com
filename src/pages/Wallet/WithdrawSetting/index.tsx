@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../../components/Button';
 import AddWithdrawSettings from './AddWithdrawSetting';
 import { add, edit } from '../../../images/other';
 import GlobalTable from '../../../components/Table/GlobalTable';
 import { Tooltip } from 'antd';
+import { useTokenActions } from '../../../store/token/tokenAction';
+import { useSelector } from 'react-redux';
+import { selectToken } from '../../../store/token/tokenSlice';
 
 function WithdrawSetting() {
   const [open, setOpen] = useState(false);
+  const { withdrawSettingsList } = useSelector(selectToken);
+  const { getWithdrawSettings } = useTokenActions();
   const [selectedSetting, setSelectedSetting] = useState<null>(null);
   const onPopupHandler = () => {
     setOpen(!open);
+    if (open) {
+      setSelectedSetting(null);
+    }
   };
 
   const headCells = [
@@ -17,25 +25,20 @@ function WithdrawSetting() {
     { id: 'type', label: 'type' },
     { id: 'withdrawFrom', label: 'Withdraw From' },
     { id: 'withdrawTo', label: 'Withdraw To' },
-    { id: 'limit', label: 'Limit' },
+    { id: 'minAmount', label: 'Min Amount' },
     { id: 'fees', label: 'Fees' },
     { id: 'commission', label: 'commission' },
     { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
   ];
 
-  const data = [
-    { id: 1, type: 'internal', withdrawFrom: 10, withdrawTo: 100, fees: 50, commission: '5 %' },
-    { id: 2, type: 'external', withdrawFrom: 100, withdrawTo: 200, fees: 50, commission: '5 %' },
-  ];
-
-  const rows = data?.map((_data: any, index: number) => {
+  const rows = withdrawSettingsList?.map((_data: any, index: number) => {
     return {
-      id: index,
+      id: index + 1,
       type: _data.type,
-      withdrawFrom: _data.withdrawFrom,
-      withdrawTo: _data.withdrawTo,
-      limit: ` ${'Min ' + _data.withdrawFrom + '-  Max ' + _data.withdrawTo}`,
-      fees: _data.fees,
+      withdrawFrom: _data.fromToken.name,
+      withdrawTo: _data.toToken.name,
+      minAmount: _data.minAmount,
+      fees: _data.fee,
       commission: _data.commission,
       actions: (
         <div className="flex items-center gap-2">
@@ -56,6 +59,10 @@ function WithdrawSetting() {
       ),
     };
   });
+
+  useEffect(() => {
+    getWithdrawSettings();
+  }, []);
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">

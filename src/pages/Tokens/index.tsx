@@ -1,19 +1,20 @@
-import { useEffect, useState } from 'react';
-// REDUX
-import { useTokenActions } from '../../store/token/tokenAction';
-import { selectToken } from '../../store/token/tokenSlice';
-import { useSelector } from 'react-redux';
-// COMMON
-import { refresh, add } from '../../images/other';
-import TokensTable from '../../components/Token/TokenTable';
-import Button from '../../components/Button';
 import AddToken from './AddToken';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import Button from '../../components/Button';
+import { refresh, add } from '../../images/other';
+
+import { selectToken } from '../../store/token/tokenSlice';
+
+import TokensTable from '../../components/Token/TokenTable';
+import { useTokenActions } from '../../store/token/tokenAction';
 
 const Tokens = () => {
   const { getTokensList } = useTokenActions();
   const { tokensList } = useSelector(selectToken);
-  const [loading, setLoading] = useState(true);
+
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectedToken, setSelectedToken] = useState<any>();
 
   useEffect(() => {
@@ -24,8 +25,12 @@ const Tokens = () => {
     })();
   }, []);
 
+  //popup handler
   const onPopupHandler = () => {
     setOpen(!open);
+    if (open) {
+      setSelectedToken(null);
+    }
   };
 
   const data = [
@@ -46,6 +51,7 @@ const Tokens = () => {
   ];
 
   const onEditHanlder = (itm: any) => {
+    console.log('item edit ::', itm);
     setSelectedToken(itm);
     setOpen(true);
   };
@@ -64,7 +70,7 @@ const Tokens = () => {
 
       {/* TABLE */}
       <TokensTable data={data} loading={loading} onEditHanlder={onEditHanlder} />
-      <AddToken open={open} onClose={onPopupHandler} />
+      <AddToken open={open} onClose={onPopupHandler} editToken={selectedToken} />
     </div>
   );
 };

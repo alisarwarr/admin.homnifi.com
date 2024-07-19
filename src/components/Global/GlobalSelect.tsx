@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactComponent as ArrowDownIcon } from '../../SVGIcons/arrowDown.svg';
 import { lowerCaseAllLetters } from '../../utils/utils';
+import { SmallCross } from '../../images/svg';
 
 interface IOptions {
   label: string;
@@ -14,6 +15,7 @@ type TGlobalSelect = {
   placeholder?: string;
   options: IOptions[];
   onChange?: (value: string | string[] | any) => void;
+  removeItemHanlder?: any;
   onBlur?: (e: React.ChangeEvent<HTMLDivElement>) => void;
   setFieldTouched?: any;
   setFieldValue?: any;
@@ -43,6 +45,7 @@ const GlobalSelect = ({
   inputClass,
   labelOptionClass,
   disabled = false,
+  removeItemHanlder,
 }: TGlobalSelect) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchTerm, setSearchTerm] = React.useState('');
@@ -104,6 +107,10 @@ const GlobalSelect = ({
   React.useEffect(() => {
     setFilteredOptions(options);
   }, [options]);
+
+  // this is use for multi select dropdown
+  const resultMultiValues = options?.filter((option) => value.includes(option.value));
+
   return (
     <div className="flex flex-col gap-2 text-sm py-2">
       <div className="font-medium text-primary">
@@ -118,9 +125,27 @@ const GlobalSelect = ({
           } ${inputClass}`}
           onClick={toggleDropdown}
         >
-          {options?.find((option) => option.value === value)?.label || placeholder}
+          {isMulti && resultMultiValues.length ? (
+            <>
+              <div className="px-4 rounded-sm flex flex-wrap gap-4">
+                {resultMultiValues.map((dt: any) => {
+                  return (
+                    <span
+                      className="flex items-center justify-center gap-2 bg-gray-100 px-2 py-1"
+                      onClick={() => {
+                        removeItemHanlder(dt.value);
+                      }}
+                    >
+                      {dt.label} <SmallCross />
+                    </span>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <>{options?.find((option) => option.value === value)?.label || placeholder}</>
+          )}
         </div>
-
         {!disabled && (
           <>
             <div

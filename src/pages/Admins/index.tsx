@@ -1,14 +1,14 @@
 //REACT
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAdminActions } from '../../store/admin/adminActions';
 
 import { add } from '../../images/other';
+import Loader from '../../components/Loader/Loader';
 import { selectUser } from '../../store/user/userSlice';
-import { useNavigate } from 'react-router-dom';
 import AdminTable from '../../components/Admin/AdminTable';
 import { selectAdmin } from '../../store/admin/adminSlice';
-import Loader from '../../components/Loader/Loader';
 
 export default function Admins(): JSX.Element {
   const navigate = useNavigate();
@@ -19,22 +19,16 @@ export default function Admins(): JSX.Element {
 
   const [loading, setLoading] = useState(true);
 
-  const fireApi = async () => {
+  const fetchAdminList = async () => {
     const response = await getAdminList();
     setLoading(false);
   };
 
   useEffect(() => {
     if (list?.length === 0) {
-      fireApi();
+      fetchAdminList();
     } else {
       setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (rolesList.length === 0) {
-      getAdminRole();
     }
   }, []);
 
@@ -57,7 +51,7 @@ export default function Admins(): JSX.Element {
         </div>
       </div>
       {/* TABLE */}
-      <AdminTable data={list} loading={loading} fireApi={fireApi} />
+      <AdminTable data={list} loading={loading} fetchAdminList={fetchAdminList} />
     </div>
   );
 }

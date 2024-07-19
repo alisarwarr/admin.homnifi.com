@@ -7,6 +7,8 @@ export const GET_PROFILE = '/profile';
 // Token
 export const TOKEN = '/tokens';
 export const TOKEN_TRANSACTION_SETTING = '/tokens/trx-settings';
+export const GET_ALL_TOKENS = '/tokens/all';
+export const ADD_WITH_DRAW_SETTINGS = '/tokens/withdraw/setting';
 
 export const TOKEN_PAIRS = '/swap/pairs';
 export const TOKEN_PAIRS_SETTING = '/swap/pairs';
@@ -144,10 +146,10 @@ export const UPDATE_ADMIN = '/admins';
 export const MAINTENANCE = '/maintenance';
 
 //cloudk
-
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
 export const CLOUDK_MACHINE_SIMULATION = '/cloud-k/test-simulation';
+
 //Wallet Admin
 export const WALLET_ADMIN_DEPOSITS = '/wallets/deposits';
 export const WALLET_ADMIN_SWAPS = '/wallets/swaps';

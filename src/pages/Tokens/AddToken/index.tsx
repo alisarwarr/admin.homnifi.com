@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Button from '../../../components/Button';
@@ -6,44 +6,120 @@ import GlobalInput from '../../../components/Global/GlobalInput';
 import GlobalSelect from '../../../components/Global/GlobalSelect';
 import GlobalDialog from '../../../components/Dialog';
 import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
+import { useTokenActions } from '../../../store/token/tokenAction';
+import useLoading from '../../../utils/hooks/useLoading';
+import { useTokensSettingsAction } from '../../../store/tokensSettings/tokensSettingsAction';
+import { selectTokensSettings } from '../../../store/tokensSettings/tokensSettingsSlice';
+import { useSelector } from 'react-redux';
+import { errorNotify, successAlert } from '../../../utils/alerts';
 
 interface Props {
   open: boolean;
   onClose: () => void;
+  editToken: any;
 }
 
-function AddToken({ open, onClose }: Props) {
+const TYPES_DATA = [
+  { label: 'ON CHAIN', value: 'on-chain' },
+  { label: 'OFF CHAIN ', value: 'off-chain' },
+];
+function AddToken({ open, onClose, editToken }: Props) {
+  const { onUpdateToken, createNewToken } = useTokenActions();
+  const { networkSettings } = useSelector(selectTokensSettings);
+  const { getNetworkSettings, addNetworkSettings } = useTokensSettingsAction();
+
+  const [isSubmit, setIsSubmit] = useState(false);
+  const { isLoading, startLoading, stopLoading } = useLoading(false);
+
   const initialValues = {
     name: '',
-    displayName: '',
-    rate: '',
-    networkType: '',
-    networkDisplayName: '',
-    tokenType: '',
+    symbol: '',
+    type: '',
     withdrawType: '',
-    tokenIcon: '',
+    color: '',
+    networks: [],
+    iconUrl: '',
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
-    displayName: Yup.string().required('Display name is required'),
-    rate: Yup.string().required('Rate is required'),
-    tokenType: Yup.string().required('Token Type is required'),
-    tokenIcon: Yup.string().required('Token icon is required'),
+    symbol: Yup.string().required('Display name is required'),
+    type: Yup.string().required('type is required'),
+    color: Yup.string().required('Color is required'),
     withdrawType: Yup.string().required('Withdraw type is required'),
+    iconUrl: Yup.string().required('Icon url required'),
+    networks: Yup.array()
+      .of(Yup.string())
+      .min(1, 'At least one network must be selected')
+      .required('Networks is required'),
   });
 
+  // formik initialization and form submission here
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      console.log('values', values);
-      onClose();
-      resetForm();
+    onSubmit: async (values) => {
+      startLoading();
+      let response: any;
+      if (editToken) {
+        response = await onUpdateToken(editToken._id, values);
+      } else {
+        response = await createNewToken(values);
+      }
+      if (response.status) {
+        successAlert(response.message);
+        stopLoading();
+        return onResetStates();
+      } else {
+        stopLoading();
+        return errorNotify(response.message);
+      }
     },
   });
 
-  const { handleChange, handleSubmit, values, errors, touched, resetForm } = formik;
+  //reset state from after form submission
+  const onResetStates = () => {
+    setIsSubmit(false);
+    onClose();
+    resetForm();
+  };
+
+  const { handleChange, handleSubmit, values, errors, touched, resetForm, setFieldValue, setValues } = formik;
+
+  // get token api call
+  useEffect(() => {
+    if (!networkSettings || networkSettings?.length === 0) {
+      getNetworkSettings({});
+    }
+  }, []);
+
+  //remove item item from dropdown
+  const removeItemHanlder = (id: string) => {
+    if (values?.networks?.includes(id)) {
+      return setFieldValue(
+        'networks',
+        values.networks.filter((dt: string) => dt !== id)
+      );
+    }
+  };
+
+  // set form states of editable tokens
+  useEffect(() => {
+    if (editToken) {
+      const type: any = TYPES_DATA.find((dt: any) => dt.value === editToken.type);
+      const withdrawType: any = TYPES_DATA.find((dt: any) => dt.value === editToken.withdrawType);
+      setValues({
+        name: editToken.name ?? '',
+        symbol: editToken.symbol ?? '',
+        type: type?.value ?? '',
+        withdrawType: withdrawType?.value ?? '',
+        color: editToken.color ?? '',
+        // networks: editToken.networks,
+        networks: editToken.networks?.map((dt) => dt._id),
+        iconUrl: editToken?.iconUrl ?? '',
+      });
+    }
+  }, [editToken]);
 
   return (
     <div>
@@ -51,12 +127,12 @@ function AddToken({ open, onClose }: Props) {
         open={open}
         size="md"
         closeButtonShow={false}
-        onClose={onClose}
+        onClose={onResetStates}
         content={
-          <form onSubmit={handleSubmit}>
+          <>
             <div className="flex justify-between items-center py-2">
               <div className=" text-md font-medium">Add Token</div>
-              <div className="cursor-pointer" onClick={onClose}>
+              <div className="cursor-pointer" onClick={onResetStates}>
                 <CrossIcon />
               </div>
             </div>
@@ -65,101 +141,35 @@ function AddToken({ open, onClose }: Props) {
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
                     name="name"
-                    label="Name"
+                    label="Token Name"
                     placeholder="Enter your name"
                     type="text"
                     required
                     value={values.name}
                     onChange={handleChange}
-                    isError={errors.name}
+                    isError={isSubmit ? errors.name : false}
                     error={errors.name}
                   />
                 </div>
 
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
-                    name="displayName"
-                    label="Display Name"
-                    placeholder="Enter your display name"
+                    disabled={editToken ? true : false}
+                    name="symbol"
+                    label="Symbol"
+                    placeholder="Enter your symbol"
                     type="text"
                     required
                     className="w-1/2"
-                    value={values.displayName}
+                    value={values.symbol}
                     onChange={handleChange}
-                    isError={errors.displayName}
-                    error={errors.displayName}
+                    isError={isSubmit ? errors.symbol : false}
+                    error={errors.symbol}
                   />
                 </div>
               </div>
 
               <div className="flex flex-col md:items-baseline  md:flex-row w-full">
-                <div className="w-full md:w-1/2 mx-2">
-                  <GlobalInput
-                    name="rate"
-                    label="Rate"
-                    placeholder="1"
-                    type="number"
-                    required
-                    value={values.rate}
-                    onChange={handleChange}
-                    isError={errors.rate}
-                    error={errors.rate}
-                  />
-                </div>
-
-                <div className="w-full md:w-1/2 mx-2 pt-2">
-                  <GlobalSelect
-                    label="Network Type"
-                    labelOptionClass={'text-left'}
-                    name={'networkType'}
-                    placeholder={'Selecte ..'}
-                    options={[
-                      { label: 'one', value: 'one' },
-                      { label: 'two', value: 'two' },
-                      { label: 'three', value: 'three' },
-                    ]}
-                    isError={false}
-                    onChange={(e) => {
-                      console.log('event ::', e);
-                      formik.setFieldValue('networkType', e);
-                    }}
-                    inputClass="mb-2 w-full"
-                    value={values.networkType}
-                  />
-                </div>
-                <div className="w-full md:w-1/2 mx-2">
-                  <GlobalInput
-                    name="networkDisplayName"
-                    label="Network Display Name"
-                    placeholder="Enter your"
-                    type="text"
-                    value={values.networkDisplayName}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="w-full md:w-1/2 mx-2">
-                  <GlobalSelect
-                    required
-                    label="Token Type"
-                    labelOptionClass={'text-left'}
-                    name={'tokenType'}
-                    placeholder={'Selecte ..'}
-                    options={[
-                      { label: 'one', value: 'one' },
-                      { label: 'two', value: 'two' },
-                      { label: 'three', value: 'three' },
-                    ]}
-                    isError={errors.tokenType && touched.tokenType ? true : false}
-                    onChange={(e) => {
-                      formik.setFieldValue('tokenType', e);
-                    }}
-                    inputClass="mb-2 w-full"
-                    value={values.tokenType}
-                    error={errors.tokenType}
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalSelect
                     required
@@ -168,13 +178,12 @@ function AddToken({ open, onClose }: Props) {
                     name={'withdrawType'}
                     placeholder={'Selecte ..'}
                     options={[
-                      { label: 'one', value: 'one' },
-                      { label: 'two', value: 'two' },
-                      { label: 'three', value: 'three' },
+                      { label: 'ON CHAIN', value: 'on-chain' },
+                      { label: 'OFF CHAIN ', value: 'off-chain' },
                     ]}
                     setFieldTouched={() => formik.setFieldTouched('withdrawType', true)}
                     error={errors.withdrawType}
-                    isError={touched.withdrawType && errors.withdrawType ? true : false}
+                    isError={touched.withdrawType && errors.withdrawType && isSubmit ? true : false}
                     value={values.withdrawType}
                     onChange={(e: any) => {
                       console.log('event 123 ::', e);
@@ -186,28 +195,98 @@ function AddToken({ open, onClose }: Props) {
                 </div>
 
                 <div className="w-full md:w-1/2 mx-2">
+                  <GlobalSelect
+                    required
+                    label="Type"
+                    labelOptionClass={'text-left'}
+                    name={'type'}
+                    placeholder={'Selecte ..'}
+                    options={[
+                      { label: 'ON CHAIN', value: 'on-chain' },
+                      { label: 'OFF CHAIN ', value: 'off-chain' },
+                    ]}
+                    isError={isSubmit && errors.type && touched.type ? true : false}
+                    onChange={(e) => {
+                      formik.setFieldValue('type', e);
+                    }}
+                    inputClass="mb-2 w-full"
+                    value={values.type}
+                    error={errors.type}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col md:items-baseline  md:flex-row w-full">
+                <div className="w-full mx-2 pt-2">
+                  <GlobalSelect
+                    label="Networks"
+                    labelOptionClass={'text-left'}
+                    name={'networks'}
+                    placeholder={'Selecte ..'}
+                    options={networkSettings?.map((dt: any) => {
+                      return { label: dt.name, value: dt._id };
+                    })}
+                    isMulti={true}
+                    // isError={false}
+                    removeItemHanlder={removeItemHanlder}
+                    onChange={(e) => {
+                      setFieldValue('networks', [...values.networks, e]);
+                    }}
+                    inputClass="mb-2 w-full"
+                    value={values.networks}
+                    isError={isSubmit && errors.networks && touched.networks ? true : false}
+                    error={errors.networks}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col  md:flex-row md:items-baseline  w-full">
+                <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
-                    name="tokenIcon"
-                    label="Token Icon"
-                    placeholder="Enter your name"
+                    name="color"
+                    label="color"
+                    placeholder="Enter color"
                     type="text"
                     required
-                    value={values.tokenIcon}
+                    value={values.color}
                     onChange={handleChange}
-                    isError={errors.tokenIcon}
-                    error={errors.tokenIcon}
+                    isError={isSubmit ? errors.color : false}
+                    error={errors.color}
+                  />
+                </div>
+
+                <div className="w-full md:w-1/2 mx-2">
+                  <GlobalInput
+                    name="iconUrl"
+                    label="Icon URL"
+                    placeholder="Enter icon url"
+                    type="text"
+                    required
+                    value={values.iconUrl}
+                    onChange={handleChange}
+                    isError={isSubmit ? errors.iconUrl : false}
+                    error={errors.iconUrl}
                   />
                 </div>
               </div>
               <div className="mx-4 md:mx-2 my-2">
                 <div className="flex flex-col  md:flex-row w-full">
-                  <Button className="bg-primary rounded-full my-4" loadingType="circular" buttonType="submit">
+                  <Button
+                    loading={isLoading}
+                    className="bg-primary rounded-full my-4"
+                    loadingType="circular"
+                    buttonType="submit"
+                    onClick={() => {
+                      setIsSubmit(true);
+                      handleSubmit();
+                    }}
+                  >
                     Add Token
                   </Button>
                 </div>
               </div>
             </div>
-          </form>
+          </>
         }
       />
     </div>

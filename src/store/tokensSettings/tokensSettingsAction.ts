@@ -36,7 +36,8 @@ export const useTokensSettingsAction = () => {
       })
       .catch((error: any) => error);
   };
-  const getNetworkSettings = async ({ page, limit }: { page: number; limit: number }) => {
+
+  const getNetworkSettings = async ({ page = 1, limit = 10 }: { page?: number; limit?: number }) => {
     return await ApiRequest()
       .request({
         method: 'GET',
@@ -54,9 +55,12 @@ export const useTokensSettingsAction = () => {
       .request({
         method: 'POST',
         url: WALLET_ADMIN_NETWORKS_NEW,
-        data
+        data,
       })
-      .then((response: any) => response)
+      .then((response: any) => {
+        getNetworkSettings({});
+        return response;
+      })
       .catch((error: any) => error);
   };
 
