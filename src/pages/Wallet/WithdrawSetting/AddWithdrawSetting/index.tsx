@@ -96,9 +96,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
 
       if (response.status) {
         successAlert(response.message);
-        onClose();
-        resetForm();
-        return setIsSubmit(false);
+        return onResetStates();
       }
 
       successAlert(
@@ -143,13 +141,20 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     }
   }, [selectedSetting]);
 
+  //reset state from after form submission
+  const onResetStates = () => {
+    setIsSubmit(false);
+    onClose();
+    resetForm();
+  };
+
   return (
     <div>
       <GlobalDialog
         open={open}
         size="md"
         closeButtonShow={false}
-        onClose={onClose}
+        onClose={onResetStates}
         content={
           <form
             onSubmit={(e) => {
@@ -164,8 +169,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               <div
                 className="cursor-pointer -mr-2"
                 onClick={() => {
-                  setIsSubmit(false);
-                  onClose();
+                  onResetStates();
                 }}
               >
                 <CrossIcon />
