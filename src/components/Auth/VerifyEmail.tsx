@@ -27,6 +27,7 @@ const VerifyEmail = ({ setStatus }: { setStatus: () => void }) => {
               Didn't receive the code?{' '}
               <button className="text-primary" onClick={() => navigate('/auth/forget-password')}>
                 Send again
+                {/* Send again */}
               </button>
             </div>
           }
