@@ -10,17 +10,14 @@ import GlobalTable from '../../../components/Table/GlobalTable';
 import moment from 'moment';
 import StatusChip from '../../../components/StatusChip';
 import TokenNameWithLogo from '../../../components/TokenNameWithLogo';
-import { getTableIndexNumber } from '../../../utils/utils';
 
 const headCells = [
-  { id: 'id', label: 'ID', show: true },
-  { id: 'user', label: 'User', show: true },
+  { id: 'requestId', label: 'ID', show: true },
+  { id: 'user', label: 'User Email', show: true },
   { id: 'createdAt', label: 'Date', show: true },
-  { id: 'fromToken', label: 'From Token', show: true },
+  { id: 'toWallet', label: 'To Wallet', show: true },
   { id: 'amount', label: 'Amount', show: true },
   { id: 'hash', label: 'Fee', show: true },
-  { id: 'fee', label: 'Fee', show: true },
-
   { id: 'status', label: 'Status', show: true, dataClass: 'text-center' },
 ];
 type FILTER = {
@@ -42,15 +39,17 @@ const DepositHistory = () => {
 
   const rows = depositHistory?.list?.map((_data, index) => {
     return {
-      id: getTableIndexNumber(filter.page, index, filter.limit),
-      user: `${_data?.user?.firstName ? _data?.user?.firstName : ''} ${
-        _data?.user?.lastName ? _data?.user?.lastName : '-'
-      }`,
+      requestId: _data?.requestId,
+      user: _data?.user?.email,
       createdAt: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
-      fromToken: <TokenNameWithLogo tokenName={_data?.wallet?.token?.name} />,
+      toWallet: (
+        <TokenNameWithLogo
+          tokenName={_data?.toWallet?.token?.name}
+          src={_data?.toWallet?.token?.iconUrl}
+        />
+      ),
       amount: _data?.amount,
       status: <StatusChip status={_data?.transactionStatus} />,
-      fee: _data.fee,
       hash: _data.hash,
     };
   });

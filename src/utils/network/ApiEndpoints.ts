@@ -48,7 +48,7 @@ export const WALLET_MIGRATIONS = '/wallet/migrations';
 export const WALLET_MIGRATIONS_ACTIONS = '/wallet/migration/action';
 
 // HISTORY
-export const WALLET_SWAP_HISTORY = '/wallet/swap/history';
+export const WALLET_SWAP_HISTORY = '/wallets/swaps';
 export const WALLET_MIGRATE_HISTORY = '/wallet/migrate/history';
 export const WALLET_DEPOSIT_HISTORY = '/wallets/deposits';
 export const WALLET_WITHDRAW_HISTORY = '/wallets/withdraws';
