@@ -313,7 +313,6 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                 <div className="w-full mx-2">
                   <GlobalInput
                     required
-                    toolTip="Amount exceeding this value will request for admin approval"
                     name="minWithdrawableAmount"
                     label="Max Amount For Automatic Withdraw "
                     placeholder="Enter min with drawableAmount"

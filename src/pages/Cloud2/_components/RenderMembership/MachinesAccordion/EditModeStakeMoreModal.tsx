@@ -64,12 +64,12 @@ export const EditModeFieldStakeMoreModal = ({
         <GlobalSelect
           name="token-modal"
           options={[
-            { name: 'bitcoin', value: 'Bitcoin' },
-            { name: 'ethereum', value: 'Ethereum' },
-            { name: 'solana', value: 'Solana' },
+            { label: 'bitcoin', value: 'Bitcoin' },
+            { label: 'ethereum', value: 'Ethereum' },
+            { label: 'solana', value: 'Solana' },
           ]}
-          showSearch={false}
-          getSelectedValue={(value) => setSelectedToken(value)}
+          isError={false}
+          onChange={(value) => setSelectedToken(value)}
         />
       </article>
       <article>

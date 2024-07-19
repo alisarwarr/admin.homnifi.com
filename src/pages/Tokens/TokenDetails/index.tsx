@@ -171,7 +171,7 @@ const TokenDetails = () => {
                   control={
                     <GlobalSwitch
                       checked={formik.values[item.key]}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         formik.setFieldValue(item.key, e.target.checked);
                       }}
                     />

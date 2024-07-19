@@ -76,29 +76,6 @@ type Props = {
   filterButtons?: React.ReactNode;
 };
 
-const BootstrapInput = styled(InputBase)(({ theme }: { theme: Theme }) => ({
-  'label + &': {
-    marginTop: theme.spacing(3),
-  },
-  '& .MuiInputBase-input': {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: 'theme.palette.background.paper',
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    paddingTop: '6px',
-    paddingBottom: '6px',
-    paddingLeft: '12px',
-    paddingRight: '8px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}));
-
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const GlobalTable = ({
@@ -528,19 +505,6 @@ const GlobalTable = ({
         </div>
 
         {/* LIMIT */}
-        {filter && (
-          <Select
-            value={filter.limit}
-            label={filter.limit}
-            className="max-h-10px"
-            input={<BootstrapInput />}
-            onChange={(e) => handleLimitChange(e.target.value)}
-          >
-            {[10, 25, 50, 100].map((dt) => {
-              return <MenuItem value={dt}>{dt}</MenuItem>;
-            })}
-          </Select>
-        )}
       </div>
 
       <GlobalDialog

@@ -26,7 +26,9 @@ export default function Profile(): JSX.Element {
   };
 
   useEffect(() => {
-    getAdminData(user?.id);
+    // getAdminData(user?.id);
+
+    getAdminData();
   }, []);
 
   useEffect(() => {
