@@ -68,7 +68,9 @@ function WithdrawSetting() {
   useEffect(() => {
     if (withdrawSettingsList?.length === 0) {
       getWithdrawSettings();
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
     } else {
       setLoading(false);
     }

@@ -19,15 +19,11 @@ const Tokens = () => {
   const [selectedToken, setSelectedToken] = useState<any>();
 
   useEffect(() => {
-    //   (async () => {
-    //     setLoading(true);
-    //     await getTokensList();
-    //     setLoading(false);
-    //   })();
-
     if (tokensList.length === 0) {
       getTokensList();
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
     } else {
       setLoading(false);
     }

@@ -76,29 +76,18 @@ function AdminRoles() {
                     className="cursor-pointer"
                   />
                 </Tooltip>
-
-                <Tooltip title={'Delete Admin Role'}>
-                  <div
-                    onClick={() => onDeleteHandler(_data)}
-                    className="cursor-pointer"
-                  >
-                    <DeleteIcon />
-                  </div>
-                </Tooltip>
               </div>
             ),
           };
         })
       : [];
 
-  const onDeleteHandler = (itm: any) => {
-    console.log('itm ::', itm);
-  };
-
   useEffect(() => {
     if (rolesList.length === 0) {
       getAdminRole();
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
     } else {
       setLoading(false);
     }
