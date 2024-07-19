@@ -7,6 +7,9 @@ import {
   formatOnlyDate,
   getDatePercentage,
 } from '../../../../../utils/helper';
+import GlobalSkeleton from '../../../../../components/Global/GlobalSkeleton';
+import { useSelector } from 'react-redux';
+import { selectCloudkSlice } from '../../../../../store/cloudk/cloudk.slice';
 
 type TProps = {
   data: TMACHINE_DATA;
@@ -18,6 +21,7 @@ const ExpiresIn = ({ data }: TProps) => {
   });
 
   const { startDate, endDate } = data;
+  const { getMachineDetailsLoading } = useSelector(selectCloudkSlice);
 
   const { totalDays, totalMonths } = formatDuration(endDate || '');
 
@@ -40,8 +44,14 @@ const ExpiresIn = ({ data }: TProps) => {
           endText={(endDate && formatOnlyDate(endDate)) || ''}
         />
         <div className="flex flex-col lg:gap-1 font-semibold text-redDanger absolute bottom-12 text-center">
-          <span className="md:text-md">{totalMonths || 1} Month</span>
-          <span className="text-xs">{totalDays || 25} Days</span>
+          {getMachineDetailsLoading ? (
+            <GlobalSkeleton animationValue="pulse" width={60} height={40} />
+          ) : (
+            <>
+              <span className="md:text-md">{totalMonths || 1} Month</span>
+              <span className="text-xs">{totalDays || 25} Days</span>
+            </>
+          )}
         </div>
       </article>
     </section>

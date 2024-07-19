@@ -20,6 +20,7 @@ const SingleMachineModalBody = ({ id }: Props) => {
   const machine = useSelector((state: RootState) =>
     selectCloudMachine(state, id)
   );
+
   const { GetConvertedPrice } = useGeneralActions();
 
   const conversionRate = useSelector(selectConvertedPrice);

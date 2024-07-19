@@ -1,26 +1,13 @@
 import RewardsTillNow from './RenderMembership/RewardsTillNow';
 import RenderMachinesHistory from './RenderMembership/RenderMachinesHistory';
-import React, { useEffect } from 'react';
-import { useCloudActions } from '../../../store/cloudk/cloudk.action';
+import React from 'react';
 
-type Props = {
-  isRenderReward?: boolean;
-};
-
-const RenderMemberShip = ({ isRenderReward = true }: Props) => {
-  const { getUserMachineRewards } = useCloudActions();
-
-  useEffect(() => {
-    getUserMachineRewards();
-  }, []);
-
+const RenderMemberShip = () => {
   return (
     <div>
-      {isRenderReward && (
-        <div className="w-full flex gap-4">
-          <RewardsTillNow />
-        </div>
-      )}
+      <div className="w-full flex gap-4">
+        <RewardsTillNow />
+      </div>
 
       <RenderMachinesHistory />
     </div>

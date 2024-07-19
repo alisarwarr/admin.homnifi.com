@@ -2,8 +2,12 @@ import { TMACHINE_DATA } from '../../../../../interfaces/cloudk';
 import { useSelector } from 'react-redux';
 import { selectConvertedPrice } from '../../../../../store/general/generalSlice';
 import { RootState } from '../../../../../store';
-import { selectCloudMachine } from '../../../../../store/cloudk/cloudk.slice';
+import {
+  selectCloudkSlice,
+  selectCloudMachine,
+} from '../../../../../store/cloudk/cloudk.slice';
 import GlobalSwitch from '../../../../../components/Global/GlobalSwitch';
+import GlobalSkeleton from '../../../../../components/Global/GlobalSkeleton';
 
 type TProps = {
   data: TMACHINE_DATA;
@@ -16,6 +20,8 @@ const Staked = ({ data }: TProps) => {
     selectCloudMachine(state, _id)
   );
 
+  const { getMachineDetailsLoading } = useSelector(selectCloudkSlice);
+
   const conversionRate = useSelector(selectConvertedPrice);
 
   return (
@@ -26,11 +32,17 @@ const Staked = ({ data }: TProps) => {
         </span>
       </article>
       <span className="text-primary font-semibold text-lg">
-        $
-        {(conversionRate &&
-          totalStaked &&
-          (totalStaked * conversionRate)?.toLocaleString()) ||
-          '25,000'}
+        {getMachineDetailsLoading ? (
+          <GlobalSkeleton animationValue="pulse" width={60} height={40} />
+        ) : (
+          `$
+        ${
+          (conversionRate &&
+            totalStaked &&
+            (totalStaked * conversionRate)?.toLocaleString()) ||
+          '0'
+        } `
+        )}
         <span className="text-sm">LYK</span>
       </span>
 
@@ -42,7 +54,7 @@ const Staked = ({ data }: TProps) => {
         <GlobalSwitch checked={data?.autoCompound || false} disabled={true} />
       </article>
 
-      {!machine?.autoCompound ? (
+      {!data?.autoCompound ? (
         <span className="bg-cardBg text-primary w-max p-2 rounded-md text-xs">
           Turn on and get 30% more
         </span>

@@ -155,7 +155,6 @@ export const useCloudActions = () => {
   };
 
   const getUserMachineRewards = async () => {
-    // userMachinesLoading
     dispatch(
       cloudkSliceAction.setCloudkSlice({
         getUserMachineRewardsLoading: true,
@@ -167,6 +166,7 @@ export const useCloudActions = () => {
         url: USER_MACHINE_REWARDS,
       })
       .then((response) => {
+        console.log({ response });
         dispatch(cloudkSliceAction.setCloudkSlice(response.data.data));
         dispatch(
           cloudkSliceAction.setCloudkSlice({
@@ -191,9 +191,11 @@ export const useCloudActions = () => {
   const getUserMachineList = async ({
     search,
     limit,
+    page,
   }: {
     search: string;
     limit: number;
+    page: number;
   }) => {
     // userMachinesLoading
     dispatch(
@@ -204,7 +206,7 @@ export const useCloudActions = () => {
     return await ApiRequest()
       .request({
         method: 'GET',
-        url: `${USER_MACHINE_LIST}?search=${search}&limit=${limit}`,
+        url: `${USER_MACHINE_LIST}?search=${search}&limit=${limit}&page=${page}`,
       })
       .then((response: any) => {
         dispatch(cloudkSliceAction.setUserMachineList(response.data.data.list));

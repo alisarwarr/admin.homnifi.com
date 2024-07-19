@@ -5,13 +5,16 @@ import Toottip from '../../../../../components/Global/Toottip';
 import { TMACHINE_DATA } from '../../../../../interfaces/cloudk';
 import { useSelector } from 'react-redux';
 import { selectConvertedPrice } from '../../../../../store/general/generalSlice';
+import { selectCloudkSlice } from '../../../../../store/cloudk/cloudk.slice';
+import GlobalSkeleton from '../../../../../components/Global/GlobalSkeleton';
 
 type TProps = {
   data: TMACHINE_DATA;
 };
 
 const Skalable = ({ data }: TProps) => {
-  // const { conversionRate } = useSelector(selectClouldSlice);
+  const { getMachineDetailsLoading } = useSelector(selectCloudkSlice);
+
   const conversionRate = useSelector(selectConvertedPrice);
 
   const isDesktop = useMediaQuery({
@@ -60,12 +63,17 @@ const Skalable = ({ data }: TProps) => {
         />
         <div className="flex flex-col lg:gap-1 font-bold text-primaryDark absolute bottom-12 text-center">
           <span className="md:text-md font-semibold">
-            ${' '}
-            {(conversionRate &&
-              totalStaked &&
-              stakeLimit &&
-              (stakeLimit - totalStaked)?.toLocaleString()) ||
-              '25,000'}
+            {getMachineDetailsLoading ? (
+              <GlobalSkeleton animationValue="pulse" width={60} height={40} />
+            ) : (
+              `$  ${
+                (conversionRate &&
+                  totalStaked &&
+                  stakeLimit &&
+                  (stakeLimit - totalStaked)?.toLocaleString()) ||
+                '0'
+              }`
+            )}
           </span>
           <span className="text-xs">mLYK</span>
         </div>

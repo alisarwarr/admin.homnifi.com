@@ -28,10 +28,11 @@ const RenderMachinesHistory = () => {
     timeperiod: 'alltime',
     type: 'all',
     search: '',
+    totalPages: 1,
   });
 
-  const [searchValue, setSearchValue] = useState('');
-  const [downloadTransaction, setDownloadTransaction] = useState([]);
+  // const [searchValue, setSearchValue] = useState('');
+  // const [downloadTransaction, setDownloadTransaction] = useState([]);
   const [initialLoad, setInitialLoad] = useState(true);
 
   const debouncedSearchValue = useDebounce(filters.search, 1000);
@@ -40,21 +41,23 @@ const RenderMachinesHistory = () => {
     const userMachineResponse = await getUserMachineList({
       search: debouncedSearchValue,
       limit: filters.limit,
+      page: filters.page,
+    });
+
+    setFilters({
+      ...filters,
+      totalPages: userMachineResponse.data.data.totalPages,
     });
 
     setMachineResponse({ ...userMachineResponse.data.data });
   };
 
   useEffect(() => {
-    fetchMachines();
-  }, [filters.limit, filters.page]);
-
-  useEffect(() => {
     if (initialLoad) {
       setInitialLoad(false);
     }
 
-    if ((filters.page || filters.limit) && !initialLoad) {
+    if ((!initialLoad && userMachineList?.length) || !userMachineList?.length) {
       fetchMachines();
     }
   }, [filters.page, filters.limit, debouncedSearchValue]);
@@ -196,7 +199,9 @@ const RenderMachinesHistory = () => {
         handlePageChange={(page) => {
           setFilters({ ...filters, page });
         }}
+        csvData={rows}
         paginate={true}
+        filterButtons={<></>}
       />
     </>
   );

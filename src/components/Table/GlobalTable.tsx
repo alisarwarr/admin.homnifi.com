@@ -9,11 +9,8 @@ import {
   Tooltip,
 } from '@mui/material';
 import NoData from './NoData';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  arrowDown,
-  arrowUp,
-  copy,
   exportIcon,
   filterIcon,
   lock,
@@ -29,16 +26,9 @@ import MailUser from '../Users/MailUser';
 import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
+import { Theme } from '@mui/material/styles';
 
-const ActionsColors = {
-  Complete: 'primaryGreen',
-  Pending: 'primary',
-  Failed: 'primaryRed',
-};
-
-import MachinesAccordion from '../Cloud/MachinesAccordion';
 import { Copy } from '../../images/svg';
-import { ArrowDown } from '../../images/icons';
 
 type Props = {
   rows?: any[];
@@ -82,10 +72,10 @@ type Props = {
 
   noDataSettings?: string;
   handleOpen: (id: string) => void;
-  totalPages?: number;
+  filterButtons?: React.ReactNode;
 };
 
-const BootstrapInput: any = styled(InputBase)(({ theme }: { theme?: any }) => ({
+const BootstrapInput = styled(InputBase)(({ theme }: { theme: Theme }) => ({
   'label + &': {
     marginTop: theme.spacing(3),
   },
@@ -126,25 +116,18 @@ const GlobalTable = ({
   handleLimitChange,
   showInnerFilters = false,
   csvData,
-  sort,
-  setSort,
-  showSort = false,
   outerFilters,
   refetch,
   showInnerFiltersSearch = true,
   innerFiltersClassName = '',
-
-  setClickeddRow,
   copyIconList = [],
-  showAccordion,
   accordion = {},
-
   copyItems,
-  colorItems,
   imageItems,
   noDataSettings,
   handleOpen,
   rowClasNames,
+  filterButtons,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -175,14 +158,6 @@ const GlobalTable = ({
     setSelectedRows(newSelectedRows);
   };
 
-  const handleSelectAllRows = () => {
-    if (selectedRows.length === rows.length) {
-      setSelectedRows([]);
-    } else {
-      setSelectedRows([...rows]);
-    }
-  };
-
   const handleCheckboxChange = (index) => {
     const updatedColumns = [...ColumnsList];
     updatedColumns[index] = {
@@ -190,27 +165,6 @@ const GlobalTable = ({
       show: !updatedColumns[index].show,
     };
     setColumns(updatedColumns);
-  };
-
-  const handleSort = (key) => {
-    if (sort.sortKey === key) {
-      if (sort.direction === 'DESC') {
-        setSort({
-          sortKey: '',
-          direction: '',
-        });
-        return;
-      }
-      setSort((prev) => ({
-        ...prev,
-        direction: prev.direction === 'ASC' ? 'DESC' : 'ASC',
-      }));
-    } else {
-      setSort({
-        sortKey: key,
-        direction: 'ASC',
-      });
-    }
   };
 
   //search handle change
@@ -262,68 +216,74 @@ const GlobalTable = ({
               />
             )}
             <div className="flex gap-2 items-center mr-2 z-50">
-              <IconButton
-                className="text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-                type="button"
-                onClick={() => {
-                  const data = csvData();
+              {filterButtons ? (
+                filterButtons
+              ) : (
+                <>
+                  <IconButton
+                    className="text-white border border-borderBlue focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                    type="button"
+                    onClick={() => {
+                      const data = csvData();
 
-                  if (data) {
-                    const csv = generateCsv(csvConfig)(data);
-                    download(csvConfig)(csv);
-                  }
-                }}
-              >
-                <img src={exportIcon} className="w-6 bg-primary h-6" />
-              </IconButton>
-              <IconButton
-                className="text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-                type="button"
-                onClick={() => {
-                  window.print();
-                }}
-              >
-                <img src={print} className="w-6 h-6" />
-              </IconButton>
-              <IconButton
-                onClick={() => setIsDropdown(!isDropdown)}
-                className="text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
-                type="button"
-              >
-                <img src={filterIcon} className="w-6 h-6" />
-              </IconButton>
-              {isDropdown && (
-                <div
-                  id="dropdownDefaultCheckbox"
-                  className="max-h-[300px] overflow-y-auto w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute top-16 right-8 !z-50"
-                >
-                  <ul
-                    className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
-                    aria-labelledby="dropdownCheckboxButton"
+                      if (data) {
+                        const csv = generateCsv(csvConfig)(data);
+                        download(csvConfig)(csv);
+                      }
+                    }}
                   >
-                    <li>
-                      {ColumnsList.map((itm, index) => {
-                        return (
-                          <div className="flex items-center border-b border-gray-200 rounded-t-lg dark:border-gray-600 px-2 py-2">
-                            <input
-                              id="checkbox-item-1"
-                              type="checkbox"
-                              checked={itm.show}
-                              onChange={() => handleCheckboxChange(index)}
-                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                            />
-                            <label
-                              htmlFor="checkbox-item-1"
-                              className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                              {itm?.label}
-                            </label>
-                          </div>
-                        );
-                      })}
-                    </li>
-                  </ul>
-                </div>
+                    <img src={exportIcon} className="w-6 bg-primary h-6" />
+                  </IconButton>
+                  <IconButton
+                    className="text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                    type="button"
+                    onClick={() => {
+                      window.print();
+                    }}
+                  >
+                    <img src={print} className="w-6 h-6" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => setIsDropdown(!isDropdown)}
+                    className="text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                    type="button"
+                  >
+                    <img src={filterIcon} className="w-6 h-6" />
+                  </IconButton>
+                  {isDropdown && (
+                    <div
+                      id="dropdownDefaultCheckbox"
+                      className="max-h-[300px] overflow-y-auto w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute top-16 right-8 !z-50"
+                    >
+                      <ul
+                        className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownCheckboxButton"
+                      >
+                        <li>
+                          {ColumnsList.map((itm, index) => {
+                            return (
+                              <div className="flex items-center border-b border-gray-200 rounded-t-lg dark:border-gray-600 px-2 py-2">
+                                <input
+                                  id="checkbox-item-1"
+                                  type="checkbox"
+                                  checked={itm.show}
+                                  onChange={() => handleCheckboxChange(index)}
+                                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                />
+                                <label
+                                  htmlFor="checkbox-item-1"
+                                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                >
+                                  {itm?.label}
+                                </label>
+                              </div>
+                            );
+                          })}
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -379,42 +339,7 @@ const GlobalTable = ({
             <thead>
               <tr
                 className={`${rows.length > 0 ? 'text-defaultBlack' : 'text-textSecondary'} w-full text-left`}
-              >
-                {/* Checkbox column */}
-                {/* {true && (
-                  <th className={`py-4 hidden md:table-cell font-semibold sm:text-xs xl:text-sm`}>
-                    <Checkbox
-                      checked={selectedRows.length === rows.length && rows.length !== 0}
-                      onChange={handleSelectAllRows}
-                      inputProps={{ 'aria-label': 'controlled' }}
-                    />
-                  </th>
-                )} */}
-
-                {/* {headCells.map((cell, index) => {
-                  return (
-                    cell.id !== '_id' && (
-                      <th
-                        key={index}
-                        className={`py-4 px-2  hidden md:table-cell text-defaultBlack font-semibold  sm:text-xs xl:text-sm ${cell.dataClass} ${cell.headCellClass}`}
-                      >
-                        <div className={`flex gap-2 items-center`}>
-                          <span>{cell.label}</span>
-                          {cell.id !== 'id' && cell.id !== 'actions' && showSort && (
-                            <img
-                              src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
-                              alt=""
-                              className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer ${sort.sortKey !== cell.id && 'opacity-50'
-                                }`}
-                              onClick={() => handleSort(cell.id)}
-                            />
-                          )}
-                        </div>
-                      </th>
-                    )
-                  );
-                })} */}
-              </tr>
+              ></tr>
               <tr
                 className={`${rows.length > 0 ? 'text-black' : 'text-textSecondary'} w-full `}
               >
@@ -426,16 +351,6 @@ const GlobalTable = ({
                        ${cell.dataClass}  border-b`}
                     >
                       {cell.label}
-                      {/* {cell.id !== 'id' && cell.id !== 'actions' && showSort && (
-                        <img
-                          src={sort.sortKey === cell.id && sort.direction === 'DESC' ? arrowDown : arrowUp}
-                          alt=""
-                          className={`hover:bg-gray-100/30 hover:rounded-full p-1 cursor-pointer  ${
-                            sort.sortKey !== cell.id && 'opacity-50'
-                          }`}
-                          onClick={() => handleSort(cell.id)}
-                        />
-                      )} */}
                     </th>
                   ))}
               </tr>
