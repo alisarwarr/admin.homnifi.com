@@ -311,7 +311,7 @@ const GlobalTable = ({
           </div>
         )}
         <div
-          className={`hidden lg:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
+          className={`hidden md:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
         >
           {/* <div className="hidden lg:flex items-center gap-2 overflow-auto"> */}
           <table className={`table-bordered border-collapse w-full`}>

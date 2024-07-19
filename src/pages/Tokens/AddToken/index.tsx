@@ -149,7 +149,7 @@ function AddToken({ open, onClose, editToken }: Props) {
                 <CrossIcon />
               </div>
             </div>
-            <div className="mx-4 md:mx-2 mt-4">
+            <div className="mr-2 md:mx-2 mt-4">
               <div className="flex flex-col  md:flex-row w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
