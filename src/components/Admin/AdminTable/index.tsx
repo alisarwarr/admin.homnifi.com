@@ -137,8 +137,8 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
         headCells={headCells}
         isLoading={false}
         paginate={true}
-        totalPages={adminDataDetail.totalPages}
-        page={adminDataDetail.currentPage}
+        totalPages={adminDataDetail?.totalPages}
+        page={adminDataDetail?.currentPage}
         handlePageChange={(page: number) => {
           getAdminList(page);
         }}

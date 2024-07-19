@@ -150,6 +150,7 @@ export const MAINTENANCE = '/maintenance';
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
 export const CLOUDK_MACHINE_SIMULATION = '/cloud-k/test-simulation';
+export const CRON_JOBS_LIST = '/cloud-k/rewards/cronjobs';
 
 //PLATFORM
 export const PLATFORM_AD = '/platform/ads/';
