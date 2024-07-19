@@ -37,7 +37,7 @@ function AddToken({ open, onClose, editToken }: Props) {
     type: '',
     withdrawType: '',
     color: '',
-    networks: [],
+    networks: [''],
     iconUrl: '',
   };
 
@@ -103,7 +103,7 @@ function AddToken({ open, onClose, editToken }: Props) {
   }, []);
 
   //remove item item from dropdown
-  const removeItemHanlder = (id: string) => {
+  const removeItemHanlder = (id: any) => {
     if (values?.networks?.includes(id)) {
       return setFieldValue(
         'networks',
@@ -249,7 +249,7 @@ function AddToken({ open, onClose, editToken }: Props) {
                     })}
                     isMulti={true}
                     // isError={false}
-                    removeItemHanlder={removeItemHanlder}
+                    removeItemHanlder={(id) => removeItemHanlder(id)}
                     onChange={(e) => {
                       setFieldValue('networks', [...values.networks, e]);
                     }}

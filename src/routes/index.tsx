@@ -57,7 +57,7 @@ import AutoCompoundPenality from '../pages/Defi-360/AutoCompoundPenality';
 import Simulation from '../pages/Cloud2/Simulation';
 import Marketing from '../pages/Marketing';
 import CommunityFriends from '../pages/community/Friends';
-import CommunitySupernode from../pages/community/FriendsNode';
+import CommunitySupernode from '../pages/community/SuperNode';
 
 export const router = createBrowserRouter([
   {

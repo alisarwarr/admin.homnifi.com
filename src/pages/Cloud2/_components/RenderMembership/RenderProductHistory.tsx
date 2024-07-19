@@ -156,20 +156,6 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({
     ),
   }));
 
-  const accordingrow: any = {
-    product: <Product />,
-    lifetimeRewards: <LifetimeRewards />,
-    staked: <Staked />,
-    claimableRewards: <Skalable />,
-    quickActions: <ExpiresIn />,
-  };
-
-  const [filter, setFilter] = useState<FILTER>({
-    page: 1,
-    limit: 10,
-    search: null,
-  });
-
   return (
     <>
       <GlobalModal
