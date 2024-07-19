@@ -8,6 +8,7 @@ import {
 import ApiRequest from '../../utils/network/ApiRequest';
 //API
 import { useNavigate } from 'react-router-dom';
+import { errorNotify } from '../../utils/alerts';
 
 export const useUserActions = () => {
   const dispatch = useDispatch();
@@ -49,11 +50,13 @@ export const useUserActions = () => {
         return response.data;
       })
       .catch((error: any) => {
+        console.log('🚀 ~ useUserActions ~ error:', error);
         dispatch(
           setLogin({
             loginLoading: false,
           })
         );
+        errorNotify(error?.data?.message);
         return error;
       });
   };

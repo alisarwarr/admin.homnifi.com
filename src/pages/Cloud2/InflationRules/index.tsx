@@ -110,7 +110,7 @@ const InflationRules = () => {
     if (value === 'create_new_rules') {
       setCloneRows([
         {
-          dropPercentage: 0,
+          dropPercentage: 1,
           productionDecreasePercentage: 0,
           increaseDLPPercentage: 0,
           mintingBoost: 0,

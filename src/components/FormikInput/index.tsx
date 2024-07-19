@@ -42,7 +42,9 @@ export default function FormikInput({
 }) {
   return (
     <div className="w-full">
-      <div className={`flex flex-col gap-1 relative ${className}`}>
+      <div
+        className={`flex text-defaultBlack flex-col gap-1 relative ${className}`}
+      >
         <GlobalInput
           required
           label={label}

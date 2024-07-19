@@ -19,16 +19,22 @@ const validationSchema = Yup.object().shape({
   type: Yup.mixed().required('Type is required.'),
   status: Yup.mixed().required('Status is required.'),
   question: Yup.string().required('Description is required.'),
-  videoUrl: Yup.string().required('Price is required.'),
-  asnwer: Yup.string(),
+  videoUrl: Yup.string().matches(
+    /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be|vimeo\.com|dailymotion\.com)\/.+$/,
+    'Enter a valid video URL from YouTube, Vimeo, or Dailymotion.'
+  ),
+  answer: Yup.string().required('Answer is required.'),
 });
 
 const updateValidationSchema = Yup.object().shape({
   type: Yup.mixed().required('Type is required.'),
   status: Yup.mixed().required('Status is required.'),
   question: Yup.string().required('Description is required.'),
-  videoUrl: Yup.string().required('Url is required.'),
-  answer: Yup.string(),
+  videoUrl: Yup.string().matches(
+    /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be|vimeo\.com|dailymotion\.com)\/.+$/,
+    'Enter a valid video URL from YouTube, Vimeo, or Dailymotion.'
+  ),
+  answer: Yup.string().required('Answer is required.'),
 });
 
 const formFields = [
@@ -81,6 +87,7 @@ const AddFaqs = () => {
       const _values: any = {
         ...values,
         type: lowerCaseAllLetters(values.type?.value),
+        status: lowerCaseAllLetters(values.status?.value),
       };
 
       try {
@@ -98,22 +105,6 @@ const AddFaqs = () => {
           navigate('/history/faq');
         }
         console.log('response', response);
-
-        // if (response?.status) {
-        //   await getFaqs(true);
-        //   if (!id) {
-        //     successAlert(response?.message);
-        //     navigate('/wa');
-        //   } else {
-        //     successAlert(response?.message);
-        //   }
-        // } else {
-        //   if (response.data?.errorVouchers) {
-        //     setDuplicateVouchers({ open: true, duplicates: response.data?.errorVouchers });
-        //   } else {
-        //     errorAlert(response?.message);
-        //   }
-        // }
       } catch (error) {
         console.error(`Product ${id ? 'update' : 'add'} failed`, error);
       } finally {
