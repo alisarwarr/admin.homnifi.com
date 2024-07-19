@@ -198,7 +198,7 @@ const GlobalSelect = ({
             </div>
             <div
               className={`absolute ${isOpen ? 'top-3' : 'top-2'} right-3 bg-red`}
-              style={{ zIndex: 100 }}
+              // style={{ zIndex: 100 }}
             >
               <ArrowDownIcon
                 className={`w-4 h-4 transform ${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-300`}

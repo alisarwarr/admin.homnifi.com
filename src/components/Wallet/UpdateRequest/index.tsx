@@ -58,7 +58,7 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
           _values = {
             ..._values,
             hash: values.hash,
-            type: 'approve',
+            type: 'accept',
           };
         }
       } else {

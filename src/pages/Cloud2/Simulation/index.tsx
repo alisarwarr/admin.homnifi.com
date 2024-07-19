@@ -405,10 +405,10 @@ const Simulation = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 ">
-                      Mintng Power
+                      Mintng Power %
                     </label>
                     <p className="text-sm text-gray-600">
-                      {selectedMachine.mintingPower}
+                      {selectedMachine.mintingPowerPerc} %
                     </p>
                   </div>
                   <div>

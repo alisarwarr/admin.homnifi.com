@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { save } from '../../../images/other';
 import GlobalCheckbox from '../../../components/Global/GlobalCheckbox';
@@ -8,7 +8,9 @@ import { useAdminActions } from '../../../store/admin/adminActions';
 import { useSelector } from 'react-redux';
 import { selectMaintenanceMode } from '../../../store/admin/adminSlice';
 import FormikInput from '../../../components/FormikInput';
-import { fork } from 'child_process';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRangePicker } from 'react-date-range';
 
 // Define interface for form values
 interface FormValues {
@@ -19,9 +21,13 @@ interface FormValues {
   maintenance: boolean;
   reason: string;
   note: string;
+  startDate: Date;
+  endDate: Date;
 }
 
 const Maintenance: React.FC = () => {
+  const [showDateRangePicker, setShowDateRangePicker] = useState(false);
+
   const initialValues: FormValues = {
     cronJob: false,
     autoLogout: false,
@@ -30,19 +36,18 @@ const Maintenance: React.FC = () => {
     maintenance: false,
     reason: '',
     note: '',
+    startDate: new Date(),
+    endDate: new Date(),
   };
 
   const { checkMaintenanceMode, updateMaintenanceMode } = useAdminActions();
   const maintenanceMode = useSelector(selectMaintenanceMode);
-  console.log('🚀 ~ maintenanceMode:', maintenanceMode);
 
   // Form submission handler
   const onSubmit = (values: FormValues) => {
-    // Handle form submission logic here
     const res = updateMaintenanceMode(values);
     console.log('🚀 ~ onSubmit ~ res:', res);
     console.log('Form submitted with values:', values);
-    // Example: perform API call or update state
   };
 
   const formik = useFormik({
@@ -56,7 +61,19 @@ const Maintenance: React.FC = () => {
       'maintenance',
       maintenanceMode !== null ? true : false
     );
-  }, []);
+  }, [maintenanceMode]);
+
+  const handleSelect = (ranges: any) => {
+    formik.setFieldValue('startDate', ranges.selection.startDate);
+    formik.setFieldValue('endDate', ranges.selection.endDate);
+    setShowDateRangePicker(false); // Close the date range picker after selection
+  };
+
+  const selectionRange = {
+    startDate: formik.values.startDate,
+    endDate: formik.values.endDate,
+    key: 'selection',
+  };
 
   // Array of checkboxes with labels
   const checkboxes = [
@@ -128,8 +145,21 @@ const Maintenance: React.FC = () => {
                 className="!w-52 !m-0"
                 onChange={formik.handleChange}
               />
+
+              {/* Date Range Picker */}
+              {/* <GlobalButton
+                text="Select Date Range"
+                classNames="!w-52"
+                onClick={() => setShowDateRangePicker(true)}
+              />
+              {showDateRangePicker && (
+                <DateRangePicker
+                  ranges={[selectionRange]}
+                  onChange={handleSelect}
+                />
+              )} */}
             </div>
-            <div className="flex flex-col gap-10 justify-center py-5  ">
+            <div className="flex flex-col gap-10 justify-center py-5">
               <GlobalButton
                 outlined
                 text="Reset"

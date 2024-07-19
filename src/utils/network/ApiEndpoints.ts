@@ -127,9 +127,9 @@ export const BROKER_ACCOUNT_REGISTRATION: string =
 //ADMIN
 export const ADMIN = '/';
 
-export const ADMIN_INFO = '/user/admin-information';
+export const ADMIN_INFO = '/admin/';
 export const ADMIN_CREATE = '/user/admin-create';
-export const ADMIN_UPDATE = '/user/admin-update';
+export const ADMIN_UPDATE = '/admins/';
 export const ADMIN_CHECK_EMAIL = '/user/check-email';
 export const ADMIN_CHECK_USERNAME = '/user/check-username';
 export const ADMIN_ACCESS = '/user/access';

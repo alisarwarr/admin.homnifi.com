@@ -34,11 +34,11 @@ import {
 export const useAdminActions = () => {
   const dispatch = useDispatch();
 
-  const getAdminData = async () => {
+  const getAdminData = async (id: string) => {
     return await ApiRequest()
       .request({
         method: 'GET',
-        url: ADMIN_INFO,
+        url: `${ADMIN_INFO}${id}`,
       })
       .then((response: any) => {
         dispatch(setAdminData(response.data.data));
@@ -59,10 +59,11 @@ export const useAdminActions = () => {
   };
 
   const updateAdminData = async (data: any) => {
+    console.log('🚀 ~ updateAdminData ~ data:', data);
     return await ApiRequest()
       .request({
         method: 'POST',
-        url: ADMIN_UPDATE,
+        url: `${ADMIN_UPDATE}${data?.id}`,
         data,
       })
       .then((response: any) => response.data)
