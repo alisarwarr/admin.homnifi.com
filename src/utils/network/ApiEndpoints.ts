@@ -161,3 +161,4 @@ export const DEFI_360_AUTO_COMPOUND_PENALITY = '/cloud-k/ac-penalty';
 
 //PLATFORM
 export const PLATFORM_AD = '/platform/ads/';
+// export const PLATFORM_AD = '/platform/ads/';

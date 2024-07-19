@@ -36,13 +36,11 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
     initialValues: initialValues,
 
     onSubmit: async (values) => {
-      console.log("🚀 ~ onSubmit: ~ values:", action)
+      console.log('🚀 ~ onSubmit: ~ values:', action);
       setSaveLoading(true);
 
       let _values: any = {
         id: action.id,
-
-
       };
 
       if (action.type === WALLET_ACTIONS.ACCEPT) {
@@ -56,7 +54,7 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
           _values = {
             ..._values,
             hash: values.hash,
-            type:'approve'
+            type: 'approve',
           };
         }
       } else {
@@ -69,14 +67,12 @@ const UpdateRequest = ({ action, onClose, requestFor }: Props) => {
         _values = {
           ..._values,
           denialReason: values.reason,
-          type:'reject'
-
+          type: 'reject',
         };
       }
 
       try {
-        const response =
-          requestFor === 'WITHDRAW'  && await updateWithdrawRequest(_values) ;
+        const response = requestFor === 'WITHDRAW' && (await updateWithdrawRequest(_values));
         if (response?.data?.status) {
           successAlert(response?.data?.message);
           requestFor === 'WITHDRAW' && getWithdrawRequests(true);

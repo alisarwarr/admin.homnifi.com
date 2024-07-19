@@ -11,12 +11,7 @@ interface CustomSwitchProps {
   labelPasitionLeft?: boolean;
 }
 
-const GlobalSwitch: React.FC<CustomSwitchProps> = ({
-  checked,
-  onChange,
-  label,
-  labelPasitionLeft = true,
-}) => {
+const GlobalSwitch: React.FC<CustomSwitchProps> = ({ checked, onChange, label, labelPasitionLeft = true }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.checked);
   };
@@ -28,26 +23,15 @@ const GlobalSwitch: React.FC<CustomSwitchProps> = ({
   return (
     <div className="flex items-center gap-8">
       {labelPasitionLeft && label && (
-        <span
-          className="text-sm text-gray-700 cursor-pointer"
-          onClick={handleLabelClick}
-        >
+        <span className="text-sm text-gray-700 cursor-pointer" onClick={handleLabelClick}>
           {label}
         </span>
       )}
 
-      <Toggle
-        checked={checked}
-        icons={false}
-        size={20}
-        onChange={handleChange}
-      />
+      <Toggle checked={checked} icons={false} size={20} onChange={handleChange} />
 
       {!labelPasitionLeft && label && (
-        <span
-          className="text-sm text-gray-700 cursor-pointer"
-          onClick={handleLabelClick}
-        >
+        <span className="text-sm text-gray-700 cursor-pointer" onClick={handleLabelClick}>
           {label}
         </span>
       )}

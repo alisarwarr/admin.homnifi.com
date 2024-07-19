@@ -31,7 +31,7 @@ type FILTER = {
 const DepositHistory = () => {
   const { getDepositHistoryRequests } = useHistoryActions();
   const { depositHistory } = useSelector(selectHistorySlice);
-  console.log("🚀 ~ DepositHistory ~ depositHistory:", depositHistory)
+  console.log('🚀 ~ DepositHistory ~ depositHistory:', depositHistory);
   const [columns, setColumns] = useState<any[]>(headCells);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FILTER>({
@@ -51,7 +51,7 @@ const DepositHistory = () => {
       amount: _data?.amount,
       status: <StatusChip status={_data?.transactionStatus} />,
       fee: _data.fee,
-      hash:_data.hash
+      hash: _data.hash,
     };
   });
 

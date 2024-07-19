@@ -10,16 +10,13 @@ import { useDefi360Action } from '../../../store/defi-360/defi-360-action';
 import { useSelector } from 'react-redux';
 import { selectDefi360 } from '../../../store/defi-360/defi-360-slice';
 
-
 const headCells = [
   { id: 'percentage', label: 'Percentage', show: true },
-  { id: 'createdAt', label: 'Date', show: true }
+  { id: 'createdAt', label: 'Date', show: true },
 ];
-
 
 export default function AutoCompoundPenality() {
   const [loading, setLoading] = useState(false);
-
 
   const fetchData = () => {
     setLoading(true);
@@ -29,22 +26,21 @@ export default function AutoCompoundPenality() {
     }, 1000);
   };
 
-
   const { getAutoCompoundPenality, postAutoCompoundPenality } = useDefi360Action();
   const { autoCompoundPenality } = useSelector(selectDefi360);
   useEffect(() => {
-      fetchData();
+    fetchData();
   }, []);
 
-
-  const rows = autoCompoundPenality ? autoCompoundPenality?.map((_data: any) => {
-      return {
+  const rows = autoCompoundPenality
+    ? autoCompoundPenality?.map((_data: any) => {
+        return {
           id: _data._id,
           percentage: _data.percentage,
-          createdAt: _data.createdAt
-      };
-  }) : [];
-
+          createdAt: _data.createdAt,
+        };
+      })
+    : [];
 
   const [open, setOpen] = useState(false);
   const onOpen = () => setOpen(true);
@@ -54,7 +50,6 @@ export default function AutoCompoundPenality() {
       formik.resetForm();
     }, 1000);
   };
-
 
   const formik = useFormik({
     initialValues: {
@@ -73,9 +68,8 @@ export default function AutoCompoundPenality() {
       await postAutoCompoundPenality(data);
       fetchData();
       onClose();
-    }
+    },
   });
-
 
   return (
     <>
@@ -116,34 +110,29 @@ export default function AutoCompoundPenality() {
 
           <div
             className="flex gap-1 items-center cursor-pointer px-3"
-          // onClick={() => fetchData(1)}
+            // onClick={() => fetchData(1)}
           >
             <img src={refresh} alt="refresh" width={24} height={24} />
             <span>Refresh</span>
           </div>
 
-          <button
-            className="flex gap-1 text-white items-center cursor-pointer px-3"
-            onClick={onOpen}
-          >
+          <button className="flex gap-1 text-white items-center cursor-pointer px-3" onClick={onOpen}>
             <img src={add} alt="" width={24} height={24} />
             <span>New Penality</span>
           </button>
         </div>
 
         {/* TABLE */}
-        {
-          autoCompoundPenality && (
-            <GlobalTable
-              rows={rows}
-              headCells={headCells}
-              copyItems={['']}
-              colorItems={['']}
-              imageItems={['']}
-              isLoading={loading}
-            />
-          )
-        }
+        {autoCompoundPenality && (
+          <GlobalTable
+            rows={rows}
+            headCells={headCells}
+            copyItems={['']}
+            colorItems={['']}
+            imageItems={['']}
+            isLoading={loading}
+          />
+        )}
       </div>
     </>
   );

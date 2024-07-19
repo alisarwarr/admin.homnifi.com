@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 type Props = {
   title?: string;
-  children?: React.ReactNode
+  children?: React.ReactNode;
 };
 
 const PageWrapper = ({ title, children }: Props) => {
@@ -11,9 +11,7 @@ const PageWrapper = ({ title, children }: Props) => {
       <div className="w-full text-white px-2 py-2">
         {title && (
           <div className="pb-3">
-            <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
-              {title}
-            </h1>
+            <h1 className="text-xl font-bold tracking-tight sm:text-2xl">{title}</h1>
           </div>
         )}
         {children}

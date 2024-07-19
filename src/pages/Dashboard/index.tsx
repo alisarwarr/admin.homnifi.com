@@ -104,7 +104,6 @@ const Dashboard = () => {
               from: 'color',
               modifiers: [['darker', 5]],
             }}
-    
             legends={[
               {
                 anchor: 'bottom',

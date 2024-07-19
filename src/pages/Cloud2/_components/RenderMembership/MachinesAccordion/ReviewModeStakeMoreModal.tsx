@@ -2,7 +2,6 @@ import React from 'react';
 import GaugeChart from '../../../../../components/Cloud/Test1Chart';
 // import { ArrowDownCircleOutlined } from '../../../../../images/svgs';
 
-
 const ReviewModeStakeMoreModal = () => {
   return (
     <article className="flex flex-col gap-2 w-full">
@@ -13,11 +12,7 @@ const ReviewModeStakeMoreModal = () => {
         </div>
 
         <div className="flex items-center gap-2 relative justify-center">
-          <GaugeChart
-            containerWidth={150}
-            containerHeight={100}
-            strokeWidth={2}
-          />
+          <GaugeChart containerWidth={150} containerHeight={100} strokeWidth={2} />
 
           <div className="flex flex-col font-bold text-primaryDark absolute bottom-4 text-center">
             <span className="text-sm font-semibold">$ 25,000</span>
@@ -26,9 +21,7 @@ const ReviewModeStakeMoreModal = () => {
         </div>
       </article>
 
-      <div className="w-[150px] flex items-center justify-center self-end">
-        {/* <ArrowDownCircleOutlined /> */}
-      </div>
+      <div className="w-[150px] flex items-center justify-center self-end">{/* <ArrowDownCircleOutlined /> */}</div>
 
       <article className="flex items-center justify-between">
         <div className="flex flex-col gap-2">
@@ -37,11 +30,7 @@ const ReviewModeStakeMoreModal = () => {
         </div>
 
         <div className="flex items-center gap-2 relative justify-center">
-          <GaugeChart
-            containerWidth={150}
-            containerHeight={100}
-            strokeWidth={2}
-          />
+          <GaugeChart containerWidth={150} containerHeight={100} strokeWidth={2} />
 
           <div className="flex flex-col font-bold text-primaryDark absolute bottom-4 text-center">
             <span className="text-sm font-semibold">$ 40,000</span>

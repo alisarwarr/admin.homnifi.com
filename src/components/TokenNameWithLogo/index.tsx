@@ -16,10 +16,10 @@ const TokenNameWithLogo = ({
         (tokenName === 'XPL'
           ? 'text-XPLColor'
           : tokenName === 'PUSD'
-          ? 'text-PUSDColor'
-          : tokenName === 'AUSD'
-          ? 'text-AUSDColor'
-          : 'text-USDTColor')
+            ? 'text-PUSDColor'
+            : tokenName === 'AUSD'
+              ? 'text-AUSDColor'
+              : 'text-USDTColor')
       }
               flex gap-1 items-center
               `}

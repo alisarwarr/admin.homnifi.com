@@ -135,8 +135,6 @@ const TokenTransactionSettingDetails = () => {
               value: CapitalizeAllLetters(_state.trxSettings?.processType),
             },
 
-
-
             trxType: {
               label: CapitalizeFirstLetter(_state.trxSettings?.trxType),
               value: CapitalizeAllLetters(_state.trxSettings?.trxType),
@@ -155,7 +153,6 @@ const TokenTransactionSettingDetails = () => {
           id ? 'Update' : 'Add'
         } Token Setting (${CapitalizeFirstLetter(state?.trxSettings?.trxType ?? '')})`}</h2>
         <span className="flex items-center gap-1 text-2xl">
-
           {formik.values.name === 'Tether' ? 'USDT' : formik.values.name}
         </span>
       </div>

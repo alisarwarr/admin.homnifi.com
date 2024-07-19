@@ -1,29 +1,12 @@
 import React from 'react';
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-} from '@nextui-org/modal';
+import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from '@nextui-org/modal';
 
 interface GlobalModalProps {
   isOpen?: boolean;
   onClose?: () => void;
   title?: string;
   children?: React.ReactNode;
-  size?:
-    | 'xs'
-    | 'sm'
-    | 'md'
-    | 'lg'
-    | 'xl'
-    | '2xl'
-    | '3xl'
-    | '4xl'
-    | '5xl'
-    | 'full'
-    | undefined;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'full' | undefined;
   noHeader?: boolean;
   hideCloseButton?: boolean;
   childrenClass?: string;
@@ -82,13 +65,7 @@ const GlobalModal: React.FC<GlobalModalProps> = ({
       >
         <ModalContent className="bg-white rounded-lg border">
           <>
-            {!noHeader ? (
-              <ModalHeader className="flex flex-col gap-1 font-medium ">
-                {title}
-              </ModalHeader>
-            ) : (
-              ''
-            )}
+            {!noHeader ? <ModalHeader className="flex flex-col gap-1 font-medium ">{title}</ModalHeader> : ''}
 
             <ModalBody className={childrenClass}>{children}</ModalBody>
           </>

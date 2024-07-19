@@ -1,7 +1,4 @@
-import {
-  RadialBarCustomLayerProps,
-  ResponsiveRadialBar,
-} from '@nivo/radial-bar';
+import { RadialBarCustomLayerProps, ResponsiveRadialBar } from '@nivo/radial-bar';
 import React from 'react';
 import { bgData, data } from '../../constants/cloud';
 
@@ -22,15 +19,7 @@ function GaugePointer() {
   return (
     <g>
       {/* <circle cx={130} cy={78} r={5} fill="white" strokeWidth={3} stroke='white' className='shadow' /> */}
-      <circle
-        cx={target.x}
-        cy={target.y}
-        r={5}
-        fill="black"
-        strokeWidth={3}
-        stroke="black"
-        className="shadow"
-      />
+      <circle cx={target.x} cy={target.y} r={5} fill="black" strokeWidth={3} stroke="black" className="shadow" />
       {/* <path
           d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
           stroke="red"

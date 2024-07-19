@@ -34,7 +34,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
     return {
       tokenName: <TokenNameWithLogo tokenName={_data.name ?? ''} />,
       trxProcess: CapitalizeFirstLetter(_data?.trxSettings?.trxType),
-      processType:CapitalizeFirstLetter(_data?.trxSettings?.processType),
+      processType: CapitalizeFirstLetter(_data?.trxSettings?.processType),
       minimumTrxAmount: _data?.trxSettings?.minAmount ?? 'Unlimited',
       maximumTrxAmount: _data?.trxSettings?.maxAmount ?? 'Unlimited',
 
@@ -45,7 +45,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
         <Chip
           label={CapitalizeFirstLetter(_data?.trxSettings?.feeType)}
           size="small"
-          sx={{ fontSize: '11px' ,color: 'white', }}
+          sx={{ fontSize: '11px', color: 'white' }}
           color={_data.feeType === 'fixed' ? 'default' : 'primary'}
         ></Chip>
       ),
@@ -54,7 +54,7 @@ const TokenTransactionSettingsTable = ({ data, loading }: Props) => {
         <Chip
           label={CapitalizeFirstLetter(_data?.trxSettings?.chargesType)}
           size="small"
-          sx={{ fontSize: '11px' , color: 'white', }}
+          sx={{ fontSize: '11px', color: 'white' }}
           color={_data.feeType === 'fixed' ? 'default' : 'primary'}
         ></Chip>
       ),

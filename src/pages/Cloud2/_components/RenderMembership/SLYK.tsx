@@ -17,9 +17,7 @@ const SLYK = (props: Props) => {
     <article className="md:w-2/5 w-full flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         <div className="flex gap-4 flex-col">
-          <p className="text-cardSecondaryText text-lg border-b border-borderLightGray">
-            Total Staked sLYK
-          </p>
+          <p className="text-cardSecondaryText text-lg border-b border-borderLightGray">Total Staked sLYK</p>
           <div className="text-primaryDark text-2xl font-medium flex gap-2">
             <GASKIcon />
             <p>8,023,586 sLYK</p>
@@ -28,9 +26,7 @@ const SLYK = (props: Props) => {
 
         <div className="flex justify-between flex-col gap-2 flex-wrap">
           <div className="flex gap-4 flex-col">
-            <p className="text-cardSecondaryText text-lg border-b border-borderLightGray">
-              Available sLYK to deposit
-            </p>
+            <p className="text-cardSecondaryText text-lg border-b border-borderLightGray">Available sLYK to deposit</p>
             <div className="text-primary text-2xl font-medium flex gap-2">
               <ClaimableIcon />
               <p>8,023,586</p>
@@ -47,7 +43,7 @@ const SLYK = (props: Props) => {
 
           <GlobalButton
             text="Rewards Calculator"
-            type='button'
+            type="button"
             classNames="!rounded-lg font-normal tracking-wide !px-6 !w-max"
             onClick={() => navigate('/defi-360/cloudk2/rewards-calculator')}
           />

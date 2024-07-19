@@ -78,15 +78,15 @@ export default function Header({ handleDrawer }: HeaderProps): JSX.Element {
       )}
 
       <div>
-      <GlobalInput
-        name="email"
-        placeholder="Search"
-        type="email"
-        // value={formik.values.email}
-        // onChange={formik.handleChange}
-        // isError={formik.errors.email}
-        // error={formik.errors.email}
-      />
+        <GlobalInput
+          name="email"
+          placeholder="Search"
+          type="email"
+          // value={formik.values.email}
+          // onChange={formik.handleChange}
+          // isError={formik.errors.email}
+          // error={formik.errors.email}
+        />
       </div>
 
       <div className="flex items-center">

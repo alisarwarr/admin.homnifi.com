@@ -79,14 +79,14 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
       username: _data.username,
       name:
         _data.accountType === 'COMPANY'
-          ? _data.companyName ?? '-'
+          ? (_data.companyName ?? '-')
           : _data.firstName
-          ? `${_data.firstName} ${_data.lastName}`
-          : '-',
+            ? `${_data.firstName} ${_data.lastName}`
+            : '-',
       email: _data.email ?? '-',
       sponsor:
         _data.refParent?.accountType === 'COMPANY'
-          ? _data.refParent?.companyName ?? '-'
+          ? (_data.refParent?.companyName ?? '-')
           : `${_data.refParent?.firstName ?? ''} ${_data.refParent?.lastName ?? '-'}`,
       accountType: _data?.accountType,
       country: _data.country?.name ?? '-',
@@ -249,13 +249,13 @@ const UsersTable = ({ data, loading, page, setPage, setReFetch, sort, setSort, f
         ...row,
         name:
           row.accountType === 'COMPANY'
-            ? row.companyName ?? '-'
+            ? (row.companyName ?? '-')
             : row.firstName
-            ? `${row.firstName} ${row.lastName}`
-            : '-',
+              ? `${row.firstName} ${row.lastName}`
+              : '-',
         sponsor:
           row.refParent?.accountType === 'COMPANY'
-            ? row.refParent?.companyName ?? '-'
+            ? (row.refParent?.companyName ?? '-')
             : `${row.refParent?.firstName ?? ''} ${row.refParent?.lastName ?? '-'}`,
         country: row?.country ? row.country?.name : '-',
         verified: row.isVerified ? 'Verified' : 'Non-Verified',

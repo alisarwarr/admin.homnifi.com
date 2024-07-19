@@ -21,12 +21,9 @@ const PurchaseCalculator = (props: Props) => {
   return (
     <CardLayout className="md:col-span-1 col-span-2  p-5 flex flex-col justify-between gap-2">
       <section className="flex flex-col gap-2">
-        <h1 className="text-secondaryBlack font-medium text-lg">
-          Purchase Calculator
-        </h1>
+        <h1 className="text-secondaryBlack font-medium text-lg">Purchase Calculator</h1>
         <span className="text-cardSecondaryText text-sm font-normal">
-          Lorem ipsum dolor sit amet consectetur.Cras egestas et placerat
-          aliquet id
+          Lorem ipsum dolor sit amet consectetur.Cras egestas et placerat aliquet id
         </span>
 
         <span className="text-defaultBlack text-xl font-medium">
@@ -45,9 +42,7 @@ const PurchaseCalculator = (props: Props) => {
         />
 
         <article className="flex items-center gap-2">
-          <span className="text-primaryDark text-xs font-medium">
-            AUTO COMPOUND
-          </span>
+          <span className="text-primaryDark text-xs font-medium">AUTO COMPOUND</span>
           <CustomSwitch
             checked={purchaseCalculatorStates.autoCompounding}
             onChange={(checked) =>
@@ -78,18 +73,8 @@ const PurchaseCalculator = (props: Props) => {
         <article
           className={`grid grid-cols-2 gap-2 transition-all ease-in-out duration-300 ${!purchaseCalculatorStates.advancedOptions ? 'w-0 -translate-x-10 h-0' : 'h-12 w-full translate-x-0'}`}
         >
-          <GlobalInput
-            name="remarks"
-            placeholder="Add any Optional Remarks"
-            type="text"
-            className="col-span-1"
-          />
-          <GlobalInput
-            name="remarks"
-            placeholder="Add any Optional Remarks"
-            type="text"
-            className="col-span-1"
-          />
+          <GlobalInput name="remarks" placeholder="Add any Optional Remarks" type="text" className="col-span-1" />
+          <GlobalInput name="remarks" placeholder="Add any Optional Remarks" type="text" className="col-span-1" />
         </article>
       </section>
     </CardLayout>

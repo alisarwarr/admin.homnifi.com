@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import { useFormik } from "formik";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import 'react-toastify/dist/ReactToastify.css';
 // REDUX
 // import { errorAlert, successAlert } from '../../../utils/alerts';
 
-import { TextField } from "@mui/material";
-import { useCustomerActions } from "../../../store/customer/customerActions";
-import { useSelector } from "react-redux";
-import { selectCustomerSlice } from "../../../store/customer/customerSlice";
+import { TextField } from '@mui/material';
+import { useCustomerActions } from '../../../store/customer/customerActions';
+import { useSelector } from 'react-redux';
+import { selectCustomerSlice } from '../../../store/customer/customerSlice';
 
 const Filters = ({ filters, handleFilterChange, clearFilters, options }) => {
   // STATES
@@ -17,7 +17,7 @@ const Filters = ({ filters, handleFilterChange, clearFilters, options }) => {
   const { getCountries, getCustomersList } = useCustomerActions();
 
   const formik = useFormik({
-    initialValues: { country: "" },
+    initialValues: { country: '' },
     onSubmit: async () => {},
   });
 
@@ -26,7 +26,7 @@ const Filters = ({ filters, handleFilterChange, clearFilters, options }) => {
       await getCountries();
     })();
   }, []);
- 
+
   return (
     <div className="w-full px-6 py-2 sm:pt-8 lg:px-8 text-white max-w-[1700px] mx-auto">
       <div className="mx-auto text-start flex gap-4 items-center">
@@ -36,19 +36,19 @@ const Filters = ({ filters, handleFilterChange, clearFilters, options }) => {
       <div className="grid grid-cols-1 gap-x-6 gap-y-3">
         <div className={`grid grid-cols-2 gap-6 rounded-md mt-8`}>
           <TextField
-            label={"Search By"}
+            label={'Search By'}
             variant="outlined"
             className={`w-full`}
-            type={"text"}
-            name={"search"}
+            type={'text'}
+            name={'search'}
             onChange={handleFilterChange}
             value={filters}
             sx={{
-              "& .css-10m55e3-MuiFormLabel-root-MuiInputLabel-root": {
-                fontSize: "0.8rem",
+              '& .css-10m55e3-MuiFormLabel-root-MuiInputLabel-root': {
+                fontSize: '0.8rem',
               },
-              "& .css-p51h6s-MuiInputBase-input-MuiOutlinedInput-input": {
-                fontSize: "0.8rem",
+              '& .css-p51h6s-MuiInputBase-input-MuiOutlinedInput-input': {
+                fontSize: '0.8rem',
               },
             }}
             InputLabelProps={{

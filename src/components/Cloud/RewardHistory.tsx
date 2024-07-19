@@ -117,23 +117,11 @@ const RewardHistory = () => {
     machine: (
       <div className="flex items-center gap-5">
         <span className="w-12">
-          <img
-            src={trx.machine.image}
-            width={44}
-            height={44}
-            alt="MachineImage"
-            className="rounded-full"
-          />
+          <img src={trx.machine.image} width={44} height={44} alt="MachineImage" className="rounded-full" />
         </span>{' '}
         <div className="flex gap-1">
-          <span className="text-defaultBlack font-medium capitalize">
-            {trx.machine.name}
-          </span>{' '}
-          {trx.machine.status ? (
-            <GlobalPills status={'active'} />
-          ) : (
-            <GlobalPills status="inactive" />
-          )}
+          <span className="text-defaultBlack font-medium capitalize">{trx.machine.name}</span>{' '}
+          {trx.machine.status ? <GlobalPills status={'active'} /> : <GlobalPills status="inactive" />}
         </div>
       </div>
     ),
@@ -145,8 +133,7 @@ const RewardHistory = () => {
 
   return (
     <div className="w-full overflow-hidden">
-      <>
-      </>
+      <></>
       {/* <GlobalTable
         rows={rows.length ? rows : []}
         headCells={headCells}

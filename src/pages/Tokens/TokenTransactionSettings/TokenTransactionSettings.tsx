@@ -43,8 +43,8 @@ const TokenTransactionSettings = () => {
 
       {/* TABLE */}
       {Object.entries(tokenTransactionSettingList).map(([key, value]) => (
-        <div key={key} className='py-4'>
-          <p className='text-l font-medium py-2'>{key}</p>
+        <div key={key} className="py-4">
+          <p className="text-l font-medium py-2">{key}</p>
           <TokenTransactionSettingsTable data={value} loading={loading} />
         </div>
       ))}

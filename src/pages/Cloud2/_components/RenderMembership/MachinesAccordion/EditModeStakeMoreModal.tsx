@@ -5,9 +5,7 @@ import GlobalInput from '../../../../../components/Global/GlobalInput';
 
 type TEditModeGaugeStakeMoreModalProps = {};
 
-export const EditModeGaugeStakeMoreModal = (
-  props: TEditModeGaugeStakeMoreModalProps
-) => {
+export const EditModeGaugeStakeMoreModal = (props: TEditModeGaugeStakeMoreModalProps) => {
   return (
     <article className="flex justify-between items-center w-full">
       <article className="flex flex-col gap-2">
@@ -16,11 +14,7 @@ export const EditModeGaugeStakeMoreModal = (
       </article>
 
       <article className="flex items-center gap-2 relative justify-center">
-        <GaugeChart
-          containerWidth={150}
-          containerHeight={100}
-          strokeWidth={2}
-        />
+        <GaugeChart containerWidth={150} containerHeight={100} strokeWidth={2} />
 
         <div className="flex flex-col font-bold text-primaryDark absolute bottom-4 text-center">
           <span className="text-sm font-semibold">$ 25,000</span>
@@ -80,9 +74,7 @@ export const EditModeFieldStakeMoreModal = ({
         <div className="relative">
           <GlobalInput name="token" type="input" />
 
-          <span className="absolute top-4 right-4 text-placeholderGrey text-xs bg-white">
-            Balance: 20.00 USDT
-          </span>
+          <span className="absolute top-4 right-4 text-placeholderGrey text-xs bg-white">Balance: 20.00 USDT</span>
         </div>
       </article>
       <article className="flex items-center justify-end gap-2">

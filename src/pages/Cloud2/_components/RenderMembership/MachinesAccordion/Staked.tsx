@@ -2,8 +2,6 @@ import { useState } from 'react';
 import CustomSwitch from '../../../../../components/Global/GlobalSwitch';
 import Toottip from '../../../../../components/Global/Toottip';
 
-
-
 const Staked = () => {
   const [autoCompundToggle, setAutoCompundToggle] = useState(false);
 
@@ -16,9 +14,7 @@ const Staked = () => {
       </GlobalModal> */}
 
       <article className="flex items-center justify-between w-full">
-        <span className="text-primaryDark font-medium text-sm uppercase">
-          staked
-        </span>
+        <span className="text-primaryDark font-medium text-sm uppercase">staked</span>
 
         <Toottip
           content={
@@ -28,7 +24,6 @@ const Staked = () => {
             </div>
           }
         >
-
           <button
             type="button"
             className="px-4 py-1 bg-primaryDark text-xs text-white rounded-md hover:bg-primary transition-all shadow-buttonShadow"
@@ -42,18 +37,11 @@ const Staked = () => {
       </span>
 
       <article className="flex items-center gap-2">
-        <span className="text-primaryDark text-xs font-medium">
-          AUTO COMPOUND
-        </span>
-        <CustomSwitch
-          checked={autoCompundToggle}
-          onChange={(checked : any) => setAutoCompundToggle(checked)}
-        />
+        <span className="text-primaryDark text-xs font-medium">AUTO COMPOUND</span>
+        <CustomSwitch checked={autoCompundToggle} onChange={(checked: any) => setAutoCompundToggle(checked)} />
       </article>
 
-      <span className="bg-cardBg text-primary w-max p-2 rounded-md text-xs">
-        Turn on and get 30% more
-      </span>
+      <span className="bg-cardBg text-primary w-max p-2 rounded-md text-xs">Turn on and get 30% more</span>
     </section>
   );
 };

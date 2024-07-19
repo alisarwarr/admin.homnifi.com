@@ -10,11 +10,11 @@
 
 /* GLOBAL-STYLE */
 * {
-    font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
 }
 
 .font-baumans {
-  font-family: "Baumans", system-ui;
+  font-family: 'Baumans', system-ui;
   font-weight: 400;
   font-style: normal;
 }
@@ -211,11 +211,15 @@ svg g g line {
 }
 
 .gradient-border {
-  background: linear-gradient(black, black) padding-box, linear-gradient(to right, #6cc3fa, #ff88ce) border-box;
+  background:
+    linear-gradient(black, black) padding-box,
+    linear-gradient(to right, #6cc3fa, #ff88ce) border-box;
 }
 
 .white-border {
-  background: linear-gradient(black, black) padding-box, linear-gradient(to right, #262626, #262626) border-box;
+  background:
+    linear-gradient(black, black) padding-box,
+    linear-gradient(to right, #262626, #262626) border-box;
 }
 
 .gradient-border-radius {
@@ -225,13 +229,17 @@ svg g g line {
 }
 
 .gradient-border-global {
-  background: linear-gradient(black, black) padding-box, linear-gradient(to right, #6cc3fa, #ff88ce) border-box;
+  background:
+    linear-gradient(black, black) padding-box,
+    linear-gradient(to right, #6cc3fa, #ff88ce) border-box;
   border-radius: 10px;
   border: 1px solid transparent;
 }
 
 .gradient-dashed-border {
-  background: linear-gradient(#0a0a0a, #0a0a0a) padding-box, linear-gradient(to right, #6cc3fa, #ff88ce) border-box;
+  background:
+    linear-gradient(#0a0a0a, #0a0a0a) padding-box,
+    linear-gradient(to right, #6cc3fa, #ff88ce) border-box;
   border-radius: 1em;
   border: 2px dashed #0a0a0a;
 }
@@ -283,8 +291,11 @@ svg g g line {
 }
 
 .wallet-border-XPL:hover {
-  box-shadow: 0 4px 26px 0 rgba(242, 107, 212, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background: linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
+  box-shadow:
+    0 4px 26px 0 rgba(242, 107, 212, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background:
+    linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
     linear-gradient(-20deg, rgba(242, 107, 212, 0.7), rgba(242, 107, 212, 0.1)) border-box;
   border: 1px solid transparent;
   transition: ease-in-out 0.2s;
@@ -295,8 +306,11 @@ svg g g line {
 }
 
 .wallet-border-PUSD:hover {
-  box-shadow: 0 4px 26px 0 rgba(98, 137, 238, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background: linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
+  box-shadow:
+    0 4px 26px 0 rgba(98, 137, 238, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background:
+    linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
     linear-gradient(-20deg, rgba(98, 137, 238, 0.7), rgba(242, 107, 212, 0.1)) border-box;
   border: 1px solid transparent;
   transition: ease-in 0.2s;
@@ -307,8 +321,11 @@ svg g g line {
 }
 
 .wallet-border-AUSD:hover {
-  box-shadow: 0 4px 26px 0 rgba(238, 182, 98, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background: linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
+  box-shadow:
+    0 4px 26px 0 rgba(238, 182, 98, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background:
+    linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
     linear-gradient(-20deg, rgba(238, 182, 98, 0.7), rgba(242, 107, 212, 0.1)) border-box;
   border: 1px solid transparent;
   transition: ease-in 0.2s;
@@ -319,8 +336,11 @@ svg g g line {
 }
 
 .wallet-border-USDT:hover {
-  box-shadow: 0 4px 26px 0 rgba(83, 174, 148, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background: linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
+  box-shadow:
+    0 4px 26px 0 rgba(83, 174, 148, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background:
+    linear-gradient(-20deg, #0a0a0a, #0a0a0a) padding-box,
     linear-gradient(-20deg, rgba(83, 174, 148, 0.7), rgba(242, 107, 212, 0.1)) border-box;
   border: 1px solid transparent;
   transition: ease-in 0.2s;
@@ -328,16 +348,24 @@ svg g g line {
 
 /* shadow-[0_0px_30px_-10px_rgba(242,107,212,0.9)] */
 .XPL-Shadow {
-  box-shadow: 0 0 20px 0 rgba(242, 107, 212, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 0 20px 0 rgba(242, 107, 212, 0.3),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .PUSD-Shadow {
-  box-shadow: 0 0 20px 0 rgba(98, 137, 238, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 0 20px 0 rgba(98, 137, 238, 0.3),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .AUSD-Shadow {
-  box-shadow: 0 0 20px 0 rgba(238, 182, 98, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 0 20px 0 rgba(238, 182, 98, 0.3),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .USDT-Shadow {
-  box-shadow: 0 0 20px 0 rgba(83, 174, 148, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 0 20px 0 rgba(83, 174, 148, 0.3),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .RichInputBase-root-20 {
@@ -350,14 +378,12 @@ svg g g line {
   background-color: white;
 }
 
-
 .small-scroll::-webkit-scrollbar {
   width: 0.4em;
 }
 
 .small-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
-
 }
 
 .small-scroll::-webkit-scrollbar-thumb {
@@ -370,53 +396,51 @@ svg g g line {
 }
 
 .imageSlider .slick-track {
-  display:flex;
+  display: flex;
 }
 
 .authSlider {
-
-bottom: 20px !important;
-position: relative;
+  bottom: 20px !important;
+  position: relative;
 }
 
 .authSlider .slick-track {
-  display:flex;
+  display: flex;
 }
 
 .authSlider .slick-dots {
-display: flex !important;
-justify-content: center;
-padding: 20px 0;
+  display: flex !important;
+  justify-content: center;
+  padding: 20px 0;
 }
 
 .authSlider .slick-dots li {
-list-style: none;
-margin: 0 5px;
+  list-style: none;
+  margin: 0 5px;
 }
 
 .authSlider .slick-dots button {
-border: none;
-background: none;
-cursor: pointer;
-padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .authSlider .slick-dots button:before {
-content: '' !important;
-display: block;
-width: 50px !important;
-height: 3px !important;
-background-color: white;
-opacity: 1 !important;
-border-radius: 1px;
-transition: all 0.3s ease;
-opacity: 0.5
+  content: '' !important;
+  display: block;
+  width: 50px !important;
+  height: 3px !important;
+  background-color: white;
+  opacity: 1 !important;
+  border-radius: 1px;
+  transition: all 0.3s ease;
+  opacity: 0.5;
 }
 
 .authSlider .slick-dots .slick-active button:before {
-opacity: 1 !important;
+  opacity: 1 !important;
 }
-
 
 .custom-switch .nextui-switch-track {
   background-color: #d5dbe0;
@@ -452,10 +476,10 @@ opacity: 1 !important;
 
   background-color: #d5dbe0 !important;
 }
-.react-toggle-thumb{
+.react-toggle-thumb {
   box-shadow: none !important;
 }
-.react-toggle--checked .react-toggle-thumb{
+.react-toggle--checked .react-toggle-thumb {
   left: 24px !important;
 }
 
@@ -468,7 +492,7 @@ opacity: 1 !important;
   position: relative;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: 1.2em;
   height: 1.2rem;
   accent-color: green;

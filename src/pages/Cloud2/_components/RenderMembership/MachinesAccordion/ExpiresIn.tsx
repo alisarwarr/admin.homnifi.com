@@ -6,9 +6,7 @@ type Props = {};
 const ExpiresIn = (props: Props) => {
   return (
     <section className="px-2 py-3 border border-borderBlue rounded-lg shadow-tableCardShadow text-primaryGrey font-normal w-full h-full flex gap-2 flex-col items-center justify-center">
-      <span className="text-primaryDark font-medium text-sm uppercase">
-        Expires In
-      </span>
+      <span className="text-primaryDark font-medium text-sm uppercase">Expires In</span>
 
       <article className="flex items-center gap-2 relative justify-center">
         <GaugeChart containerWidth={200} containerHeight={125} />

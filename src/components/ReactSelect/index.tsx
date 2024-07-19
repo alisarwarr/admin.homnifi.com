@@ -101,13 +101,11 @@ const ReactSelect = ({
                   color: '#1B9FDA',
                   border: state.isFocused
                     ? 'none'
-
                     : (formik?.errors[name] && formik?.touched[name]) || isError
-                    ? '1px solid #f44336'
-                    : '1px solid #D7D7D7',
+                      ? '1px solid #f44336'
+                      : '1px solid #D7D7D7',
                   '&:hover': {
                     border: !state.isFocused && '1px solid #1B9FDA',
-
                   },
                   boxShadow: '0px',
                   outline: state.isFocused && '2px #90CAF9 solid',

@@ -47,7 +47,7 @@ const initialState: TemplateState = {
       },
     ],
   },
-  userMachineList: null
+  userMachineList: null,
 };
 
 const slice = createSlice({

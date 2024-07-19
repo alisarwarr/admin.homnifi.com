@@ -15,18 +15,14 @@ const RenderMachineRewardCharts = (props: Props) => {
         <table>
           <thead>
             <tr>
-              <th className="text-left font-normal text-primaryGrey text-sm">
-                Status:
-              </th>
+              <th className="text-left font-normal text-primaryGrey text-sm">Status:</th>
               <td>
                 <div className="bg-primaryGreen/20 rounded-full w-20 flex items-center justify-center gap-2 px-2 py-1">
                   <span className="relative flex h-2 w-2">
                     <span
                       className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-primaryGreen`}
                     ></span>
-                    <span
-                      className={`relative inline-flex rounded-full h-2 w-2 bg-primaryGreen`}
-                    ></span>
+                    <span className={`relative inline-flex rounded-full h-2 w-2 bg-primaryGreen`}></span>
                   </span>
                   <span className="text-sm text-primaryGreen">Active</span>
                 </div>
@@ -35,9 +31,7 @@ const RenderMachineRewardCharts = (props: Props) => {
           </thead>
           <tbody>
             <tr>
-              <th className="text-left font-normal text-primaryGrey text-sm">
-                Product
-              </th>
+              <th className="text-left font-normal text-primaryGrey text-sm">Product</th>
               <td>75.00 (0.21%)</td>
             </tr>
           </tbody>
@@ -47,9 +41,7 @@ const RenderMachineRewardCharts = (props: Props) => {
 
         <div className="flex flex-col items-center gap-4">
           <div className="w-full flex gap-10 justify-center items-center">
-            <span className="uppercase font-medium text-primaryDark">
-              staked
-            </span>
+            <span className="uppercase font-medium text-primaryDark">staked</span>
             <button className="bg-primaryDark rounded text-white px-2 py-1 text-sm hover:bg-primary transition-all duration-300">
               + Stake More
             </button>

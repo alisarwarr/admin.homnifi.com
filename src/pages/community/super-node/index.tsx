@@ -1,5 +1,3 @@
 export default function CommunitySupernode(): JSX.Element {
-    return (
-        <div>CommunitySupernode</div>
-    )
+  return <div>CommunitySupernode</div>;
 }

@@ -16,8 +16,8 @@ const StatusChip = ({ status }: Props) => {
         (typeof status === 'boolean' && status)
           ? 'success'
           : status === 'PENDING'
-          ? 'warning'
-          : 'error'
+            ? 'warning'
+            : 'error'
       }
       sx={{ fontSize: '10px', fontWeight: 700 }}
     />

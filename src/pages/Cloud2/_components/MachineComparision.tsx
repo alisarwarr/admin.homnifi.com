@@ -7,11 +7,7 @@ import { SwiperSlide } from 'swiper/react';
 import CardSelect from '../../../components/Cards/CardSelect';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
-import {
-  clouldk2SliceAction,
-  Clouldk2State,
-  selectClouldSlice,
-} from '../../../store/clouldk2Slice';
+import { clouldk2SliceAction, Clouldk2State, selectClouldSlice } from '../../../store/clouldk2Slice';
 import GlobalButton from '../../../components/Global/GlobalButton';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
@@ -105,18 +101,10 @@ const MachineComparision = (props: Props) => {
         </article>
 
         <CardLayout className="col-span-2 p-5">
-          <CardSlider
-            className="w-full"
-            data={machineList}
-            slidesPerView={slidesPerView}
-            spaceBetween={10}
-          >
+          <CardSlider className="w-full" data={machineList} slidesPerView={slidesPerView} spaceBetween={10}>
             {machineList.map((card, index) => (
               <SwiperSlide key={index}>
-                <CardSelect
-                  data={card}
-                  containerStyles="!self-center flex justify-center items-center"
-                />
+                <CardSelect data={card} containerStyles="!self-center flex justify-center items-center" />
               </SwiperSlide>
             ))}
           </CardSlider>
@@ -159,10 +147,7 @@ const MachineComparision = (props: Props) => {
           className={`flex gap-5 translate-y-0 col-span-2 items-center bg-white/30 backdrop-blur-md sticky top-[85px]`}
         >
           {activeMachines.map((machine, index) => (
-            <div
-              key={index}
-              className="min-w-[80px] px-5 py-2 rounded-lg border relative"
-            >
+            <div key={index} className="min-w-[80px] px-5 py-2 rounded-lg border relative">
               {machine.name}
 
               <button

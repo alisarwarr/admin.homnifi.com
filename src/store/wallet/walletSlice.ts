@@ -13,7 +13,7 @@ export interface WithdrawRequest {
   amount: number;
   fee: number;
   charges: number;
-  total: number
+  total: number;
   requestStatus: 'PENDING' | 'DENIED' | 'COMPLETED';
   withdrawProcess: 'MANUAL' | 'AUTOMATIC';
   network: any;

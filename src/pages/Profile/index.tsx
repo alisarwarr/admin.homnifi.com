@@ -15,7 +15,6 @@ export default function Profile(): JSX.Element {
 
   const user = useSelector(selectUser);
 
-
   const formikRef = useRef<any>(null);
 
   const initialValues = {

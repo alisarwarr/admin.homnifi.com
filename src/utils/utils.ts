@@ -8,9 +8,8 @@ export const CapitalizeFirstLetter = (string: any) => {
   return string?.charAt(0)?.toUpperCase() + string?.slice(1).toLowerCase();
 };
 
-export const CapitalizeAllLetters = (s: any) => s?.charAt(0).toUpperCase() + s?.slice(1).toUpperCase() ;
-export const lowerCaseAllLetters = (s: any) => s?.charAt(0).toLowerCase() + s?.slice(1).toLowerCase() ;
-
+export const CapitalizeAllLetters = (s: any) => s?.charAt(0).toUpperCase() + s?.slice(1).toUpperCase();
+export const lowerCaseAllLetters = (s: any) => s?.charAt(0).toLowerCase() + s?.slice(1).toLowerCase();
 
 export const getTableIndexNumber = (page: number, index: number, limit: number) => {
   return (page - 1) * limit + (index + 1);

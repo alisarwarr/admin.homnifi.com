@@ -204,8 +204,8 @@ const UserDetails = () => {
                   {formik.values?.sponsor?.companyName
                     ? formik.values.sponsor.companyName
                     : formik.values.sponsor.firstName
-                    ? `${formik.values.sponsor.firstName} ${formik.values.sponsor.lastName}`
-                    : formik.values.username}
+                      ? `${formik.values.sponsor.firstName} ${formik.values.sponsor.lastName}`
+                      : formik.values.username}
                 </span>
                 <span className="text-xs">{formik.values.sponsor.email}</span>
               </div>

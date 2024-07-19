@@ -38,7 +38,7 @@ type FILTER = {
 const WithdrawHistory = () => {
   const { getWithdrawHistoryRequests } = useHistoryActions();
   const { withdrawHistory } = useSelector(selectHistorySlice);
-  console.log("🚀 ~ WithdrawHistory ~ withdrawHistory:", withdrawHistory)
+  console.log('🚀 ~ WithdrawHistory ~ withdrawHistory:', withdrawHistory);
   const [columns, setColumns] = useState<any[]>(headCells);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<FILTER>({

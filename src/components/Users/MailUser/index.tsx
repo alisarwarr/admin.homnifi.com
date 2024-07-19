@@ -1,10 +1,10 @@
-import { useFormik } from "formik";
-import React, { useState } from "react";
-import * as Yup from "yup";
-import FormikInput from "../../FormikInput";
-import Button from "../../Button";
-import { useCustomerActions } from "../../../store/customer/customerActions";
-import { errorAlert, successAlert } from "../../../utils/alerts";
+import { useFormik } from 'formik';
+import React, { useState } from 'react';
+import * as Yup from 'yup';
+import FormikInput from '../../FormikInput';
+import Button from '../../Button';
+import { useCustomerActions } from '../../../store/customer/customerActions';
+import { errorAlert, successAlert } from '../../../utils/alerts';
 
 type Props = {
   onClose: any;
@@ -14,13 +14,13 @@ type Props = {
 };
 
 const validationSchema = Yup.object().shape({
-  subject: Yup.string().required("Subject is required."),
-  message: Yup.string().required("Message is required."),
+  subject: Yup.string().required('Subject is required.'),
+  message: Yup.string().required('Message is required.'),
 });
 
 const formFields = [
-  { key: "subject", label: "Subject", type: "text" },
-  { key: "message", label: "Message", type: "textarea" },
+  { key: 'subject', label: 'Subject', type: 'text' },
+  { key: 'message', label: 'Message', type: 'textarea' },
 ];
 
 const MailUser = ({ onClose, user, bulkMail, userIds }: Props) => {
@@ -28,8 +28,8 @@ const MailUser = ({ onClose, user, bulkMail, userIds }: Props) => {
   const { sendUserMail, sendBulkMailToUsers } = useCustomerActions();
 
   const initialValues: any = {
-    subject: "",
-    message: "",
+    subject: '',
+    message: '',
   };
 
   const formik = useFormik({
@@ -68,12 +68,10 @@ const MailUser = ({ onClose, user, bulkMail, userIds }: Props) => {
                 placeholder={`Enter ${field.label}`}
                 error={formik.errors[field.key]}
                 value={formik.values[field.key]}
-                onChange={(e: any) =>
-                  formik.setFieldValue(field.key, e.target.value)
-                }
+                onChange={(e: any) => formik.setFieldValue(field.key, e.target.value)}
                 touched={formik.touched[field.key]}
                 shrink={true}
-                multiline={field.key === "message" ? true : false}
+                multiline={field.key === 'message' ? true : false}
                 rows={6}
               />
             </div>

@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  GaugeContainer,
-  GaugeValueArc,
-  GaugeReferenceArc,
-  useGaugeState,
-} from '@mui/x-charts/Gauge';
+import { GaugeContainer, GaugeValueArc, GaugeReferenceArc, useGaugeState } from '@mui/x-charts/Gauge';
 
 function GaugePointer({ strokeWidth }: { strokeWidth?: number }) {
   const { valueAngle, outerRadius, cx, cy } = useGaugeState();
@@ -20,15 +15,7 @@ function GaugePointer({ strokeWidth }: { strokeWidth?: number }) {
   };
   return (
     <g>
-      <circle
-        cx={target.x}
-        cy={target.y}
-        r={5}
-        rx="9.5"
-        fill="white"
-        strokeWidth={strokeWidth || 8}
-        stroke="white"
-      />
+      <circle cx={target.x} cy={target.y} r={5} rx="9.5" fill="white" strokeWidth={strokeWidth || 8} stroke="white" />
     </g>
   );
 }
@@ -39,11 +26,7 @@ type TGaugeChart = {
   strokeWidth?: number;
 };
 
-export default function GaugeChart({
-  containerHeight,
-  containerWidth,
-  strokeWidth,
-}: TGaugeChart) {
+export default function GaugeChart({ containerHeight, containerWidth, strokeWidth }: TGaugeChart) {
   return (
     <>
       <svg width="0" height="0">

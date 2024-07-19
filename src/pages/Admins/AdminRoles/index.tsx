@@ -95,7 +95,7 @@ function AdminRoles() {
   if (loading) {
     return <Loader />;
   }
-  
+
   return (
     <div className="w-full px-2">
       <div className="flex bg-primary items-center table-head-bg text-white">

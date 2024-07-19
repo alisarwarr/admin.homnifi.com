@@ -10,14 +10,7 @@ type Props = {
   variant?: 'text' | 'rectangular' | 'rounded' | 'circular';
 };
 
-const GlobalSkeleton = ({
-  animationValue,
-  sx,
-  className,
-  width,
-  height,
-  variant,
-}: Props) => {
+const GlobalSkeleton = ({ animationValue, sx, className, width, height, variant }: Props) => {
   return (
     <Skeleton
       variant={variant}

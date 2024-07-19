@@ -29,7 +29,7 @@ const headCells = [
   { id: 'id', label: 'ID', dataClass: '', show: true },
   { id: 'user', label: 'User Name', dataClass: 'min-w-24', show: true },
   { id: 'requestId', label: 'Request ID', dataClass: 'min-w-32', show: true },
-  { id: 'requestDate', label: 'Request Date', dataClass: 'min-w-36', show: true , },
+  { id: 'requestDate', label: 'Request Date', dataClass: 'min-w-36', show: true },
   { id: 'token', label: 'Token', dataClass: 'min-w-24', show: true },
   { id: 'network', label: 'Network', dataClass: 'min-w-24', show: true },
   { id: 'address', label: 'Wallet Address', dataClass: 'max-w-32', show: true },

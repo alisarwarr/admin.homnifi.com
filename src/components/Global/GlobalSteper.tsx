@@ -10,7 +10,6 @@ type Props = {
 };
 
 const GlobalStepper = ({ step, enableBackground = null, lineEnable = true }: Props) => {
-
   return (
     <div className="h-full transition-all">
       <StepNumber number={step} enableBackground={enableBackground} active={true} />

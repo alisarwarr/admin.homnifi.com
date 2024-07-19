@@ -3,7 +3,7 @@ export interface TINFLATIONRULES {
     _id: string;
     adminNote: string;
     name: string; // Added "name" to match the initial state
-  },
+  };
   rules: {
     dropPercentage: number;
     productionDecreasePercentage: number;

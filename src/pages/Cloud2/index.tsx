@@ -10,9 +10,7 @@ const Cloud2 = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
 
-  return (
-      <RenderMemberShip />
-  );
+  return <RenderMemberShip />;
 };
 
 export default Cloud2;
