@@ -29,6 +29,7 @@ import { errorAlert, successAlert } from '../../utils/alerts';
 import { Theme } from '@mui/material/styles';
 
 import { Copy } from '../../images/svg';
+import { formatDate, isIsoDateString } from '../../utils/helper';
 
 type Props = {
   rows?: any[];
@@ -439,7 +440,15 @@ const GlobalTable = ({
                                       alt=""
                                     />
                                   ) : (
-                                    <>{row[cell.id] ? row[cell.id] : <>-</>}</>
+                                    <>
+                                      {isIsoDateString(row[cell.id]) ? (
+                                        formatDate(row[cell.id])
+                                      ) : row[cell.id] ? (
+                                        row[cell.id]
+                                      ) : (
+                                        <>-</>
+                                      )}
+                                    </>
                                   )}
                                   {copyIconList.find(
                                     (dt) => dt === cell.id
@@ -504,7 +513,7 @@ const GlobalTable = ({
       >
         {filter && <div></div>}
         <div className="self-center">
-          {totalPages && paginate && (
+          {totalPages && paginate ? (
             <Pagination
               shape="rounded"
               count={totalPages}
@@ -513,6 +522,8 @@ const GlobalTable = ({
                 handlePageChange && handlePageChange(value);
               }}
             />
+          ) : (
+            ''
           )}
         </div>
 
