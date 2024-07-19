@@ -32,7 +32,7 @@ export const useWalletActions = () => {
         page: filter.page,
         limit: filter.limit,
         search: filter.search,
-        status: 'PENDING',
+        // status: 'success',
       },
     });
 

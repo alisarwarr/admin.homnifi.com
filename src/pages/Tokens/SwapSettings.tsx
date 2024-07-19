@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import { useTokensSettingsAction } from '../../store/tokensSettings/tokensSettingsAction';
 import { selectTokensSettings } from '../../store/tokensSettings/tokensSettingsSlice';
 import { useSelector } from 'react-redux';
+import TokenNameWithLogo from '../../components/TokenNameWithLogo';
 
 const headCells = [
   { id: 'fromToken', label: 'From Token', show: true },
@@ -49,8 +50,18 @@ export default function SwapSettings() {
   const rows = swapSettings
     ? swapSettings?.map((_data: any, index: number) => {
         return {
-          fromToken: _data.fromToken?.name,
-          toToken: _data.toToken?.name,
+          fromToken: (
+            <TokenNameWithLogo
+              tokenName={_data?.fromToken?.name}
+              src={_data?.fromToken?.iconUrl}
+            />
+          ),
+          toToken: (
+            <TokenNameWithLogo
+              tokenName={_data?.toToken?.name}
+              src={_data?.toToken?.iconUrl}
+            />
+          ),
           minAmount: _data.minAmount,
           maxAmount: _data.maxAmount,
           createdAt: _data.createdAt,

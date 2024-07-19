@@ -42,11 +42,11 @@ export const useHistoryActions = () => {
     const response = await ApiRequest().request({
       method: 'GET',
       url: `${WALLET_SWAP_HISTORY}`,
-      params: {
-        page: filter.page,
-        limit: filter.limit,
-        search: filter.search,
-      },
+      // params: {
+      //   page: filter.page,
+      //   limit: filter.limit,
+      //   search: filter.search,
+      // },
     });
 
     const _migrationReuests = response?.data?.data;

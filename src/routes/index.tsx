@@ -298,16 +298,16 @@ export const router = createBrowserRouter([
           </React.Suspense>
         ),
       },
-      {
-        path: '/wallet/transfer',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <SwapHistory />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
+      // {
+      //   path: '/wallet/transfer',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <SwapHistory />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
       {
         path: '/wallet/withdraw',
         element: (
