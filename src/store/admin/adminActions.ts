@@ -276,10 +276,8 @@ export const useAdminActions = () => {
         url: `${CRON_JOBS_LIST}?page=${page}&limit=${limit}`,
       })
       .then((response: any) => {
-        console.log('response cron jobs ::', response.data.data);
-        // dispatch(setCronJobsList())
-        // dispatch(setCronJobsData())
-
+        dispatch(setCronJobsList(response.data.data?.list));
+        dispatch(setCronJobsData(response.data.data));
         return response.data.data;
       })
       .catch((err: any) => {
