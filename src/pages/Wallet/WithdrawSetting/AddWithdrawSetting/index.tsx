@@ -215,12 +215,16 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     labelOptionClass={'text-left'}
                     name={'withdrawFrom'}
                     placeholder={'Selecte From'}
-                    options={tokensList.map((tkn) => {
-                      return {
-                        label: tkn.name,
-                        value: tkn._id,
-                      };
-                    })}
+                    options={
+                      tokensList?.length
+                        ? tokensList?.map((tkn) => {
+                            return {
+                              label: tkn.name,
+                              value: tkn._id,
+                            };
+                          })
+                        : []
+                    }
                     setFieldTouched={() =>
                       formik.setFieldTouched('withdrawFrom', true)
                     }
@@ -246,12 +250,16 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     labelOptionClass={'text-left'}
                     name={'withdrawTo'}
                     placeholder={'Selecte To'}
-                    options={tokensList.map((tkn) => {
-                      return {
-                        label: tkn.name,
-                        value: tkn._id,
-                      };
-                    })}
+                    options={
+                      tokensList?.length
+                        ? tokensList?.map((tkn) => {
+                            return {
+                              label: tkn.name,
+                              value: tkn._id,
+                            };
+                          })
+                        : []
+                    }
                     setFieldTouched={() =>
                       formik.setFieldTouched('withdrawTo', true)
                     }
