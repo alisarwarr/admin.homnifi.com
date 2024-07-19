@@ -17,7 +17,8 @@ export const useFaqActions = () => {
       method: 'GET',
       url: `${FAQ}/deposit?page=${page}`,
     });
-    const _faqs = response?.data?.data;
+    const _faqs = response?.data;
+    console.log('🚀 ~ getFaqs ~ _faqs:', _faqs, response);
     dispatch(setFaqs(_faqs));
   };
 

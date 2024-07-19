@@ -12,49 +12,54 @@ import { selectUser } from '../../store/user/userSlice';
 export default function Profile(): JSX.Element {
   const { getAdminData, updateAdminData } = useAdminActions();
   const admin = useSelector(selectAdminData);
+  console.log('🚀 ~ Profile ~ admin:', admin);
 
   const user = useSelector(selectUser);
+  console.log('🚀 ~ Profile ~ user:', user);
 
   const formikRef = useRef<any>(null);
 
   const initialValues = {
-    email: '',
-    username: '',
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
+    email: user?.email ? user?.email : '',
+    username: user?.username ? user?.username : '',
+    firstName: user?.firstName ? user?.firstName : '',
+    lastName: user?.lastName ? user?.lastName : '',
+    phoneNumber: user?.phoneNumber ? user?.phoneNumber : '',
   };
 
   useEffect(() => {
-    // getAdminData(user?.id);
-
-    getAdminData();
+    getAdminData(user?.id);
   }, []);
 
   useEffect(() => {
-    if (formikRef.current && admin) {
+    if (formikRef.current && user) {
       formikRef.current.setValues({
-        email: admin?.email || '',
+        email: user?.email || '',
         username: admin?.username || '',
         firstName: admin?.firstName || '',
         lastName: admin?.lastName || '',
         phoneNumber: admin?.phoneNumber || '',
       });
     }
-  }, [admin]);
+  }, []);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     username: Yup.string().required('Username is required'),
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
-    phoneNumber: Yup.string().required('Phone number is required'),
+    phoneNumber: Yup.string(),
   });
 
   const onSubmit = async (values: any) => {
+    const _values = {
+      id: user?.id,
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+    };
     setIsSubmitting(true);
     try {
-      const response = await updateAdminData(values);
+      const response = await updateAdminData(_values);
       if (response.status) {
         successAlert('Successfully updated profile!');
       } else {
@@ -95,7 +100,7 @@ export default function Profile(): JSX.Element {
   return (
     <div className="w-full px-6 py-2 sm:py-8 mb-20 lg:px-8 text-white max-w-[1700px] mx-auto">
       <div className="mx-auto text-start">
-        <h2 className="text-2xl font-bold">Profile</h2>
+        <h2 className="text-2xl text-primary font-bold">Profile</h2>
       </div>
 
       <form
@@ -110,6 +115,7 @@ export default function Profile(): JSX.Element {
                   label={capitalizeFirstLetter(key)}
                   type={key}
                   name={key}
+                  disabled={key === 'email' || key === 'username'}
                   shrink={true}
                   error={errors[key] && touched[key] ? true : false}
                   value={values[key]}
