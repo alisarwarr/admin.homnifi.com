@@ -70,7 +70,7 @@ export const allDrawerOptions: DrawerSection[] = [
             name: 'Withdraw Settings',
             icon: <Dashboard />,
             icon_dark: setting,
-            url: '/wallet/withdraw-settings',
+            url: '/token/withdraw-settings',
             key: 'wallet-withdraw-settings',
             active: false,
             options: [],

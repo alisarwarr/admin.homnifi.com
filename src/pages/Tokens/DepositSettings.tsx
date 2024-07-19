@@ -96,10 +96,26 @@ export default function DepositSettings() {
             minDisplayAmount: ''
         },
         validationSchema: Yup.object({
-            fromToken: Yup.mixed().required('Type is required'),
-            toToken: Yup.mixed().required('ID is required'),
+            fromToken: Yup.object({
+                label: Yup.string().required(),
+                value: Yup.string().required(),
+                id: Yup.string().required()
+            }).required('From Token is required'),
+            toToken: Yup.object({
+                label: Yup.string().required(),
+                value: Yup.string().required(),
+                id: Yup.string().required()
+            }).required('To Token is required'),
             minAmount: Yup.string().required('Minimum Amount is required'),
             minDisplayAmount: Yup.string().required('Minimum Display Amount is required')
+            .test(
+                'is-greater-than-minAmount',
+                'Min Display Amount must be greater than Min Amount',
+                function (value) {
+                    const { minAmount } = this.parent;
+                    return Number(value) > Number(minAmount);
+                }
+            )
         }),
         onSubmit: async (values) => {
             const data = {
@@ -142,8 +158,8 @@ export default function DepositSettings() {
                             value={formik.values.toToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.toToken && !!formik.errors.toToken}
-                            error={formik.errors.toToken}
+                            isError={formik.touched.toToken?.value && !!formik.errors.toToken?.value}
+                            error={formik.errors.toToken?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />
@@ -161,8 +177,8 @@ export default function DepositSettings() {
                             value={formik.values.fromToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.fromToken && !!formik.errors.fromToken}
-                            error={formik.errors.fromToken}
+                            isError={formik.touched.fromToken?.value && !!formik.errors.fromToken?.value}
+                            error={formik.errors.fromToken?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />

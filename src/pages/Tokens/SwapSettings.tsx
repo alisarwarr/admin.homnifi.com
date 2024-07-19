@@ -5,6 +5,8 @@ import GlobalDialog from '../../components/Dialog';
 import GlobalInput from '../../components/Global/GlobalInput';
 import GlobalSelect from '../../components/Global/GlobalSelect';
 import GlobalButton from '../../components/Global/GlobalButton';
+import GlobalFormControlLabel from '../../components/Global/GlobalFormControlLabel';
+import GlobalSwitch from '../../components/Global/GlobalSwitch';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTokensSettingsAction } from '../../store/tokensSettings/tokensSettingsAction';
@@ -105,18 +107,31 @@ export default function SwapSettings() {
             toToken: { label: "", value: "", id: "" },
             minAmount: '',
             maxAmount: '',
+            isCurtomRate: false,
             rate: '',
             commission: '',
             commissionType: { label: "", value: "" }
         },
         validationSchema: Yup.object({
-            fromToken: Yup.mixed().required('From Token is required'),
-            toToken: Yup.mixed().required('To Token is required'),
+            fromToken: Yup.object({
+                label: Yup.string().required("From Token is required"),
+                value: Yup.string().required("From Token is required"),
+                id: Yup.string().required("From Token is required")
+            }),
+            toToken: Yup.object({
+                label: Yup.string().required("To Token is required"),
+                value: Yup.string().required("To Token is required"),
+                id: Yup.string().required("To Token is required")
+            }),
             minAmount: Yup.number().required('Minimum Amount is required').min(0, 'Amount must be greater than or equal to 0'),
             maxAmount: Yup.number().required('Maximum Amount is required').min(0, 'Amount must be greater than or equal to 0'),
-            rate: Yup.number().required('Rate is required').min(0, 'Rate must be greater than or equal to 0'),
+            isCurtomRate: Yup.boolean(),
+            rate: Yup.number().min(0, 'Rate must be greater than or equal to 0'),
             commission: Yup.number().required('Commission is required').min(0, 'Amount must be greater than or equal to 0'),
-            commissionType: Yup.mixed().required('Commission Type is required'),
+            commissionType: Yup.object({
+                label: Yup.string().required("Commission Type is required"),
+                value: Yup.string().required("Commission Type is required")
+            })
         }),
         onSubmit: async (values) => {
             const data = {
@@ -124,7 +139,7 @@ export default function SwapSettings() {
                 toToken: values.toToken.id,
                 minAmount: values.minAmount,
                 maxAmount: values.maxAmount,
-                rate: values.rate,
+                rate: values.isCurtomRate ? values.rate : null,
                 commission: values.commission,
                 commissionType: values.commissionType.value
             };
@@ -138,6 +153,9 @@ export default function SwapSettings() {
             onClose();
         }
     });
+
+
+    console.log({formik});
 
 
     return (
@@ -162,8 +180,8 @@ export default function SwapSettings() {
                             value={formik.values.fromToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.fromToken && !!formik.errors.fromToken}
-                            error={formik.errors.fromToken}
+                            isError={formik.touched.fromToken?.value && !!formik.errors.fromToken?.value}
+                            error={formik.errors.fromToken?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />
@@ -181,8 +199,8 @@ export default function SwapSettings() {
                             value={formik.values.toToken.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.toToken && !!formik.errors.toToken}
-                            error={formik.errors.toToken}
+                            isError={formik.touched.toToken?.value && !!formik.errors.toToken?.value}
+                            error={formik.errors.toToken?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />
@@ -213,18 +231,34 @@ export default function SwapSettings() {
                             error={formik.errors.maxAmount}
                         />
 
-                        <GlobalInput
-                            name="rate"
-                            label="Rate"
-                            placeholder="Enter rate"
-                            type="number"
-                            required
-                            value={formik.values.rate}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            isError={formik.touched.rate && !!formik.errors.rate}
-                            error={formik.errors.rate}
+                        <GlobalFormControlLabel
+                            control={
+                                <GlobalSwitch
+                                    checked={formik.values.isCurtomRate}
+                                    onChange={(e) => {
+                                        formik.setFieldValue("isCurtomRate", e);
+                                    }}
+                                />
+                            }
+                            label="Custom Rate"
+                            className="text-primary"
                         />
+
+                        {
+                            formik.values.isCurtomRate && (
+                                <GlobalInput
+                                    name="rate"
+                                    label="Rate"
+                                    placeholder="Enter rate"
+                                    type="number"
+                                    value={formik.values.rate}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    isError={formik.touched.rate && !!formik.errors.rate}
+                                    error={formik.errors.rate}
+                                />
+                            )
+                        }
 
                         <GlobalSelect
                             required
@@ -238,8 +272,8 @@ export default function SwapSettings() {
                             value={formik.values.commissionType.value}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            isError={formik.touched.commissionType && !!formik.errors.commissionType}
-                            error={formik.errors.commissionType}
+                            isError={formik.touched.commissionType?.value && !!formik.errors.commissionType?.value}
+                            error={formik.errors.commissionType?.value}
                             setFieldTouched={formik.setFieldTouched}
                             setFieldValue={formik.setFieldValue}
                         />

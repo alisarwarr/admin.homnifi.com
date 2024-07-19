@@ -62,7 +62,7 @@ export default function NetworkSettings() {
         },
         validationSchema: Yup.object({
             name: Yup.string().required('Name is required'),
-            blockchainCode: Yup.string().required('Blockchain Code is required'),
+            blockchainCode: Yup.string().required('Blockchain Code is required')
         }),
         onSubmit: async(values) => {
             const data = {

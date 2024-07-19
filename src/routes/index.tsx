@@ -321,7 +321,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: '/wallet/withdraw-settings',
+        path: '/token/withdraw-settings',
         element: (
           <React.Suspense fallback={<Loader />}>
             <ProtectedRoute>
