@@ -54,18 +54,6 @@ const Tokens = () => {
     console.log('item edit ::', itm);
     setSelectedToken(itm);
     setOpen(true);
-
-    // setSelectedToken({
-    //   name: 'QA token',
-    //   symbol: 'QA',
-    //   type: 'off-chain',
-    //   withdrawType: 'on-chain',
-    //   color: 'YELLOW',
-    //   networks: ['669917284e572339025f2d2f', '66990e97f798f5eb94180022', '6698c64cd0fc293b85ee3bf4'],
-    //   iconUrl: 'http://icon-url.com',
-    //   createdBy: '6693f2f823f11a87d047964f',
-    //   _id: '669942688a0a94d151d5295f',
-    // });
   };
 
   return (

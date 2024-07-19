@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { WithdrawSettingsList } from '../../utils/interfaces';
 
 interface TokenSliceState {
   tokensList: Token[];
@@ -10,7 +11,7 @@ interface TokenSliceState {
     [key: string]: any;
   };
   tokenPairs: any[];
-  withdrawSettingsList: any[];
+  withdrawSettingsList: WithdrawSettingsList[];
 }
 
 export interface Token {
@@ -85,6 +86,7 @@ export interface TokenTransactionSettingType {
   name?: string;
   symbol?: string;
   token?: string;
+
   // transactionType?: string;
   // feeType: string | any;
   // fee: number;
@@ -131,7 +133,8 @@ const tokenSlice = createSlice({
   },
 });
 
-export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs, setWithdrawSettingsList } = tokenSlice.actions;
+export const { setTokenList, setTokenTRansactionSettingList, setTokenPairs, setWithdrawSettingsList } =
+  tokenSlice.actions;
 
 export const selectToken = (state: { token: TokenSliceState }) => state.token;
 export default tokenSlice.reducer;

@@ -1,14 +1,14 @@
 //REACT
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAdminActions } from '../../store/admin/adminActions';
 
 import { add } from '../../images/other';
+import Loader from '../../components/Loader/Loader';
 import { selectUser } from '../../store/user/userSlice';
-import { useNavigate } from 'react-router-dom';
 import AdminTable from '../../components/Admin/AdminTable';
 import { selectAdmin } from '../../store/admin/adminSlice';
-import Loader from '../../components/Loader/Loader';
 
 export default function Admins(): JSX.Element {
   const navigate = useNavigate();

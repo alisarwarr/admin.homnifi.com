@@ -31,8 +31,8 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
   const navigate = useNavigate();
   const { adminDataDetail } = useSelector(selectAdmin);
   const [selectedUser, setSelectedUser] = useState<any>();
+  const [openLockUserDialog, setOpenLockUserDialog] = useState(false); 
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
-  const [openLockUserDialog, setOpenLockUserDialog] = useState(false);
   const { updateAdminAccess, deleteAdmin, getAdminList } = useAdminActions();
 
   const rows =
