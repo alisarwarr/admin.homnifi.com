@@ -62,7 +62,7 @@ const headCells = [
   },
   {
     id: 'actions',
-    label: 'Actions',
+    label: 'Status',
     headCellClass: 'text-center min-w-[100px]',
     show: true,
   },
