@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { ResponsiveLine } from '@nivo/line';
 import {
   TChartDataType,
@@ -26,6 +25,15 @@ const LineChart = ({
   colors,
   containerClassName,
 }: TLineChart) => {
+  // Extract all y values from the data
+  const allYValues = data.flatMap((serie) =>
+    serie.data.map((point) => point.y)
+  );
+  // Find the maximum y value
+  const maxYValue = Math.max(...allYValues);
+  // Find the minimum y value
+  const minYValue = Math.min(...allYValues);
+
   const CustomTooltip = ({ point }: { point: any }) => (
     <div
       style={{
@@ -36,10 +44,7 @@ const LineChart = ({
         color: '#939393',
       }}
     >
-      <div className="flex items-center justify-between">
-        <div>{point.data.xFormatted}</div>
-        <div>17:56</div>
-      </div>
+      <div className="flex items-center justify-between"></div>
       <br />
       <div className="flex items-center gap-2">
         <div
@@ -53,7 +58,7 @@ const LineChart = ({
         <div>
           {point.serieId}:{' '}
           <span className="font-medium text-secondaryBlack">
-            {point.data.xFormatted}
+            {point.data.yFormatted}
           </span>
         </div>
       </div>
@@ -104,16 +109,22 @@ const LineChart = ({
           xScale={{ type: 'point' }}
           yScale={{
             type: 'linear',
-            min: 'auto',
-            max: 'auto',
-            stacked: true,
-            reverse: false,
+            min: minYValue,
+            max: maxYValue,
+            // stacked: true,
+            // reverse: false,
           }}
           colors={colors || ['#0E173F', '#1B9FDA']}
           yFormat=" >-.2f"
           axisTop={null}
           axisRight={null}
-          axisLeft={null}
+          axisLeft={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legendOffset: -40,
+            legendPosition: 'middle',
+          }}
           axisBottom={{
             tickSize: 0,
             tickPadding: 5,
@@ -131,7 +142,7 @@ const LineChart = ({
           pointLabel="data.yFormatted"
           pointLabelYOffset={-12}
           enableArea={true}
-          areaBaselineValue={40}
+          areaBaselineValue={minYValue}
           areaOpacity={0.05}
           enableCrosshair={false}
           crosshairType="top-left"
@@ -183,10 +194,10 @@ const LineChart = ({
           xScale={{ type: 'point' }}
           yScale={{
             type: 'linear',
-            min: 'auto',
-            max: 'auto',
-            stacked: true,
-            reverse: false,
+            min: minYValue,
+            max: maxYValue,
+            // stacked: true,
+            // reverse: false,
           }}
           axisTop={null}
           axisRight={null}
@@ -205,7 +216,7 @@ const LineChart = ({
             legendOffset: -40,
             legendPosition: 'middle',
             truncateTickAt: 0,
-            format: (value) => `$ ${value}`,
+            format: (value) => console.log('valuevaluevalue', value),
           }}
           enableGridX={false}
           enablePoints={false}
