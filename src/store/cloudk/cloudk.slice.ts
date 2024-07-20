@@ -19,12 +19,14 @@ export interface TemplateState {
   getMachineDetailsLoading: boolean;
   userMachinesLoading: boolean;
   getUserMachineRewardsLoading: boolean;
+  simulationMachineList: any[] | null;
 }
 export const CLOUD_SLICE_NAME = 'cloudk';
 const initialState: TemplateState = {
   value: '',
   products: [],
   userRewards: [],
+  simulationMachineList: [],
   infalationRules: [
     {
       inflation: {
@@ -79,6 +81,9 @@ const slice = createSlice({
     },
     setUserMachineList: (state, action: PayloadAction<any>) => {
       return { ...state, userMachineList: action.payload };
+    },
+    setSimulationMachineList: (state, action: PayloadAction<any>) => {
+      return { ...state, simulationMachineList: action.payload };
     },
   },
 });
