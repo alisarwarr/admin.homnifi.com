@@ -49,28 +49,25 @@ const Simulation = () => {
     collateral,
     simulationData,
   } = useSelector(selectSimulationSlice);
-  console.log('prices', prices);
   useEffect(() => {
     getUserMachineList({
       search: debouncedSearchValue,
       limit: filters.limit,
       page: filters.page,
     });
-  }, []);
+  }, [selectedMachine]);
 
-  const handleSelectFirstProduct = () => {
-    console.log(
-      'userMachineList?.[0]',
-      userMachineList?.[0],
-      userMachineList,
-      machines
-    );
-    dispatch(
-      simulationSliceAction.setSimulationSlice({
-        selectedMachine: userMachineList && userMachineList?.[0],
-      })
-    );
-  };
+  useEffect(() => {
+    if (userMachineList) {
+      if (userMachineList?.length > 0 && !selectedMachine) {
+        dispatch(
+          simulationSliceAction.setSimulationSlice({
+            selectedMachine: userMachineList[0],
+          })
+        );
+      }
+    }
+  }, [userMachineList, dispatch, selectedMachine]);
 
   const machinesDropdown =
     userMachineList?.map((item: any, i: number) => ({
@@ -79,7 +76,6 @@ const Simulation = () => {
     })) || [];
 
   const handleChange = (selectedOption: any | null) => {
-    console.log('🚀 ~ handleChange ~ selectedOption:', selectedOption);
     if (selectedOption) {
       const selectedMachineDetails =
         userMachineList?.find((machine) => machine.name === selectedOption) ||
@@ -209,6 +205,10 @@ const Simulation = () => {
 
   const RewardsCalculatorChartData: TChartDataType = [
     {
+      id: 'Total Price',
+      data: totalPrice,
+    },
+    {
       id: 'ATH',
       color: 'hsl(226, 70%, 50%)',
       data: ath,
@@ -220,12 +220,8 @@ const Simulation = () => {
       data: dlp,
     },
     {
-      id: 'Price',
+      id: 'Token Price',
       data: price,
-    },
-    {
-      id: 'Reward',
-      data: totalPrice,
     },
   ];
 
@@ -255,8 +251,8 @@ const Simulation = () => {
   const RewardsCalculatorChartFill: TChartDataFill = [
     { match: { id: 'ATH' }, id: 'gradient1' },
     { match: { id: 'DLP' }, id: 'gradient1' },
-    { match: { id: 'Price' }, id: 'gradient1' },
-    { match: { id: 'Reward' }, id: 'gradient1' },
+    { match: { id: 'Token Price' }, id: 'gradient1' },
+    { match: { id: 'Total Price' }, id: 'gradient1' },
   ];
   const headCells = [
     { id: 'day', label: 'Day' },
@@ -320,10 +316,7 @@ const Simulation = () => {
             <label className="block text-sm font-medium text-primary">
               Upload CSV or Excel File
             </label>
-            {/* <input
-              type="file"
-              className="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            /> */}
+
             <input
               type="file"
               accept=".csv, .xlsx, .xls"
@@ -361,7 +354,6 @@ const Simulation = () => {
           </div>
         </div>
 
-        {/* Right column (div 2/3) */}
         {selectedMachine && (
           <div className="md:w-2/3  w-full flex flex-row py-5 gap-16">
             <div>
@@ -405,10 +397,10 @@ const Simulation = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 ">
-                      Mintng Power %
+                      Mintng Power
                     </label>
                     <p className="text-sm text-gray-600">
-                      {selectedMachine.mintingPowerPerc} %
+                      {selectedMachine.mintingPower}
                     </p>
                   </div>
                   <div>

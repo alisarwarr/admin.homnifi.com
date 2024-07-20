@@ -36,7 +36,7 @@ interface Machine {
   lockedPrice: number;
   allTimeHigh: number;
   dlp: number;
-  mintingPowerPerc: number;
+  mintingPower: number;
   boost: number;
 }
 
@@ -58,7 +58,7 @@ export interface SimulationState {
   simulationData: any[];
   prices: number[];
   collateral: number;
-  selectedMachine: Machine;
+  selectedMachine: Machine | null;
   startSimulationLoading: boolean;
 
   products: Product[];
@@ -214,35 +214,7 @@ const initialState: SimulationState = {
   prices: [],
   simulationData: [],
   collateral: 0,
-  selectedMachine: {
-    _id: '66978a6d30cb98351b732b76',
-    user: {
-      _id: '669509dce62ff890e02c00be',
-      email: 'khanss@gmail.com',
-      blockchainId: '2046062473',
-    },
-    name: 'XK500',
-    imageUrl:
-      'https://s3-alpha-sig.figma.com/img/7e81/61ad/d52b69a5f11e633605fd221870e6fc43?Expires=1722211200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hPKa4Ho9VT0BN2ERm2guLOaKPe~0ImqnIWO5G5UqxdI9H3kPxCOdXUWGFjerYrN1Cc2yn5j7bdJGLgl2JUPjaNlO6zISB5BQt2Ff6ysaqXrc8qiRzSXFbbUtW5z7KSIS~iJ31~-qpxqB~dnBVm48QmYxk3lOLLJ8kp9Sq0CqesDcDL9pZ1CvY5gmvcVXM2OFg-K5mY3fdTl0O7rY5xeNTsb9QjYG9ShJ5wH3gxReokQUoXeoeGPm1RrVb6kIAZy83WDeUReDgZapAKs-3ysDm320FEwC0nKQpiIzzO3nBYj0S~xYJE1ikNKpDOqm2cLrR6LmubiDN9d9s2EbbP92VQ__',
-    externalMachineId: 'EXdd4T41234561',
-    stakeLimit: 1000,
-    rewardWallet: '669789cff29280551e7076c1',
-    stakeToken: {
-      _id: '6692960b0631494a434e2c05',
-      name: 'mLYK',
-      symbol: 'mLYK',
-      color: '#3B89FF',
-      iconUrl:
-        'https://s3-alpha-sig.figma.com/img/3f09/da83/e820d2dafed1d3b195b0580a704ad3d4?Expires=1721606400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ScyV7P3fO0PEPH9jNhV~AXJsX5ZrsRFh-b~0BqI6ot2M9-dh4do91aaV2gv0kxjv-gNJQslE1afuBzVlK0lvNUEAqsJhrAxMM3hAVZckINZDwjZ5zxzrOSqqmufsPu4hy70u6faHXM4dtSn6YXVDVEjvwJCHecnTv277yacCeWfkBi~btGTMZg4ZvdcSAqP7kJD2RaKB66xHIILIThmehVh9THdTgmBcBvPUTyhQHddFrZZdmYKlDEed~uag9VCXlU30wYVqpoBpftFo0LB7BtKJ7HXneuM0pbV5gS5EMywyu2O5x~wyx79w1gZFFj1vIHIfb1mgqUI7cCC65N2nBw__',
-    },
-    status: 'active',
-    autoCompound: false,
-    lockedPrice: 1,
-    allTimeHigh: 1,
-    dlp: 1,
-    mintingPowerPerc: 1,
-    boost: 0.06,
-  },
+  selectedMachine: null,
   startSimulationLoading: false,
 
   products: [

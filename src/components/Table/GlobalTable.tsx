@@ -502,7 +502,6 @@ const GlobalTable = ({
             ''
           )}
         </div>
-
       </div>
 
       <GlobalDialog
