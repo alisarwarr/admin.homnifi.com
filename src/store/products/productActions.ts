@@ -1,4 +1,8 @@
-import { selectProductSlice, setProducts } from './productSlice';
+import {
+  selectProductSlice,
+  setProducts,
+  setSelectProduct,
+} from './productSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { PRODUCTS } from '../../utils/network/ApiEndpoints';
 
@@ -26,6 +30,9 @@ export const useProductActions = () => {
       method: 'GET',
       url: `${PRODUCTS}/${id}`,
     });
+    const _products = response?.data?.data;
+
+    dispatch(setSelectProduct(_products));
     return response?.data?.data;
   };
 
