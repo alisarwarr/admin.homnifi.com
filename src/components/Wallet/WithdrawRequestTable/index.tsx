@@ -29,6 +29,10 @@ export const statusDisplay = {
     label: 'Approval Pending',
     color: 'orange',
   },
+  completed: {
+    label: 'Approval Pending',
+    color: '#22bb33',
+  },
 };
 
 type Props = {
@@ -72,8 +76,6 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
   const [openWithdrawAction, setOpenWithdrawAction] = useState(false);
   const [withdrawAction, setWithdrawAction] = useState<any>();
   const [columns, setColumns] = useState<any[]>(headCells);
-
-  console.log({ data: data.list });
 
   const rows = data?.list?.map((_data: any) => {
     return {
@@ -124,10 +126,10 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
             <span
               className="font-bold"
               style={{
-                color: statusDisplay[_data.requestStatus].color,
+                color: statusDisplay[_data.requestStatus]?.color,
               }}
             >
-              {statusDisplay[_data.requestStatus].label}
+              {statusDisplay[_data.requestStatus]?.label}
             </span>
           )}
         </>
