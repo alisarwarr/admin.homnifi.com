@@ -213,7 +213,8 @@ const Simulation = () => {
 
   const RewardsCalculatorChartData: TChartDataType = [
     {
-      id: 'Total Price',
+      id: 'Total Reward',
+      color: 'rgb(0,0,255)',
       data: totalPrice,
     },
     {
@@ -251,6 +252,7 @@ const Simulation = () => {
   const row = (simulationData || []).map((reward, index) => ({
     day: `${'Day '}${index + 1}`,
     totalPrice: reward.totalPrice,
+    collatoral: reward.collatoral,
     dlp: reward.dlp,
     tokenPrice: reward.tokenPrice,
     allTimeHigh: reward.allTimeHigh,
@@ -260,15 +262,16 @@ const Simulation = () => {
     { match: { id: 'ATH' }, id: 'gradient1' },
     { match: { id: 'DLP' }, id: 'gradient1' },
     { match: { id: 'Token Price' }, id: 'gradient1' },
-    { match: { id: 'Total Price' }, id: 'gradient1' },
+    { match: { id: 'Total Reward' }, id: 'gradient1' },
   ];
   const headCells = [
     { id: 'day', label: 'Day' },
+    { id: 'collatoral', label: 'Collatoral' },
 
     { id: 'tokenPrice', label: 'Token Price' },
     { id: 'dlp', label: 'DLP' },
     { id: 'allTimeHigh', label: 'ATH' },
-    { id: 'totalPrice', label: 'Total Price' },
+    { id: 'totalPrice', label: 'Total Reward' },
   ];
   useEffect(() => {
     setIsChecked(Boolean(selectedMachine?.autoCompound));
