@@ -28,7 +28,7 @@ function WithdrawSetting() {
     { id: 'type', label: 'type' },
     { id: 'withdrawFrom', label: 'Withdraw From' },
     { id: 'withdrawTo', label: 'Withdraw To' },
-    { id: 'minAmount', label: 'Min Amount' },
+    { id: 'minDisplayAmount', label: 'Min Display Amount' },
     { id: 'fees', label: 'Fees' },
     { id: 'commission', label: 'commission' },
     { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
@@ -41,7 +41,7 @@ function WithdrawSetting() {
           type: _data.type,
           withdrawFrom: _data.fromToken.name,
           withdrawTo: _data.toToken.name,
-          minAmount: _data.minAmount ?? 0,
+          minDisplayAmount: _data.minDisplayAmount ?? 0,
           fees: _data.fee ?? 0,
           commission: _data.commission ?? 0,
           actions: (
@@ -82,7 +82,7 @@ function WithdrawSetting() {
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">
-      <div className="flex bg-primary items-center table-head-bg text-white">
+       <div className="flex bg-primary items-center text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">
           Withdraw Settings
         </h1>

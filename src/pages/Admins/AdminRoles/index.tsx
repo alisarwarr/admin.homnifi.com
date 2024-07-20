@@ -1,13 +1,12 @@
 import { Tooltip } from 'antd';
 import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
+import Loader from '../../../components/Loader/Loader';
+import { add, edit, view } from '../../../images/other';
 import { selectAdmin } from '../../../store/admin/adminSlice';
 import GlobalTable from '../../../components/Table/GlobalTable';
 import AddAdminRole from '../../../components/Admin/AddAdminRole';
-import { add, edit, view, viewWhite } from '../../../images/other';
 import { useAdminActions } from '../../../store/admin/adminActions';
-import { ReactComponent as DeleteIcon } from '../../../SVGIcons/deleteIcon.svg';
-import Loader from '../../../components/Loader/Loader';
 
 function AdminRoles() {
   const { getAdminRole } = useAdminActions();
@@ -99,7 +98,7 @@ function AdminRoles() {
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">
-      <div className="flex bg-primary items-center table-head-bg text-white">
+       <div className="flex bg-primary items-center text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Admin Roles</h1>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"

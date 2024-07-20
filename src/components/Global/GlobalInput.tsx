@@ -2,6 +2,8 @@ import React from 'react';
 import { ReactComponent as EyeOpenIcon } from '../../SVGIcons/eyeIcon.svg';
 import { ReactComponent as EyeCloseIcon } from '../../SVGIcons/eyeCloseIcon.svg';
 import { ReactComponent as WarningIcon } from '../../SVGIcons/warning.svg';
+import { Tooltip } from '@mui/material';
+import { ToolTipSvg } from '../../images/svg';
 
 type TGlobalInput = {
   name: string;
@@ -24,6 +26,7 @@ type TGlobalInput = {
   containerStyles?: string;
   isApiError?: boolean;
   phoneInput?: boolean;
+  toolTip?: string;
 };
 
 const GlobalInput = ({
@@ -43,13 +46,28 @@ const GlobalInput = ({
   containerStyles,
   isApiError = false,
   phoneInput = false,
+  toolTip,
 }: TGlobalInput) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
-    <div className={`flex flex-col gap-2 ${containerStyles}`}>
-      <div className={`text-sm text-primary font-medium ${labelStyle}`}>
-        {label} {required && <span className="text-redDanger">*</span>}
+    
+    <div className={`flex flex-col my-2 gap-2 ${containerStyles}`}>
+      <div className={`text-sm font-medium ${labelStyle}`}>
+        {label && (
+          <div
+            className={`text-sm flex font-medium text-primary ${labelStyle}`}
+          >
+            {label} {required && <span className="text-redDanger px-2">*</span>}{' '}
+            {toolTip && (
+              <Tooltip title={toolTip}>
+                <div className="cursor-pointer">
+                  <ToolTipSvg />
+                </div>
+              </Tooltip>
+            )}
+          </div>
+        )}
       </div>
       <div className="relative flex items-center justify-center">
         <input
@@ -64,7 +82,7 @@ const GlobalInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`outline-none border py-2 px-4 text-xs rounded-full w-full ${
+          className={`outline-none border py-2 px-5 text-xs rounded-full w-full ${
             isError || isApiError ? 'border-redDanger' : 'border-blueGrey'
           } ${className}`}
         />

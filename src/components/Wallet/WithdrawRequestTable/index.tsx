@@ -1,21 +1,35 @@
 import GlobalTable from '../../Table/GlobalTable';
 import { WithdrawRequest } from '../../../store/wallet/walletSlice';
-import { Chip, Tooltip } from '@mui/material';
 import GlobalDialog from '../../Dialog';
 import UpdateRequest from '../UpdateRequest';
 import { useState } from 'react';
 import { WALLET_ACTIONS } from '../../../constants';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
 import WithdrawActionButton from '../WithdrawActionButton';
-import StatusChip from '../../StatusChip';
 import TokenNameWithLogo from '../../TokenNameWithLogo';
-import { copy } from '../../../images/other';
-import {
-  CapitalizeAllLetters,
-  copyToClipboard,
-  getTableIndexNumber,
-} from '../../../utils/utils';
+
+export const statusDisplay = {
+  pending: {
+    label: 'Pending',
+    color: 'blue',
+  },
+  approved: {
+    label: 'Approved',
+    color: 'green',
+  },
+  'on-chain-failure-and-reimbursed': {
+    label: 'Failed Onchain',
+    color: 'red',
+  },
+  'rejected-and-reimbursed': {
+    label: 'Rejected and Reimbursed',
+    color: 'black',
+  },
+  'pending-for-admin': {
+    label: 'Approval Pending',
+    color: 'orange',
+  },
+};
 
 type Props = {
   data: {
@@ -30,7 +44,7 @@ type Props = {
 };
 
 const headCells = [
-  { id: 'requestId', label: 'Id', dataClass: 'min-w-32', show: true },
+  { id: 'requestId', label: 'Hash Id', dataClass: 'min-w-32', show: true },
   { id: 'user', label: 'User Email', dataClass: 'min-w-24', show: true },
   {
     id: 'requestDate',
@@ -48,7 +62,7 @@ const headCells = [
   },
   {
     id: 'actions',
-    label: 'Actions',
+    label: 'Status',
     headCellClass: 'text-center min-w-[100px]',
     show: true,
   },
@@ -58,40 +72,65 @@ const WithdrawRequestsTable = ({ data, loading, filter, setFilter }: Props) => {
   const [openWithdrawAction, setOpenWithdrawAction] = useState(false);
   const [withdrawAction, setWithdrawAction] = useState<any>();
   const [columns, setColumns] = useState<any[]>(headCells);
-  const [copied, setCopied] = useState<boolean>(false);
 
-  const rows = data?.list?.map((_data, index) => {
+  console.log({ data: data.list });
+
+  const rows = data?.list?.map((_data: any) => {
     return {
-      requestId: _data._id,
+      requestId: _data.requestId,
       user: _data?.user?.email,
       requestDate: moment(_data?.createdAt).format('MMM, DD YYYY hh:mm'),
-      token: <TokenNameWithLogo tokenName={_data?.token?.name} />,
+      token: (
+        <TokenNameWithLogo
+          tokenName={_data?.token?.name}
+          src={_data?.token?.iconUrl}
+        />
+      ),
       network: _data.network?.name,
       amount: _data.amount,
       actions: (
-        <div className="flex flex-col screen1500:flex-row justify-center gap-2">
-          <WithdrawActionButton
-            status={_data.requestStatus}
-            onClick={() => {
-              setOpenWithdrawAction(true);
-              setWithdrawAction({ type: WALLET_ACTIONS.ACCEPT, id: _data._id });
-            }}
-            className=" bg-green-800 hover:bg-green-800/70"
-          >
-            Complete
-          </WithdrawActionButton>
+        <>
+          {_data.requestStatus === 'pending-for-admin' ? (
+            <div className="flex flex-col screen1500:flex-row justify-center gap-2">
+              <WithdrawActionButton
+                status={_data.requestStatus}
+                onClick={() => {
+                  setOpenWithdrawAction(true);
+                  setWithdrawAction({
+                    type: WALLET_ACTIONS.ACCEPT,
+                    id: _data._id,
+                  });
+                }}
+                className=" bg-green-800 hover:bg-green-800/70"
+              >
+                Complete
+              </WithdrawActionButton>
 
-          <WithdrawActionButton
-            status={_data.requestStatus}
-            onClick={() => {
-              setOpenWithdrawAction(true);
-              setWithdrawAction({ type: WALLET_ACTIONS.REJECT, id: _data._id });
-            }}
-            className="bg-red-600 hover:bg-red-600/70"
-          >
-            Reject
-          </WithdrawActionButton>
-        </div>
+              <WithdrawActionButton
+                status={_data.requestStatus}
+                onClick={() => {
+                  setOpenWithdrawAction(true);
+                  setWithdrawAction({
+                    type: WALLET_ACTIONS.REJECT,
+                    id: _data._id,
+                  });
+                }}
+                className="bg-red-600 hover:bg-red-600/70"
+              >
+                Reject
+              </WithdrawActionButton>
+            </div>
+          ) : (
+            <span
+              className="font-bold"
+              style={{
+                color: statusDisplay[_data.requestStatus].color,
+              }}
+            >
+              {statusDisplay[_data.requestStatus].label}
+            </span>
+          )}
+        </>
       ),
     };
   });

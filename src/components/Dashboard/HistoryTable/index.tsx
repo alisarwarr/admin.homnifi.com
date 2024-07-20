@@ -15,6 +15,10 @@ function HostoryTabla() {
   const [activeTab, setActiveTab] = React.useState('withdraw');
   const [test, setTest] = React.useState();
   const [clickeddRow, setClickeddRow] = React.useState<any>();
+  const [copyIconList, setCopyIconList] = React.useState<any[]>([
+    { name: 'destinations', isCopied: false },
+    { name: 'txId', isCopied: false },
+  ]);
   const [filterState, setFilterState] = React.useState({
     id: '',
     coin: '',
@@ -34,7 +38,6 @@ function HostoryTabla() {
     { id: 'status', label: 'Status' },
     { id: 'actions', label: 'Actions' },
   ];
-  const copyIconList = ['destinations', 'txId'];
   const row = [
     {
       id: 1,
@@ -164,8 +167,8 @@ function HostoryTabla() {
 
   return (
     <>
-      <div className="w-full  py-2 px-2 rounded-md">
-        <div className="flex items-center bg-gray-100">
+      <div className="w-full py-2 px-2 rounded-md border">
+        <div className="flex bg-primary items-center text-white">
           <h1 className="flex-1 font-semibold text-2xl px-3 py-1">Wallet</h1>
         </div>
 
@@ -190,7 +193,7 @@ function HostoryTabla() {
                 type="string"
                 name="id"
                 shrink={true}
-                placeholder="Enter ID"
+                placeholder="Enter ID "
                 className="w-full"
                 value={filterState['id']}
                 onChange={(e) => {
@@ -198,7 +201,7 @@ function HostoryTabla() {
                 }}
                 isError={false}
               />
-              <div className="absolute top-[18px] left-3 cursor-pointer">
+              <div className="absolute top-7 left-2 cursor-pointer">
                 <SeachIcon />
               </div>
             </div>
@@ -246,6 +249,7 @@ function HostoryTabla() {
           paginate={false}
           setClickeddRow={setClickeddRow}
           copyIconList={copyIconList}
+          setCopyIconList={setCopyIconList}
         />
       </div>
       <HistoryPopup

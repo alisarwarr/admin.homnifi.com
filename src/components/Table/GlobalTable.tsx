@@ -27,9 +27,8 @@ import ConfirmDialog from '../Dialog/ConfirmDialog';
 import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { Theme } from '@mui/material/styles';
-
-import { Copy } from '../../images/svg';
 import { formatDate, isIsoDateString } from '../../utils/helper';
+import { Copied, Copy, ToolTipSvg } from '../../images/svg';
 
 type Props = {
   rows?: any[];
@@ -70,7 +69,7 @@ type Props = {
   copyItems?: any[];
   colorItems?: any[];
   imageItems?: any[];
-
+  setCopyIconList?: any;
   noDataSettings?: string;
   handleOpen?: (id: string) => void;
   filterButtons?: React.ReactNode;
@@ -107,6 +106,8 @@ const GlobalTable = ({
   handleOpen,
   rowClasNames,
   filterButtons,
+  setClickeddRow,
+  setCopyIconList,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -232,26 +233,26 @@ const GlobalTable = ({
                   {isDropdown && (
                     <div
                       id="dropdownDefaultCheckbox"
-                      className="max-h-[300px] overflow-y-auto w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute top-16 right-8 !z-50"
+                      className="max-h-[300px] overflow-y-auto w-48 bg-white divide-y divide-gray-100 rounded-lg shadow absolute top-16 right-8 !z-50"
                     >
                       <ul
-                        className="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                        className="p-3 space-y-3 text-sm text-gray-700"
                         aria-labelledby="dropdownCheckboxButton"
                       >
                         <li>
                           {ColumnsList.map((itm, index) => {
                             return (
-                              <div className="flex items-center border-b border-gray-200 rounded-t-lg dark:border-gray-600 px-2 py-2">
+                              <div className="flex items-center border-b border-gray-200 rounded-t-lg px-2 py-2">
                                 <input
                                   id="checkbox-item-1"
                                   type="checkbox"
                                   checked={itm.show}
                                   onChange={() => handleCheckboxChange(index)}
-                                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                                 />
                                 <label
                                   htmlFor="checkbox-item-1"
-                                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                  className="ms-2 text-sm font-medium text-gray-900"
                                 >
                                   {itm?.label}
                                 </label>
@@ -311,7 +312,7 @@ const GlobalTable = ({
           </div>
         )}
         <div
-          className={`hidden lg:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
+          className={`hidden md:flex items-center gap-2 overflow-x-auto border bg-white border-borderGray rounded-lg `}
         >
           {/* <div className="hidden lg:flex items-center gap-2 overflow-auto"> */}
           <table className={`table-bordered border-collapse w-full`}>
@@ -326,7 +327,7 @@ const GlobalTable = ({
                   headCells.map((cell, index) => (
                     <th
                       key={index}
-                      className={`hidden lg:table-cell text-center font-medium text-sm p-3 border-b border-borderGray
+                      className={`hidden md:table-cell text-center font-medium text-sm p-3 border-b border-borderGray
                        ${cell.dataClass}  border-b`}
                     >
                       {cell.label}
@@ -393,17 +394,27 @@ const GlobalTable = ({
                           let color = '';
                           if (
                             row[cell.id] === 'success' ||
-                            row[cell.id] === 'approved'
+                            row[cell.id] === 'approved' ||
+                            row[cell.id] === 'Complete'
                           )
                             color = 'text-primaryGreen';
-                          else if (row[cell.id] === 'pending')
+                          else if (
+                            row[cell.id] === 'pending' ||
+                            row[cell.id] === 'Pending'
+                          )
                             color = 'text-primary';
-                          else if (row[cell.id] === 'failed')
+                          else if (
+                            row[cell.id] === 'failed' ||
+                            row[cell.id] === 'Failed'
+                          )
                             color = 'text-primaryRed';
 
                           return (
                             cell.id !== '_id' && (
                               <td
+                                // onClick={() => {
+                                //   setClickeddRow(row);
+                                // }}
                                 key={index}
                                 className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                               >
@@ -425,19 +436,51 @@ const GlobalTable = ({
                                       ) : (
                                         <>-</>
                                       )}
+                                      {cell.id === 'status' &&
+                                        row?.errorTooltip && (
+                                          <Tooltip
+                                            title={row.error ?? 'Failed'}
+                                          >
+                                            <div className="cursor-pointer px-2">
+                                              <ToolTipSvg />
+                                            </div>
+                                          </Tooltip>
+                                        )}
                                     </>
                                   )}
-                                  {copyIconList.find(
-                                    (dt) => dt === cell.id
-                                  ) && (
+
+                                  {copyIconList.length > 0 &&
+                                  copyIconList.find(
+                                    (dt) => dt.name === cell.id && !dt.isCopied
+                                  ) ? (
                                     <Copy
                                       className="ml-3 cursor-pointer"
-                                      onClick={() =>
+                                      onClick={() => {
+                                        setCopyIconList((prev: any) =>
+                                          prev.map((item) =>
+                                            item.name === cell.id
+                                              ? {
+                                                  ...item,
+                                                  isCopied: true,
+                                                }
+                                              : item
+                                          )
+                                        );
                                         navigator.clipboard.writeText(
                                           row[cell.id]
-                                        )
-                                      }
+                                        );
+                                      }}
                                     />
+                                  ) : (
+                                    <>
+                                      {copyIconList.length > 0 &&
+                                        copyIconList.find(
+                                          (dt) =>
+                                            dt.name === cell.id && dt.isCopied
+                                        ) && (
+                                          <Copied className="ml-3 cursor-pointer" />
+                                        )}
+                                    </>
                                   )}
                                 </div>
                               </td>
@@ -453,11 +496,11 @@ const GlobalTable = ({
           </table>
         </div>
 
-        <div className="flex md:hidden flex-col gap-3">
+        <div className="bg-white flex md:hidden flex-col gap-3">
           <div className="flex flex-col gap-4 w-full text-defaultBlack text-xs">
             {isLoading &&
               headCells.map((cell, index) => (
-                <div key={index} className="w-full flex items-center">
+                <div key={index} className="w-full flex items-center pl-5">
                   <div className="w-1/3">{cell.label}:</div>
                   <div className="w-2/3">
                     <Skeleton
