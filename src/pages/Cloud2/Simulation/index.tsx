@@ -23,9 +23,11 @@ import useDebounce from '../../../utils/hooks/useDebounceHook';
 import GlobalTable from '../../../components/Table/GlobalTable';
 
 const Simulation = () => {
-  const { getUserMachineList, startSimulation } = useCloudActions();
+  const { getUserMachineList, startSimulation, getUserSimulationList } =
+    useCloudActions();
   const dispatch = useDispatch();
-  const { userMachineList } = useSelector(selectCloudkSlice);
+  const { userMachineList, simulationMachineList } =
+    useSelector(selectCloudkSlice);
   const [erroMessage, setErrorMessage] = useState({
     fileError: '',
     collateralError: '',
@@ -50,7 +52,7 @@ const Simulation = () => {
     simulationData,
   } = useSelector(selectSimulationSlice);
   useEffect(() => {
-    getUserMachineList({
+    getUserSimulationList({
       search: debouncedSearchValue,
       limit: filters.limit,
       page: filters.page,
@@ -58,19 +60,19 @@ const Simulation = () => {
   }, [selectedMachine]);
 
   useEffect(() => {
-    if (userMachineList) {
-      if (userMachineList?.length > 0 && !selectedMachine) {
+    if (simulationMachineList) {
+      if (simulationMachineList?.length > 0 && !selectedMachine) {
         dispatch(
           simulationSliceAction.setSimulationSlice({
-            selectedMachine: userMachineList[0],
+            selectedMachine: simulationMachineList[0],
           })
         );
       }
     }
-  }, [userMachineList, dispatch, selectedMachine]);
+  }, [simulationMachineList, dispatch, selectedMachine]);
 
   const machinesDropdown =
-    userMachineList?.map((item: any, i: number) => ({
+    simulationMachineList?.map((item: any, i: number) => ({
       label: item.name,
       value: item.name,
     })) || [];
@@ -78,8 +80,9 @@ const Simulation = () => {
   const handleChange = (selectedOption: any | null) => {
     if (selectedOption) {
       const selectedMachineDetails =
-        userMachineList?.find((machine) => machine.name === selectedOption) ||
-        null;
+        simulationMachineList?.find(
+          (machine) => machine.name === selectedOption
+        ) || null;
       dispatch(
         simulationSliceAction.setSimulationSlice({
           selectedMachine: selectedMachineDetails,
@@ -102,7 +105,7 @@ const Simulation = () => {
       fileType === 'text/csv' ||
       fileType === 'application/vnd.ms-excel' ||
       fileType ===
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -445,7 +448,7 @@ const Simulation = () => {
             // handlePageChange={(page: number) => {
             //   getAdminList(page);
             // }}
-            handleOpen={() => { }}
+            handleOpen={() => {}}
           />
         </div>
       )}

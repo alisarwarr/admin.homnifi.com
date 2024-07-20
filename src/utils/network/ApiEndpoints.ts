@@ -149,6 +149,8 @@ export const MAINTENANCE = '/maintenance';
 //cloudk
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
+export const SIMULATION_MACHINE_LIST = '/cloud-k/simulation-machines';
+
 export const CLOUDK_MACHINE_SIMULATION = '/cloud-k/test-simulation';
 export const CRON_JOBS_LIST = '/cloud-k/rewards/cronjobs';
 

@@ -7,6 +7,7 @@ import {
   USER_MACHINE_DETAILS,
   INFLATION_RULES,
   CRON_JOBS_LIST,
+  SIMULATION_MACHINE_LIST,
 } from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
 import { simulationSliceAction } from './simulation';
@@ -325,7 +326,49 @@ export const useCloudActions = () => {
         return error;
       });
   };
+  const getUserSimulationList = async ({
+    search,
+    limit,
+    page,
+  }: {
+    search?: string;
+    limit?: number;
+    page?: number;
+  }) => {
+    // userMachinesLoading
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        userMachinesLoading: true,
+      })
+    );
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: `${SIMULATION_MACHINE_LIST}?search=${search}&limit=${limit}&page=${page}`,
+      })
+      .then((response: any) => {
+        dispatch(
+          cloudkSliceAction.setSimulationMachineList(response.data.data.list)
+        );
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
 
+        return response;
+      })
+      .catch((error: any) => {
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
+
+        return error;
+      });
+  };
   return {
     getInfalationRules,
     createInfalationRules,
@@ -336,5 +379,6 @@ export const useCloudActions = () => {
     getUserRewardsData,
     getMachineDetails,
     getUserMachineRewards,
+    getUserSimulationList,
   };
 };
