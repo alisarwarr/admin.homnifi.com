@@ -9,11 +9,11 @@ import WithdrawActionButton from '../WithdrawActionButton';
 import TokenNameWithLogo from '../../TokenNameWithLogo';
 
 export const statusDisplay = {
-  'pending': {
+  pending: {
     label: 'Pending',
     color: 'blue',
   },
-  'approved': {
+  approved: {
     label: 'Approved',
     color: 'green',
   },
