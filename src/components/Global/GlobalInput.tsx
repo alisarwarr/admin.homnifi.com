@@ -51,7 +51,6 @@ const GlobalInput = ({
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
-    
     <div className={`flex flex-col my-2 gap-2 ${containerStyles}`}>
       <div className={`text-sm font-medium ${labelStyle}`}>
         {label && (
