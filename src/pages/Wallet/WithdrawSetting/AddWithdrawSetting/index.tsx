@@ -10,6 +10,7 @@ import GlobalInput from '../../../../components/Global/GlobalInput';
 import GlobalSelect from '../../../../components/Global/GlobalSelect';
 import { useTokenActions } from '../../../../store/token/tokenAction';
 import { ReactComponent as CrossIcon } from '../../../../SVGIcons/cancelIcon.svg';
+import useLoading from '../../../../utils/hooks/useLoading';
 
 interface Props {
   open: boolean;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
+  const { startLoading, stopLoading, isLoading } = useLoading();
   const { getTokensList, createWithdrawSetting, updateWithdrawSetting } =
     useTokenActions();
 
@@ -74,6 +76,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     validationSchema,
     onSubmit: async (values) => {
       setIsSubmit(true);
+      startLoading();
       const body = {
         type: values.type,
         fromToken: values.withdrawFrom,
@@ -96,10 +99,9 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
 
       if (response.status) {
         successAlert(response.message);
-        onClose();
-        resetForm();
-        return setIsSubmit(false);
+        return onResetStates();
       }
+      stopLoading();
 
       successAlert(
         response.message
@@ -143,13 +145,21 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
     }
   }, [selectedSetting]);
 
+  //reset state from after form submission
+  const onResetStates = () => {
+    setIsSubmit(false);
+    onClose();
+    stopLoading();
+    resetForm();
+  };
+
   return (
     <div>
       <GlobalDialog
         open={open}
         size="md"
         closeButtonShow={false}
-        onClose={onClose}
+        onClose={onResetStates}
         content={
           <form
             onSubmit={(e) => {
@@ -164,8 +174,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               <div
                 className="cursor-pointer -mr-2"
                 onClick={() => {
-                  setIsSubmit(false);
-                  onClose();
+                  onResetStates();
                 }}
               >
                 <CrossIcon />
@@ -206,12 +215,16 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     labelOptionClass={'text-left'}
                     name={'withdrawFrom'}
                     placeholder={'Selecte From'}
-                    options={tokensList.map((tkn) => {
-                      return {
-                        label: tkn.name,
-                        value: tkn._id,
-                      };
-                    })}
+                    options={
+                      tokensList?.length
+                        ? tokensList?.map((tkn) => {
+                            return {
+                              label: tkn.name,
+                              value: tkn._id,
+                            };
+                          })
+                        : []
+                    }
                     setFieldTouched={() =>
                       formik.setFieldTouched('withdrawFrom', true)
                     }
@@ -237,12 +250,16 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     labelOptionClass={'text-left'}
                     name={'withdrawTo'}
                     placeholder={'Selecte To'}
-                    options={tokensList.map((tkn) => {
-                      return {
-                        label: tkn.name,
-                        value: tkn._id,
-                      };
-                    })}
+                    options={
+                      tokensList?.length
+                        ? tokensList?.map((tkn) => {
+                            return {
+                              label: tkn.name,
+                              value: tkn._id,
+                            };
+                          })
+                        : []
+                    }
                     setFieldTouched={() =>
                       formik.setFieldTouched('withdrawTo', true)
                     }
@@ -295,8 +312,8 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               <div className="flex flex-col md:items-baseline  md:flex-row w-full">
                 <div className="w-full mx-2">
                   <GlobalInput
-                    required
                     toolTip="Amount exceeding this value will request for admin approval"
+                    required
                     name="minWithdrawableAmount"
                     label="Max Amount For Automatic Withdraw "
                     placeholder="Enter min with drawableAmount"
@@ -412,6 +429,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
               <div className="mx-4 md:mx-2 my-2">
                 <div className="flex flex-col  md:flex-row w-full">
                   <Button
+                    loading={isLoading}
                     className="bg-primary rounded-full my-4"
                     loadingType="circular"
                     buttonType="submit"

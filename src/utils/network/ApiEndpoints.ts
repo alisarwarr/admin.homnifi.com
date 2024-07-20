@@ -127,9 +127,9 @@ export const BROKER_ACCOUNT_REGISTRATION: string =
 //ADMIN
 export const ADMIN = '/';
 
-export const ADMIN_INFO = '/user/admin-information';
+export const ADMIN_INFO = '/admin/';
 export const ADMIN_CREATE = '/user/admin-create';
-export const ADMIN_UPDATE = '/user/admin-update';
+export const ADMIN_UPDATE = '/admins/';
 export const ADMIN_CHECK_EMAIL = '/user/check-email';
 export const ADMIN_CHECK_USERNAME = '/user/check-username';
 export const ADMIN_ACCESS = '/user/access';
@@ -149,7 +149,10 @@ export const MAINTENANCE = '/maintenance';
 //cloudk
 export const INFLATION_RULES = 'cloud-k/inflation-rules';
 export const USER_MACHINE_LIST = '/cloud-k/user-machines';
+export const SIMULATION_MACHINE_LIST = '/cloud-k/simulation-machines';
+
 export const CLOUDK_MACHINE_SIMULATION = '/cloud-k/test-simulation';
+export const CRON_JOBS_LIST = '/cloud-k/rewards/cronjobs';
 
 //PLATFORM
 export const PLATFORM_AD = '/platform/ads/';

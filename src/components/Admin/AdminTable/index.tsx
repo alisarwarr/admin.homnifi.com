@@ -1,6 +1,6 @@
 import { Tooltip } from 'antd';
-import { useEffect, useState } from 'react';
 import StatusChip from '../../StatusChip';
+import { useEffect, useState } from 'react';
 import { Delete } from '../../../images/svg';
 import { useNavigate } from 'react-router-dom';
 import GlobalTable from '../../Table/GlobalTable';
@@ -137,8 +137,8 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
         headCells={headCells}
         isLoading={false}
         paginate={true}
-        totalPages={adminDataDetail.totalPages}
-        page={adminDataDetail.currentPage}
+        totalPages={adminDataDetail?.totalPages}
+        page={adminDataDetail?.currentPage}
         handlePageChange={(page: number) => {
           getAdminList(page);
         }}

@@ -1,68 +1,84 @@
-import React from 'react';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import Loader from '../../../components/Loader/Loader';
 import GlobalTable from '../../../components/Table/GlobalTable';
-import { Tooltip } from 'antd';
-import { edit, view } from '../../../images/other';
+import { useAdminActions } from '../../../store/admin/adminActions';
+import { selectAdmin } from '../../../store/admin/adminSlice';
 
 function CronJob() {
+  const { getCronJobs } = useAdminActions();
+  const [loading, setLoading] = useState(true);
+  const { cronJobList, cronJobData } = useSelector(selectAdmin);
+
   const headCells = [
-    { id: 'id', label: 'Id' },
     { id: 'startTime', label: 'Start Time' },
     { id: 'endTime', label: 'End Time' },
-    { id: 'takenPrice', label: 'Taken Price' },
+    { id: 'tokenPrice', label: 'Taken Price' },
     { id: 'status', label: 'Status' },
-    { id: 'tatalMachine', label: 'Total Machine' },
-    { id: 'timeTaken', label: 'Time Taken' },
-    // { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
+    { id: 'totalMachines', label: 'Total Machine' },
+    // { id: 'timeTaken', label: 'Time Taken' },
   ];
-  const data = [
-    {
-      id: 1,
-      startTime: '03:30',
-      endTime: '03:30',
-      takenPrice: '300',
-      status: 'Completed',
-      tatalMachine: '50',
-      timeTaken: '50 hours',
-    },
-  ];
-  const rows =
-    data?.length > 0
-      ? data?.map((_data: any) => {
-          return {
-            id: _data.id,
-            startTime: _data.startTime,
-            endTime: _data.endTime,
-            takenPrice: _data.takenPrice,
-            status: _data.status,
-            tatalMachine: _data.tatalMachine,
-            timeTaken: _data.timeTaken,
-            // actions: (
-            //   <div className="flex items-center gap-2">
-            //     <Tooltip title="View Cron Job">
-            //       <div>
-            //         <img src={view} width={18} height={18} alt="View Icon" className="cursor-pointer" />
-            //       </div>
-            //     </Tooltip>
 
-            //     <Tooltip title="Edit Cron Job">
-            //       <img src={edit} width={18} height={18} alt="Edit Icon" className="cursor-pointer" />
-            //     </Tooltip>
-            //   </div>
-            // ),
+  const calculateDurations = (startTime, endTime) => {
+    const start = moment(startTime);
+    const end = moment(endTime);
+    const duration = moment.duration(end.diff(start));
+    const hours = Math.floor(duration.asHours());
+    const minutes = duration.minutes();
+    return `${hours} : ${minutes}`;
+  };
+
+  const rows =
+    cronJobList?.length > 0
+      ? cronJobList?.map((_data: any, index: number) => {
+          return {
+            id: index + 1,
+            startTime: moment(_data.startTime).format('hh:mm a'),
+            endTime: _data.endTime
+              ? moment(_data.endTime).format('hh:mm a')
+              : '-',
+            tokenPrice: _data.tokenPrice,
+            status: _data.status,
+            errorTooltip:
+              _data.error || _data.status === 'failed' ? true : false,
+            totalMachines: _data.totalMachines,
+            error: _data.error,
+            // timeTaken: calculateDurations(_data.startTime, _data.endTime),
           };
         })
       : [];
 
+  useEffect(() => {
+    if (cronJobList?.length == 0) {
+      getCronJobs();
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <div className="w-full px-2">
-      <div className="flex bg-primary items-center table-head-bg text-white">
+    <div className="w-full px-2 border py-4 rounded-md">
+       <div className="flex bg-primary items-center text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Cron Jobs</h1>
       </div>
       <GlobalTable
         rows={rows}
         headCells={headCells}
         isLoading={false}
-        paginate={false}
+        paginate={cronJobData?.totalPages > 1}
+        page={cronJobData?.currentPage ?? 1}
+        totalPages={cronJobData?.totalPages ?? 1}
+        handlePageChange={(page: number) => {
+          getCronJobs(page);
+        }}
       />
     </div>
   );

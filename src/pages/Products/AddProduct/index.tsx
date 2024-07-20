@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import SaveBar from '../../../components/SaveBar';
 import { download, photo } from '../../../images/other';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useProductActions } from '../../../store/products/productActions';
 import ReactSelect from '../../../components/ReactSelect';
 import { errorAlert, successAlert } from '../../../utils/alerts';
@@ -12,7 +12,14 @@ import { useProvidersActions } from '../../../store/providers/providerActions';
 import { useSelector } from 'react-redux';
 import { selectProviderSlice } from '../../../store/providers/providerSlice';
 import GlobalSelect from '../../../components/Global/GlobalSelect';
-import { lowerCaseAllLetters } from '../../../utils/utils';
+import {
+  CapitalizeFirstLetter,
+  lowerCaseAllLetters,
+} from '../../../utils/utils';
+import {
+  TProduct,
+  selectProductSlice,
+} from '../../../store/products/productSlice';
 
 const validationSchema = Yup.object().shape({
   status: Yup.mixed().required('Status is required.'),
@@ -47,6 +54,8 @@ const validationSchema = Yup.object().shape({
 const AddProduct = () => {
   // STATES
   const [saveLoading, setSaveLoading] = useState<boolean>(false);
+  const { products } = useSelector(selectProductSlice);
+  const { getProductById } = useProductActions();
   const [duplicateVouchers, setDuplicateVouchers] = useState<{
     open: boolean;
     duplicates: string[];
@@ -54,14 +63,67 @@ const AddProduct = () => {
     open: false,
     duplicates: [],
   });
+  const { id } = useParams();
 
   const { addProduct, getProducts } = useProductActions();
-
   const navigate = useNavigate();
 
-  const { providers } = useSelector(selectProviderSlice);
+  useEffect(() => {
+    let product: any;
+    product = products?.find((product: TProduct | any) => {
+      return product?._id === id;
+    });
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+    (async () => {
+      if (id) {
+        if (!product) product = await getProductById(id);
+        if (product) {
+          console.log('🚀 ~ productproduct:', product);
+
+          // SET VALUES
+          formik.setValues({
+            status: {
+              value: CapitalizeFirstLetter(product?.status),
+              label: CapitalizeFirstLetter(product?.status),
+            },
+            defiPortal: {
+              value: CapitalizeFirstLetter(product?.defiPortal),
+              label: CapitalizeFirstLetter(product?.defiPortal),
+            },
+            aiTradingNews: {
+              value: CapitalizeFirstLetter(product?.aiTradingSoftwareName),
+              label: CapitalizeFirstLetter(product?.aiTradingSoftwareName),
+            },
+
+            name: product?.name,
+            description: '',
+            price: product?.price,
+            url: product?.url,
+            imageUrl: product?.imageUrl,
+            vouchers: '',
+            externalProductId: product?.externalProductId,
+            skuId: product?.skuId,
+            mintingPower: product?.mintingPower,
+            mintingPowerPerc: product?.mintingPowerPerc,
+            airdropPromo: product?.airdropPromo,
+            stakeLimit: product?.mintingPowerPerc,
+            tokenAirdrop: product?.tokenAirdrop,
+            licenseName: product?.licenseName,
+            profitSplitFee: product?.profitSplitFee,
+            aiTradingSoftwareName: '',
+            superNodeLevel: product?.superNodeLevel,
+            globalPool: product?.globalPool,
+            bonus: product?.bonus,
+            capping: product?.capping,
+          });
+        }
+      }
+    })();
+  }, [products, id]);
+  // let product: any;
+  // product = products?.find((product: TProduct | any) => {
+  //   return product?._id === id;
+  // });
 
   const initialValues: {
     status: { value: string; label: string };

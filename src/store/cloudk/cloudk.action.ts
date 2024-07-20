@@ -2,11 +2,12 @@ import { useDispatch } from 'react-redux';
 import ApiRequest from '../../utils/network/ApiRequest';
 import {
   CLOUDK_MACHINE_SIMULATION,
-  PRODUCTS,
   USER_MACHINE_LIST,
   USER_MACHINE_REWARDS,
   USER_MACHINE_DETAILS,
   INFLATION_RULES,
+  CRON_JOBS_LIST,
+  SIMULATION_MACHINE_LIST,
 } from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
 import { simulationSliceAction } from './simulation';
@@ -169,20 +170,27 @@ export const useCloudActions = () => {
         method: 'GET',
         url: USER_MACHINE_REWARDS,
       })
-      .then((response: any) => {
-        console.log('🚀 ~ .then ~ response:', response.data.data?.list);
+      .then((response) => {
+        console.log({ response });
+        dispatch(cloudkSliceAction.setCloudkSlice(response.data.data));
         dispatch(
-          cloudkSliceAction.setUserMachineList(response.data.data?.list)
-        );
-        dispatch(
-          simulationSliceAction.setSimulationSlice({
-            machines: response.data.data.list,
+          cloudkSliceAction.setCloudkSlice({
+            getUserMachineRewardsLoading: false,
           })
         );
 
         return response;
       })
-      .catch((error: any) => error);
+      .catch((error) => {
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            getUserMachineRewardsLoading: false,
+          })
+        );
+
+        return error;
+      });
   };
 
   const startSimulation = async (data: any) => {
@@ -282,9 +290,9 @@ export const useCloudActions = () => {
     limit,
     page,
   }: {
-    search: string;
-    limit: number;
-    page: number;
+    search?: string;
+    limit?: number;
+    page?: number;
   }) => {
     // userMachinesLoading
     dispatch(
@@ -318,7 +326,49 @@ export const useCloudActions = () => {
         return error;
       });
   };
+  const getUserSimulationList = async ({
+    search,
+    limit,
+    page,
+  }: {
+    search?: string;
+    limit?: number;
+    page?: number;
+  }) => {
+    // userMachinesLoading
+    dispatch(
+      cloudkSliceAction.setCloudkSlice({
+        userMachinesLoading: true,
+      })
+    );
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: `${SIMULATION_MACHINE_LIST}?search=${search}&limit=${limit}&page=${page}`,
+      })
+      .then((response: any) => {
+        dispatch(
+          cloudkSliceAction.setSimulationMachineList(response.data.data.list)
+        );
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
 
+        return response;
+      })
+      .catch((error: any) => {
+        toast.error(error.data.message);
+        dispatch(
+          cloudkSliceAction.setCloudkSlice({
+            userMachinesLoading: false,
+          })
+        );
+
+        return error;
+      });
+  };
   return {
     getInfalationRules,
     createInfalationRules,
@@ -329,5 +379,6 @@ export const useCloudActions = () => {
     getUserRewardsData,
     getMachineDetails,
     getUserMachineRewards,
+    getUserSimulationList,
   };
 };

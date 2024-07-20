@@ -7,12 +7,15 @@ import { Tooltip } from 'antd';
 import { useTokenActions } from '../../../store/token/tokenAction';
 import { useSelector } from 'react-redux';
 import { selectToken } from '../../../store/token/tokenSlice';
+import Loader from '../../../components/Loader/Loader';
 
 function WithdrawSetting() {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { withdrawSettingsList } = useSelector(selectToken);
   const { getWithdrawSettings } = useTokenActions();
   const [selectedSetting, setSelectedSetting] = useState<null>(null);
+
   const onPopupHandler = () => {
     setOpen(!open);
     if (open) {
@@ -25,48 +28,61 @@ function WithdrawSetting() {
     { id: 'type', label: 'type' },
     { id: 'withdrawFrom', label: 'Withdraw From' },
     { id: 'withdrawTo', label: 'Withdraw To' },
-    { id: 'minAmount', label: 'Min Amount' },
+    { id: 'minDisplayAmount', label: 'Min Display Amount' },
     { id: 'fees', label: 'Fees' },
     { id: 'commission', label: 'commission' },
     { id: 'actions', label: 'Actions', headCellClass: 'text-center' },
   ];
 
-  const rows = withdrawSettingsList?.map((_data: any, index: number) => {
-    return {
-      id: index + 1,
-      type: _data.type,
-      withdrawFrom: _data.fromToken.name,
-      withdrawTo: _data.toToken.name,
-      minAmount: _data.minAmount,
-      fees: _data.fee,
-      commission: _data.commission,
-      actions: (
-        <div className="flex items-center gap-2">
-          <Tooltip title="Edit Admin Role">
-            <img
-              src={edit}
-              width={18}
-              height={18}
-              alt="Edit Icon"
-              onClick={() => {
-                onPopupHandler();
-                setSelectedSetting(_data);
-              }}
-              className="cursor-pointer"
-            />
-          </Tooltip>
-        </div>
-      ),
-    };
-  });
+  const rows = withdrawSettingsList
+    ? withdrawSettingsList?.map((_data: any, index: number) => {
+        return {
+          id: index + 1,
+          type: _data.type,
+          withdrawFrom: _data.fromToken.name,
+          withdrawTo: _data.toToken.name,
+          minDisplayAmount: _data.minDisplayAmount ?? 0,
+          fees: _data.fee ?? 0,
+          commission: _data.commission ?? 0,
+          actions: (
+            <div className="flex items-center gap-2">
+              <Tooltip title="Edit Admin Role">
+                <img
+                  src={edit}
+                  width={18}
+                  height={18}
+                  alt="Edit Icon"
+                  onClick={() => {
+                    onPopupHandler();
+                    setSelectedSetting(_data);
+                  }}
+                  className="cursor-pointer"
+                />
+              </Tooltip>
+            </div>
+          ),
+        };
+      })
+    : [];
 
   useEffect(() => {
-    getWithdrawSettings();
+    if (withdrawSettingsList?.length === 0) {
+      getWithdrawSettings();
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    } else {
+      setLoading(false);
+    }
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">
-      <div className="flex bg-primary items-center table-head-bg text-white">
+       <div className="flex bg-primary items-center text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">
           Withdraw Settings
         </h1>

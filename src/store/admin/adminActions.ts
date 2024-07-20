@@ -16,6 +16,7 @@ import {
   DELETE_ADMIN,
   UPDATE_ADMIN,
   MAINTENANCE,
+  CRON_JOBS_LIST,
 } from '../../utils/network/ApiEndpoints';
 import ApiRequest from '../../utils/network/ApiRequest';
 import {
@@ -26,16 +27,18 @@ import {
   setRoleList,
   setAdminDetail,
   setMaintenanceMode,
+  setCronJobsList,
+  setCronJobsData,
 } from './adminSlice';
 
 export const useAdminActions = () => {
   const dispatch = useDispatch();
 
-  const getAdminData = async () => {
+  const getAdminData = async (id: string) => {
     return await ApiRequest()
       .request({
         method: 'GET',
-        url: ADMIN_INFO,
+        url: `${ADMIN_INFO}${id}`,
       })
       .then((response: any) => {
         dispatch(setAdminData(response.data.data));
@@ -56,10 +59,11 @@ export const useAdminActions = () => {
   };
 
   const updateAdminData = async (data: any) => {
+    console.log('🚀 ~ updateAdminData ~ data:', data);
     return await ApiRequest()
       .request({
         method: 'POST',
-        url: ADMIN_UPDATE,
+        url: `${ADMIN_UPDATE}${data?.id}`,
         data,
       })
       .then((response: any) => response.data)
@@ -266,6 +270,22 @@ export const useAdminActions = () => {
       .catch((err: any) => err.data);
   };
 
+  const getCronJobs = async (page: number = 1, limit: number = 10) => {
+    return await ApiRequest()
+      .request({
+        method: 'GET',
+        url: `${CRON_JOBS_LIST}?page=${page}&limit=${limit}`,
+      })
+      .then((response: any) => {
+        dispatch(setCronJobsList(response.data.data?.list));
+        dispatch(setCronJobsData(response.data.data));
+        return response.data.data;
+      })
+      .catch((err: any) => {
+        return err.data;
+      });
+  };
+
   return {
     getAdminData,
     createAdminData,
@@ -285,5 +305,6 @@ export const useAdminActions = () => {
     updateAdmin,
     checkMaintenanceMode,
     updateMaintenanceMode,
+    getCronJobs,
   };
 };

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import Button from '../../../components/Button';
-import GlobalInput from '../../../components/Global/GlobalInput';
-import GlobalSelect from '../../../components/Global/GlobalSelect';
+import React, { useEffect, useState } from 'react';
 import GlobalDialog from '../../../components/Dialog';
-import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
-import { useTokenActions } from '../../../store/token/tokenAction';
 import useLoading from '../../../utils/hooks/useLoading';
+import GlobalInput from '../../../components/Global/GlobalInput';
+import { errorNotify, successAlert } from '../../../utils/alerts';
+import GlobalSelect from '../../../components/Global/GlobalSelect';
+import { useTokenActions } from '../../../store/token/tokenAction';
+import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
 import { useTokensSettingsAction } from '../../../store/tokensSettings/tokensSettingsAction';
 import { selectTokensSettings } from '../../../store/tokensSettings/tokensSettingsSlice';
-import { useSelector } from 'react-redux';
-import { errorNotify, successAlert } from '../../../utils/alerts';
 
 interface Props {
   open: boolean;
@@ -103,12 +103,15 @@ function AddToken({ open, onClose, editToken }: Props) {
   }, []);
 
   //remove item item from dropdown
-  const removeItemHanlder = (id: string) => {
-    if (values?.networks?.includes(id)) {
-      return setFieldValue(
-        'networks',
-        values.networks.filter((dt: string) => dt !== id)
-      );
+  const removeItemHanlder = (id: any) => {
+    if (values?.networks.length > 0) {
+      const networkList: any = [...values?.networks];
+      if (networkList?.includes(id)) {
+        return setFieldValue(
+          'networks',
+          values.networks.filter((dt: string) => dt !== id)
+        );
+      }
     }
   };
 
@@ -127,7 +130,6 @@ function AddToken({ open, onClose, editToken }: Props) {
         type: type?.value ?? '',
         withdrawType: withdrawType?.value ?? '',
         color: editToken.color ?? '',
-        // networks: editToken.networks,
         networks: editToken.networks?.map((dt) => dt._id),
         iconUrl: editToken?.iconUrl ?? '',
       });
@@ -149,7 +151,7 @@ function AddToken({ open, onClose, editToken }: Props) {
                 <CrossIcon />
               </div>
             </div>
-            <div className="mx-4 md:mx-2 mt-4">
+            <div className="mr-2 md:mx-2 mt-4">
               <div className="flex flex-col  md:flex-row w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalInput
@@ -182,7 +184,7 @@ function AddToken({ open, onClose, editToken }: Props) {
                 </div>
               </div>
 
-              <div className="flex flex-col md:items-baseline  md:flex-row w-full">
+              <div className="flex flex-col md:items-baseline mt-1 md:flex-row w-full">
                 <div className="w-full md:w-1/2 mx-2">
                   <GlobalSelect
                     required
@@ -237,8 +239,8 @@ function AddToken({ open, onClose, editToken }: Props) {
                 </div>
               </div>
 
-              <div className="flex flex-col md:items-baseline  md:flex-row w-full">
-                <div className="w-full mx-2 pt-2">
+              <div className="flex flex-col md:items-baseline md:flex-row w-full">
+                <div className="w-full mx-2">
                   <GlobalSelect
                     label="Networks"
                     labelOptionClass={'text-left'}
@@ -249,7 +251,7 @@ function AddToken({ open, onClose, editToken }: Props) {
                     })}
                     isMulti={true}
                     // isError={false}
-                    removeItemHanlder={removeItemHanlder}
+                    removeItemHanlder={(id) => removeItemHanlder(id)}
                     onChange={(e) => {
                       setFieldValue('networks', [...values.networks, e]);
                     }}

@@ -30,6 +30,7 @@ export interface ProductStateSlice {
   //   paginate: any;
   // };
   products: TProduct[];
+  selectProduct: TProduct | null;
 }
 
 const initialState: ProductStateSlice = {
@@ -38,6 +39,7 @@ const initialState: ProductStateSlice = {
   //   paginate: {},
   // },
   products: [],
+  selectProduct: null,
 };
 
 const productSlice = createSlice({
@@ -47,10 +49,13 @@ const productSlice = createSlice({
     setProducts: (state, action: PayloadAction<any>) => {
       return { ...state, products: action.payload };
     },
+    setSelectProduct: (state, action: PayloadAction<any>) => {
+      return { ...state, selectProduct: action.payload };
+    },
   },
 });
 
-export const { setProducts } = productSlice.actions;
+export const { setProducts, setSelectProduct } = productSlice.actions;
 export const selectProductSlice = (state: { product: ProductStateSlice }) =>
   state.product;
 

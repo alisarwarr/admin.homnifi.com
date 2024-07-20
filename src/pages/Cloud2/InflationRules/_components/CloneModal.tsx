@@ -34,17 +34,21 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
   });
 
   const handleAddRow = () => {
-    formik.setFieldValue('rules', [
-      ...formik.values.rules,
-      {
-        dropPercentage: '',
-        productionDecreasePercentage: '',
-        increaseDLPPercentage: '',
-        mintingBoost: '',
-      },
-    ]);
+    const newRow = {
+      dropPercentage: 1,
+      productionDecreasePercentage: '',
+      increaseDLPPercentage: '',
+      mintingBoost: '',
+    };
+    if (formik.values.rules.length > 0) {
+      const lastRow = formik.values.rules[formik.values.rules.length - 1];
+      newRow.dropPercentage = lastRow.dropPercentage + 5;
+    } else {
+      newRow.dropPercentage = 1;
+    }
+    formik.setFieldValue('rules', [...formik.values.rules, newRow]);
   };
-
+  console.log('ormik.values.rules', formik.values.rules);
   const handleDeleteRow = (index) => {
     const newRows = [...formik.values.rules];
     newRows.splice(index, 1);
@@ -89,7 +93,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
         <thead>
           <tr className="text-left font-semibold text-sm p-3 border-b border-borderGray">
             <th className="text-sm">% Fall in the LYK Price</th>
-            <th className="">Decrease Producation</th>
+            <th className="">Decrease Production</th>
             <th className="">Increase DLP</th>
             <th className="">Minting Boost</th>
             <th className="">Actions</th>
@@ -100,10 +104,10 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
             <tr key={index} className="p-5 border-b border-borderGray   ">
               <td className="!border-r px-2">
                 <GlobalInput
-                  name={`rules[${index}].dropPercentage `}
+                  name={`rules[${index}].dropPercentage`}
                   type="number"
                   value={row.dropPercentage}
-                  className={`rounded-none border-none !px-0 !py-0  `}
+                  className={`rounded-none border-none !px-0 !py-0`}
                   onChange={(e) =>
                     handleInputChange(index, 'dropPercentage', e.target.value)
                   }
@@ -114,7 +118,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
                   }
                 />
               </td>
-              <td className="!border-r  px-2">
+              <td className="!border-r px-2">
                 <GlobalInput
                   name={`rules[${index}].productionDecreasePercentage`}
                   type="number"
@@ -135,7 +139,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
                   }
                 />
               </td>
-              <td className="!border-r  px-2">
+              <td className="!border-r px-2">
                 <GlobalInput
                   name={`rules[${index}].increaseDLPPercentage`}
                   type="number"
@@ -155,7 +159,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
                   }
                 />
               </td>
-              <td className="!border-r  px-2 ">
+              <td className="!border-r px-2 ">
                 <GlobalInput
                   name={`rules[${index}].mintingBoost`}
                   type="number"
@@ -174,7 +178,7 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
               <td>
                 <DeleteIcon
                   onClick={() => handleDeleteRow(index)}
-                  className="h-6 "
+                  className="h-6"
                 />
               </td>
             </tr>
@@ -182,12 +186,14 @@ const CloneModalContent = ({ rows, setCloneRows, handleSave, loading }) => {
         </tbody>
       </table>
       <div className="flex flex-col gap-4 py-5">
-        <GlobalButton
-          type="button"
-          outlined
-          text="Add Row"
-          onClick={handleAddRow}
-        />
+        {formik.values.rules.length <= 20 && (
+          <GlobalButton
+            type="button"
+            outlined
+            text="Add Row"
+            onClick={handleAddRow}
+          />
+        )}
         <GlobalButton type="submit" text="Save" loading={loading} />
       </div>
     </form>

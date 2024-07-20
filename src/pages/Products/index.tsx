@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { add, refresh } from '../../images/other';
 import { useProductActions } from '../../store/products/productActions';
 import { selectProductSlice } from '../../store/products/productSlice';
-import ProductsTable from '../../components/ProductsTable';
 import { Link } from 'react-router-dom';
 
 const Products = () => {
@@ -51,12 +50,6 @@ const Products = () => {
       </div>
 
       {/* TABLE */}
-      <ProductsTable
-        data={products}
-        loading={loading}
-        page={page}
-        setPage={setPage}
-      />
     </div>
   );
 };

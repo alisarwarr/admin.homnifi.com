@@ -89,7 +89,7 @@ export default function AutoCompoundPenality() {
               required
               value={formik.values.percentage}
               onChange={formik.handleChange}
-              isError={formik.errors.percentage && formik.touched.percentage}
+              // isError={formik.errors.percentage && formik.touched.percentage}
               error={formik.errors.percentage}
             />
 

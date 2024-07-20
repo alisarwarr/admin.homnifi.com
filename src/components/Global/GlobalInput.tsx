@@ -15,10 +15,17 @@ type TGlobalInput = {
   error?: string;
   value?: string | any;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.FocusEvent<HTMLElement, Element>
+  ) => void;
   className?: string;
   disabled?: boolean;
   labelStyle?: string;
+  containerStyles?: string;
+  isApiError?: boolean;
+  phoneInput?: boolean;
   toolTip?: string;
 };
 
@@ -36,28 +43,37 @@ const GlobalInput = ({
   disabled,
   labelStyle,
   onBlur,
-  toolTip = '',
+  containerStyles,
+  isApiError = false,
+  phoneInput = false,
+  toolTip,
 }: TGlobalInput) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   return (
-    <div className="flex flex-col gap-2 my-2 w-full">
-      {label && (
-        <div className={`text-sm flex font-medium text-primary ${labelStyle}`}>
-          {label} {required && <span className="text-redDanger px-2">*</span>}{' '}
-          {toolTip && (
-            <Tooltip title={toolTip}>
-              <div className="cursor-pointer">
-                <ToolTipSvg />
-              </div>
-            </Tooltip>
-          )}
-        </div>
-      )}
+    
+    <div className={`flex flex-col my-2 gap-2 ${containerStyles}`}>
+      <div className={`text-sm font-medium ${labelStyle}`}>
+        {label && (
+          <div
+            className={`text-sm flex font-medium text-primary ${labelStyle}`}
+          >
+            {label} {required && <span className="text-redDanger px-2">*</span>}{' '}
+            {toolTip && (
+              <Tooltip title={toolTip}>
+                <div className="cursor-pointer">
+                  <ToolTipSvg />
+                </div>
+              </Tooltip>
+            )}
+          </div>
+        )}
+      </div>
       <div className="relative flex items-center justify-center">
         <input
           autoComplete="off"
           disabled={disabled}
+          contentEditable={disabled}
           name={name}
           type={
             type === 'password' ? (showPassword ? 'text' : 'password') : type
@@ -66,14 +82,30 @@ const GlobalInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`${
-            disabled && 'cursor-not-allowed'
-          } outline-none text-defaultBlack border py-2 px-8 text-xs rounded-full w-full ${
-            isError ? 'border-redDanger' : 'border-blueGrey'
+          className={`outline-none border py-2 px-5 text-xs rounded-full w-full ${
+            isError || isApiError ? 'border-redDanger' : 'border-blueGrey'
           } ${className}`}
         />
-        {isError ? (
-          <span className="absolute right-2">
+
+        {isError && type === 'password' ? (
+          <div className="flex items-center gap-2 absolute right-4">
+            <span>
+              <WarningIcon className="w-6" />
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <EyeCloseIcon className="w-4" />
+              ) : (
+                <EyeOpenIcon className="w-4" />
+              )}
+            </button>
+          </div>
+        ) : isError ? (
+          <span className="absolute right-4">
             <WarningIcon className="w-6" />
           </span>
         ) : (

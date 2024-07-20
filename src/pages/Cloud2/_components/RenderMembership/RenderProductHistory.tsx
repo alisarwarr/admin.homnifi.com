@@ -8,9 +8,9 @@ import Skalable from './MachinesAccordion/Skalable';
 import GlobalTable from '../../../../components/Table/GlobalTable';
 import GlobalModal from '../../../../components/Global/GlobalModal';
 import useModalHook from '../../../../utils/hooks/useModalHook';
-import SingleMachineModalBody from './SingleMachineModalBody';
 import { edit } from '../../../../images/other';
 import { TProduct } from '../../../../store/products/productSlice';
+import { useNavigate } from 'react-router-dom';
 
 type FILTER = {
   page: number;
@@ -27,6 +27,7 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({
   const [productID, setProductID] = useState('');
   const stakeModalHook = useModalHook();
   const machineDetailHook = useModalHook();
+  const navigate = useNavigate();
 
   const headCells = [
     {
@@ -137,56 +138,19 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({
           height={24}
           color="red"
           alt="View Icon"
-          onClick={() => {
-            // onEditHanlder(_data);
-          }}
+          onClick={() => navigate(`/cloudk2/products/details/${product?._id}`)}
           className="cursor-pointer"
         />
 
-        <div className="w-6 h-6 flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
+        {/* <div className="w-6 h-6 flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
           <DeleteIcon />
-        </div>
-        <InfoIcon
-          onClick={() => (
-            setProductID(product._id), stakeModalHook.handleOpen()
-          )}
-          className="cursor-pointer"
-        />
+        </div> */}
       </div>
     ),
   }));
 
-  const accordingrow: any = {
-    product: <Product />,
-    lifetimeRewards: <LifetimeRewards />,
-    staked: <Staked />,
-    claimableRewards: <Skalable />,
-    quickActions: <ExpiresIn />,
-  };
-
-  const [filter, setFilter] = useState<FILTER>({
-    page: 1,
-    limit: 10,
-    search: null,
-  });
-
   return (
     <>
-      <GlobalModal
-        onClose={() => {
-          stakeModalHook.handleClose();
-          // dispatch(setStackMoreAmount(0));
-          // dispatch(setMoreStackPercentage(0));
-          // setClouldk2Slice({
-          //   stackMoreToken: '',
-          // });
-        }}
-        isOpen={stakeModalHook.open}
-        size="5xl"
-      >
-        <SingleMachineModalBody id={productID} />
-      </GlobalModal>
-
       <GlobalTable
         rows={rows.length ? rows : []}
         headCells={headCells}

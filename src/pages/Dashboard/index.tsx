@@ -99,7 +99,7 @@ const Dashboard = () => {
             colors={['#357EEB', '#EB6535', '#5BAC0A']}
             data={data}
             margin={{ top: 40, right: 0, bottom: 80, left: 0 }}
-            startAngle={2}
+            startAngle={0.2}
             innerRadius={0.7}
             padAngle={1}
             activeOuterRadiusOffset={8}
