@@ -8,7 +8,6 @@ import Skalable from './MachinesAccordion/Skalable';
 import GlobalTable from '../../../../components/Table/GlobalTable';
 import GlobalModal from '../../../../components/Global/GlobalModal';
 import useModalHook from '../../../../utils/hooks/useModalHook';
-import SingleMachineModalBody from './SingleMachineModalBody';
 import { edit } from '../../../../images/other';
 import { TProduct } from '../../../../store/products/productSlice';
 
@@ -143,36 +142,15 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({
           className="cursor-pointer"
         />
 
-        <div className="w-6 h-6 flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
+        {/* <div className="w-6 h-6 flex justify-center items-center rounded-md text-white cursor-pointer mx-2">
           <DeleteIcon />
-        </div>
-        <InfoIcon
-          onClick={() => (
-            setProductID(product._id), stakeModalHook.handleOpen()
-          )}
-          className="cursor-pointer"
-        />
+        </div> */}
       </div>
     ),
   }));
 
   return (
     <>
-      <GlobalModal
-        onClose={() => {
-          stakeModalHook.handleClose();
-          // dispatch(setStackMoreAmount(0));
-          // dispatch(setMoreStackPercentage(0));
-          // setClouldk2Slice({
-          //   stackMoreToken: '',
-          // });
-        }}
-        isOpen={stakeModalHook.open}
-        size="5xl"
-      >
-        <SingleMachineModalBody id={productID} />
-      </GlobalModal>
-
       <GlobalTable
         rows={rows.length ? rows : []}
         headCells={headCells}
