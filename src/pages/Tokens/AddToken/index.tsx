@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useSelector } from 'react-redux';
 import Button from '../../../components/Button';
-import GlobalInput from '../../../components/Global/GlobalInput';
-import GlobalSelect from '../../../components/Global/GlobalSelect';
+import React, { useEffect, useState } from 'react';
 import GlobalDialog from '../../../components/Dialog';
-import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
-import { useTokenActions } from '../../../store/token/tokenAction';
 import useLoading from '../../../utils/hooks/useLoading';
+import GlobalInput from '../../../components/Global/GlobalInput';
+import { errorNotify, successAlert } from '../../../utils/alerts';
+import GlobalSelect from '../../../components/Global/GlobalSelect';
+import { useTokenActions } from '../../../store/token/tokenAction';
+import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
 import { useTokensSettingsAction } from '../../../store/tokensSettings/tokensSettingsAction';
 import { selectTokensSettings } from '../../../store/tokensSettings/tokensSettingsSlice';
-import { useSelector } from 'react-redux';
-import { errorNotify, successAlert } from '../../../utils/alerts';
 
 interface Props {
   open: boolean;
@@ -130,7 +130,6 @@ function AddToken({ open, onClose, editToken }: Props) {
         type: type?.value ?? '',
         withdrawType: withdrawType?.value ?? '',
         color: editToken.color ?? '',
-        // networks: editToken.networks,
         networks: editToken.networks?.map((dt) => dt._id),
         iconUrl: editToken?.iconUrl ?? '',
       });

@@ -8,12 +8,12 @@ import GlobalSelect from '../../Global/GlobalSelect';
 import GlobalDialog from '../../../components/Dialog';
 import { permissionsList } from '../../../utils/data';
 import GlobalCheckbox from '../../Global/GlobalCheckbox';
+import useLoading from '../../../utils/hooks/useLoading';
 import React, { useEffect, useMemo, useState } from 'react';
 import { errorNotify, successAlert } from '../../../utils/alerts';
 import { useAdminActions } from '../../../store/admin/adminActions';
 import { ReactComponent as CrossIcon } from '../../../SVGIcons/cancelIcon.svg';
 import { selectAdminPermissionsList } from '../../../store/admin/adminSlice';
-import useLoading from '../../../utils/hooks/useLoading';
 
 interface Props {
   open: boolean;

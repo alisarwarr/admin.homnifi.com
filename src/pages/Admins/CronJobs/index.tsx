@@ -1,15 +1,15 @@
+import moment from 'moment';
+import { useSelector } from 'react-redux';
 import React, { useEffect, useState } from 'react';
+import Loader from '../../../components/Loader/Loader';
 import GlobalTable from '../../../components/Table/GlobalTable';
 import { useAdminActions } from '../../../store/admin/adminActions';
-import { useSelector } from 'react-redux';
 import { selectAdmin } from '../../../store/admin/adminSlice';
-import moment from 'moment';
-import Loader from '../../../components/Loader/Loader';
 
 function CronJob() {
   const { getCronJobs } = useAdminActions();
-  const { cronJobList, cronJobData } = useSelector(selectAdmin);
   const [loading, setLoading] = useState(true);
+  const { cronJobList, cronJobData } = useSelector(selectAdmin);
 
   const headCells = [
     { id: 'startTime', label: 'Start Time' },
@@ -26,7 +26,6 @@ function CronJob() {
     const duration = moment.duration(end.diff(start));
     const hours = Math.floor(duration.asHours());
     const minutes = duration.minutes();
-
     return `${hours} : ${minutes}`;
   };
 
@@ -67,7 +66,7 @@ function CronJob() {
 
   return (
     <div className="w-full px-2 border py-4 rounded-md">
-      <div className="flex bg-primary items-center table-head-bg text-white">
+       <div className="flex bg-primary items-center text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Cron Jobs</h1>
       </div>
       <GlobalTable
