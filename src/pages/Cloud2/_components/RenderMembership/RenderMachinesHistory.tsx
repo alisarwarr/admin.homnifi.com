@@ -1,13 +1,13 @@
 import GlobalTable from '../../../../components/Table/GlobalTable';
 import GlobalModal from '../../../../components/Global/GlobalModal';
 import useModalHook from '../../../../utils/hooks/useModalHook';
-import SingleMachineModalBody from './SingleMachineModalBody';
 import { useCloudActions } from '../../../../store/cloudk/cloudk.action';
 import { selectCloudkSlice } from '../../../../store/cloudk/cloudk.slice';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { formatToUpperCase } from '../../../../utils/helper';
 import useDebounce from '../../../../utils/hooks/useDebounceHook';
+import SingleMachineModalBody from './SingleMachineModalBody copy';
 
 const RenderMachinesHistory = () => {
   const [machineResponse, setMachineResponse] = useState({

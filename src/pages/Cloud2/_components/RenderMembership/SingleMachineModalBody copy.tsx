@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectConvertedPrice } from '../../../../store/general/generalSlice';
 import { useGeneralActions } from '../../../../store/general/generalActions';
 import NoData from '../../../../components/Table/NoData';
@@ -10,7 +10,13 @@ import Skalable from './MachinesAccordion/Skalable';
 import ExpiresIn from './MachinesAccordion/ExpiresIn';
 import { useCloudActions } from '../../../../store/cloudk/cloudk.action';
 import { RootState } from '../../../../store';
-import { selectCloudMachine } from '../../../../store/cloudk/cloudk.slice';
+import {
+  cloudkSliceAction,
+  selectCloudMachine,
+  selectCloudkSlice,
+} from '../../../../store/cloudk/cloudk.slice';
+import { useProductActions } from '../../../../store/products/productActions';
+import { selectProductSlice } from '../../../../store/products/productSlice';
 
 type Props = {
   id: string;
@@ -20,12 +26,19 @@ const SingleMachineModalBody = ({ id }: Props) => {
   const machine = useSelector((state: RootState) =>
     selectCloudMachine(state, id)
   );
-
+  const dispatch = useDispatch();
   const { GetConvertedPrice } = useGeneralActions();
 
   const conversionRate = useSelector(selectConvertedPrice);
+  const selectProduct = useSelector(selectProductSlice);
+  console.log(
+    '🚀 ~ SingleMachineModalBody ~ selectProduct:',
+    selectProduct,
+    machine
+  );
 
   const { getMachineDetails } = useCloudActions();
+  const { getProductById } = useProductActions();
 
   const fetchUserMachineById = async () => {
     await getMachineDetails(id);
