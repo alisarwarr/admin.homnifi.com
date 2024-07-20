@@ -21,10 +21,15 @@ import {
 import GlobalInput from '../../../components/Global/GlobalInput';
 import useDebounce from '../../../utils/hooks/useDebounceHook';
 import GlobalTable from '../../../components/Table/GlobalTable';
+import GlobalSwitch from '../../../components/Global/GlobalSwitch';
 
 const Simulation = () => {
-  const { getUserMachineList, startSimulation, getUserSimulationList } =
-    useCloudActions();
+  const {
+    getUserMachineList,
+    startSimulation,
+    getUserSimulationList,
+    chnageAutoCompund,
+  } = useCloudActions();
   const dispatch = useDispatch();
   const { userMachineList, simulationMachineList } =
     useSelector(selectCloudkSlice);
@@ -42,7 +47,7 @@ const Simulation = () => {
     totalPages: 1,
   });
   const debouncedSearchValue = useDebounce(filters.search, 1000);
-
+  const [isChecked, setIsChecked] = useState(false);
   const {
     machines,
     selectedMachine,
@@ -265,6 +270,19 @@ const Simulation = () => {
     { id: 'allTimeHigh', label: 'ATH' },
     { id: 'totalPrice', label: 'Total Price' },
   ];
+  useEffect(() => {
+    setIsChecked(Boolean(selectedMachine?.autoCompound));
+  }, [selectedMachine?.autoCompound]);
+
+  const handleAutoCompund = async (checked) => {
+    setIsChecked(checked);
+    const values = {
+      machine: selectedMachine?._id,
+      enabled: checked,
+    };
+
+    const resp = await chnageAutoCompund(values);
+  };
 
   return (
     <div className="w-full px-2">
@@ -379,7 +397,11 @@ const Simulation = () => {
                       Auto Compound
                     </label>
                     <p className="text-sm text-gray-600">
-                      {selectedMachine.autoCompound ? 'True' : 'False'}
+                      <GlobalSwitch
+                        checked={isChecked}
+                        onChange={(checked) => handleAutoCompund(checked)}
+                      />
+                      {/* {selectedMachine.autoCompound ? 'True' : 'False'} */}
                     </p>
                   </div>
                   <div>
