@@ -31,11 +31,11 @@ export default function ApiRequest() {
       }
 
       if (error.response.status === 401) {
-        // logout();
+        logout();
       }
 
       if (error.response.status === 403) {
-        // logout()
+        logout();
       }
 
       return Promise.reject(error.response);
