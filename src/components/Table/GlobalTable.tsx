@@ -28,8 +28,7 @@ import { useCustomerActions } from '../../store/customer/customerActions';
 import { errorAlert, successAlert } from '../../utils/alerts';
 import { Theme } from '@mui/material/styles';
 import { formatDate, isIsoDateString } from '../../utils/helper';
-
-import { Copy, ToolTipSvg } from '../../images/svg';
+import { Copied, Copy, ToolTipSvg } from '../../images/svg';
 
 type Props = {
   rows?: any[];
@@ -70,7 +69,7 @@ type Props = {
   copyItems?: any[];
   colorItems?: any[];
   imageItems?: any[];
-
+  setCopyIconList?: any;
   noDataSettings?: string;
   handleOpen?: (id: string) => void;
   filterButtons?: React.ReactNode;
@@ -107,6 +106,8 @@ const GlobalTable = ({
   handleOpen,
   rowClasNames,
   filterButtons,
+  setClickeddRow,
+  setCopyIconList,
 }: Props) => {
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
   const [isDropdown, setIsDropdown] = useState(false);
@@ -326,7 +327,7 @@ const GlobalTable = ({
                   headCells.map((cell, index) => (
                     <th
                       key={index}
-                      className={`hidden lg:table-cell text-center font-medium text-sm p-3 border-b border-borderGray
+                      className={`hidden md:table-cell text-center font-medium text-sm p-3 border-b border-borderGray
                        ${cell.dataClass}  border-b`}
                     >
                       {cell.label}
@@ -393,16 +394,27 @@ const GlobalTable = ({
                           let color = '';
                           if (
                             row[cell.id] === 'success' ||
-                            row[cell.id] === 'approved'
+                            row[cell.id] === 'approved' ||
+                            row[cell.id] === 'Complete'
                           )
                             color = 'text-primaryGreen';
-                          else if (row[cell.id] === 'pending')
+                          else if (
+                            row[cell.id] === 'pending' ||
+                            row[cell.id] === 'Pending'
+                          )
                             color = 'text-primary';
-                          else if (row[cell.id] === 'failed')
+                          else if (
+                            row[cell.id] === 'failed' ||
+                            row[cell.id] === 'Failed'
+                          )
                             color = 'text-primaryRed';
+
                           return (
                             cell.id !== '_id' && (
                               <td
+                                // onClick={() => {
+                                //   setClickeddRow(row);
+                                // }}
                                 key={index}
                                 className={`table-cell font-medium text-xs text-textSecondary py-4 px-2 topup ${cell.rowDataClass} ${cell.dataClass}`}
                               >
@@ -436,17 +448,39 @@ const GlobalTable = ({
                                         )}
                                     </>
                                   )}
-                                  {copyIconList.find(
-                                    (dt) => dt === cell.id
-                                  ) && (
+
+                                  {copyIconList.length &&
+                                  copyIconList.find(
+                                    (dt) => dt.name === cell.id && !dt.isCopied
+                                  ) ? (
                                     <Copy
                                       className="ml-3 cursor-pointer"
-                                      onClick={() =>
+                                      onClick={() => {
+                                        setCopyIconList((prev: any) =>
+                                          prev.map((item) =>
+                                            item.name === cell.id
+                                              ? {
+                                                  ...item,
+                                                  isCopied: true,
+                                                }
+                                              : item
+                                          )
+                                        );
                                         navigator.clipboard.writeText(
                                           row[cell.id]
-                                        )
-                                      }
+                                        );
+                                      }}
                                     />
+                                  ) : (
+                                    <>
+                                      {copyIconList.length &&
+                                        copyIconList.find(
+                                          (dt) =>
+                                            dt.name === cell.id && dt.isCopied
+                                        ) && (
+                                          <Copied className="ml-3 cursor-pointer" />
+                                        )}
+                                    </>
                                   )}
                                 </div>
                               </td>
@@ -462,7 +496,7 @@ const GlobalTable = ({
           </table>
         </div>
 
-        <div className="bg-white flex lg:hidden flex-col gap-3">
+        <div className="bg-white flex md:hidden flex-col gap-3">
           <div className="flex flex-col gap-4 w-full text-defaultBlack text-xs">
             {isLoading &&
               headCells.map((cell, index) => (

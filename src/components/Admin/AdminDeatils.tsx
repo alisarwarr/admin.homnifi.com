@@ -7,8 +7,8 @@ import AddAdminRole from './AddAdminRole';
 import GlobalSelect from '../Global/GlobalSelect';
 import React, { useEffect, useState } from 'react';
 import { CapitalizeFirstLetter } from '../../utils/utils';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { errorAlert, successAlert } from '../../utils/alerts';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAdminActions } from '../../store/admin/adminActions';
 import {
   selectAdmin,
@@ -32,8 +32,8 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
   } = useAdminActions();
 
   const state = location?.state?._data;
-  const [edit] = useState<boolean>(location?.state?.edit);
   const [open, setOpen] = React.useState<boolean>(false);
+  const [edit] = useState<boolean>(location?.state?.edit);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
 
   const initialValues = {
@@ -179,7 +179,7 @@ export default function AdminDeatils({ create = false }: { create?: boolean }) {
           </Button>
         </div>
       </div>
-      <div className="px-6 lg:px-8 mx-auto mt-4">
+      <div className="px-12 mx-auto mt-4">
         <Button
           loading={isLoading}
           disable={!edit}

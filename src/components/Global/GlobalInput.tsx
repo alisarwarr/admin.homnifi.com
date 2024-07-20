@@ -82,7 +82,7 @@ const GlobalInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`outline-none border py-2 px-4 text-xs rounded-full w-full ${
+          className={`outline-none border py-2 px-5 text-xs rounded-full w-full ${
             isError || isApiError ? 'border-redDanger' : 'border-blueGrey'
           } ${className}`}
         />
