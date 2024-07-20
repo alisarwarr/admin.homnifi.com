@@ -13,5 +13,6 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     // user is not authenticated
     return <Navigate to="/auth/signin" />;
   }
+
   return children;
 };
