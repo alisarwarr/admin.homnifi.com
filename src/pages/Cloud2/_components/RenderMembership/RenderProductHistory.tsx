@@ -10,6 +10,7 @@ import GlobalModal from '../../../../components/Global/GlobalModal';
 import useModalHook from '../../../../utils/hooks/useModalHook';
 import { edit } from '../../../../images/other';
 import { TProduct } from '../../../../store/products/productSlice';
+import { useNavigate } from 'react-router-dom';
 
 type FILTER = {
   page: number;
@@ -26,6 +27,7 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({
   const [productID, setProductID] = useState('');
   const stakeModalHook = useModalHook();
   const machineDetailHook = useModalHook();
+  const navigate = useNavigate();
 
   const headCells = [
     {
@@ -136,9 +138,7 @@ const RenderProductHistory: React.FC<RenderProductHistoryProps> = ({
           height={24}
           color="red"
           alt="View Icon"
-          onClick={() => {
-            // onEditHanlder(_data);
-          }}
+          onClick={() => navigate(`/cloudk2/products/details/${product?._id}`)}
           className="cursor-pointer"
         />
 
