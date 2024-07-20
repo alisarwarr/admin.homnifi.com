@@ -449,7 +449,7 @@ const GlobalTable = ({
                                     </>
                                   )}
 
-                                  {copyIconList.length &&
+                                  {copyIconList.length > 0 &&
                                   copyIconList.find(
                                     (dt) => dt.name === cell.id && !dt.isCopied
                                   ) ? (
@@ -473,7 +473,7 @@ const GlobalTable = ({
                                     />
                                   ) : (
                                     <>
-                                      {copyIconList.length &&
+                                      {copyIconList.length > 0 &&
                                         copyIconList.find(
                                           (dt) =>
                                             dt.name === cell.id && dt.isCopied
