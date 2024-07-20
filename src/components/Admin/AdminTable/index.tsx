@@ -33,8 +33,9 @@ const headCells = [
 const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isDelete, setIsDelete] = useState(false);
   const { adminDataDetail } = useSelector(selectAdmin);
-  const [selectedUser, setSelectedUser] = useState<any>();
+  const [selectedUser, setSelectedUser] = useState<any>(null);
   const [openLockUserDialog, setOpenLockUserDialog] = useState(false);
   const adminPermissionsList = useSelector(selectAdminPermissionsList);
   const { updateAdminAccess, deleteAdmin, getAdminList } = useAdminActions();
@@ -82,7 +83,8 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
                   <div
                     className="cursor-pointer"
                     onClick={() => {
-                      onDeleteAdmin(_data._id);
+                      setIsDelete(true);
+                      setSelectedUser(_data);
                     }}
                   >
                     <Delete />
@@ -95,9 +97,11 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
       : [];
 
   //delete admin
-  const onDeleteAdmin = async (id: string) => {
-    const response = await deleteAdmin(id);
+  const onDeleteAdmin = async () => {
+    const response = await deleteAdmin(selectedUser._id);
     if (response.data?.status) {
+      setSelectedUser(null);
+      setIsDelete(false);
       return successAlert(response.data.message);
     }
     errorAlert(response.message);
@@ -105,7 +109,7 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
 
   return (
     <>
-      <ConfirmDialog
+      {/* <ConfirmDialog
         title={
           selectedUser?.status === 'ACTIVE' ? 'Block Admin?' : 'Un-Block Admin?'
         }
@@ -131,7 +135,7 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
       >
         Are you sure you want to{' '}
         {selectedUser?.status === 'ACTIVE' ? 'Block' : 'Un-Block'} this Admin?
-      </ConfirmDialog>
+      </ConfirmDialog> */}
       <GlobalTable
         rows={rows}
         headCells={headCells}
@@ -144,6 +148,20 @@ const AdminTable = ({ data, loading, fetchAdminList }: Props) => {
         }}
         handleOpen={() => {}}
       />
+      <>{console.log('isDelete ::', { isDelete, selectedUser })}</>
+      <ConfirmDialog
+        title="Approved Verification?"
+        open={isDelete}
+        onClose={() => {
+          setIsDelete(false);
+          setSelectedUser(null);
+        }}
+        onConfirm={() => {
+          onDeleteAdmin();
+        }}
+      >
+        Are you sure you want to Delete Admin?
+      </ConfirmDialog>
     </>
   );
 };

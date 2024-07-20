@@ -106,7 +106,7 @@ const Simulation = () => {
       fileType === 'text/csv' ||
       fileType === 'application/vnd.ms-excel' ||
       fileType ===
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -453,7 +453,7 @@ const Simulation = () => {
             // handlePageChange={(page: number) => {
             //   getAdminList(page);
             // }}
-            handleOpen={() => { }}
+            handleOpen={() => {}}
           />
         </div>
       )}
