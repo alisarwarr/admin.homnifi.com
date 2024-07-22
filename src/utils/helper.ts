@@ -72,7 +72,7 @@ export const formatStringToDOB = (isoDateString: string) => {
   }
 };
 
-export const formatToUpperCase = (date: Date | string) => {
+export const formatToUpperCase = (date: any) => {
   const formattedDate = format(date, 'dd MMMM yyyy', { locale: enUS });
   return formattedDate.replace(/(\b\w+\b)/g, (match, p1, offset) =>
     offset === 3 ? p1.toUpperCase() : p1

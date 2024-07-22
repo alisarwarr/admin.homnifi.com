@@ -8,6 +8,7 @@ import {
   INFLATION_RULES,
   CRON_JOBS_LIST,
   SIMULATION_MACHINE_LIST,
+  SIMULATION_AUTO_COMPUND,
 } from '../../utils/network/ApiEndpoints';
 import { cloudkSliceAction } from './cloudk.slice';
 import { simulationSliceAction } from './simulation';
@@ -369,6 +370,23 @@ export const useCloudActions = () => {
         return error;
       });
   };
+
+  const chnageAutoCompund = async (data: any) => {
+    return await ApiRequest()
+      .request({
+        method: 'POST',
+        url: SIMULATION_AUTO_COMPUND,
+        data,
+      })
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        toast.error(error.data.message);
+
+        return error;
+      });
+  };
   return {
     getInfalationRules,
     createInfalationRules,
@@ -380,5 +398,6 @@ export const useCloudActions = () => {
     getMachineDetails,
     getUserMachineRewards,
     getUserSimulationList,
+    chnageAutoCompund,
   };
 };
