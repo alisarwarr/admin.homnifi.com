@@ -56,8 +56,6 @@ import CronJob from '../pages/Admins/CronJobs';
 import AutoCompoundPenality from '../pages/Defi-360/AutoCompoundPenality';
 import Simulation from '../pages/Cloud2/Simulation';
 import Marketing from '../pages/Marketing';
-import CommunityFriends from '../pages/community/friends';
-import CommunitySupernode from '../pages/community/SuperNode';
 
 export const router = createBrowserRouter([
   {
@@ -134,26 +132,26 @@ export const router = createBrowserRouter([
           </React.Suspense>
         ),
       },
-      {
-        path: '/community/friends',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <CommunityFriends />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
-      {
-        path: '/community/super-node',
-        element: (
-          <React.Suspense fallback={<Loader />}>
-            <ProtectedRoute>
-              <CommunitySupernode />
-            </ProtectedRoute>
-          </React.Suspense>
-        ),
-      },
+      // {
+      //   path: '/community/friends',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <CommunityFriends />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
+      // {
+      //   path: '/community/super-node',
+      //   element: (
+      //     <React.Suspense fallback={<Loader />}>
+      //       <ProtectedRoute>
+      //         <CommunitySupernode />
+      //       </ProtectedRoute>
+      //     </React.Suspense>
+      //   ),
+      // },
       {
         path: '/marketing',
         element: (

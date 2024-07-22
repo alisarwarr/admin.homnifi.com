@@ -19,30 +19,36 @@ import GlobalAccordian from '../../../components/Accordian';
 import { AccordionItem } from '@nextui-org/react';
 
 const headCells = [
-  { id: 'id', label: 'ID', show: true, rowDataClass: '!py-1' },
   {
     id: 'dropPercentage',
     label: '% Fall in the LYK Price',
     show: true,
-    rowDataClass: '!py-1',
+    dataClass: '!border',
+    rowDataClass: '!py-0  !border text-lg ',
   },
   {
     id: 'productionDecreasePercentage',
     label: 'Decrease Producation',
     show: true,
-    rowDataClass: '!py-1',
+    dataClass: '!border',
+
+    rowDataClass: '!py-0  !border',
   },
   {
     id: 'increaseDLPPercentage',
     label: 'Increase DLP',
     show: true,
-    rowDataClass: '!py-1',
+    dataClass: '!border',
+
+    rowDataClass: '!py-0 !border',
   },
   {
     id: 'mintingBoost',
     label: 'Minting Boost',
     show: true,
-    rowDataClass: '!py-1',
+    dataClass: '!border',
+
+    rowDataClass: '!py-0 !border',
   },
 ];
 type FILTER = {
@@ -72,10 +78,9 @@ const InflationRules = () => {
 
   const rows = currentinfalationRules?.rules?.map((_data, index) => {
     return {
-      id: getTableIndexNumber(filter.page, index, filter.limit),
-      dropPercentage: _data?.dropPercentage,
-      productionDecreasePercentage: _data.productionDecreasePercentage,
-      increaseDLPPercentage: _data.increaseDLPPercentage,
+      dropPercentage: `${_data?.dropPercentage}%`,
+      productionDecreasePercentage: `${_data.productionDecreasePercentage}%`,
+      increaseDLPPercentage: `${_data.increaseDLPPercentage}%`,
       mintingBoost: _data.mintingBoost,
     };
   });
@@ -154,17 +159,17 @@ const InflationRules = () => {
         {currentinfalationRules?.inflation.name}{' '}
         <span className="text-sm px-2">{`(${currentinfalationRules?.inflation.adminNote})`}</span>
       </h1>
+      <div className="max-w-[600px]">
+        <GlobalTable
+          rows={rows}
+          headCells={columns?.filter((itm) => itm?.show === true)}
+          isLoading={isLoading}
+          paginate={false}
 
-      <GlobalTable
-        rows={rows}
-        headCells={columns?.filter((itm) => itm?.show === true)}
-        isLoading={isLoading}
-        paginate={false}
-
-        // showInnerFilters={true}
-        // csvData={getCsvData}
-      />
-
+          // showInnerFilters={true}
+          // csvData={getCsvData}
+        />
+      </div>
       <GlobalModal
         size="5xl"
         isOpen={isModalOpen}
