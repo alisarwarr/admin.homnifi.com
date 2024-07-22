@@ -176,6 +176,13 @@ export default function SwapSettings() {
       if (!selectedId) {
         await addSwapSettings(data);
       } else {
+        const data = {
+          minAmount: values.minAmount,
+          maxAmount: values.maxAmount,
+          rate: values.isCurtomRate ? values.rate : null,
+          commission: values.commission,
+          commissionType: values.commissionType.value,
+        };
         await updateSwapSettings({ id: selectedId, data });
       }
       fetchData();
@@ -198,6 +205,7 @@ export default function SwapSettings() {
               required
               label="From Token"
               name="fromToken"
+              disabled={selectedId ? true : false}
               placeholder="select a From Token"
               options={
                 allTokens
@@ -225,6 +233,7 @@ export default function SwapSettings() {
               label="To Token"
               name="toToken"
               placeholder="select a To Token"
+              disabled={selectedId ? true : false}
               options={
                 allTokens
                   ? allTokens.map((item: any) => ({

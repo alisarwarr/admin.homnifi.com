@@ -79,8 +79,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
       startLoading();
       const body = {
         type: values.type,
-        fromToken: values.withdrawFrom,
-        toToken: values.withdrawTo,
+
         minAmount: values.minAmount,
         minDisplayAmount: values.minDisplayAmount,
         minWithdrawableAmount: values.minWithdrawableAmount,
@@ -94,7 +93,12 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
       if (selectedSetting) {
         response = await updateWithdrawSetting(selectedSetting._id, body);
       } else {
-        response = await createWithdrawSetting(body);
+        const _body = {
+          ...body,
+          fromToken: values.withdrawFrom,
+          toToken: values.withdrawTo,
+        };
+        response = await createWithdrawSetting(_body);
       }
 
       if (response.status) {
@@ -214,6 +218,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     label="Withdraw From"
                     labelOptionClass={'text-left'}
                     name={'withdrawFrom'}
+                    disabled={selectedSetting ? true : false}
                     placeholder={'Selecte From'}
                     options={
                       tokensList?.length
@@ -248,6 +253,7 @@ function AddWithdrawSettings({ open, onClose, selectedSetting }: Props) {
                     required
                     label="Withdraw To"
                     labelOptionClass={'text-left'}
+                    disabled={selectedSetting ? true : false}
                     name={'withdrawTo'}
                     placeholder={'Selecte To'}
                     options={

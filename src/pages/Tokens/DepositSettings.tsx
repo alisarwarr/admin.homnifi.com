@@ -147,9 +147,14 @@ export default function DepositSettings() {
         minAmount: values.minAmount,
         minDisplayAmount: values.minDisplayAmount,
       };
+
       if (!selectedId) {
         await addDespositSettings(data);
       } else {
+        const data = {
+          minAmount: values.minAmount,
+          minDisplayAmount: values.minDisplayAmount,
+        };
         await updateDespositSettings({ id: selectedId, data });
       }
       fetchData();
@@ -169,6 +174,7 @@ export default function DepositSettings() {
             <GlobalSelect
               required
               label="To Token"
+              disabled={selectedId ? true : false}
               name="toToken"
               placeholder="select a To Token"
               options={
@@ -196,6 +202,7 @@ export default function DepositSettings() {
               label="From Token"
               name="fromToken"
               placeholder="select a From Token"
+              disabled={selectedId ? true : false}
               options={
                 allTokens
                   ? allTokens.map((item: any) => ({
