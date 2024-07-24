@@ -10,6 +10,8 @@ import GlobalTable from '../../../components/Table/GlobalTable';
 import moment from 'moment';
 import StatusChip from '../../../components/StatusChip';
 import TokenNameWithLogo from '../../../components/TokenNameWithLogo';
+import GlobalSelect from '../../../components/Global/GlobalSelect';
+import GlobalInput from '../../../components/Global/GlobalInput';
 
 const headCells = [
   { id: 'requestId', label: 'ID', show: true },
@@ -20,11 +22,14 @@ const headCells = [
   { id: 'hash', label: 'Fee', show: true },
   { id: 'status', label: 'Status', show: true, dataClass: 'text-center' },
 ];
+
 type FILTER = {
   page: number;
   limit: number;
-  search: string | null;
+  query: string | null;
+  status: string | null;
 };
+
 const DepositHistory = () => {
   const { getDepositHistoryRequests } = useHistoryActions();
   const { depositHistory } = useSelector(selectHistorySlice);
@@ -34,7 +39,8 @@ const DepositHistory = () => {
   const [filter, setFilter] = useState<FILTER>({
     page: 1,
     limit: 10,
-    search: null,
+    query: null,
+    status: null,
   });
 
   const rows = depositHistory?.list?.map((_data, index) => {
@@ -86,20 +92,51 @@ const DepositHistory = () => {
     setLoading(true);
     getDepositHistoryRequests(true, filter);
     setLoading(false);
-  }, [filter.limit, filter.page]);
+  }, [filter.limit, filter.page, filter.query, filter.status]);
 
   useEffect(() => {
-    if (filter.search !== null) {
+    if (filter.query !== null) {
       const search = setTimeout(async () => {
         await getDepositHistoryRequests(true, filter);
       }, 400);
       return () => clearTimeout(search);
     }
-  }, [filter.search]);
+  }, [filter.query]);
+
+  const filterData = [
+    {
+      placeholder: 'Status',
+      text: 'All',
+      name: 'status',
+      options: [
+        { label: 'All', value: null },
+        { label: 'Pending', value: 'pending' },
+        { label: 'Success', value: 'success' },
+        { label: 'Failed', value: 'failed' },
+      ],
+    },
+  ];
+
+  const onFilterStateHandler = (name: string, value: string) => {
+    console.log('🚀 ~ onFilterStateHandler ~ value:', value, name);
+    setFilter((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const onResetFilter = () => {
+    setFilter({
+      page: 1,
+      limit: 10,
+      query: null,
+      status: null,
+    });
+  };
 
   return (
     <div className="w-full px-2">
-      <div className="flex bg-primary items-center  text-white">
+      <div className="flex bg-primary items-center text-white">
         <h1 className="flex-1 font-bold text-2xl px-3 py-1">Deposit History</h1>
         <div
           className="flex gap-1 items-center cursor-pointer px-3"
@@ -112,6 +149,56 @@ const DepositHistory = () => {
           <img src={refresh} alt="refresh" width={24} height={24} />
           <span>Refresh</span>
         </div>
+      </div>
+
+      <div className="flex flex-row   justify-center items-center gap-5 p-2">
+        {/* <div className="flex gap-x-2 items-center flex-wrap !w-full"> */}
+        <div className="">
+          <GlobalInput
+            type="string"
+            name="search"
+            required={false}
+            label="Search"
+            placeholder="Search"
+            className="!w-96"
+            value={filter['query']}
+            onChange={(e) => {
+              onFilterStateHandler('query', e.target.value);
+            }}
+            isError={false}
+          />
+        </div>
+        <div className="flex flex-row w-full gap-5 ">
+          {filterData.map((dt: any, index) => {
+            console.log('🚀 ~ {filterData.map ~ dt:', filter[dt.name]);
+            return (
+              <GlobalSelect
+                key={index}
+                labelOptionClass={'text-left'}
+                name={dt.name}
+                label={dt.placeholder}
+                placeholder={dt.placeholder}
+                options={dt.options}
+                isError={false}
+                value={filter[dt.name] || ''}
+                onChange={(e) => {
+                  console.log('🚀 ~ {filterData.map ~ e:', e);
+                  onFilterStateHandler(dt.name, e);
+                }}
+                containerClassnames=" xs:max-w-44 w-full"
+              />
+            );
+          })}
+        </div>
+        <div className="flex items-center  mt-5">
+          <p
+            onClick={onResetFilter}
+            className="text-primary px-4 font-normal cursor-pointer"
+          >
+            Reset
+          </p>
+        </div>
+        {/* </div> */}
       </div>
 
       <GlobalTable

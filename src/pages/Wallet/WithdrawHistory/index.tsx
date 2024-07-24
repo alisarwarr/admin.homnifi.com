@@ -13,6 +13,8 @@ import { Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import TokenNameWithLogo from '../../../components/TokenNameWithLogo';
 import { getTableIndexNumber } from '../../../utils/utils';
+import GlobalSelect from 'components/Global/GlobalSelect';
+import FormikInput from 'components/FormikInput';
 
 const headCells = [
   { id: 'id', label: 'ID', show: true },
@@ -37,7 +39,9 @@ const headCells = [
 type FILTER = {
   page: number;
   limit: number;
-  search: string | null;
+  query: string | null;
+  status: string | null;
+  type: string | null;
 };
 
 const WithdrawHistory = () => {
@@ -49,7 +53,9 @@ const WithdrawHistory = () => {
   const [filter, setFilter] = useState<FILTER>({
     page: 1,
     limit: 10,
-    search: null,
+    query: null,
+    status: null,
+    type: null,
   });
 
   const rows = withdrawHistory?.list?.map((_data, index) => {
@@ -143,13 +149,62 @@ const WithdrawHistory = () => {
   }, [filter.limit, filter.page]);
 
   useEffect(() => {
-    if (filter.search !== null) {
+    if (filter.query !== null) {
       const search = setTimeout(async () => {
         await getWithdrawHistoryRequests(true, filter);
       }, 400);
       return () => clearTimeout(search);
     }
-  }, [filter.search]);
+  }, [filter.query]);
+
+  const filterData = [
+    {
+      placeholder: 'Status',
+      text: 'All',
+      name: 'status',
+      options: [
+        { label: 'All', value: '' },
+        { label: 'Pending', value: 'pending' },
+        { label: 'Approved', value: 'approved' },
+        { label: 'Completed', value: 'completed' },
+        { label: 'Pending for Admin', value: 'pending-for-admin' },
+        { label: 'Rejected and Reimbursed', value: 'rejected-and-reimbursed' },
+        {
+          label: 'On Chain Failure and Reimbursed',
+          value: 'on-chain-failure-and-reimbursed',
+        },
+      ],
+    },
+
+    {
+      placeholder: 'Type',
+      text: 'All',
+      name: 'type',
+      options: [
+        { label: 'All', value: '' },
+        { label: 'External', value: 'external' },
+        { label: 'Internal', value: 'internal' },
+      ],
+    },
+  ];
+
+  const onFilterStateHandler = (name: string, value: string) => {
+    console.log('🚀 ~ onFilterStateHandler ~ value:', value, name);
+    setFilter((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const onResetFilter = () => {
+    setFilter({
+      page: 1,
+      limit: 10,
+      query: null,
+      status: null,
+      type: null,
+    });
+  };
 
   return (
     <div className="w-full px-2">

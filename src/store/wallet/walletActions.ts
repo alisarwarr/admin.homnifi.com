@@ -28,12 +28,7 @@ export const useWalletActions = () => {
     const response = await ApiRequest().request({
       method: 'GET',
       url: `${WALLET_WITHDRAWS}`,
-      params: {
-        page: filter.page,
-        limit: filter.limit,
-        search: filter.search,
-        // status: 'success',
-      },
+      params: filter,
     });
 
     const _withdrawRequests = response?.data?.data;

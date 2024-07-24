@@ -42,11 +42,7 @@ export const useHistoryActions = () => {
     const response = await ApiRequest().request({
       method: 'GET',
       url: `${WALLET_SWAP_HISTORY}`,
-      // params: {
-      //   page: filter.page,
-      //   limit: filter.limit,
-      //   search: filter.search,
-      // },
+      params: filter,
     });
 
     const _migrationReuests = response?.data?.data;
@@ -57,16 +53,13 @@ export const useHistoryActions = () => {
     force: boolean = false,
     filter?: any
   ) => {
+    console.log('filter', filter);
     if (depositHistory?.list?.length && !force) return;
 
     const response = await ApiRequest().request({
       method: 'GET',
       url: `${WALLET_DEPOSIT_HISTORY}`,
-      params: {
-        page: filter.page,
-        limit: filter.limit,
-        search: filter.search,
-      },
+      params: filter,
     });
 
     const _migrationReuests = response?.data?.data;
@@ -131,6 +124,11 @@ export const useHistoryActions = () => {
 
     dispatch(setFeaturePurchaseHistory(response?.data?.data));
   };
+  // Deposit
+
+  //  rqtId  useremail  toWallet =  token.name amount status // remarks  datewithtime   hash
+  //  Withdraw
+  // rqtId  , user.emial / user.bid  ,amount  ,fee , commsion , total  , status , withdrawtype  , token.name - nwtwork .code , reciver add , "userRemarks "
 
   const getProductPurchaseHistory = async (
     force: boolean = false,
@@ -141,11 +139,7 @@ export const useHistoryActions = () => {
     const response = await ApiRequest().request({
       method: 'GET',
       url: `${PRODUCT_PURCHASE_HISTORY}`,
-      params: {
-        page: filter.page,
-        limit: filter.limit,
-        search: filter.search,
-      },
+      params: filter,
     });
 
     dispatch(setProductPurchaseHistory(response?.data?.data));

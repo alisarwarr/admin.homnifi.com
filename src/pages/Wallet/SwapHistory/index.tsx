@@ -9,6 +9,7 @@ import { selectHistorySlice } from '../../../store/wallet/historySlice';
 import GlobalTable from '../../../components/Table/GlobalTable';
 import moment from 'moment';
 import TokenNameWithLogo from '../../../components/TokenNameWithLogo';
+import GlobalInput from '../../../components/Global/GlobalInput';
 
 const headCells = [
   { id: 'id', label: 'Hash Id', show: true },
@@ -22,7 +23,7 @@ const headCells = [
 type FILTER = {
   page: number;
   limit: number;
-  search: string | null;
+  query: string | null;
 };
 const SwapHistory = () => {
   const { getSwapHistoryRequests } = useHistoryActions();
@@ -33,7 +34,7 @@ const SwapHistory = () => {
   const [filter, setFilter] = useState<FILTER>({
     page: 1,
     limit: 10,
-    search: null,
+    query: null,
   });
 
   const rows = swapHistory?.list?.map((_data: any) => {
@@ -90,16 +91,18 @@ const SwapHistory = () => {
     setLoading(true);
     getSwapHistoryRequests(true, filter);
     setLoading(false);
-  }, [filter.limit, filter.page]);
+  }, [filter.limit, filter.page, filter.query]);
 
   useEffect(() => {
-    if (filter.search !== null) {
+    console.log('🚀 ~ SwapHistory ~ filter:', filter);
+
+    if (filter.query !== null) {
       const search = setTimeout(async () => {
         await getSwapHistoryRequests(true, filter);
       }, 400);
       return () => clearTimeout(search);
     }
-  }, [filter.search]);
+  }, [filter.query]);
 
   return (
     <div className="w-full px-2">
@@ -116,6 +119,22 @@ const SwapHistory = () => {
           <img src={refresh} alt="refresh" width={24} height={24} />
           <span>Refresh</span>
         </div>
+      </div>
+
+      <div className="flex  py-2">
+        <GlobalInput
+          type="string"
+          name="search"
+          required={false}
+          label="Search"
+          placeholder="Search"
+          className="!w-96 !justify-start !self-start"
+          value={filter['query']}
+          onChange={(e) => {
+            setFilter({ ...filter, query: e.target.value || null });
+          }}
+          isError={false}
+        />
       </div>
 
       <GlobalTable

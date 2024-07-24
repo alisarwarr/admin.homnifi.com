@@ -20,6 +20,7 @@ export default function FormikInput({
   multiline = false,
   rows = 0,
   isError = true,
+  required = true,
 }: {
   label?: string;
   type: string;
@@ -39,6 +40,7 @@ export default function FormikInput({
   multiline?: boolean;
   rows?: number;
   isError?: boolean;
+  required?: boolean;
 }) {
   return (
     <div className="w-full">
@@ -46,7 +48,7 @@ export default function FormikInput({
         className={`flex text-defaultBlack flex-col gap-1 relative ${className}`}
       >
         <GlobalInput
-          required
+          required={required}
           label={label}
           type={type}
           name={name}
